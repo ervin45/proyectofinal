@@ -1,0 +1,139 @@
+#summary Descripcion de los campos que vamos descubriendo de las tablas del octosis
+
+==Prefijos de Tablas (Indican el directorio del archivo original)==
+ * CB (Caja banco)
+ * IV (Integrado de venta)
+ * ST (Stock)
+ * UN (Unidad)
+ * PV (Proveedores)
+ * SE (Servicio)
+ * DP (Deudores Prendarios)
+
+==Tablas==
+ * IVF_CLIEN0 (Listado de Clientes)
+ * IVF_CLUNI0 (Clientes Operaciones) UNI_NUMOPE
+ * IVF_CUITX0 (CUIT asociado con Cliente)
+ * IVF_FACTU0 (Factura Cliente)
+ * IVF_FCSFC0 (Factura Cliente)
+ * IVF_ITAMP0 (Unidades, cada instancia en particular)
+ * IVF_ITMOP0 (Operaciones) OPE_NUMERO  OPE_NROINT
+ * IVF_ITMRP0
+ * IVF_RMFAC0
+ * PVD4_FACTU
+ * PVP_CUITX0
+ * STS_ARTIC0 STS_ARTIC0 (Articulos y unidades) ART_CODIGO ver desc tabla abajo
+ * STS_MOVIM0 (Movimientos de articulos) E: entradas S:salidas ART_STOCK(sucursal) 1:santa fe, 2:rafaela, 3:reconquista
+ * STS_UNIDA0
+ * UNU_UNIVT0
+ * STS_ARTIC0
+
+
+= STS_MOVIM0 =
+
+Nos tenemos que asegurar que ART_CODIGO tenga varchar(22) como tipo de dato.
+
+ALTER TABLE `STS_MOVIM0` CHANGE `ART_CODIGO` `ART_CODIGO` VARCHAR( 22 ) NOT NULL;
+ALTER TABLE `STS_ARTIC0` CHANGE `ART_CODIGO` `ART_CODIGO` VARCHAR( 22 ) NOT NULL;
+
+=Interpretaciones de campos de Octosis=
+
+== Tabla:STS_APDEP0 ==
+
+{{{
+ART_DEFCOD
+ART_CODIGO 	Codigo del repuesto
+ART_MEDIDA 	
+ART_DEPOS 	Deposito (1 = Santa Fe, 2 = Rafaela, 3 = Reconquista, 99=Estacion ESSO)
+ART_SDOINI 	Saldo inicial (en teoria el stock el 1/5/1999)
+ART_SDOUNI 	
+ART_ESTANT 	
+ART_SDOURG 	
+ART_SDOGTA 	
+ART_SIURGE 	
+ART_SIGARA 	
+ART_SDOENV 	
+ART_SIIMPO 	
+ART_UBICAC 	
+ART_FECSDO 	
+ART_RESUNI 	
+ART_RESURG 	
+ART_RESGTA
+}}}
+
+== Tabla:STS_MOVIM0 ==
+
+{{{
+ART_TIPMOV 	Tipo de Movimiento (S3 = Venta, S1 = venta por taller, E1 = Compra, E3 = Devoilucion)
+ART_NUMERO 	
+ART_DEFCOD 	
+ART_CODIGO 	Codigo de articulo
+ART_MEDIDA 	
+ART_UNIMED 	
+ART_CANTID 	Itemes involucradas en el movimiento
+ART_PRECIO 	Costo en el caso de una venta
+ART_DEPOSI 	
+ART_FECHA 	
+ART_STOCK 	
+ART_TIPDOC 	
+ART_NRODOC 	
+ART_ESTADO 	
+ART_NCOMPR 	
+ART_CENCOS 	
+ART_DESCUE 	
+ART_PREVT 	
+ART_CREMIT 	
+ART_IMPUTA 	
+ART_RESPON 	
+ART_TIPAJU 	
+ART_UMC 	
+ART_CANTI2 	
+ART_PREVT2 	
+ART_CPEDVT 	
+ART_NROITM 	
+ART_CPEDST 	
+ART_MARCA 	
+ART_CODSAL 	
+ART_UMCONV 	
+ART_CANTI3 	
+ART_DEFCO3 	
+ART_CODIG3 	
+ART_NROMAQ 	
+ART_MARCA1 	
+ART_CODDEV 	
+ART_CIERR 	
+ART_HORA 	
+ART_CONTRO 	
+ART_PORINC 	
+ART_PREVTU 	
+ART_CANTVF 	
+ART_CODVRF 	
+ART_DESCU1 	
+ART_DESCU2 	
+ART_DESAUX 	
+ART_PORIVA 	
+ART_IVADEF 	
+ART_MEMO 	
+ART_PREORI 	
+ART_PRVTOR 	
+ART_PREDOL 	Precio en dolares 
+ART_FECMIG 	
+ART_HORMIG 	
+ART_NUMENT 	
+ART_SINCAR 	
+ART_NROFAB 	
+ART_NRODES 	
+ART_NROFAC 	
+ART_PRUFOB 	
+ART_PRUADU 	
+ART_PRUTOT 	
+ART_SALTRA 	
+ART_DEFPAD 	
+ART_CODPAD 	
+ART_ETAPAD 	
+ART_COSDOL 	
+ART_CODAPE 	
+ART_NSERIE 	
+ART_VENCIM 	
+ART_PORCOF
+}}}
+
