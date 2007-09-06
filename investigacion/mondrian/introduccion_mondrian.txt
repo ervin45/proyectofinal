@@ -1,0 +1,39 @@
+
+Estuve investigando mondrian como servidor de base multidimensional. 
+
+La arquitectura esta descripta en:
+http://mondrian.pentaho.org/documentation/architecture.php y es muy
+amigable para las aplicaciones que quieran ejecutar desde Java el API
+que ofrece mondrian. No es nuestro caso. pero en esa página hay un
+ejemplo muy fácil:
+
+{{{
+import mondrian.olap.*;
+ import java.io.PrintWriter;
+ 
+ Connection connection = DriverManager.getConnection(
+     "Provider=mondrian;" +
+     "Jdbc=jdbc:odbc:MondrianFoodMart;" +
+     "Catalog=/WEB-INF/FoodMart.xml;",
+     null,
+     false);
+ Query query = connection.parseQuery(
+     "SELECT {[Measures].[Unit Sales], [Measures].[Store Sales]} on columns," +
+     " {[Product].children} on rows " +
+     "FROM [Sales] " +
+     "WHERE ([Time].[1997].[Q1], [Store].[CA].[San Francisco])");
+ Result result = connection.execute(query);
+ result.print(new PrintWriter(System.out));
+}}}
+
+Es el ultimo recurso ponernos a hacer una aplicación Java.... 
+
+
+=Alternativa XML/HTTP=
+
+http://mondrian.pentaho.org/images/arch_mondrian_v1_lrg.png 
+
+Una de las mejores alternativas es usar XML/HTTP y que se envíen las
+consultas MDX a Mondrian y este nos devuelva el Resulset
+correspondiente. Todo esto se hace mediante SOAP, en python esto sería
+SOAP.py pero parece que no funciona correctamente (ver problemas_con_SOAP.txt)

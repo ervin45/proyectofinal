@@ -1,0 +1,22 @@
+
+Ver test_soap1.py y test_soap2.py, en los 2 casos el error es: 
+*The Mondrian XML: Invalid XML/A message:  Body has 0 Discover Requests and 0 Execute Requests*
+
+
+Y test_soap3.py genera el error 
+*The Mondrian XML: Mondrian Error:Internal error: Invalid XML/A message: Wrong number of RequestType elements: 0*
+
+
+
+=Respuesta esperada=
+
+Habría que lograr que genere una peticion como la siguiente:
+
+<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
+   <RequestType>MDSCHEMA_CUBES</RequestType>
+</Discover>
+
+
+segun
+http://www.tech-archive.net/Archive/Data/microsoft.public.data.xmlanalysis/2004-08/0015.html
+es problema de namespace; no se como eliminarlo en SOAPpy
