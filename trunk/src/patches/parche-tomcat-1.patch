@@ -1,0 +1,15 @@
+--- /usr/share/tomcat5/bin/setclasspath.sh.orig	2007-09-14 10:27:54.000000000 -0300
++++ /usr/share/tomcat5/bin/setclasspath.sh	2007-09-14 10:28:24.000000000 -0300
+@@ -51,6 +51,12 @@
+ # Set standard CLASSPATH
+ CLASSPATH="$JAVA_HOME"/lib/tools.jar:$BASEDIR/bin/commons-launcher.jar:$BASEDIR/bin/commons-logging-api.jar:$BASEDIR/bin/jmx.jar
+ 
++# Add MySQL support
++if [ -f /usr/share/java/mysql.jar ]
++then
++  CLASSPATH="$CLASSPATH":"/usr/share/java/mysql.jar"
++fi
++
+ # OSX hack to CLASSPATH
+ JIKESPATH=
+ if [ `uname -s` = "Darwin" ]; then
