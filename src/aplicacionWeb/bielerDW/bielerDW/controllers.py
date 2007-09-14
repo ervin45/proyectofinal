@@ -2,18 +2,33 @@ from turbogears import controllers, expose, flash
 # from model import *
 from turbogears import identity, redirect
 from cherrypy import request, response
+
+import string
+
 # from bielerDW import json
 # import logging
 # log = logging.getLogger("bielerDW.controllers")
 
 class Root(controllers.RootController):
-    @expose(template="bielerDW.templates.welcome")
+    @expose(template="bielerDW.templates.index")
     # @identity.require(identity.in_group("admin"))
     def index(self):
         import time
         # log.debug("Happy TurboGears Controller Responding For Duty")
-        flash("Your application is now running")
+        flash("Your sdfsdf is now running")
         return dict(now=time.ctime())
+    
+    @expose(template="bielerDW.templates.content_default")
+    def content_default(self):
+        # log.debug("Happy TurboGears Controller Responding For Duty")
+        return dict(title="HOLA")
+    
+    @expose(template="bielerDW.templates.reportes")
+    def reportes(self, title):
+        # log.debug("Happy TurboGears Controller Responding For Duty")
+	title = title[0].upper() + title[1:]
+        return dict(title=title)    
+    
 
     @expose(template="bielerDW.templates.login")
     def login(self, forward_url=None, previous_url=None, *args, **kw):

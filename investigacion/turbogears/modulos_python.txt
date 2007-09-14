@@ -2,3 +2,4 @@
 - TGFusionCharts: Graficas SWF. Hay que fijarse la licencia.
 - pyR: Wrapper python para R
 - TGOpenIDLogin: Login controller
+- ToscaWidgets
