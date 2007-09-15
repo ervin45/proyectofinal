@@ -78,6 +78,7 @@ def check_tipo(p):
     if (re.match('ENT  3-Ajuste Inventario \+',o) and m == 'E1- 3'):
         return True
 
+    # no se exactamente que es E3-91??
     #if (re.match('ENT Devoluci\xa2n de Salida',o) and m == 'E3-91'):
     #   return True
     
