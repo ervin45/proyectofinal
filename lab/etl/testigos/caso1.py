@@ -1,52 +1,72 @@
 #!/usr/bin/env python
 import pprint
 import re
+import MySQLdb
 
-octosis_file = file('A000.180.20.09.txt','r').readlines()
-mysql_file = file('A000.180.20.09-mysql.txt','r').readlines()
-#octosis_file = file('A000.180.16.09.txt','r').readlines()
-#mysql_file = file('A000.180.16.09-mysql.txt','r').readlines()
+filename = 'A000.180.20.09.txt'
+articulo = '000001802009000000000'
+
+n='6111800009000000000'
+filename = '%s.txt' % n
+articulo = '00%s' % n 
+
+octosis_file = file(filename,'r').readlines()
+octosis_file = octosis_file[7:]
+
+con = MySQLdb.Connect(host="127.0.0.1", port=3306, user="root", passwd="", db="b2")
+cursor = con.cursor(MySQLdb.cursors.DictCursor)
+sql = """SELECT
+ CONCAT(ART_TIPMOV,'-',ART_CODSAL) as TIPO,
+ ART_CANTID as CANTIDAD,
+ ART_FECHA as FECHA,
+ ART_PRECIO as PRECIO,
+ ART_PREDOL as D
+FROM
+ `STS_MOVIM0`
+WHERE
+ ART_CODIGO = ' %s'
+order by
+ ART_FECHA, ART_HORA
+""" % articulo
+cursor.execute(sql)
+results = cursor.fetchall()
 
 
-octosis_file = octosis_file[6:]
-mysql_file = mysql_file[5:]
-
-nice_tuples = zip(octosis_file, mysql_file)
+#Just comparing...
+nice_tuples = zip(octosis_file, results)
 
 def check(p):
     return check_date(p) and check_precio(p) and check_cnt(p) and check_tipo(p)
 
 def check_date(p):
     o = p[0][3:11].split('/')
-    m = p[1].split('|')[3].split('-')
-
-    #print m[0][3:5],   o[2]
+    m = p[1]
 
     #check year
-    if m[0][3:5] == o[2]:
+    if str(m['FECHA'].year)[2:4] == o[2]:
         #check month
-        if int(m[1]) == int(o[1]):
+        if m['FECHA'].month == int(o[1]):
             #check day
-            if int(m[2]) == int(o[0]):
+            if m['FECHA'].day == int(o[0]):
                 return True                
     return False
 
 def check_precio(p):
     o = p[0][42:52]
-    m = p[1].split('|')[4]
+    m = p[1]
     
-    return float(o) == float(m)
+    return float(o) == m['PRECIO']
 
 def check_cnt(p):
     o = p[0][50:68]
-    m = p[1].split('|')[2]
+    m = p[1]
 
-    return float(o) == float(m)
+    return float(o) == m['CANTIDAD']
 
 
 def check_tipo(p):
     o = p[0][12:40]
-    m = p[1].split('|')[1].strip()
+    m = p[1]['TIPO'].strip()
 
     if (o[0:14] == 'ENT  1-Remito:' and m == 'E1- 1'):
         return True
@@ -78,20 +98,25 @@ def check_tipo(p):
     if (re.match('ENT  3-Ajuste Inventario \+',o) and m == 'E1- 3'):
         return True
 
-    # no se exactamente que es E3-91??
-    #if (re.match('ENT Devoluci\xa2n de Salida',o) and m == 'E3-91'):
-    #   return True
+    # hay 2 "ENT Devoluci\xa2n de Salida" internas?
+    if (re.match('ENT Devoluci\xa2n de Salida',o) and m == 'E3-91'):
+       return True
     
     if (re.match('ENT Devoluci\xa2n de Salida',o) and m == 'E3-92'):
         return True
     
     print o.__repr__(), m
 
+errors=0
 for p in nice_tuples:
     if check(p):
+        #print "OK"
         pass
     else:
-        #print "ERROR"
+        print "ERROR in: %s" % repr(p)
+        errors += 1
         pass
+
+print "\nErrors: %d" %errors
 
 
