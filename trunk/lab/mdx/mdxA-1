@@ -1,0 +1,3 @@
+  select {[Time].[1997]} ON COLUMNS,
+  {([Measures].[Unit Sales], [Product].[All Products])} ON ROWS
+from [Sales]

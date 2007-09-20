@@ -1,0 +1,5 @@
+  select [Time].[1997].Children ON COLUMNS,
+  Crossjoin({[Measures].[Unit Sales]}, [Product].[All Products].Children) ON ROWS
+from [Sales]
+  
+

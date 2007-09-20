@@ -1,0 +1,6 @@
+
+  select [Time].[1997].Children ON COLUMNS,
+  {([Measures].[Unit Sales], [Product].[All Products])} ON ROWS
+from [Sales]
+  
+
