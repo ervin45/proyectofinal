@@ -31,5 +31,5 @@ def query_mondrian(stm):
     return the_page
 
 
-print query_mondrian("SELECT Measures.MEMBERS ON COLUMNS FROM Sales")
+print query_mondrian("SELECT Gender.MEMBERS ON COLUMNS FROM Sales")
 
