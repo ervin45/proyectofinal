@@ -20,7 +20,8 @@ sql = """SELECT
  ART_CANTID as CANTIDAD,
  ART_FECHA as FECHA,
  ART_PRECIO as PRECIO,
- ART_PREDOL as D
+ ART_PREDOL as D,
+ ART_PREVT as PREVT
 FROM
  `STS_MOVIM0`
 WHERE
@@ -68,41 +69,52 @@ def check_tipo(p):
     o = p[0][12:40]
     m = p[1]['TIPO'].strip()
 
-    if (o[0:14] == 'ENT  1-Remito:' and m == 'E1- 1'):
+    ## Salida por Consumo
+    ## CUANDO SE REALIZO UNA VENTA POR TALLER QUE LUEGO SE
+    ## HACE LA DEVOLUCIÓN APARECE ESTA LEYENDA
+    
+    if (re.match('SAL  1-Salida por Consumo',o) and m == 'S1- 1'):          
+        print p[0], p[1]
         return True
 
+    ## venta por taller
+    ## S.Ap.XX ES SUB APERTURA EJEMPLO 00->CLIENTE     02->GARANTIA
     if (re.match('SAL +OR: +[0-9]+ +S\.Ap\.[0-9]+',o) and m == 'S1- 1'):
         return True
 
+    ## venta mostrador
     if (re.match('SAL x Venta \(Pv\. +[0-9\.]+\)',o) and m == 'S3-'):
         return True
 
-    if (re.match('SAL 23-SUCURSAL RECONQUISTA',o) and m == 'S1-23'):
+    ## compra
+    if (o[0:14] == 'ENT  1-Remito:' and m == 'E1- 1'):
         return True
 
-    if (re.match('SAL 22-SUCURSAL RAFAELA',o) and m == 'S1-22'):
+
+    if (re.match('SAL 23-SUCURSAL RECONQUISTA',o)    and m == 'S1-23'):
         return True
 
-    if (re.match('ENT 23-Ent.de RECONQUISTA',o) and m == 'E1-23'):
+    if (re.match('SAL 22-SUCURSAL RAFAELA',o)        and m == 'S1-22'):
         return True
 
-    if (re.match('ENT 22-Ent.de RAFAELA',o) and m == 'E1-22'):
+    if (re.match('ENT 23-Ent.de RECONQUISTA',o)      and m == 'E1-23'):
         return True
 
-    if (re.match('SAL  1-Salida por Consumo',o) and m == 'S1- 1'):          
+    if (re.match('ENT 22-Ent.de RAFAELA',o)          and m == 'E1-22'):
         return True
 
-    if (re.match('SAL  2-Ajuste Inventario -',o) and m == 'S1- 2'):
+
+    if (re.match('SAL  2-Ajuste Inventario -',o)     and m == 'S1- 2'):
         return True
 
-    if (re.match('ENT  3-Ajuste Inventario \+',o) and m == 'E1- 3'):
+    if (re.match('ENT  3-Ajuste Inventario \+',o)    and m == 'E1- 3'):
         return True
 
     # hay 2 "ENT Devoluci\xa2n de Salida" internas?
-    if (re.match('ENT Devoluci\xa2n de Salida',o) and m == 'E3-91'):
+    if (re.match('ENT Devoluci\xa2n de Salida',o)    and m == 'E3-91'):
        return True
     
-    if (re.match('ENT Devoluci\xa2n de Salida',o) and m == 'E3-92'):
+    if (re.match('ENT Devoluci\xa2n de Salida',o)    and m == 'E3-92'):
         return True
     
     print o.__repr__(), m
@@ -113,7 +125,7 @@ for p in nice_tuples:
         #print "OK"
         pass
     else:
-        print "ERROR in: %s" % repr(p)
+        #print "ERROR in: %s" % repr(p)
         errors += 1
         pass
 

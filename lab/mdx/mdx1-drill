@@ -1,0 +1,3 @@
+  select DRILLDOWNMEMBER( {[Time]} , {[Time].[1997]}) ON COLUMNS,
+  {[Measures].[Unit Sales]} ON ROWS
+from [Sales]
