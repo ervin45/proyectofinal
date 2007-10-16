@@ -4,21 +4,25 @@ import MySQLdb
 import csv
 
 # Create a connection object and create a cursor
-con = MySQLdb.Connect(host="127.0.0.1", port=3306, user="bieler", passwd="xxx", db="b2")
+con = MySQLdb.Connect(host="127.0.0.1", port=3306, user="root", passwd="", db="b2")
 cursor = con.cursor()
 cursor2 = con.cursor()
 
 writer = csv.writer(open("stock.csv", "wb"),delimiter = ';', quoting = csv.QUOTE_ALL)
-writer.writerows((['Anio','Mes','Grupo_Constructivo1','Grupo_Constructivo2','Modelo','Modificacion','Pieza','Proovedor','Descripcion','Codigo','Stock','Costo_pesos','Costo_dolares','Precio_Vta', 'Compras', 'Devoluciones', 'Ventas', 'VentaPorTaller'],))
+writer.writerows((['Anio','Mes','Grupo_Constructivo1','Grupo_Constructivo2','Modelo','Modificacion','Pieza','Proovedor','Descripcion','Codigo','Stock','Costo_pesos','Precio_Vta', 'Compras', 'Devoluciones', 'Ventas', 'VentaPorTaller'],))
 
 def get_costo_precio_etc(row,cursor):
   anio=row[0]
   mes=row[1]
   codigo=row[9]
+
+
+  ###
+  ### E1-1 | Compra | "1-Remito"
+  ###
   sql=""" 
 SELECT
- M.ART_PRECIO as Costo_Pesos,
- M.ART_PREDOL as Costo_Dolares
+ M.ART_PRECIO * M.ART_CANTID as Costo_Pesos
 FROM
  `STS_ARTIC0` A
   Join `STS_MOVIM0` M on (A.ART_CODIGO = M.ART_CODIGO)
@@ -27,6 +31,7 @@ WHERE
   and A.ART_CODIGO ='%s'
   and M.ART_FECHA < '%s-%s-01'
   and M.ART_TIPMOV = 'E1'
+  and M.ART_CODSAL = '1'
   and (M.ART_PRECIO + M.ART_PREDOL) > 0
 ORDER BY
   M.ART_FECHA DESC LIMIT 1
@@ -37,8 +42,7 @@ ORDER BY
   if not costos:
     sql=""" 
 SELECT
- M.ART_PRECIO as Costo_Pesos,
- M.ART_PREDOL as Costo_Dolares
+ M.ART_PRECIO as Costo_Pesos
 FROM
  `STS_ARTIC0` A
   Join `STS_MOVIM0` M on (A.ART_CODIGO = M.ART_CODIGO)
@@ -63,7 +67,11 @@ WHERE
   A.`ART_DEFCOD`   = 'A'
   and A.ART_CODIGO ='%s'
   and M.ART_FECHA < '%s-%s-01'
-  and M.ART_TIPMOV LIKE 'S%%'
+  and
+
+  (M.ART_TIPMOV = 'S3' or
+   (M.ART_TIPMOV = 'S3' and  and M.ART_CODSAL = '1')
+  )
   and (M.ART_PRECIO + M.ART_PREDOL) > 0
 ORDER BY
   M.ART_FECHA DESC LIMIT 1
