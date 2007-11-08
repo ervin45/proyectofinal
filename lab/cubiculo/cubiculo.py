@@ -57,4 +57,13 @@ class Cubiculo:
 		return sql
 
 
+#c = cubiculo.Cubiculo('vendido',
+#	[['Tiempo','anio'],
+#	 ['Sucursal','sucursal',"sucursal = 'rafaela'"]],
+#	['Cantidad'])
+#print c.sql()
+#c.drill('Tiempo','mes','anio=2007')
+#print c.sql()
+
+
 
