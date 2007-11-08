@@ -2,27 +2,24 @@
 class Cubiculo:
 	def __init__(self,ft, dimensions, measures):
 		self.ft = ft
-		self.dimensions = dimensions
+		self.dimensions = {}
+		for a in dimensions:
+			self.dimensions[a[0]] = a
 		self.measures = measures
 
 	def drill(self, dimension, nivel, restriccion):
-		rtn = []
-		for a in self.dimensions:
-			if a[0] == dimension:
-				rtn.append([a[0],nivel,restriccion])
-			else:
-				rtn.append(a)
-		self.dimensions = rtn
+		""" operacion primitiva para hacer el drilldown, drillup y slice"""
+		self.dimensions[dimension] = [dimension, nivel, restriccion]
 
 	def sql(self):
-
+		""" devuelve el SQL """
 		ft = "ft_%s" % self.ft
 		sfrom = "from %s" % ft
 
 		joins = ''
 		levels = []
 		where = []
-		for dim in self.dimensions:
+		for dim in self.dimensions.values():
 			(name, level, restriction) = dim
 		
 			joins += "join td_%s on (%s.fk_%s = td_%s.id) " % (name, ft, name, name)
