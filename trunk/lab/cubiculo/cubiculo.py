@@ -4,8 +4,20 @@ class Cubiculo:
 		self.ft = ft
 		self.dimensions = {}
 		for a in dimensions:
-			self.dimensions[a[0]] = a
-		self.measures = measures
+			self.add_dimension(a)
+		if type(measures) == type([]): #is_array??
+			self.measures = measures
+		else:
+			self.measures = [measures]
+
+	def add_dimension(self, a):
+		if len(a) == 2:
+			a.append(None)
+		self.dimensions[a[0]] = a
+
+	def add_measure(self, m):
+		self.measures.append(m)
+		
 
 	def drill(self, dimension, nivel, restriccion):
 		""" operacion primitiva para hacer el drilldown, drillup y slice"""
