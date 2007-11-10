@@ -11,7 +11,7 @@ cursor2 = con.cursor()
 
 ## DWH
 
-con_dwh = PgSQL.connect(host="192.168.61.101", port=5432, user="ncesar", password=".,supermo", database="bieler_dw", serialize = 0)
+con_dwh = PgSQL.connect(host="192.168.61.101", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
 cursor_dwh = con_dwh.cursor()
 
 
