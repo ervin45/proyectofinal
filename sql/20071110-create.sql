@@ -14,6 +14,7 @@ CREATE TABLE td_pieza (
 
 CREATE TABLE td_proveedor (
     id serial CONSTRAINT proveedor_id_primary PRIMARY KEY,
+    id_octosis integer NOT NULL,
     proveedor varchar(255)
 ) WITHOUT OIDS;
 
