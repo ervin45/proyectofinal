@@ -11,7 +11,7 @@ cursor2 = con.cursor()
 
 ## DWH
 
-con_dwh = PgSQL.connect(host="192.168.61.101", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+con_dwh = PgSQL.connect(host="192.168.61.102", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
 cursor_dwh = con_dwh.cursor()
 
 
@@ -241,6 +241,7 @@ GROUP BY
 
     	#print row
 
-        print etlutils.get_id(cursor_dwh,'td_tiempo','id', {'anio':anio, 'mes':mes})
+        etlutils.get_id(cursor_dwh,'td_tiempo','id', {'anio':anio, 'mes':mes})
+        print "----------------------------"
 
 con.close()
