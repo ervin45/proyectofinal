@@ -13,6 +13,8 @@ cursor2 = con.cursor()
 ## DWH
 
 con_dwh = PgSQL.connect(host="192.168.61.102", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+con_dwh.set_client_encoding('windows-1252')
+
 cursor_dwh = con_dwh.cursor()
 
 
@@ -240,9 +242,29 @@ GROUP BY
    	#someiterable.extend(row)
    	#someiterable.extend(get_costo_precio_etc(someiterable,cursor2))
 
-    	#print row
+    	(grupoConstructivo1, 
+         grupoConstructivo2,
+         modelo,
+         modificacion,
+         pieza,
+         proovedor,
+         descripcion,
+         codigo,
+         stock) = row[0:9]
 
-        etlutils.get_id(cursor_dwh,'td_tiempo','id', {'anio':anio, 'mes':mes})
-        print "----------------------------"
+        grupo_constructivo = grupoConstructivo1 + grupoConstructivo2
+        
+        tiempo_id = etlutils.get_id(cursor_dwh,'td_tiempo','id', {'anio':anio, 'mes':mes})
+        
+
+        pieza_id = etlutils.get_id(cursor_dwh,'td_pieza','id',{'grupo_constructivo': grupo_constructivo, 'modelo':modelo,'modificacion': modificacion, 'pieza': pieza, 'descripcion': descripcion, 'codigo': codigo})
+
+        proveedor_id=etlutils.get_id(cursor_dwh,'td_proveedor','id',{'id_octosis':proovedor})
+
+        sql = 'insert into ft_movimientos (fk_tiempo, fk_pieza, fk_proveedor, stock) values (%s, %s, %s, %s)'
+        cursor_dwh.execute (sql, (tiempo_id, pieza_id, proveedor_id, stock))
+        con_dwh.commit()
+
 
 con.close()
+con_dwh.close()
