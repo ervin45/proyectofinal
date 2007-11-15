@@ -10,6 +10,6 @@ cursor_dwh = con_dwh.cursor()
 
 sql = "select id from td_tiempo where anio = '1945' and mes = '5'"
 
-for a in range(180):
+for a in range(1800):
     cursor_dwh.execute (sql)
     print a, cursor_dwh.fetchone ()
