@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-from pyPgSQL import PgSQL
+#from pyPgSQL import PgSQL
+import psycopg2 as PgSQL
 import MySQLdb
 import etlutils
 
