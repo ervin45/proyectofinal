@@ -1,7 +1,10 @@
 from turbogears import controllers, expose, flash
-# from model import *
+import model
+
 from turbogears import identity, redirect
 from cherrypy import request, response
+
+
 
 
 
@@ -14,7 +17,6 @@ from model import xmlaResponse
 # log = logging.getLogger("bielerDW.controllers")
 
 class Root(controllers.RootController):
-    mdx = "hola soy el MDX"
     
     @expose(template="bielerDW.templates.index")
     # @identity.require(identity.in_group("admin"))
@@ -31,18 +33,9 @@ class Root(controllers.RootController):
     
     @expose(template="bielerDW.templates.reportes")
     def reportes(self, title):
-        xmla = xmlaResponse()
-        
-        if(title == "1"):
-            table = xmla.response1("select Crossjoin({[Measures].[Unit Sales]},[Product].[All Products].[Drink].[Alcoholic Beverages].[Beer and Wine].[Beer].Children) ON COLUMNS,  {[Time].[1997]} ON ROWS from [Sales]")
-        elif(title == "2"):
-            table = xmla.response2("select Crossjoin({[Measures].[Unit Sales]},[Product].[All Products].[Drink].[Alcoholic Beverages].[Beer and Wine].[Beer].Children) ON COLUMNS,  {[Time].[1997]} ON ROWS from [Sales]")            
-        else:            
-            table = xmla.response3("select Crossjoin({[Measures].[Unit Sales]},[Product].[All Products].[Drink].[Alcoholic Beverages].[Beer and Wine].[Beer].Children) ON COLUMNS,  {[Time].[1997]} ON ROWS from [Sales]")            
-            
-	# log.debug("Happy TurboGears Controller Responding For Duty")
-	title = title[0].upper() + title[1:]
-        return dict(title=title, filas=table, pt=self.mdx, link=(int(title) + 1))
+        informe = model.Informe()
+        table = informe.informe("movimientos", [["pieza", "codigo"], ["tiempo","anio"]], [["stock", "sum"]])
+        return dict(title=title, filas=table, link=(int(title) + 1))
     
 
     @expose(template="bielerDW.templates.login")

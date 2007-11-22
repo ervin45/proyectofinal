@@ -22,6 +22,7 @@ class TestPages(unittest.TestCase):
         "the index method should return a string called now"
         import types
         result = testutil.call(cherrypy.root.index)
+	assert 2 == 1
         assert type(result["now"]) == types.StringType
 
     def test_indextitle(self):
