@@ -13,7 +13,7 @@
 <body>
 
 
-
+${filas}
 <div class="outer-container">
 
 <div class="inner-container">
@@ -26,14 +26,14 @@
 	<div class="path">	
 			<a href="index.html">Home</a> &#8250; <a href="index.html">Subpage</a>
 	</div>
-${pt}
+
 <table border="1">
     <tr>
-        <td py:for="c in filas[0]"><a href="http://www.google.com.ar">${c}</a></td>
+        <td py:for="c in filas.keys()"><a href="http://www.google.com.ar">${c}</a></td>
     </tr>
-    <tr py:for="f in filas[1:]">
-        <td><a href="/reportes/${link}">${f[0]}</a></td>
-        <td py:for="c in f[1:]">${c}</td>
+    <tr py:for="codigo in list(filas.values()).pop(0).keys()">
+        <td>${codigo}</td>
+        <td py:for="c in filas[codigo].values()">${c}</td>
     </tr>
 </table>
 </div>

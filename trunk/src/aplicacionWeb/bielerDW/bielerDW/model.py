@@ -3,6 +3,9 @@ from turbogears.database import PackageHub
 from sqlobject import *
 from turbogears import identity
 
+import psycopg2
+import cubiculo
+
 hub = PackageHub('bielerDW')
 __connection__ = hub
 
@@ -116,6 +119,40 @@ class Permission(SQLObject):
 from turbogears import widgets                         
                          
                          
+class Informe:
+                             
+    def __init__(self):
+        pass
+                    
+    def informe(self, ft, dimensions, measures):
+        con_dwh = psycopg2.connect(host="192.168.61.102", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+        cursor_dwh = con_dwh.cursor()
+        
+
+
+        
+        c = cubiculo.Cubiculo(ft, dimensions, measures)
+        
+                
+        
+        sql = c.sql()
+        
+        cursor_dwh.execute (sql)
+        table = cursor_dwh.fetchall()
+        
+        rtn = {}
+        
+        for row in table:
+            if not rtn.has_key(row[0]):
+                rtn[row[0]] = {}
+            rtn[row[0]][row[1]] = row[2]
+        
+        
+        
+        return rtn
+
+                         
+                         
 class xmlaResponse:
     def getMemberCaption(self,m):
         caption = ""
@@ -124,7 +161,8 @@ class xmlaResponse:
         return caption
                                      
     def response1(self, mdx):                                     
-        import cElementTree as ET
+        from xml.etree import cElementTree as ET
+	#import ElementTree as ET
         tree = ET.parse("/home/chinomng/utn/proyecto/proyectofinal/lab/mdx/mdxA-1-salida.xml")
 
         envelope= tree.getroot()
@@ -173,7 +211,7 @@ class xmlaResponse:
         return table
         
     def response2(self, mdx):                                     
-        import cElementTree as ET
+        from xml.etree import cElementTree as ET
         tree = ET.parse("/home/chinomng/utn/proyecto/proyectofinal/lab/mdx/mdxA-2-salida.xml")
 
         envelope= tree.getroot()
@@ -222,7 +260,7 @@ class xmlaResponse:
         return table        
         
     def response3(self, mdx):                                     
-        import cElementTree as ET
+        from xml.etree import cElementTree as ET
         tree = ET.parse("/home/chinomng/utn/proyecto/proyectofinal/lab/mdx/mdxA-3-salida.xml")
 
         envelope= tree.getroot()
