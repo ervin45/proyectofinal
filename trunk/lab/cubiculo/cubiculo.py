@@ -5,10 +5,7 @@ class Cubiculo:
 		self.dimensions = {}
 		for a in dimensions:
 			self.add_dimension(a)
-		if type(measures) == type([]): #is_array??
-			self.measures = measures
-		else:
-			self.measures = [measures]
+		self.measures = measures
 
 	def add_dimension(self, a):
 		if len(a) == 2:
@@ -45,7 +42,9 @@ class Cubiculo:
 		else:
 			where = ""
 
-		select = "select " + ','.join(levels) + ',' + ','.join(self.measures) 
+                t = ['%s(%s)' % (x[1],x[0]) for x in self.measures]
+
+		select = "select " + ','.join(levels) + ',' + ','.join(t) 
 
 		sql = """
 %s
