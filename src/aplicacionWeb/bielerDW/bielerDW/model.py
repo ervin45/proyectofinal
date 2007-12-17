@@ -125,185 +125,25 @@ class Informe:
         pass
                     
     def informe(self, ft, dimensions, measures):
-        con_dwh = psycopg2.connect(host="192.168.61.102", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor()
-        
-
-
-        
         c = cubiculo.Cubiculo(ft, dimensions, measures)
-        
-                
-        
         sql = c.sql()
         
         cursor_dwh.execute (sql)
         table = cursor_dwh.fetchall()
-        
         rtn = {}
-        
         for row in table:
             if not rtn.has_key(row[0]):
                 rtn[row[0]] = {}
             rtn[row[0]][row[1]] = row[2]
-        
-        
-        
         return rtn
-
-                         
-                         
-class xmlaResponse:
+        
     def getMemberCaption(self,m):
         caption = ""
         for item in m:
             caption = caption + item[1].text + " "
         return caption
-                                     
-    def response1(self, mdx):                                     
-        from xml.etree import cElementTree as ET
-	#import ElementTree as ET
-        tree = ET.parse("/home/chinomng/utn/proyecto/proyectofinal/lab/mdx/mdxA-1-salida.xml")
 
-        envelope= tree.getroot()
-        body = envelope[1]
-        ExecuteResponse = body[0]
-        ereturn = ExecuteResponse[0]
-        root = ereturn[0]
-        CellData = root[3]
-        Axes = root[2]
-        TuplesAxes0 = Axes[0][0]
-        TuplesAxes1 = Axes[1][0]
-        
-        filas = []
-        filas.append([1,2,3,4])
-        filas.append([5,6,7,8])
-        filas.append([9,10,11,12])
-                
-        columns = []
-        for item in TuplesAxes0:
-                columns.append(self.getMemberCaption(item))
-                
-        print columns        
-                
-        rows = []
-        for item in TuplesAxes1:
-                rows.append(self.getMemberCaption(item))
-                
-        print rows        
-                
-        cells = []
-        for item in CellData:
-            cells.append(item[0].text)
-            
-        print cells    
-                            
-        mod = len(columns)
-        print mod
-        table = []
-        r = [""] + columns 
-        print r
-        table.append(r)
-        for i,item in enumerate(rows):
-            r = [item] + cells[i*mod:(i+1)*mod]
-            table.append(r)      
 
-        return table
-        
-    def response2(self, mdx):                                     
-        from xml.etree import cElementTree as ET
-        tree = ET.parse("/home/chinomng/utn/proyecto/proyectofinal/lab/mdx/mdxA-2-salida.xml")
-
-        envelope= tree.getroot()
-        body = envelope[1]
-        ExecuteResponse = body[0]
-        ereturn = ExecuteResponse[0]
-        root = ereturn[0]
-        CellData = root[3]
-        Axes = root[2]
-        TuplesAxes0 = Axes[0][0]
-        TuplesAxes1 = Axes[1][0]
-        
-        filas = []
-        filas.append([1,2,3,4])
-        filas.append([5,6,7,8])
-        filas.append([9,10,11,12])
-                
-        columns = []
-        for item in TuplesAxes0:
-                columns.append(self.getMemberCaption(item))
-                
-        print columns        
-                
-        rows = []
-        for item in TuplesAxes1:
-                rows.append(self.getMemberCaption(item))
-                
-        print rows        
-                
-        cells = []
-        for item in CellData:
-            cells.append(item[0].text)
-            
-        print cells    
-                            
-        mod = len(columns)
-        print mod
-        table = []
-        r = [""] + columns 
-        print r
-        table.append(r)
-        for i,item in enumerate(rows):
-            r = [item] + cells[i*mod:(i+1)*mod]
-            table.append(r)      
-
-        return table        
-        
-    def response3(self, mdx):                                     
-        from xml.etree import cElementTree as ET
-        tree = ET.parse("/home/chinomng/utn/proyecto/proyectofinal/lab/mdx/mdxA-3-salida.xml")
-
-        envelope= tree.getroot()
-        body = envelope[1]
-        ExecuteResponse = body[0]
-        ereturn = ExecuteResponse[0]
-        root = ereturn[0]
-        CellData = root[3]
-        Axes = root[2]
-        TuplesAxes0 = Axes[0][0]
-        TuplesAxes1 = Axes[1][0]
-        
-        filas = []
-        filas.append([1,2,3,4])
-        filas.append([5,6,7,8])
-        filas.append([9,10,11,12])
-                
-        columns = []
-        for item in TuplesAxes0:
-                columns.append(self.getMemberCaption(item))
-                
-        print columns        
-                
-        rows = []
-        for item in TuplesAxes1:
-                rows.append(self.getMemberCaption(item))
-                
-        print rows        
-                
-        cells = []
-        for item in CellData:
-            cells.append(item[0].text)
-            
-        print cells    
-                            
-        mod = len(columns)
-        print mod
-        table = []
-        r = [""] + columns 
-        print r
-        table.append(r)
-        for i,item in enumerate(rows):
-            r = [item] + cells[i*mod:(i+1)*mod]
-            table.append(r)      
-
-        return table        
+ 

@@ -10,8 +10,6 @@ from cherrypy import request, response
 
 import string
 
-from model import xmlaResponse
-
 # from bielerDW import json
 # import logging
 # log = logging.getLogger("bielerDW.controllers")
@@ -22,19 +20,33 @@ class Root(controllers.RootController):
     # @identity.require(identity.in_group("admin"))
     def index(self):
         import time
+        import logging
+        
+        a = [1,2,3,4]
+        
+        log = logging.getLogger("bielerDW")
+        log.debug("Happy TurboGears Controller Responding For Duty")
+        log.debug(a)
         # log.debug("Happy TurboGears Controller Responding For Duty")
         flash("Your sdfsdf is now running")
         return dict(now=time.ctime())
-    
+        
     @expose(template="bielerDW.templates.content_default")
     def content_default(self):
         # log.debug("Happy TurboGears Controller Responding For Duty")
         return dict(title="HOLA")
-    
+
     @expose(template="bielerDW.templates.reportes")
     def reportes(self, title):
+        import logging
         informe = model.Informe()
+        
+        log = logging.getLogger("bielerDW")
+        log.debug("Happy TurboGears Controller Responding For Duty")
+                
         table = informe.informe("movimientos", [["pieza", "codigo"], ["tiempo","anio"]], [["stock", "sum"]])
+        
+        log.debug(table)
         return dict(title=title, filas=table, link=(int(title) + 1))
     
 

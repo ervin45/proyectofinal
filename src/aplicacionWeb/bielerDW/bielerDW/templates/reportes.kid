@@ -29,11 +29,12 @@ ${filas}
 
 <table border="1">
     <tr>
+        <td>&nbsp;</td>
         <td py:for="c in filas.keys()"><a href="http://www.google.com.ar">${c}</a></td>
     </tr>
-    <tr py:for="codigo in list(filas.values()).pop(0).keys()">
+    <tr py:for="codigo in filas.values().pop(0).keys()">
         <td>${codigo}</td>
-        <td py:for="c in filas[codigo].values()">${c}</td>
+        <td py:for="c in filas.values()">${c.get(codigo, 0)}</td>
     </tr>
 </table>
 </div>
