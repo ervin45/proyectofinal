@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% load hash_tags %}
+<!DCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"><head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''" /><title>Bieler Web Application</title>
 
@@ -16,29 +17,35 @@
 </div>
 </div>
 <div class="path"> <a href="index.html">Home</a>
-› <a href="index.html">Subpage</a> </div>
+<a href="/pivot/">Pivot</a> </div>
+
+
 <table border="1">
 <tbody>
 </tbody><tbody>
-<tr>
-<td>
-{% for c in filas.keys %}
-<a href="http://www.google.com.ar">{{c}}</a>
-{% endfor %}
-</td>
-</tr>
-<tr>
-{% for codigo in  codigos%}
-<td>{{codigo}}</td>
-<td>
-{% for c in filas %}
-  {{c}}
-{% endfor %}
-</td>
-{% endfor %}
-</tr>
+    <tr>
+        <td></td>
+        {% for h in header %}
+            
+            <td>
+                <a href="http://www.google.com.ar">{{h}}</a>
+            </td>
+        {% endfor %}
+    </tr>
+    
+    {% for valor in  body.keys%}
+    <tr>
+        <td>{{valor}}</td>
+        {% for v in body|hash:valor %}
+        <td>        
+          {{v}}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
 </tbody>
 </table>
+
 </div>
 </div>
 </body>
