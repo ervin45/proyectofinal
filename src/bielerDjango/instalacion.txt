@@ -1,0 +1,17 @@
+Documentacion:
+
+Instale modulo docutils
+
+Auth
+
+Habiliar en Instaled_APP
+
+Session
+
+Habiliar en Instaled_APP
+
+Admin
+
+En url.py agregue (r'^admin/', include('django.contrib.admin.urls')),
+En Instaled_APP agregue 'django.contrib.admin',
+corri python manage.py syncdb

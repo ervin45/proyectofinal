@@ -71,9 +71,18 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    #'django.contrib.auth',
-    #'django.contrib.contenttypes',
-    #'django.contrib.sessions',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.admin',
+    'django.contrib.sessions',
     #'django.contrib.sites',
     'bielerDjango.olap',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    #'django.core.context_processors.media',
+    'django.core.context_processors.request',
 )

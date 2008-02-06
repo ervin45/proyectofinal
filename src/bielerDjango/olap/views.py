@@ -1,32 +1,33 @@
 import models
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
-from django.template.loader import get_template
-from django.template import Context
-from django.http import HttpResponse
+from django.core.context_processors import debug
 
-import datetime
+from django.template import loader, Context
 
-def current_datetime(request):
-    now = datetime.datetime.now()
-    html = "<html><body>It is now %s.</body></html>" % now
-    return HttpResponse(html)
+def custom_proc(request):
+    "A context processor that provides 'app', 'user' and 'ip_address'."
+    return {
+        'app': 'My app',
+        'user': request.user,
+        'ip_address': request.META['REMOTE_ADDR']
+    }
 
-
-def reportes(self, title):
+def reportes(request, title):
     informe = models.Informe()
     
     table = informe.informe("movimientos", [["pieza", "codigo"], ["tiempo","anio"]], [["stock", "sum"]])
-    
+
     print table
-    t = get_template('reportes.html')
     codigos = list(table.values()).pop(0).keys()
-    html = t.render(Context({'title': title, 'filas':table, 'codigos':codigos}))
-    return HttpResponse(html)     
-    
-    #return dict(title=title, filas=table, link=(int(title) + 1))
+    return render_to_response('reportes.html',{'title': title, 'filas':table, 'codigos':codigos},context_instance=RequestContext(request, processors=[custom_proc]))
 
-    
-    
-   
 
+def setSession(request, valor):
+    request.session['valor'] = valor
+
+
+def printSession(request):
+    print request.session['valor']
 
