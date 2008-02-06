@@ -1,8 +1,10 @@
 from django.conf.urls.defaults import patterns
-from olap.views import current_datetime
-from olap.views import reportes
+from django.conf.urls.defaults import *
+from olap.views import *
 
 urlpatterns = patterns('',
-    (r'^time/$', current_datetime),
     (r'^reportes/(\d)/$', reportes),
+    (r'^setSession/(.+)/$', setSession),
+    (r'^printSession/$', printSession),
+    (r'^admin/', include('django.contrib.admin.urls')),
 )

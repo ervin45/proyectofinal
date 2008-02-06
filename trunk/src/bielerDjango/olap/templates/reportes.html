@@ -31,7 +31,7 @@
 {% for codigo in  codigos%}
 <td>{{codigo}}</td>
 <td>
-{% for c in filas.get(codigo) %}
+{% for c in filas %}
   {{c}}
 {% endfor %}
 </td>
@@ -41,4 +41,6 @@
 </table>
 </div>
 </div>
-</body></html>
+</body>
+
+</html>
