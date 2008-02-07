@@ -25,7 +25,10 @@ class Informe:
     def roll(self, axis):
         self.cubiculo.roll(axis)
         return self.build_cube()
-                      
+    
+    def drill_replacing(self, axis, value):
+        self.cubiculo.drill_replacing(axis, value)
+        return self.build_cube()
         
     def build_cube(self):
         con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")

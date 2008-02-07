@@ -26,3 +26,8 @@ def drill(request, axis):
     request.session["informe"] = a
     return render_to_response('reportes.html',{'header':cubo.header, 'body':cubo.body})
 
+def drill_replacing(request, axis, value):
+    a = request.session["informe"]
+    cubo = a.drill_replacing(axis, value)
+    request.session["informe"] = a
+    return render_to_response('reportes.html',{'header':cubo.header, 'body':cubo.body})    

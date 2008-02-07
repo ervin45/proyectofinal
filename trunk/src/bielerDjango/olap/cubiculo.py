@@ -6,40 +6,30 @@ class Meta:
 										'modelo', 
 										'modificacion'],
 							   'tiempo':['mes', 'anio']}
-							
+
 	def previous(self, dimension, nivel):
-		prev = ''
-		for next in self.dimension_meta[dimension]:
-			if next == nivel:
-				result = prev
-			prev = next
-			
-		if result == '':
+		index = self.dimension_meta[dimension].index(nivel)
+		result = self.dimension_meta[dimension][index - 1:index]
+		if result == []:
 			result = nivel
-				
+		else:
+			result = result[0]
 		return result
-	
+
 	def next(self, dimension, nivel):
-		from copy import copy
-		prev = ''
-		lista = copy(self.dimension_meta[dimension])
-		lista.reverse()
-		for next in lista:
-			if next == nivel:
-				result = prev
-			prev = next
-			
-		if result == '':
+		index = self.dimension_meta[dimension].index(nivel)
+		result = self.dimension_meta[dimension][index + 1:index + 2]
+		if result == []:
 			result = nivel
-				
+		else:
+			result = result[0]
 		return result
-	
+
 	def parent_list(self, dimension, nivel):
 		niveles = self.dimension_meta[dimension]
 		result = niveles[niveles.index(nivel):]
 		result.reverse()
 		return result
-			
 
 class Cubiculo:
 	def __init__(self,ft, dimensions, measures):
@@ -50,7 +40,7 @@ class Cubiculo:
 		self.dimensions_order = self.dimensions.keys()
 		self.measures = measures
 		self.meta = Meta()
-		
+
 	def add_dimension(self, a):
 		if len(a) == 2:
 			a.append(None)
@@ -70,18 +60,25 @@ class Cubiculo:
 		nivel = self.dimensions[dimension][1]
 		nuevo_nivel = self.meta.next(dimension, nivel)
 		self.dimensions[dimension][1] = nuevo_nivel
-		
+
 	def pivot(self):
 		pprint(self.dimensions_order)
 		(self.dimensions_order[0], self.dimensions_order[1]) = (self.dimensions_order[1], self.dimensions_order[0])
 		pprint(self.dimensions_order)
-		
+
 	def second_dimension_values(self):
 		second_dimension = self.dimensions[self.dimensions_order[1]]
 		levels_parent = self.meta.parent_list(second_dimension[0], second_dimension[1])
 		select = "|| ' - ' ||".join(levels_parent)
 		sql = "select distinct(%s) from td_%s" % (select, second_dimension[0])
 		return sql
+
+	def drill_replacing(self, axis, value):
+		self.drill(axis)
+		nivel = self.dimensions[self.dimensions_order[int(axis)]][1]
+		print nivel
+		print value
+		self.dimensions[self.dimensions_order[int(axis)]][2] = "%s=%s" % (str(nivel), str(value))
 
 	def sql(self):
 		""" devuelve el SQL """
@@ -92,10 +89,10 @@ class Cubiculo:
 		levels_with_parent = []
 		levels = []
 		where = []
-		
+
 		for dimension in self.dimensions_order:
 			(name, level, restriction) = self.dimensions[dimension]
-		
+
 			joins += "join td_%s on (%s.fk_%s = td_%s.id) " % (name, ft, name, name)
 			levels_with_parent.append(self.meta.parent_list(name, level)) 
 			levels.append("td_%s.%s" % (name,level))
@@ -110,7 +107,7 @@ class Cubiculo:
 
                 t = ['%s(%s)' % (x[1],x[0]) for x in self.measures]
 
-		
+
 		select = "select %s, %s"  % (','.join(["|| ' - ' ||".join(x) for x in levels_with_parent])
 									,  ','.join(t)) 
 
@@ -121,7 +118,7 @@ class Cubiculo:
 %s
 %s""" % (select,sfrom, joins,where,group_by)
 		print sql
-		
+
 		return sql
 
 

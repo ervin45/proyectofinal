@@ -30,9 +30,9 @@
         <td></td>
     </tr>
     <tr>
-        <td><a href="/drill/0/">IZQUIERDA</a></td>
+        <td><a href="/roll/0/">IZQUIERDA</a></td>
         <td></td>
-        <td><a href="/roll/0/">DERECHA</a></td>
+        <td><a href="/drill/0/">DERECHA</a></td>
     </tr>
         <tr>
             <td></td>
@@ -52,14 +52,14 @@
         {% for h in header %}
             
             <td>
-                <a href="http://www.google.com.ar">{{h}}</a>
+                <a href="/drill_replacing/0/{{h}}/">{{h}}</a>
             </td>
         {% endfor %}
     </tr>
     
     {% for valor in  body.keys%}
     <tr>
-        <td>{{valor}}</td>
+        <td><a href="/drill_replacing/1/{{valor}}/">{{valor}}</a></td>
         {% for v in body|hash:valor %}
         <td>        
           {{v}}
