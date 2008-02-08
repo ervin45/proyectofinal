@@ -30,12 +30,23 @@ CREATE TABLE ft_movimientos (
    fk_pieza integer,
    fk_proveedor integer,
    stock  integer,
-   costo_pesos integer,
-   precio_vta integer,
+   costo_pesos numeric(14,3),
+   precio_vta numeric(14,3),
    compras integer,
    devoluciones integer,
    ventas integer, 
    ventas_por_taller integer,
+   PRIMARY KEY (fk_tiempo, fk_pieza, fk_proveedor)
+
+);
+
+CREATE TABLE ft_compras (
+   fk_tiempo integer,
+   fk_pieza integer,
+   fk_proveedor integer,
+   cantidad  integer,
+   costo_pesos numeric(14,3),
+   costo_dolar numeric(14,3),
    PRIMARY KEY (fk_tiempo, fk_pieza, fk_proveedor)
 
 );
