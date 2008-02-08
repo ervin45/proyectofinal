@@ -29,6 +29,10 @@ class Informe:
     def drill_replacing(self, axis, value):
         self.cubiculo.drill_replacing(axis, value)
         return self.build_cube()
+    
+    def drill_replacing2(self, value0, value1):
+        self.cubiculo.drill_replacing2(value0, value1)
+        return self.build_cube()    
         
     def build_cube(self):
         con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
