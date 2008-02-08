@@ -71,10 +71,10 @@ def check_tipo(p):
 
     ## Salida por Consumo
     ## CUANDO SE REALIZO UNA VENTA POR TALLER QUE LUEGO SE
-    ## HACE LA DEVOLUCIÓN APARECE ESTA LEYENDA
+    ## HACE LA DEVOLUCIoN APARECE ESTA LEYENDA
     
     if (re.match('SAL  1-Salida por Consumo',o) and m == 'S1- 1'):          
-        print p[0], p[1]
+        #print p[0], p[1]
         return True
 
     ## venta por taller
@@ -117,7 +117,7 @@ def check_tipo(p):
     if (re.match('ENT Devoluci\xa2n de Salida',o)    and m == 'E3-92'):
         return True
     
-    print o.__repr__(), m
+    #print o.__repr__(), m
 
 errors=0
 for p in nice_tuples:
@@ -125,7 +125,9 @@ for p in nice_tuples:
         #print "OK"
         pass
     else:
-        #print "ERROR in: %s" % repr(p)
+        print "-----ERROR-------"
+        pprint.pprint(p)
+        print "-----------------"
         errors += 1
         pass
 
