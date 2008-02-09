@@ -57,7 +57,7 @@ class Informe:
         for row in table:
             if not rtn.has_key(row[0]):
                 rtn[row[0]] = {}
-            rtn[row[0]][row[1]] = row[2]            
+            rtn[row[0]][row[1]] = ", ".join([str(x) for x in row[2:]])            
 
            
 
@@ -65,7 +65,7 @@ class Informe:
         sql_second_dimension_values = self.cubiculo.dimension_values(1)
         cursor_dwh.execute(sql_second_dimension_values)
         codigos = cursor_dwh.fetchall()        
-        codigos = [x[0] for x in codigos]
+        codigos = [x[0]  for x in codigos]
         
         
 
@@ -73,13 +73,19 @@ class Informe:
         cursor_dwh.execute(sql_first_dimension_values)
         header = cursor_dwh.fetchall()
         header = [x[0] for x in header]
+        
+        pprint(rtn)
                
         valores = {}
         for anio in header:
             for codigo in codigos:
                 if not valores.get(codigo, False):
                     valores[codigo] = []
-                valores[codigo].append(rtn[anio].get(codigo, 0))            
+                try:
+                    valores[codigo].append(rtn[anio].get(codigo, ""))            
+                except:
+                    valores[codigo].append("")
+                    "problemas"
                
         cubo = Cubo()
          
