@@ -6,7 +6,16 @@ class Cubo:
     pass              
                          
 class Informe:
-                             
+    """
+    Un informe realiza la conexion a la base de datos y
+    genera un cubiculo para manipular
+
+    # creando
+    >>> i = Informe()
+    # pasando parametros
+    >>> cubo = informe.informe("movimientos", [["pieza", "codigo"], ["tiempo","anio"]], [["stock", "sum"]]) 
+
+    """
     def __init__(self):
         pass
                     
