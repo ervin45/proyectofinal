@@ -57,12 +57,12 @@
         {% endfor %}
     </tr>
     
-    {% for valor in  body.keys%}
+    {% for valor in  body_order%}
     <tr>
         <td><a href="/drill_replacing/1/{{valor}}/">{{valor}}</a></td>
         {% for v in body|hash:valor %}
         <td>        
-          <a href="/drill_replacing2/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{v}}</a>
+          <a href="/drill_replacing2/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{ v|floatformat:"-2" }}</a>
         </td>
         {% endfor %}
     </tr>
