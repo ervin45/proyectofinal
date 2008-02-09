@@ -2,9 +2,10 @@ from pprint import pprint
 
 class Meta:
 	def __init__(self):
-		self.dimension_meta = {'pieza':['grupo_constructivo', 
+		self.dimension_meta = {'pieza':['codigo',
+										'modificacion',
 										'modelo', 
-										'modificacion'],
+										'grupo_constructivo'],
 							   'tiempo':['mes', 'anio']}
 
 	def previous(self, dimension, nivel):
@@ -85,16 +86,19 @@ class Cubiculo:
 	def pivot(self):
 		(self.dimensions_order[0], self.dimensions_order[1]) = (self.dimensions_order[1], self.dimensions_order[0])
 
-	def second_dimension_values(self):
-		second_dimension = self.dimensions[self.dimensions_order[1]]
-		levels_parent = self.meta.parent_list(second_dimension[0], second_dimension[1])
+	def dimension_values(self, axis):
+		first_dimension = self.dimensions[self.dimensions_order[int(axis)]]
+		levels_parent = self.meta.parent_list(first_dimension[0], first_dimension[1])
 		select = "|| ' - ' ||".join(levels_parent)
-		pprint(second_dimension)
-		where = "%s" % " and ".join(["td_%s.%s in(%s)" % ( second_dimension[0], nivel, ", ".join(val)) for nivel, val in second_dimension[2].items()])
+		campos = ", ".join([x for x in levels_parent])
+		
+		pprint(first_dimension)
+		where = "%s" % " and ".join(["td_%s.%s in(%s)" % ( first_dimension[0], nivel, ", ".join(val)) for nivel, val in first_dimension[2].items()])
 		if where:
 			where = "where %s" % where
-		sql = "select distinct(%s) from td_%s %s" % (select, second_dimension[0], where)
-		return sql
+		sql = "select distinct(%s), %s from td_%s %s order by %s" % (select, campos, first_dimension[0], where, campos)
+		print sql
+		return sql			
 
 	def drill_replacing(self, axis, value):
 		nivel = self.dimensions[self.dimensions_order[int(axis)]][1]
@@ -130,6 +134,7 @@ class Cubiculo:
 				where.extend(["td_%s.%s in(%s)" % ( name, nivel, ", ".join(val)) for nivel, val in restriction.items()])
 
 		group_by = 'group by ' + ', '.join([", ".join(x) for x in levels_with_parent])
+		order_by = "order by %s " % ', '.join([", ".join(x) for x in levels_with_parent])
 		if where:
 			where = "where %s " % ' and '.join(where)
 			#where = "where %s " % ' and '.join(where)
@@ -142,12 +147,15 @@ class Cubiculo:
 		select = "select %s, %s"  % (','.join(["|| ' - ' ||".join(x) for x in levels_with_parent])
 									,  ','.join(t)) 
 
+		
 		sql = """
 %s
 %s
 %s
 %s
-%s""" % (select,sfrom, joins,where,group_by)
+%s
+%s
+""" % (select,sfrom, joins,where,group_by, order_by)
 		print sql
 
 		return sql

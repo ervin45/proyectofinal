@@ -13,7 +13,7 @@ class Informe:
     # creando
     >>> i = Informe()
     # pasando parametros
-    >>> cubo = informe.informe("movimientos", [["pieza", "codigo"], ["tiempo","anio"]], [["stock", "sum"]]) 
+    >>> cubo = i.informe("movimientos", [["pieza", "codigo"], ["tiempo","anio"]], [["stock", "sum"]]) 
 
     """
     def __init__(self):
@@ -52,29 +52,40 @@ class Informe:
         table = cursor_dwh.fetchall()
         
         rtn = {}    
+                     
         
         for row in table:
             if not rtn.has_key(row[0]):
                 rtn[row[0]] = {}
             rtn[row[0]][row[1]] = row[2]            
+
+           
+
         
-        sql_second_dimension_values = self.cubiculo.second_dimension_values()
+        sql_second_dimension_values = self.cubiculo.dimension_values(1)
         cursor_dwh.execute(sql_second_dimension_values)
-        
         codigos = cursor_dwh.fetchall()        
         codigos = [x[0] for x in codigos]
         
-        valores = {}
         
-        for anio in rtn.values():
+
+        sql_first_dimension_values = self.cubiculo.dimension_values(0)
+        cursor_dwh.execute(sql_first_dimension_values)
+        header = cursor_dwh.fetchall()
+        header = [x[0] for x in header]
+               
+        valores = {}
+        for anio in header:
             for codigo in codigos:
                 if not valores.get(codigo, False):
                     valores[codigo] = []
-                valores[codigo].append(anio.get(codigo, 0))            
+                valores[codigo].append(rtn[anio].get(codigo, 0))            
                
         cubo = Cubo()
-        cubo.header = rtn.keys()
+         
+        cubo.header = header
         cubo.body = valores
+        cubo.body_order = codigos
         
         return cubo  
         
