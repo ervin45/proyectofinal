@@ -86,6 +86,9 @@ class Cubiculo:
 	def pivot(self):
 		(self.dimensions_order[0], self.dimensions_order[1]) = (self.dimensions_order[1], self.dimensions_order[0])
 
+	def getMeasuresList(self):
+		return [x[0] for x in self.measures]
+
 	def dimension_values(self, axis):
 		first_dimension = self.dimensions[self.dimensions_order[int(axis)]]
 		levels_parent = self.meta.parent_list(first_dimension[0], first_dimension[1])
@@ -137,15 +140,15 @@ class Cubiculo:
 		order_by = "order by %s " % ', '.join([", ".join(x) for x in levels_with_parent])
 		if where:
 			where = "where %s " % ' and '.join(where)
-			#where = "where %s " % ' and '.join(where)
 		else:
 			where = ""
 
-                t = ['%s(%s)' % (x[1],x[0]) for x in self.measures]
+		measures = ['%s(%s) as %s' % (x[1],x[0], x[0]) for x in self.measures]
 
-
-		select = "select %s, %s"  % (','.join(["|| ' - ' ||".join(x) for x in levels_with_parent])
-									,  ','.join(t)) 
+		columns_string = "|| ' - ' ||".join(levels_with_parent[0]) + " as columns"
+		rows_string   = "|| ' - ' ||".join(levels_with_parent[1]) + " as rows"
+		
+		select = "select %s, %s, %s"  % (columns_string, rows_string,','.join(measures)) 
 
 		
 		sql = """
