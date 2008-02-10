@@ -52,3 +52,19 @@ CREATE TABLE ft_compras (
 );
 
 
+CREATE TABLE td_tipo_venta (
+    id serial CONSTRAINT tipo_venta_id_primary PRIMARY KEY,
+    tipo_venta varchar(255)
+) WITHOUT OIDS;
+
+
+CREATE TABLE ft_ventas (
+   fk_tiempo integer,
+   fk_pieza integer,
+   fk_proveedor integer,
+   fk_tipo_venta integer,
+   cantidad  integer,
+   precio_venta_pesos numeric(14,2),
+   margen_pesos numeric(14,2),
+   PRIMARY KEY (fk_tiempo, fk_pieza, fk_proveedor, fk_tipo_venta)
+);
