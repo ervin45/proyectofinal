@@ -1,8 +1,11 @@
 import psycopg2
+import psycopg2.extras
+import copy
+
 import cubiculo
 from pprint import pprint
 
-class Cubo:
+class Cube:
     pass              
                          
 class Informe:
@@ -19,8 +22,9 @@ class Informe:
     def __init__(self):
         pass
                     
-    def informe(self, ft, dimensions, measures):
+    def informe(self, ft, dimensions, measures, member_function):
         self.cubiculo = cubiculo.Cubiculo(ft, dimensions, measures)
+        self.member_function = member_function
         return self.build_cube() 
     
     def pivot(self):       
@@ -42,56 +46,67 @@ class Informe:
     def drill_replacing2(self, value0, value1):
         self.cubiculo.drill_replacing2(value0, value1)
         return self.build_cube()    
-        
-    def build_cube(self):
+       
+    def dimension_values(self, axis):
         con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor()        
+
+        sql_dimension_values = self.cubiculo.dimension_values(int(axis))
+        cursor_dwh.execute(sql_dimension_values)
+        axis_values = cursor_dwh.fetchall()        
+        axis_values = [x[0]  for x in axis_values]
         
+        return axis_values
+            
+
+    def build_cube(self):
+        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+        
+        cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor)
         sql = self.cubiculo.sql()
         cursor_dwh.execute(sql)
+        
         table = cursor_dwh.fetchall()
         
-        rtn = {}    
-                     
+        first_axis = self.dimension_values(0)
+        second_axis = self.dimension_values(1)
         
-        for row in table:
-            if not rtn.has_key(row[0]):
-                rtn[row[0]] = {}
-            rtn[row[0]][row[1]] = ", ".join([str(x) for x in row[2:]])            
-
-           
-
+        count = 0
+        body = {}
+        dicttable = dict(table[count])
         
-        sql_second_dimension_values = self.cubiculo.dimension_values(1)
-        cursor_dwh.execute(sql_second_dimension_values)
-        codigos = cursor_dwh.fetchall()        
-        codigos = [x[0]  for x in codigos]
-        
-        
-
-        sql_first_dimension_values = self.cubiculo.dimension_values(0)
-        cursor_dwh.execute(sql_first_dimension_values)
-        header = cursor_dwh.fetchall()
-        header = [x[0] for x in header]
-        
-        pprint(rtn)
-               
-        valores = {}
-        for anio in header:
-            for codigo in codigos:
-                if not valores.get(codigo, False):
-                    valores[codigo] = []
+        for h in first_axis:
+            
+            for s in second_axis:
                 try:
-                    valores[codigo].append(rtn[anio].get(codigo, ""))            
-                except:
-                    valores[codigo].append("")
-                    "problemas"
-               
-        cubo = Cubo()
+                    #En caso que no haya clave para el elemento se crea
+                    if not body.get(s, False):
+                        body[s] = []  
+                    #El elemento de la cabecera de table podria no coincidir con
+                    #los indices recorridos porque table esta ordenado pero incompleto
+                    if h == dicttable['columns'] and s == dicttable['rows']:
+                        
+                        measuresList = self.cubiculo.getMeasuresList()
+                        
+                        params = {}
+                        for measure in measuresList:
+                            params[measure] = dicttable[measure]                        
+                        
+                        value = self.member_function(**params)
+                        
+                        
+                        body[s].append(value)
+                        count = count + 1
+                        dicttable = dict(table[count])
+                    else:
+                        body[s].append(-1) 
+                except Exception, e:
+                    print  e
+                
+        cube = Cube()
          
-        cubo.header = header
-        cubo.body = valores
-        cubo.body_order = codigos
+        cube.header = first_axis
+        cube.body = body
+        cube.body_order = second_axis
         
-        return cubo  
-        
+        return cube
