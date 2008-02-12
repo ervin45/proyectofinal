@@ -105,7 +105,6 @@ class Report:
         cube.header = first_axis
         cube.body = body
         cube.body_order = second_axis
-        print cube.body_order
         return cube    
         
     

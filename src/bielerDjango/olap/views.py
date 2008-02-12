@@ -28,10 +28,6 @@ def report(request,report, x, y, xl, yl, xr="", yr="", ore=""):
     cube = report.get_cube()
     
     request.session['informe'] = report
-    print "body or"
-    print cube.header
-    print cube.body_order 
-    print cube.body
     return render_to_response('reportes.html',{'cube':cube})
 
 def pivot(request):
