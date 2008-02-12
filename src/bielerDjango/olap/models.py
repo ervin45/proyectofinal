@@ -7,45 +7,38 @@ from pprint import pprint
 
 class Cube:
     pass              
-                         
-class Informe:
-    """
-    Un informe realiza la conexion a la base de datos y
-    genera un cubiculo para manipular
-
-    # creando
-    >>> i = Informe()
-    # pasando parametros
-    >>> cubo = i.informe("movimientos", [["pieza", "codigo"], ["tiempo","anio"]], [["stock", "sum"]]) 
-
-    """
-    def __init__(self):
-        pass
-                    
-    def informe(self, ft, dimensions, measures, member_function):
-        self.cubiculo = cubiculo.Cubiculo(ft, dimensions, measures)
-        self.member_function = member_function
-        return self.build_cube() 
     
+class Report:
+    pass
+
+    def get_cube(self):
+        self.cubiculo = cubiculo.Cubiculo("compras", 
+                                 [[self.x, self.xl, eval(self.xr)], [self.y, self.yl, eval(self.yr)]], 
+                                 [["cantidad", "sum"],['costo_pesos', 'sum']])
+                                
+        return self.build_cube()
+
     def pivot(self):       
         self.cubiculo.pivot()
-        return self.build_cube() 
-    
+        return self.cubiculo.absolute_url()
+        #return "http://localhost:8000/reporte2/compras/tiempo/pieza/mes/grupo_constructivo/rx={'anio':[2002]}/ry={}/ro={}/"
+
     def drill(self, axis):
         self.cubiculo.drill(axis)
-        return self.build_cube()
-    
+        return self.cubiculo.absolute_url()
+
     def roll(self, axis):
         self.cubiculo.roll(axis)
-        return self.build_cube()
-    
+        return self.cubiculo.absolute_url()
+
     def drill_replacing(self, axis, value):
         self.cubiculo.drill_replacing(axis, value)
-        return self.build_cube()
-    
+        return self.cubiculo.absolute_url()
+
     def drill_replacing2(self, value0, value1):
-        self.cubiculo.drill_replacing2(value0, value1)
-        return self.build_cube()    
+        self.cubiculo.drill_replacing(0, value0)
+        self.cubiculo.drill_replacing(1, value1)
+        return self.cubiculo.absolute_url()    
        
     def dimension_values(self, axis):
         con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
@@ -57,8 +50,8 @@ class Informe:
         axis_values = [x[0]  for x in axis_values]
         
         return axis_values
-            
 
+    
     def build_cube(self):
         con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         
@@ -73,40 +66,48 @@ class Informe:
         
         count = 0
         body = {}
-        dicttable = dict(table[count])
+        try:
+            dicttable = dict(table[count])
+        except:
+            dicttable = {}
         
         for h in first_axis:
             
             for s in second_axis:
-                try:
-                    #En caso que no haya clave para el elemento se crea
-                    if not body.get(s, False):
-                        body[s] = []  
-                    #El elemento de la cabecera de table podria no coincidir con
-                    #los indices recorridos porque table esta ordenado pero incompleto
-                    if h == dicttable['columns'] and s == dicttable['rows']:
-                        
-                        measuresList = self.cubiculo.getMeasuresList()
-                        
-                        params = {}
-                        for measure in measuresList:
-                            params[measure] = dicttable[measure]                        
-                        
-                        value = self.member_function(**params)
-                        
-                        
-                        body[s].append(value)
-                        count = count + 1
+                #En caso que no haya clave para el elemento se crea
+                if not body.get(s, False):
+                    body[s] = []  
+                #El elemento de la cabecera de table podria no coincidir con
+                #los indices recorridos porque table esta ordenado pero incompleto
+                if h == dicttable.get('columns', False) and s == dicttable.get('rows', False):
+                    measuresList = self.cubiculo.getMeasuresList()
+                    
+                    params = {}
+                    for measure in measuresList:
+                        params[measure] = dicttable[measure]                        
+                    value = self.member_function(**params)
+                    
+                    body[s].append(value)
+                    count = count + 1
+                    
+                    try:
                         dicttable = dict(table[count])
-                    else:
-                        body[s].append(-1) 
-                except Exception, e:
-                    print  e
+                    except:
+                        dicttable = {}
+                        
+                else:
+                    body[s].append(-1) 
+
+
                 
         cube = Cube()
          
         cube.header = first_axis
         cube.body = body
         cube.body_order = second_axis
+        print cube.body_order
+        return cube    
         
-        return cube
+    
+    
+    
