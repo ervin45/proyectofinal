@@ -9,19 +9,28 @@ class Cube:
     pass              
     
 class Report:
-    pass
-
-    def get_cube(self):
+    def __init__(self, x, y, xl, yl, xr, yr, ore, member_function):
+        ##VIENE DE LA BD
+        self.ft = "compras" #report
+        self.measures = [["cantidad", "sum"],['costo_pesos', 'sum']]
+        self.member_function = member_function
+        ##VIENE DE LA BD
+        self.x = x
+        self.xl = xl
+        self.y = y
+        self.yl = yl
+        self.xr = xr
+        self.yr = yr
+        self.ore = ore        
+        
+        
         self.cubiculo = cubiculo.Cubiculo("compras", 
-                                 [[self.x, self.xl, eval(self.xr)], [self.y, self.yl, eval(self.yr)]], 
-                                 [["cantidad", "sum"],['costo_pesos', 'sum']])
-                                
-        return self.build_cube()
+                                         [[self.x, self.xl, eval(self.xr)], [self.y, self.yl, eval(self.yr)]], 
+                                         [["cantidad", "sum"],['costo_pesos', 'sum']])        
 
     def pivot(self):       
         self.cubiculo.pivot()
         return self.cubiculo.absolute_url()
-        #return "http://localhost:8000/reporte2/compras/tiempo/pieza/mes/grupo_constructivo/rx={'anio':[2002]}/ry={}/ro={}/"
 
     def drill(self, axis):
         self.cubiculo.drill(axis)

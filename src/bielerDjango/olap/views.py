@@ -7,50 +7,50 @@ def costo_promedio(costo_pesos, cantidad):
     return float(costo_pesos) / float(cantidad)
 
 def report(request,report, x, y, xl, yl, xr="", yr="", ore=""):
-    #informe = models.Informe()
-    
-    report = models.Report()
-    
-    ##VIENE DE LA BD
-    report.ft = "compras" #report
-    report.measures = [["cantidad", "sum"],['costo_pesos', 'sum']]
-    report.member_function = costo_promedio
-    ##VIENE DE LA BD
-    
-    report.x = x
-    report.xl = xl
-    report.y = y
-    report.yl = yl
-    report.xr = xr
-    report.yr = yr
-    report.ore = ore
-    
-    cube = report.get_cube()
-    
-    request.session['informe'] = report
+    report = models.Report(x, y, xl, yl, xr, yr, ore, costo_promedio)
+    cube = report.build_cube()
     return render_to_response('reportes.html',{'cube':cube})
 
 def pivot(request):
-    a = request.session["informe"]
-    url = a.pivot()
+    (report, x, y, xl, yl, xr, yr, ore) = parse_url(request.META['HTTP_REFERER'])
+    report = models.Report(x, y, xl, yl, xr, yr, ore, costo_promedio)
+    url = report.pivot()
     return HttpResponseRedirect(url)
     
 def roll(request, axis):
-    a = request.session["informe"]
-    url = a.roll(axis)
+    (report, x, y, xl, yl, xr, yr, ore) = parse_url(request.META['HTTP_REFERER'])
+    report = models.Report(x, y, xl, yl, xr, yr, ore, costo_promedio)
+    url = report.roll(axis)
     return HttpResponseRedirect(url)
 
 def drill(request, axis):
-    a = request.session["informe"]
-    url = a.drill(axis)
+    (report, x, y, xl, yl, xr, yr, ore) = parse_url(request.META['HTTP_REFERER'])
+    report = models.Report(x, y, xl, yl, xr, yr, ore, costo_promedio)
+    url = report.drill(axis)
     return HttpResponseRedirect(url)
 
 def drill_replacing(request, axis, value):
-    a = request.session["informe"]
-    url = a.drill_replacing(axis, value)
+    (report, x, y, xl, yl, xr, yr, ore) = parse_url(request.META['HTTP_REFERER'])
+    report = models.Report(x, y, xl, yl, xr, yr, ore, costo_promedio)
+    url = report.drill_replacing(axis, value)
     return HttpResponseRedirect(url)
 
 def drill_replacing2(request, value0, value1):
-    a = request.session["informe"]
-    url = a.drill_replacing2(value0, value1)
+    (report, x, y, xl, yl, xr, yr, ore) = parse_url(request.META['HTTP_REFERER'])
+    report = models.Report(x, y, xl, yl, xr, yr, ore, costo_promedio)
+    url = report.drill_replacing2(value0, value1)
     return HttpResponseRedirect(url)
+
+def parse_url(referer):
+    import re
+    
+    referer = referer.replace("%7B", "{")
+    referer = referer.replace("%7D", "}")
+    referer = referer.replace("%5B", "[")
+    referer = referer.replace("%5D", "]")
+    referer = referer.replace("%20", " ")    
+
+    p = re.compile('^http://localhost:8000/report/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$')    
+    result = p.findall(referer)
+    
+    return result[0]
