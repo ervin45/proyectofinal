@@ -4,6 +4,7 @@ from olap.views import *
 
 urlpatterns = patterns('',
     (r'^reportes/$', reportes),
+    (r'^report/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$', report),
     (r'^pivot/$', pivot),
     (r'^drill/(.*)/$', drill),
     (r'^drill_replacing/(.*)/(.*)/$', drill_replacing),
