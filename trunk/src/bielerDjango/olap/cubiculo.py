@@ -6,7 +6,9 @@ class Meta:
                                         'modificacion',
                                         'modelo', 
                                         'grupo_constructivo'],
-                               'tiempo':['mes', 'anio']}
+                               'tiempo':['mes', 'anio'],
+                               'proveedor':['proveedor']
+                            }
 
     def previous(self, dimension, nivel):
         index = self.dimension_meta[dimension].index(nivel)
@@ -43,13 +45,15 @@ anio: [2000, 2002, 2007], mes: [12, 11]
 where anio in (2000, 2002, 2007) and mes in (12,11)
 '''
 class Cubiculo:
-    def __init__(self,ft, dimensions, measures):
+    def __init__(self,ft, dimensions, measures, ore):
         self.ft = ft
         self.dimensions = {}
         for a in dimensions:
             self.add_dimension(a)
         self.measures = measures
+        self.ore = ore
         self.meta = Meta()
+        
         
         print "dimesion: " + str(self.dimensions)
 
@@ -132,6 +136,16 @@ class Cubiculo:
     def drill_replacing2(self, value0, value1):
         self.drill_replacing(0, value0)
         self.drill_replacing(1, value1)
+        
+    def dice(self, main_axis, other_axis):
+        ma = self.dimensions.pop(main_axis)
+        
+        index = [self.ore.index(x) for x in self.ore if x[0] == other_axis][0]
+        oa = self.ore[index]
+        
+        self.dimensions_order[self.dimensions_order.index(main_axis)] = other_axis
+        self.ore[index] = ma
+        self.dimensions[other_axis] = oa
 
     def sql(self):
         """ devuelve el SQL """
@@ -143,6 +157,7 @@ class Cubiculo:
         where = []
 
         for dimension in self.dimensions_order:
+            print "FOR"
             (name, level, restriction) = self.dimensions[dimension]
 
             joins += "join td_%s on (%s.fk_%s = td_%s.id) " % (name, ft, name, name)
@@ -151,6 +166,16 @@ class Cubiculo:
                 for nivel, val in restriction.items():
                     valores = ", ".join([str(v) for v in val])
                     where.append("td_%s.%s in('%s')" % ( name, nivel, valores))
+        
+        for other_dim in self.ore:
+            print "FORORE"
+            print "other dim: " + str(other_dim)
+            (name, level, restriction) = other_dim
+            joins += "join td_%s on (%s.fk_%s = td_%s.id) " % (name, ft, name, name)
+            if restriction:
+                for nivel, val in restriction.items():
+                    valores = ", ".join([str(v) for v in val])
+                    where.append("td_%s.%s in('%s')" % ( name, nivel, valores))            
             
         group_by = 'group by ' + ', '.join([", ".join(x) for x in levels_with_parent])
         order_by = "order by %s " % ', '.join([", ".join(x) for x in levels_with_parent])
@@ -180,8 +205,8 @@ class Cubiculo:
         return sql
     
     
-    def absolute_url(self):
-        url = "http://localhost:8000/report/compras/"
+    def absolute_url(self, request):
+        url = "http://%s:%s/report/compras/" % (request.META['SERVER_NAME'], request.META['SERVER_PORT'])
         dimension_url = "/".join(self.dimensions_order)
         url = url + dimension_url + "/"
         
@@ -190,7 +215,7 @@ class Cubiculo:
         
         xr_url = "xr=" + str(self.dimensions[self.dimensions_order[0]][2]) + "/"
         yr_url = "yr=" + str(self.dimensions[self.dimensions_order[1]][2]) + "/"
-        ore_url = "ore=" + "/"
+        ore_url = "ore=" + str(self.ore) + "/"
         
         url = url + xr_url + yr_url + ore_url
         
