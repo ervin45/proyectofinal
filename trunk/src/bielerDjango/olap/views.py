@@ -8,8 +8,12 @@ def costo_promedio(costo_pesos, cantidad):
 
 def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
     report = models.Report(report_name, x, y, xl, yl, xr, yr, ore, costo_promedio)
+    
     cube = report.build_cube()
-    return render_to_response('reportes.html',{'cube':cube})
+    main_axis = report.getMainAxisList()
+    other_axis = report.getOtherAxisList()
+    
+    return render_to_response('reportes.html',locals())
 
 def pivot(request):
     (report, x, y, xl, yl, xr, yr, ore) = parse_url(request)

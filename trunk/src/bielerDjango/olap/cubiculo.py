@@ -146,6 +146,12 @@ class Cubiculo:
         self.dimensions_order[self.dimensions_order.index(main_axis)] = other_axis
         self.ore[index] = ma
         self.dimensions[other_axis] = oa
+        
+    def getMainAxisList(self):
+        return self.dimensions.keys()
+    
+    def getOtherAxisList(self):
+        return [x[0] for x in self.ore]
 
     def sql(self):
         """ devuelve el SQL """
