@@ -23,7 +23,6 @@ class Report:
         self.yr = yr
         self.ore = ore        
         
-        
         self.cubiculo = cubiculo.Cubiculo("compras", 
                                          [[self.x, self.xl, eval(self.xr)], [self.y, self.yl, eval(self.yr)]], 
                                          [["cantidad", "sum"],['costo_pesos', 'sum']], eval(self.ore))        
@@ -64,6 +63,11 @@ class Report:
         
         return axis_values
 
+    def getMainAxisList(self):
+        return self.cubiculo.getMainAxisList()
+    
+    def getOtherAxisList(self):
+        return self.cubiculo.getOtherAxisList()
     
     def build_cube(self):
         con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")

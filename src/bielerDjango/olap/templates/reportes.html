@@ -3,9 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"><head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''" /><title>Bieler Web Application</title>
 
-<script type="text/javascript" src="/static/javascript/jquery/jquery.js"></script>
-<script type="text/javascript" src="/static/jquery/javascript/interface.js"></script>
+<script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/css/default.css" media="screen" />
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $("#dice").click(function() {
+        
+        var main_axis = document.getElementById('main_axis').value
+        var other_axis = document.getElementById('other_axis').value
+        
+        window.location = "/dice/" + main_axis + "/" + other_axis +"/"
+      });
+    });
+
+</script>
 </head>
 <body>
 
@@ -16,17 +28,27 @@
 <div class="slogan"></div>
 </div>
 </div>
-<div class="path"> <a href="index.html">Home</a>
+<div class="path"> <a href="index.html">Inicio</a> Este es el informe original
+<br>
+<br>
 <a href="/pivot/">Pivot</a> 
-<a href="/dice/tiempo/proveedor/">Dice tiempo-proveedor</a>
-<a href="/dice/tiempo/pieza/">Dice tiempo-pieza</a>
-<a href="/dice/proveedor/tiempo/">Dice proveedor-tiempo</a>
-<a href="/dice/proveedor/pieza/">Dice proveedor-pieza</a>
-<a href="/dice/pieza/proveedor/">Dice pieza-proveedor</a>
-<a href="/dice/pieza/tiempo/">Dice pieza-tiempo</a>
+<br>
+<br />
+<select id="main_axis">
+{% for ma in main_axis %}
+    <option>{{ma}}</option>
+{% endfor %}
+</select>
 
+<select id="other_axis">
+{% for oa in other_axis %}
+    <option>{{oa}}</option>
+{% endfor %}
+</select>
+<input id="dice" value="Dice" type="button" />
 
-
+<br>
+<br>
 
 
 <table>

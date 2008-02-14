@@ -12,4 +12,6 @@ urlpatterns = patterns('',
     (r'^dice/(.*)/(.*)/$', dice),
     
     (r'^admin/', include('django.contrib.admin.urls')),
+    
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/proyecto/proyectofinal/src/bielerDjango/media'}),
 )
