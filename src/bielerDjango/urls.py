@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     (r'^drill_replacing2/(.*)/(.*)/$', drill_replacing2),
     (r'^roll/(.*)/$', roll),
     (r'^dice/(.*)/(.*)/$', dice),
+    (r'^graph_data/$', graph_data),
     
     (r'^admin/', include('django.contrib.admin.urls')),
     
