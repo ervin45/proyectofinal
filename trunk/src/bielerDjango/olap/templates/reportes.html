@@ -100,6 +100,32 @@
 
 </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/media/js/swfobject.js"></script>
+<div id="flashcontent"></div>
+<script type="text/javascript">
+var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "800", "600", "9", "#FFFFFF");
+so.addVariable("data", "/graph_data/{{url_data}}");
+so.addParam("allowScriptAccess", "sameDomain");
+so.write("flashcontent");
+</script>
+
+
 </body>
 
 </html>
