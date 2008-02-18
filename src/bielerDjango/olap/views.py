@@ -7,12 +7,17 @@ from pprint import pprint
 def costo_promedio(costo_pesos, cantidad):
     return float(costo_pesos) / float(cantidad)
 
+def cantidad(**kw):
+    return float(kw['cantidad'])
+
 def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
-    report = models.Report(report_name, x, y, xl, yl, xr, yr, ore, costo_promedio)
+    report = models.Report(report_name, x, y, xl, yl, xr, yr, ore, cantidad)
     
     cube = report.build_cube()
     main_axis = report.getMainAxisList()
     other_axis = report.getOtherAxisList()
+    
+    ofc_params = graph_data(cube)
     
     request.session['data'] = cube
     
@@ -52,13 +57,11 @@ def dice(request, main_axix, other_axis):
     (report, x, y, xl, yl, xr, yr, ore) = parse_url(request)
     report = models.Report(report, x, y, xl, yl, xr, yr, ore, costo_promedio)
     url = report.dice(request, main_axix, other_axis)
-    return HttpResponseRedirect(url)
+    return HttpResponseRedirect(url)  
 
-def graph_data(request):
+def graph_data(cube):
     import OpenFlashChart as ofc
     import itertools as it
-    
-    cube = request.session['data']
     
     graph = ofc.graph()
     
@@ -67,19 +70,21 @@ def graph_data(request):
     colour_iter = it.cycle(bar_colours)
     max_y = 0
     for i, valor in enumerate(cube.body_order):
-        graph.bar(alpha=50, colour=colour_iter.next(), text=valor, size=10)
-        graph.set_data(cube.body[valor])
+        row_values_str = cube.body[valor]
+        row_values     = [float(x) for x in row_values_str if x != ""]
         
-        max_y = max(max_y, max(cube.body[valor]))
+        graph.bar(alpha=50, colour=colour_iter.next(), text=valor, size=10)
+        graph.set_data(row_values_str)
+        
+        max_y = max([max_y] + row_values)
         
     
     graph.set_x_labels([str(x) for x in cube.header])
     
-    graph.set_y_max(round(float(max_y) * 1.1, -2))
+    max_y2 = round(float(max_y) * 1.1 + 50, -2)
+    graph.set_y_max(max_y2)
     
-    html = graph.render()
-    
-    return HttpResponse(html)    
+    return graph.render_js()
 
 def parse_url(request):
     import re
