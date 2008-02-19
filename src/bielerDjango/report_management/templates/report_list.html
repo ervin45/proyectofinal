@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"><head>
+<!--DCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"-->
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''"><title>Bieler Web Application</title><script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/report_management.css" media="screen"><script type="text/javascript">
+$(document).ready(function() {
+});
+</script>
+</head>
+<body>
+<table>
+<tbody>
+<tr>
+<th> Nombre </th>
+<th>Tabla de Hechos</th>
+<th> Usuario </th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+{% for report in reports %}
+<tr class="{% cycle odd,even %}">
+<td> {{report.name}} </td>
+<td> {{report.ft}} </td>
+<td> {{report.user_id}} </td>
+<td>Visualizar</td>
+<td><a href="/report/modify/{{report.id}}">Modificar</a></td>
+<td><a href="/report/delete/{{report.id}}">Eliminar</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</body></html>
