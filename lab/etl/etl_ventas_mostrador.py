@@ -42,7 +42,7 @@ SELECT
  SUM(M.ART_PREVT * M.ART_CANTID) / C.CAM_VENDED as Precio_Vta_Dolares,
  SUM((M.ART_PREVT - M.ART_PRECIO)* M.ART_CANTID) as Margen_Pesos,
  SUM((M.ART_PREVT - M.ART_PRECIO)* M.ART_CANTID) / C.CAM_VENDED as Margen_Dolares,
- 'Taller' as Tipo 
+ 'Mostrador' as Tipo 
 FROM
  `STS_ARTIC0` A 
  Join `STS_MOVIM0` M on (A.ART_CODIGO = M.ART_CODIGO)
@@ -51,8 +51,8 @@ WHERE
   A.`ART_DEFCOD` = 'A'
   and YEAR(M.ART_FECHA) =  '%s'
   and MONTH(M.ART_FECHA) = '%s'
-  and M.ART_TIPMOV = 'S1'
-  and M.ART_CODSAL = ' 1'
+  and M.ART_TIPMOV = 'S3'
+
 GROUP BY 
  A.ART_CODIGO
 """ % (anio,mes)

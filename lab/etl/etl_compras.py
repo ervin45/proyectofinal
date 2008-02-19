@@ -21,9 +21,11 @@ cursor_dwh = con_dwh.cursor()
 
 for anio in range(1998,2008):
   for mes in range(1,13):
+    print "procesando: ", anio, mes
     # Make SQL string and execute it
   ###
   ### E1-1 | Compra | "1-Remito"
+  ### E1-2 | Compra (aparentemente a proveedores distintos de MBenz) | 2-Remito
   ###
     sql = """
 SELECT 
@@ -46,7 +48,7 @@ WHERE
   and YEAR(M.ART_FECHA) =  '%s'
   and MONTH(M.ART_FECHA) = '%s'
   and M.ART_TIPMOV = 'E1'
-  and M.ART_CODSAL = ' 1'
+  and (M.ART_CODSAL = ' 1' or M.ART_CODSAL = ' 2')
 
 GROUP BY 
  A.ART_CODIGO

@@ -90,6 +90,9 @@ def check_tipo(p):
     if (o[0:14] == 'ENT  1-Remito:' and m == 'E1- 1'):
         return True
 
+    ## compra (a otros que no sean mercedes benz / preguntarle a Gustavo)
+    if (o[0:14] == 'ENT  2-Remito:' and m == 'E1- 2'):
+        return True
 
     if (re.match('SAL 23-SUCURSAL RECONQUISTA',o)    and m == 'S1-23'):
         return True
