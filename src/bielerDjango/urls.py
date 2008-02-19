@@ -1,16 +1,20 @@
 from django.conf.urls.defaults import patterns
 from django.conf.urls.defaults import *
-from olap.views import *
+import olap.views as olap
+import report_management.views as rm
 
 urlpatterns = patterns('',
-    (r'^report/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$', report),
-    (r'^pivot/$', pivot),
-    (r'^drill/(.*)/$', drill),
-    (r'^drill_replacing/(.*)/(.*)/$', drill_replacing),
-    (r'^drill_replacing2/(.*)/(.*)/$', drill_replacing2),
-    (r'^roll/(.*)/$', roll),
-    (r'^dice/(.*)/(.*)/$', dice),
-    (r'^graph_data/$', graph_data),
+    (r'^report/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$', olap.report),
+    (r'^pivot/$', olap.pivot),
+    (r'^drill/(.*)/$', olap.drill),
+    (r'^drill_replacing/(.*)/(.*)/$', olap.drill_replacing),
+    (r'^drill_replacing2/(.*)/(.*)/$', olap.drill_replacing2),
+    (r'^roll/(.*)/$', olap.roll),
+    (r'^dice/(.*)/(.*)/$', olap.dice),
+    (r'^graph_data/$', olap.graph_data),
+    
+    (r'^report/report_list/$', rm.report_list),
+    (r'^report/delete/(\d{1,4})/$', rm.delete),
     
     (r'^admin/', include('django.contrib.admin.urls')),
     

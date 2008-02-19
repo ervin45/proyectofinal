@@ -10,7 +10,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
-DATABASE_NAME = 'prueba_django'             # Or path to database file if using sqlite3.
+DATABASE_NAME = 'bieler_dw'             # Or path to database file if using sqlite3.
 DATABASE_USER = 'ncesar'             # Not used with sqlite3.
 DATABASE_PASSWORD = 'jjjj'         # Not used with sqlite3.
 DATABASE_HOST = '127.0.0.1'             # Set to empty string for localhost. Not used with sqlite3.
@@ -68,6 +68,7 @@ ROOT_URLCONF = 'bielerDjango.urls'
 
 TEMPLATE_DIRS = (
     '/home/proyecto/proyectofinal/src/bielerDjango/olap/templates',
+    '/home/proyecto/proyectofinal/src/bielerDjango/report_management/templates',
 )
 
 INSTALLED_APPS = (
@@ -77,6 +78,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     #'django.contrib.sites',
     'bielerDjango.olap',
+    'bielerDjango.report_management',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

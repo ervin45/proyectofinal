@@ -163,7 +163,6 @@ class Cubiculo:
         where = []
 
         for dimension in self.dimensions_order:
-            print "FOR"
             (name, level, restriction) = self.dimensions[dimension]
 
             joins += "join td_%s on (%s.fk_%s = td_%s.id) " % (name, ft, name, name)
@@ -174,8 +173,6 @@ class Cubiculo:
                     where.append("td_%s.%s in('%s')" % ( name, nivel, valores))
         
         for other_dim in self.ore:
-            print "FORORE"
-            print "other dim: " + str(other_dim)
             (name, level, restriction) = other_dim
             joins += "join td_%s on (%s.fk_%s = td_%s.id) " % (name, ft, name, name)
             if restriction:
