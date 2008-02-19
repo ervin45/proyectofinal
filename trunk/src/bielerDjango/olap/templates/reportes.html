@@ -4,7 +4,7 @@
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''" /><title>Bieler Web Application</title>
 
 <script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/css/default.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/media/css/olap.css" media="screen" />
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -72,25 +72,25 @@
 </div>
 
 
-<table border="1">
+<table>
 <tbody>
 </tbody><tbody>
     <tr>
-        <td></td>
+        <th></th>
         {% for h in cube.header %}
             
-            <td>
+            <th>
                 <a href="/drill_replacing/0/{{h}}/">{{h}}</a>
-            </td>
+            </th>
         {% endfor %}
     </tr>
     
     {% for valor in cube.body_order %}
     <tr>
-        <td><a href="/drill_replacing/1/{{valor}}/">{{valor}}</a></td>
+        <th><a href="/drill_replacing/1/{{valor}}/">{{valor}}</a></th>
         {% for v in cube.body|hash:valor %}
         <td>        
-          <a href="/drill_replacing2/{{ cube.header|hash:forloop.counter0 }}/{{valor}}/">{{ v }}</a>
+          <a href="/drill_replacing2/{{ cube.header|hash:forloop.counter0 }}/{{valor}}/">{{v|default_if_none:"&nbsp;"}}</a>
         </td>
         {% endfor %}
     </tr>
@@ -119,7 +119,7 @@
 <script type="text/javascript" src="/media/js/swfobject.js"></script>
 <div id="flashcontent"></div>
 <script type="text/javascript">
-var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "800", "600", "9", "#FFFFFF");
+var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "1900", "600", "9", "#FFFFFF");
 so.addVariable("variables","true");
 
 {{ofc_params}}

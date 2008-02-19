@@ -113,7 +113,7 @@ class Report:
                         dicttable = {}
                         
                 else:
-                    body[y].append('') 
+                    body[y].append(None) 
 
 
                 

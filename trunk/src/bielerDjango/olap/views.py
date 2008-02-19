@@ -64,6 +64,8 @@ def graph_data(cube):
     import itertools as it
     
     graph = ofc.graph()
+    graph.y_label_steps = 5
+    graph.x_label_style="13,#9933CC,2"
     
     bar_colours = ['#000000', '#550000', '#AA0000', '#FF0000']
     
@@ -71,7 +73,7 @@ def graph_data(cube):
     max_y = 0
     for i, valor in enumerate(cube.body_order):
         row_values_str = cube.body[valor]
-        row_values     = [float(x) for x in row_values_str if x != ""]
+        row_values     = [float(x) for x in row_values_str if x]
         
         graph.bar(alpha=50, colour=colour_iter.next(), text=valor, size=10)
         graph.set_data(row_values_str)
@@ -81,7 +83,11 @@ def graph_data(cube):
     
     graph.set_x_labels([str(x) for x in cube.header])
     
-    max_y2 = round(float(max_y) * 1.1 + 50, -2)
+    if max_y < 50: 
+        max_y2 = 50 
+    else: 
+        max_y2 = round(float(max_y) * 1.1 + 50, -2)
+        
     graph.set_y_max(max_y2)
     
     return graph.render_js()
