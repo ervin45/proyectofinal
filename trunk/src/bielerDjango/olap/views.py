@@ -4,22 +4,25 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from pprint import pprint
 
-def costo_promedio(costo_pesos, cantidad):
-    return float(costo_pesos) / float(cantidad)
+def costo_promedio(**kw):
+    return kw.get("costo_dolar", 0) + kw.get("precio_venta_dolares", 0)
 
-def cantidad(**kw):
-    return float(kw['cantidad'])
+def ratio_ventas_compras(**kw):
+    return kw.get("cantidad", 0)
+    try:
+            return str(float(kw.get("precio_venta_dolares", 0)) / float(kw.get("costo_dolar", 0)))
+    except ZeroDivisionError:
+            return None
+    
 
 def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
-    report = models.Report(report_name, x, y, xl, yl, xr, yr, ore, cantidad)
+    report = models.Report(report_name, x, y, xl, yl, xr, yr, ore, costo_promedio)
     
     cube = report.build_cube()
     main_axis = report.getMainAxisList()
     other_axis = report.getOtherAxisList()
     
     ofc_params = graph_data(cube)
-    
-    request.session['data'] = cube
     
     return render_to_response('reportes.html',locals())
 
@@ -64,7 +67,6 @@ def graph_data(cube):
     import itertools as it
     
     graph = ofc.graph()
-    graph.y_label_steps = 5
     graph.x_label_style="13,#9933CC,2"
     
     bar_colours = ['#000000', '#550000', '#AA0000', '#FF0000']
