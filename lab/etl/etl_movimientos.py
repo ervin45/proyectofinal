@@ -6,15 +6,13 @@ import MySQLdb
 import etlutils
 
 # Create a connection object and create a cursor
-con = MySQLdb.Connect(host="192.168.61.3", port=3306, user="b2", passwd="b2", db="b2")
+con = MySQLdb.Connect(host="127.0.0.1", port=3306, user="root", db="b2")
 cursor = con.cursor()
 cursor2 = con.cursor()
 
 ## DWH
-
-con_dwh = PgSQL.connect(host="192.168.61.102", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+con_dwh = PgSQL.connect(host="192.168.61.100", port=5432, user="ncesar", password="a-notela", database="bieler_dw")
 con_dwh.set_client_encoding('windows-1252')
-
 cursor_dwh = con_dwh.cursor()
 
 
@@ -25,6 +23,7 @@ cursor_dwh = con_dwh.cursor()
 
 for anio in range(1998,2008):
   for mes in range(1,13):
+    print "procesando ", anio, mes
     # Make SQL string and execute it
     sql = """
 SELECT 
@@ -36,7 +35,7 @@ SELECT
  substring(A.ART_CODIGO, 20, 3) as Proovedor,
  A.ART_DESCRI as Descripcion,
  A.ART_CODIGO as Codigo,
- SUM( IF( M.ART_TIPMOV LIKE 'S%%', - M.ART_CANTID, M.ART_CANTID ) ) + AP.ART_SDOINI AS Stock
+ SUM( IF( M.ART_TIPMOV LIKE 'S%%', - M.ART_CANTID, M.ART_CANTID ) ) + AP.ART_SDOINI AS Stock,
  SUM( IF( M.ART_TIPMOV LIKE 'S%%' AND YEAR(M.ART_FECHA) = '%s' AND MONTH(M.ART_FECHA) = '%s', M.ART_CANTID, 0 ) ) as Egresos,
  SUM( IF( M.ART_TIPMOV NOT LIKE 'S%%' AND YEAR(M.ART_FECHA) = '%s' AND MONTH(M.ART_FECHA) = '%s', M.ART_CANTID, 0 ) ) as Ingresos
 FROM
@@ -47,10 +46,11 @@ WHERE
   A.`ART_DEFCOD` = 'A'
   and AP.ART_DEPOS = '1'
   and substring(A.ART_CODIGO, 4, 6)='376010'
-  and M.ART_FECHA < '%s-%s-01'
+  and M.ART_FECHA < concat(period_add('%04d%02d',1), '00')
 GROUP BY 
  A.ART_CODIGO
 """ % (anio,mes,anio,mes,anio,mes)
+
     cursor.execute(sql)
 
     # Fetch all results from the cursor into a sequence and close the connection
