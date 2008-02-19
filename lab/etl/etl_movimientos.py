@@ -46,7 +46,7 @@ WHERE
   A.`ART_DEFCOD` = 'A'
   and AP.ART_DEPOS = '1'
   and substring(A.ART_CODIGO, 4, 6)='376010'
-  and M.ART_FECHA < concat(period_add('%04d%02d',1), '00')
+  and M.ART_FECHA < concat(period_add('%04d%02d',1), '01')
 GROUP BY 
  A.ART_CODIGO
 """ % (anio,mes,anio,mes,anio,mes)
