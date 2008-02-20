@@ -119,7 +119,11 @@ def check_tipo(p):
     
     if (re.match('ENT Devoluci\xa2n de Salida',o)    and m == 'E3-92'):
         return True
-    
+
+## encontre un 'S2-91' en los siguientes dias:
+##    * 1999-12-21 en el codigo ' 003760107420000000000'
+##    * 1999-09-17 en el codigo ' 003760100113000000000'
+## Y parece que estaria asociado a un 'E1- 1' ese mismo dia
     #print o.__repr__(), m
 
 errors=0
