@@ -14,6 +14,13 @@ def ratio_ventas_compras(**kw):
     except ZeroDivisionError:
             return None
     
+def rotacion(first, second):
+    
+    if not first['cantidad'] or not second['stock']:
+        return None
+    
+    return first['cantidad'] / second['stock']
+
 
 def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
     report = models.Report(report_name, x, y, xl, yl, xr, yr, ore, costo_promedio)
@@ -26,16 +33,20 @@ def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
     
     return render_to_response('reportes.html',locals())
 
-def report2(request,ft1, x1, y1, xl1, yl1, xr1="", yr1="", ore1=""
-    ,ft2, x2, y2, xl2, yl2, xr2="", yr2="", ore2=""):
-    report = models.Report2(ft1, x1, y1, xl1, yl1, xr1="", yr1="", ore1=""
-    ,ft2, x2, y2, xl2, yl2, xr2="", yr2="", ore2="", costo_promedio)
+def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
+    ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2):
+    report2 = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
+    ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, rotacion)
+    
     
     cube = report2.build_cube()
+    
+    pprint(cube)
+    
     #main_axis = report2.getMainAxisList()
     #other_axis = report2.getOtherAxisList()
     
-    ofc_params = graph_data(cube)
+    #ofc_params = graph_data(cube)
     
     return render_to_response('reportes.html',locals())
 
