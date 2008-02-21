@@ -5,6 +5,7 @@ import report_management.views as rm
 
 urlpatterns = patterns('',
     (r'^report/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$', olap.report),
+    (r'^report2/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/xr=(.*)/yr=(.*)/ore=(.*)$', olap.report2),
     (r'^pivot/$', olap.pivot),
     (r'^drill/(.*)/$', olap.drill),
     (r'^drill_replacing/(.*)/(.*)/$', olap.drill_replacing),
