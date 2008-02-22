@@ -347,6 +347,8 @@ class Cube:
                 temp.extend([j] * factor_y)
             self.dim_y = temp            
 
+class CubeTooBig:
+    pass
 
 class Report:
     def __init__(self,report_name, x, y, xl, yl, xr, yr, ore, member_function):
@@ -432,7 +434,7 @@ class Report:
     def getOtherAxisList(self):
         first_cubiculo = self.cubiculos[self.fts[0]]
         return first_cubiculo.getOtherAxisList()
-    
+
     def build_cube(self):
         tables = {}
         count = {}
@@ -443,9 +445,12 @@ class Report:
        
         for ft in self.fts:
             cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor)
-            
+
             sql = self.cubiculos[ft].sql()
             cursor_dwh.execute(sql)
+
+            if cursor_dwh.rowcount > 400:
+                raise CubeTooBig
            
             tables[ft] = cursor_dwh.fetchall()
             count[ft] = 0
@@ -597,7 +602,10 @@ class Report2:
     def exec_sql(self, sql):
         con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
-        cursor_dwh.execute(sql)  
+        cursor_dwh.execute(sql)
+        
+        if cursor_dwh.rowcount > 400:
+            raise CubeTooBig
          
         return cursor_dwh.fetchall()
 
