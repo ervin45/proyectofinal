@@ -130,7 +130,15 @@ def graph_data(header, body, body_order):
     graph = ofc.graph()
     graph.x_label_style="13,#9933CC,2"
     
-    bar_colours = ['#000000', '#550000', '#AA0000', '#FF0000']
+    palette = ['#009966', '#00ff55', '#00AA33', '#00EE88',
+               '#006699', '#0055ff', '#0033AA', '#0088EE',
+               '#990066', '#ff0055', '#AA0033', '#EE0088',
+               '#996600', '#ff5500', '#AA3300', '#EE8800',
+               '#669900', '#55ff00', '#33AA00', '#88EE00',
+               '#660099', '#5500ff', '#3300AA', '#8800EE',
+               '#666699', '#5555ff', '#3333AA', '#8888AA',
+               ]
+    bar_colours = palette[0:len(cube.header)]
     
     colour_iter = it.cycle(bar_colours)
     max_y = 0
