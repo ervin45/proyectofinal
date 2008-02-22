@@ -41,14 +41,37 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     
     cube = report2.build_cube()
     
-    pprint(cube)
+    header     = cube.dim_y
+    body       = body1(cube)
+    body_order = cube.dim_x
+    
     
     #main_axis = report2.getMainAxisList()
     #other_axis = report2.getOtherAxisList()
     
-    #ofc_params = graph_data(cube)
+    ofc_params = graph_data(header, body, body_order)
     
     return render_to_response('reportes.html',locals())
+
+        
+def body1(cube):
+    '''
+    >>> from pprint import pprint
+    >>> c = Cube()
+    >>> c.add('uno',1,{"result":1})
+    >>> c.add('uno',2,{"result":3})
+    >>> c.add('dos',1,{"result":2})
+    >>> c.add('dos',2,{"result":7})
+    >>> pprint(c.body())
+    {'dos': [2, 7], 'uno': [1, 3]}
+    '''
+        
+    result = {}
+    
+    for x in cube.dim_x:
+        result[x] = list(cube.rows(x, 'result'))
+        
+    return result
 
 def pivot(request):
     (report, x, y, xl, yl, xr, yr, ore) = parse_url(request)
@@ -86,6 +109,7 @@ def dice(request, main_axix, other_axis):
     url = report.dice(request, main_axix, other_axis)
     return HttpResponseRedirect(url)  
 
+
 def get_tope(max_y):
     '''
     Toma max_y y devuelve un numero de tope de la tabla
@@ -99,7 +123,7 @@ def get_tope(max_y):
     return tope
 
 
-def graph_data(cube):
+def graph_data(header, body, body_order):
     import OpenFlashChart as ofc
     import itertools as it
     
@@ -110,8 +134,8 @@ def graph_data(cube):
     
     colour_iter = it.cycle(bar_colours)
     max_y = 0
-    for i, valor in enumerate(cube.body_order):
-        row_values_str = cube.body[valor]
+    for i, valor in enumerate(body_order):
+        row_values_str = body[valor]
         row_values     = [float(x) for x in row_values_str if x]
         
         graph.bar(alpha=50, colour=colour_iter.next(), text=valor, size=10)
@@ -120,8 +144,9 @@ def graph_data(cube):
         max_y = max([max_y] + row_values)
         
     
-    graph.set_x_labels([str(x) for x in cube.header])
+    graph.set_x_labels([str(x) for x in header])
     
+
     graph.set_y_max(get_tope(max_y))
     
     return graph.render_js()
