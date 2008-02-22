@@ -25,14 +25,17 @@ def rotacion(first, second):
 
 def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
     report = models.Report(report_name, x, y, xl, yl, xr, yr, ore, costo_promedio)
+
+    try:
+        cube = report.build_cube()    
+        main_axis = report.getMainAxisList()
+        other_axis = report.getOtherAxisList()
+    
+        ofc_params = graph_data(cube.header, cube.body, cube.body_order)
         
-    cube = report.build_cube()
-    main_axis = report.getMainAxisList()
-    other_axis = report.getOtherAxisList()
-    
-    ofc_params = graph_data(cube.header, cube.body, cube.body_order)
-    
-    return render_to_response('reportes.html',locals())
+        return render_to_response('reportes.html',locals())
+    except CubeTooBig:
+        return render_to_response('levemente_amanerado.html',locals())
 
 def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2):
