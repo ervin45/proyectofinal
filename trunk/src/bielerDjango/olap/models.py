@@ -5,6 +5,30 @@ import copy
 import cubiculo
 from pprint import pprint
 
+
+def isFloat(s):
+    try:
+        return float(s) or True
+    except:
+        return False
+
+def compare(a,b):
+    primero = a.split(' - ')
+    segundo = b.split(' - ')
+    for x,y in zip(primero, segundo):
+        if isFloat(x) and isFloat(y):                                   
+            if float(x) > float(y):
+                return 1
+            elif float(x) < float(y):
+                return -1
+        else:
+            if x > y:
+                return 1
+            elif x < y:
+                return -1
+    print "returning 0"
+    return 0
+
 class Cube:
     '''
     >>> c = Cube()
@@ -219,7 +243,7 @@ class Cube:
         '''
         if x not in self.dim_x:
             self.dim_x.append(x)
-            self.dim_x.sort()
+            self.dim_x.sort(compare)
 
     def add_y_value(self, y):
         '''
@@ -237,7 +261,7 @@ class Cube:
         '''
         if y not in self.dim_y:
             self.dim_y.append(y)
-            self.dim_y.sort()
+            self.dim_y.sort(compare)
 
     def add_measure_value(self, measure):
         '''
@@ -251,7 +275,7 @@ class Cube:
         '''
         if measure not in self.measures:
             self.measures.append(measure)
-            self.measures.sort()
+            self.measures.sort(compare)
 
     def dimensions(self):
         '''
