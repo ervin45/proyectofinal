@@ -213,7 +213,9 @@ class Cube:
         >>> i = c.get_measures(x='2007', y='Producto_1')
         >>> for a in i: print a
         ...
-        >>>
+        >>> c = Cube()
+        >>> c.add_x_value('1998-7', 7)
+        >>> c.add_x_value('2000-11', )
         '''
         if x not in self.dim_x:
             self.dim_x.append(x)
@@ -419,6 +421,7 @@ class Report:
        
         for ft in self.fts:
             cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            
             sql = self.cubiculos[ft].sql()
             cursor_dwh.execute(sql)
            
