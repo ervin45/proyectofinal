@@ -1,9 +1,10 @@
-http://localhost:8000/report2/ventas/pieza/tiempo/modelo/mes/xr={'grupo_constructivo':[184], 'modelo':[3]}/yr={}/ore={}/movimientos/pieza/tiempo/modelo/anio/xr={'grupo_constructivo':[184], 'modelo':[3]}/yr={}/ore={}
+
+--Rotacion por mes--
+http://localhost:8000/report2/ventas/pieza/tiempo/modelo/mes/xr={'grupo_constructivo':['184'], 'modelo':['3']}/yr={}/ore={}/movimientos/pieza/tiempo/modelo/anio/xr={'grupo_constructivo':['184'], 'modelo':['3']}/yr={}/ore={}
+
+--Rotacion por año--
+http://localhost:8000/report2/ventas/tiempo/pieza/anio/modelo/xr={}/yr={'grupo_constructivo':['184'], 'modelo':['3']}/ore={}/movimientos/tiempo/pieza/anio/modelo/xr={}/yr={'grupo_constructivo':['184'], 'modelo':['3']}/ore={}
 
 
-http://localhost:8000/report2/ventas/tiempo/pieza/mes/modelo/xr={}/yr={'grupo_constructivo':[184], 'modelo':[3]}/ore={}/movimientos/tiempo/pieza/anio/modelo/xr={}/yr={'grupo_constructivo':[184], 'modelo':[3]}/ore={}
 
-http://localhost:8000/report2/ventas/tiempo/pieza/mes/codigo/xr={}/yr={'grupo_constructivo':[184], 'modelo':[3]}/ore={}/movimientos/tiempo/pieza/anio/codigo/xr={}/yr={'grupo_constructivo':[184], 'modelo':[3]}/ore={}
-
-http://localhost:8000/report2/ventas/tiempo/pieza/anio/codigo/xr={}/yr={'grupo_constructivo':[184], 'modelo':[3]}/ore={}/movimientos/tiempo/pieza/anio/codigo/xr={}/yr={'grupo_constructivo':[184], 'modelo':[3]}/ore={}
 

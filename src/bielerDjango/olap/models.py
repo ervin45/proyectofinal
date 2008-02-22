@@ -13,8 +13,8 @@ def isFloat(s):
         return False
 
 def compare(a,b):
-    primero = a.split(' - ')
-    segundo = b.split(' - ')
+    primero = str(a).split(' - ')
+    segundo = str(b).split(' - ')
     for x,y in zip(primero, segundo):
         if isFloat(x) and isFloat(y):                                   
             if float(x) > float(y):
@@ -32,24 +32,24 @@ def compare(a,b):
 class Cube:
     '''
     >>> c = Cube()
-    >>> c.add(1,1,{"c":1})
-    >>> c.add(1,2,{"c":3})
-    >>> c.add(2,1,{"c":2})
-    >>> c.add(2,2,{"c":7})
-    >>> c.add(1,1,{"a":10})
-    >>> c.add(1,2,{"a":10})
-    >>> c.add(2,1,{"a":40})
-    >>> c.add(2,2,{"a":42})
-    >>> c.add(3,2,{"a":78})
-    >>> c.add(4,3,{"a":79})
-    >>> for a in c.columns(y=3, measure="a"):
+    >>> c.add('1','1',{"c":1})
+    >>> c.add('1','2',{"c":3})
+    >>> c.add('2','1',{"c":2})
+    >>> c.add('2','2',{"c":7})
+    >>> c.add('1','1',{"a":10})
+    >>> c.add('1','2',{"a":10})
+    >>> c.add('2','1',{"a":40})
+    >>> c.add('2','2',{"a":42})
+    >>> c.add('3','2',{"a":78})
+    >>> c.add('4','3',{"a":79})
+    >>> for a in c.columns(y='3', measure="a"):
     ...   print a
     ...
     None
     None
     None
     79
-    >>> for a in c.columns(y=2, measure="a"):
+    >>> for a in c.columns(y='2', measure="a"):
     ...   print a
     ...
     10
@@ -69,17 +69,17 @@ class Cube:
     def set_default(self, value):
         ''' 
         >>> c = Cube()
-        >>> c.add(1,1,{"c":1})
-        >>> c.add(1,2,{"c":3})
-        >>> c.add(2,1,{"c":2})
-        >>> c.add(2,2,{"c":7})
-        >>> c.add(1,1,{"a":10})
-        >>> c.add(1,2,{"a":10})
-        >>> c.add(2,1,{"a":40})
-        >>> c.add(2,2,{"a":42})
-        >>> c.add(3,2,{"a":78})
-        >>> c.add(4,3,{"a":79})
-        >>> for a in c.columns(y=3, measure="a"):
+        >>> c.add('1','1',{"c":1})
+        >>> c.add('1','2',{"c":3})
+        >>> c.add('2','1',{"c":2})
+        >>> c.add('2','2',{"c":7})
+        >>> c.add('1','1',{"a":10})
+        >>> c.add('1','2',{"a":10})
+        >>> c.add('2','1',{"a":40})
+        >>> c.add('2','2',{"a":42})
+        >>> c.add('3','2',{"a":78})
+        >>> c.add('4','3',{"a":79})
+        >>> for a in c.columns(y='3', measure="a"):
         ...   print a
         ...
         None
@@ -87,7 +87,7 @@ class Cube:
         None
         79
         >>> c.set_default(-1)
-        >>> for a in c.columns(y=3, measure="a"):
+        >>> for a in c.columns(y='3', measure="a"):
         ...   print a
         ...
         -1
@@ -101,32 +101,32 @@ class Cube:
     def add(self, x, y, measures_values):
         ''' 
         >>> c = Cube()
-        >>> c.add('uno',1,{"c":1})
-        >>> c.add('uno',2,{"c":3})
-        >>> c.add('dos',1,{"c":2})
-        >>> c.add('dos',2,{"c":7})
+        >>> c.add('uno','1',{"c":1})
+        >>> c.add('uno','2',{"c":3})
+        >>> c.add('dos','1',{"c":2})
+        >>> c.add('dos','2',{"c":7})
         >>> pprint(c.data)
-        {('dos', 1, 'c'): 2,
-         ('dos', 2, 'c'): 7,
-         ('uno', 1, 'c'): 1,
-         ('uno', 2, 'c'): 3}
-        >>> c.add('uno',1,{"a":8})
-        >>> c.add('uno',2,{"a":2})
-        >>> c.add('dos',1,{"a":1})
-        >>> c.add('dos',2,{"a":5})
+        {('dos', '1', 'c'): 2,
+         ('dos', '2', 'c'): 7,
+         ('uno', '1', 'c'): 1,
+         ('uno', '2', 'c'): 3}
+        >>> c.add('uno','1',{"a":8})
+        >>> c.add('uno','2',{"a":2})
+        >>> c.add('dos','1',{"a":1})
+        >>> c.add('dos','2',{"a":5})
         >>> pprint(c.data)
-        {('dos', 1, 'a'): 1,
-         ('dos', 1, 'c'): 2,
-         ('dos', 2, 'a'): 5,
-         ('dos', 2, 'c'): 7,
-         ('uno', 1, 'a'): 8,
-         ('uno', 1, 'c'): 1,
-         ('uno', 2, 'a'): 2,
-         ('uno', 2, 'c'): 3}
+        {('dos', '1', 'a'): 1,
+         ('dos', '1', 'c'): 2,
+         ('dos', '2', 'a'): 5,
+         ('dos', '2', 'c'): 7,
+         ('uno', '1', 'a'): 8,
+         ('uno', '1', 'c'): 1,
+         ('uno', '2', 'a'): 2,
+         ('uno', '2', 'c'): 3}
         >>> c.dim_x
         ['dos', 'uno']
         >>> c.dim_y
-        [1, 2]
+        ['1', '2']
         >>> 
         '''
         self.add_x_value(x)
@@ -139,24 +139,24 @@ class Cube:
         ''' 
         >>> c = Cube()
         >>> from pprint import pprint
-        >>> c.add(1,1,{"c":1})
-        >>> c.add(1,2,{"c":3})
-        >>> c.add(2,1,{"c":2})
-        >>> c.add(2,2,{"c":7})
-        >>> c.add(1,1,{"a":10})
-        >>> c.add(1,2,{"a":10})
-        >>> c.add(2,1,{"a":40})
-        >>> c.add(2,2,{"a":42})
-        >>> pprint(c.get(2, 1))
+        >>> c.add('1','1',{"c":1})
+        >>> c.add('1','2',{"c":3})
+        >>> c.add('2','1',{"c":2})
+        >>> c.add('2','2',{"c":7})
+        >>> c.add('1','1',{"a":10})
+        >>> c.add('1','2',{"a":10})
+        >>> c.add('2','1',{"a":40})
+        >>> c.add('2','2',{"a":42})
+        >>> pprint(c.get('2', '1'))
         {'a': 40, 'c': 2}
         >>> 
         >>> c = Cube()
-        >>> c.add(1,1,{"c":1})
-        >>> c.add(1,2,{"c":3})
-        >>> c.add(1,3,{"c":2})
-        >>> c.add(1,4,{"c":7})
-        >>> c.add_y_value(5)
-        >>> c.get(1,5)
+        >>> c.add('1','1',{"c":1})
+        >>> c.add('1','2',{"c":3})
+        >>> c.add('1','3',{"c":2})
+        >>> c.add('1','4',{"c":7})
+        >>> c.add_y_value('5')
+        >>> c.get('1','5')
         {'c': None}
         '''
         
@@ -170,13 +170,13 @@ class Cube:
     def columns(self, y, measure):   
         '''
         >>> c = Cube()
-        >>> i = c.columns(y=2, measure="c")
+        >>> i = c.columns(y='2', measure="c")
         >>> for a in i: print a
-        >>> c.add(1,1,{"c":1})
-        >>> c.add(1,2,{"c":3})
-        >>> c.add(2,1,{"c":2})
-        >>> c.add(2,2,{"c":7})
-        >>> for a in c.columns(y=2, measure="c"):
+        >>> c.add('1','1',{"c":1})
+        >>> c.add('1','2',{"c":3})
+        >>> c.add('2','1',{"c":2})
+        >>> c.add('2','2',{"c":7})
+        >>> for a in c.columns(y='2', measure="c"):
         ...   print a
         ...
         3
@@ -190,13 +190,13 @@ class Cube:
     def rows(self, x, measure):
         '''
         >>> c = Cube()
-        >>> i = c.rows(x=2, measure="c")
+        >>> i = c.rows(x='2', measure="c")
         >>> for a in i: print a
-        >>> c.add(1,1,{"c":1})
-        >>> c.add(1,2,{"c":3})
-        >>> c.add(2,1,{"c":2})
-        >>> c.add(2,2,{"c":7})
-        >>> for a in c.rows(x=2, measure="c"):
+        >>> c.add('1','1',{"c":1})
+        >>> c.add('1','2',{"c":3})
+        >>> c.add('2','1',{"c":2})
+        >>> c.add('2','2',{"c":7})
+        >>> for a in c.rows(x='2', measure="c"):
         ...   print a
         ...
         2
@@ -210,13 +210,13 @@ class Cube:
     def get_measures(self, x, y):
         '''
         >>> c = Cube()
-        >>> i = c.get_measures(x=2, y=2)
+        >>> i = c.get_measures(x='2', y='2')
         >>> for a in i: print a
-        >>> c.add(1,1,{"c":1})
-        >>> c.add(1,2,{"c":3})
-        >>> c.add(2,1,{"c":2})
-        >>> c.add(2,2,{"c":7})
-        >>> i = c.get_measures(x=2, y=2)
+        >>> c.add('1','1',{"c":1})
+        >>> c.add('1','2',{"c":3})
+        >>> c.add('2','1',{"c":2})
+        >>> c.add('2','2',{"c":7})
+        >>> i = c.get_measures(x='2', y='2')
         >>> for a in i: print a
         ...
         7
@@ -237,9 +237,7 @@ class Cube:
         >>> i = c.get_measures(x='2007', y='Producto_1')
         >>> for a in i: print a
         ...
-        >>> c = Cube()
-        >>> c.add_x_value('1998-7', 7)
-        >>> c.add_x_value('2000-11', )
+        >>>
         '''
         if x not in self.dim_x:
             self.dim_x.append(x)
@@ -280,8 +278,8 @@ class Cube:
     def dimensions(self):
         '''
         >>> c = Cube()
-        >>> c.add(1,1,{"c":1})
-        >>> c.add(2,1,{"c":2})
+        >>> c.add('1','1',{"c":1})
+        >>> c.add('2','1',{"c":2})
         >>> c.dimensions()
         (2, 1)
         >>> c.fit(2,24)
@@ -296,21 +294,21 @@ class Cube:
         '''
         >>> from pprint import pprint
         >>> c = Cube()
-        >>> c.add('uno',1,{"c":1})
-        >>> c.add('uno',2,{"c":3})
-        >>> c.add('uno',3,{"c":2})
-        >>> c.add('uno',4,{"c":7})
+        >>> c.add('uno','1',{"c":1})
+        >>> c.add('uno','2',{"c":3})
+        >>> c.add('uno','3',{"c":2})
+        >>> c.add('uno','4',{"c":7})
         >>> pprint(c.data)
-        {('uno', 1, 'c'): 1,
-         ('uno', 2, 'c'): 3,
-         ('uno', 3, 'c'): 2,
-         ('uno', 4, 'c'): 7}
-        >>> for a in c.columns(y=2, measure="c"):
+        {('uno', '1', 'c'): 1,
+         ('uno', '2', 'c'): 3,
+         ('uno', '3', 'c'): 2,
+         ('uno', '4', 'c'): 7}
+        >>> for a in c.columns(y='2', measure="c"):
         ...   print a
         ...
         3
         >>> c.fit(4,4)
-        >>> for a in c.columns(y=2, measure="c"):
+        >>> for a in c.columns(y='2', measure="c"):
         ...   print a
         ...
         3
@@ -320,17 +318,17 @@ class Cube:
         >>> c.dim_x
         ['uno', 'uno', 'uno', 'uno']
         >>> c.dim_y
-        [1, 2, 3, 4]
+        ['1', '2', '3', '4']
         >>> c = Cube()
-        >>> c.add('uno',1,{"c":1})
-        >>> c.add('uno',2,{"c":3})
-        >>> c.add('dos',1,{"c":2})
-        >>> c.add('dos',2,{"c":7})
+        >>> c.add('uno','1',{"c":1})
+        >>> c.add('uno','2',{"c":3})
+        >>> c.add('dos','1',{"c":2})
+        >>> c.add('dos','2',{"c":7})
         >>> c.fit(4,4)
         >>> pprint(c.dim_x)
         ['dos', 'dos', 'uno', 'uno']
         >>> c.dim_y
-        [1, 1, 2, 2]
+        ['1', '1', '2', '2']
         >>> 
         '''     
         
@@ -606,7 +604,7 @@ class Report2:
     def fill_table(self, cube, incomplete_table):
         for row in incomplete_table:
             dict_row = dict(row)
-            cube.add(dict_row.pop('rows'),dict_row.pop('columns'),dict_row) 
+            cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row) 
             
     
     def complete_dimensions(self, cube, cubiculo):
@@ -614,10 +612,10 @@ class Report2:
         y_axis = self.dimension_values(0, cubiculo)
         
         for x in x_axis:
-            cube.add_x_value(x)
+            cube.add_x_value(str(x))
 
         for y in y_axis:
-            cube.add_y_value(y)
+            cube.add_y_value(str(y))
             
     def fit(self, complete_cubes):
         max_dimensions = (0, 0)
