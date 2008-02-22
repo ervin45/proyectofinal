@@ -86,6 +86,19 @@ def dice(request, main_axix, other_axis):
     url = report.dice(request, main_axix, other_axis)
     return HttpResponseRedirect(url)  
 
+def get_tope(max_y):
+    '''
+    Toma max_y y devuelve un numero de tope de la tabla
+    '''
+    big_max_y = max_y * 1.05
+    
+    digitos = math.ceil(math.log10(big_max_y))
+    pos = [(x+1)*(10**(digitos-1)) for x in range(10)]
+    tope = [x for x in pos if x > big_max_y][0]
+    
+    return tope
+
+
 def graph_data(cube):
     import OpenFlashChart as ofc
     import itertools as it
@@ -109,12 +122,7 @@ def graph_data(cube):
     
     graph.set_x_labels([str(x) for x in cube.header])
     
-    if max_y < 50: 
-        max_y2 = 50 
-    else: 
-        max_y2 = round(float(max_y) * 1.1 + 50, -2)
-        
-    graph.set_y_max(max_y2)
+    graph.set_y_max(get_tope(max_y))
     
     return graph.render_js()
 
