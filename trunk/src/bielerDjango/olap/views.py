@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from pprint import pprint
+import math
 
 def costo_promedio(**kw):
     return kw.get("margen_dolares", 0)
@@ -24,12 +25,12 @@ def rotacion(first, second):
 
 def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
     report = models.Report(report_name, x, y, xl, yl, xr, yr, ore, costo_promedio)
-    
+        
     cube = report.build_cube()
     main_axis = report.getMainAxisList()
     other_axis = report.getOtherAxisList()
     
-    ofc_params = graph_data(cube)
+    ofc_params = graph_data(cube.header, cube.body, cube.body_order)
     
     return render_to_response('reportes.html',locals())
 
@@ -42,7 +43,7 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     cube = report2.build_cube()
     
     header     = cube.dim_y
-    body       = body1(cube)
+    body       = get_body(cube)
     body_order = cube.dim_x
     
     
@@ -54,7 +55,7 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     return render_to_response('reportes.html',locals())
 
         
-def body1(cube):
+def get_body(cube):
     '''
     >>> from pprint import pprint
     >>> c = Cube()
@@ -130,6 +131,8 @@ def graph_data(header, body, body_order):
     graph = ofc.graph()
     graph.x_label_style="13,#9933CC,2"
     
+    graph.set_tool_tip('#key# <br> #val#')
+    
     palette = ['#009966', '#00ff55', '#00AA33', '#00EE88',
                '#006699', '#0055ff', '#0033AA', '#0088EE',
                '#990066', '#ff0055', '#AA0033', '#EE0088',
@@ -138,7 +141,7 @@ def graph_data(header, body, body_order):
                '#660099', '#5500ff', '#3300AA', '#8800EE',
                '#666699', '#5555ff', '#3333AA', '#8888AA',
                ]
-    bar_colours = palette[0:len(cube.header)]
+    bar_colours = palette[0:len(body_order)]
     
     colour_iter = it.cycle(bar_colours)
     max_y = 0
@@ -169,3 +172,14 @@ def parse_url(request):
     result = p.findall(referer)
     
     return result[0]
+
+def test(request):
+    return HttpResponse('hola')
+
+
+def _test():
+    import doctest
+    doctest.testmod()
+
+if __name__ == "__main__":
+    _test()
