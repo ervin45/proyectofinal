@@ -3,6 +3,7 @@ from pprint import pprint
 class Meta:
     def __init__(self):
         self.dimension_meta = {'pieza':['codigo',
+                                        'pieza',
                                         'modificacion',
                                         'modelo', 
                                         'grupo_constructivo'],

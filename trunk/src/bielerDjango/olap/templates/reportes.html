@@ -77,7 +77,7 @@
 </tbody><tbody>
     <tr>
         <th></th>
-        {% for h in cube.header %}
+        {% for h in header %}
             
             <th>
                 <a href="/drill_replacing/0/{{h}}/">{{h}}</a>
@@ -85,12 +85,12 @@
         {% endfor %}
     </tr>
     
-    {% for valor in cube.body_order %}
+    {% for valor in body_order %}
     <tr>
         <th><a href="/drill_replacing/1/{{valor}}/">{{valor}}</a></th>
-        {% for v in cube.body|hash:valor %}
+        {% for v in body|hash:valor %}
         <td>        
-          <a href="/drill_replacing2/{{ cube.header|hash:forloop.counter0 }}/{{valor}}/">{{v|default_if_none:"&nbsp;"}}</a>
+          <a href="/drill_replacing2/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{v|default_if_none:"&nbsp;"}}</a>
         </td>
         {% endfor %}
     </tr>

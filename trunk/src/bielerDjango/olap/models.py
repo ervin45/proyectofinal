@@ -220,11 +220,33 @@ class Cube:
             self.dim_x.sort()
 
     def add_y_value(self, y):
+        '''
+        >>> c = Cube()
+        >>> c.dim_y
+        []
+        >>> c.add_y_value('2007')
+        >>> c.dim_y
+        ['2007']
+        >>> c.add_x_value('Producto_1')
+        >>> i = c.get_measures(y='2007', x='Producto_1')
+        >>> for a in i: print a
+        ...
+        >>>
+        '''
         if y not in self.dim_y:
             self.dim_y.append(y)
             self.dim_y.sort()
 
     def add_measure_value(self, measure):
+        '''
+        >>> c = Cube()
+        >>> c.measures
+        []
+        >>> c.add_measure_value('cantidad')
+        >>> c.measures
+        ['cantidad']
+        >>>
+        '''
         if measure not in self.measures:
             self.measures.append(measure)
             self.measures.sort()
@@ -300,10 +322,7 @@ class Cube:
             for j in self.dim_y:
                 temp.extend([j] * factor_y)
             self.dim_y = temp            
-             
-            
-            
-            
+
 
 class Report:
     def __init__(self,report_name, x, y, xl, yl, xr, yr, ore, member_function):
@@ -322,11 +341,9 @@ class Report:
          
         self.cubiculos = {}
         for ft in self.fts:
-         
-            cub = cubiculo.Cubiculo(ft, 
-                                          [[self.x, self.xl, eval(self.xr)], [self.y, self.yl, eval(self.yr)]], 
-                                          self.measures[ft], eval(self.ore))  
-                                         
+            #dimensions = [[self.x,self.xl,eval(self.xr)],[self.y,self.yl,eval(self.yr)]]
+            dimensions = [[self.x,self.xl,{}],[self.y,self.yl,{}]]
+            cub=cubiculo.Cubiculo(ft,dimensions,self.measures[ft], eval(self.ore))
             self.cubiculos[ft] = cub 
 
     def pivot(self, request):
@@ -465,11 +482,21 @@ class Report2:
         self.measures = {'movimientos': [["stock", "avg"]], 'ventas': [["cantidad", "sum"], ["margen_dolares", "sum"]]}
         self.member_function = member_function
         ##VIENE DE LA BD
+        exr1        = eval(xr1)
+        d11         = [x1, xl1, exr1]
+        eyr1        = eval(yr1)
+        d12         = [y1, yl1, eyr1]
+        dimensions1 = [d11, d12]
+        eore1       = eval(ore1)
+        cubiculo1   = cubiculo.Cubiculo(ft1,dimensions1, self.measures[ft1], eore1)
 
-
-        cubiculo1 = cubiculo.Cubiculo(ft1,[[x1, xl1, eval(xr1)], [y1, yl1, eval(yr1)]], self.measures[ft1], eval(ore1))
-
-        cubiculo2 = cubiculo.Cubiculo(ft2,[[x2, xl2, eval(xr2)], [y2, yl2, eval(yr2)]], self.measures[ft2], eval(ore1))
+        exr2 = eval(xr2)
+        d21 = [x2, xl2,exr2]
+        eyr2 = eval(yr2)
+        d22 = [y2, yl2, eyr2]
+        dimensions2 = [d21, d22]
+        eore2 = eval(ore2)
+        cubiculo2   = cubiculo.Cubiculo(ft2, dimensions2, self.measures[ft2], eore2)
 
 
         self.cubiculos = {}
@@ -621,5 +648,9 @@ class Report2:
         
         return final_cube
     
+def _test():
+    import doctest
+    doctest.testmod()
 
-
+if __name__ == "__main__":
+    _test()
