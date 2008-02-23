@@ -256,12 +256,54 @@ class Cubiculo:
 
 
     def drill(self, axis):
+        '''
+        Ejecuta una operación de drill en el cubo
+
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
+        >>> c.drill(0)
+        >>> c.dimensions['tiempo']
+        ['tiempo', 'mes', {}]
+        >>> c.drill(1)
+        >>> c.dimensions['pieza']
+        ['pieza', 'modelo', {}]
+        >>> try:
+        ...    c.drill(2)
+        ... except InvalidAxis:
+        ...    print "OK"
+        ...
+        OK
+        >>>
+        '''
         dimension = self.dimensions_order[int(axis)]
         level = self.dimensions[dimension][1]
         new_level = self.meta.previous(dimension, level)
         self.dimensions[dimension][1] = new_level
 
     def roll(self, axis):
+        '''
+        Realiza una operación de roll al cubo
+
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'modelo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
+        >>> c.roll(0)
+        >>> c.dimensions['tiempo']
+        ['tiempo', 'anio', {}]
+        >>> c.roll(0)
+        >>> c.dimensions['tiempo']
+        ['tiempo', 'TODO', {}]
+        >>> c.roll(1)
+        >>> c.dimensions['pieza']
+        ['pieza', 'grupo_constructivo', {}]
+        >>> c.roll(1)
+        >>> c.dimensions['pieza']
+        ['pieza', 'TODO', {}]
+        >>> try:
+        ...    c.roll(2)
+        ... except InvalidAxis:
+        ...    print "OK"
+        ...
+        OK
+        >>>        
+        '''
         dimension = self.dimensions_order[int(axis)]
         level = self.dimensions[dimension][1]
         new_level = self.meta.next(dimension, level)
@@ -269,6 +311,16 @@ class Cubiculo:
         self.dimensions[dimension][1] = new_level
 
     def pivot(self):
+        '''realiza la operacion de pivot (intercambio de dimensiones principales)
+        del cubo
+
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'modelo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
+        >>> c.pivot()        
+        >>> c.dimensions
+        ['pieza', 'tiempo']
+        >>> 
+        '''
+        
         (self.dimensions_order[0], self.dimensions_order[1]) = (self.dimensions_order[1], self.dimensions_order[0])
         
 
