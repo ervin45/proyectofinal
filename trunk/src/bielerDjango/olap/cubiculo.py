@@ -9,6 +9,9 @@ class InvalidLevel:
 class InvalidDimension:
     pass
 
+class InvalidValue:
+    pass
+
 
 class Meta:
     def __init__(self):
@@ -22,6 +25,17 @@ class Meta:
                                'tiempo':['mes', 'anio', 'TODO'],
                                'proveedor':['proveedor', 'TODO']
                             }
+                            
+        self.fact_table_meta = {'ventas':      ['tiempo',
+                                                'pieza',
+                                                'proveedor',
+                                                'tipo_venta'],
+                                'compras':     ['tiempo',
+                                                'pieza'
+                                                'proveedor'],
+                                'movimientos': ['tiempo',
+                                                'pieza',
+                                                'proveedor']}
 
     def previous(self, dimension, level):
         """
@@ -261,7 +275,6 @@ class Cubiculo:
                 rest = "td_%s.%s in('%s')" % ( first_dimension[0], level, valores)
                 where_aux.append(rest)
             where = "%s" % " and ".join(where_aux)
-            #where = "%s" % " and ".join(["td_%s.%s in(%s)" % ( first_dimension[0], level, ", ".join(val)) for level, val in first_dimension[2].items()])
             if where:
                 where = "where %s" % where
             sql = "select distinct(%s), %s from td_%s %s order by %s" % (select, campos, first_dimension[0], where, campos)
@@ -308,9 +321,6 @@ class Cubiculo:
 
     def drill_replacing2(self, value0, value1):
         '''
-        Realiza una operación de drill_replacing en ambos ejes
-        para 2 valores (uno por eje)
-        
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
@@ -319,7 +329,7 @@ class Cubiculo:
         {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'modelo', {'grupo_constructivo': ['184']}]}
         >>> try:
         ...    c.drill_replacing2('cualquiera', '184')
-        ... except InvalidLevel:
+        ... except InvalidValue:
         ...    print "OK"
         OK
         >>>
@@ -329,7 +339,7 @@ class Cubiculo:
         
     def dice(self, main_axis, other_axis):
         '''
-        Realiza una operación de dice (rotación de ejes del cubo)
+        Realiza una operacion de dice (rotacion de ejes del cubo)
         
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
         >>> c.getMainAxisList()
@@ -345,6 +355,14 @@ class Cubiculo:
         OK
         >>>
         '''
+        
+        if not main_axis in self.dimensions.keys():
+            raise InvalidDimension
+        
+        if not other_axis in self.ore.keys():
+            raise InvalidDimension
+        
+        
         ma = self.dimensions.pop(main_axis)
         
         index = [self.ore.index(x) for x in self.ore if x[0] == other_axis][0]
@@ -370,7 +388,9 @@ class Cubiculo:
         ['proveedor']
         >>>
         '''
-        return [x[0] for x in self.ore]
+        
+        total_dimensions = self.meta.fact_table_meta[self.ft]
+        return [x for x in total_dimensions if x not in (self.dimensions.keys())]
     
     def _select(self):
         '''
@@ -500,7 +520,7 @@ class Cubiculo:
         >>> c._order_by()
         ''
         >>>
-        '''        
+        '''
 
         levels_with_parent = []
 
