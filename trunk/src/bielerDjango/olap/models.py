@@ -5,6 +5,8 @@ import copy
 import cubiculo
 from pprint import pprint
 
+too_many_rows = 400
+too_many_cells = 800
 
 def isFloat(s):
     try:
@@ -409,75 +411,7 @@ class Report:
 
     def getOtherAxisList(self):
         return self.cubiculo.getOtherAxisList()
-
-    #def build_cube(self):
-        #tables = {}
-        #count = {}
-        #dicttable = {}
-
-        #con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")        
-
-
-        #for ft in self.fts:
-            #cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-            #sql = self.cubiculos[ft].sql()
-            #cursor_dwh.execute(sql)
-
-            #if cursor_dwh.rowcount > 400:
-                #pass #raise CubeTooBig
-
-            #tables[ft] = cursor_dwh.fetchall()
-            #count[ft] = 0
-
-            #try:
-                #dicttable[ft] = dict(tables[ft][count[ft]])
-            #except:
-                #dicttable[ft] = {}
-
-        #x_axis = self.dimension_values(0)
-        #y_axis = self.dimension_values(1)
-
-        #body = {}
-
-        #for x in x_axis:
-            #for y in y_axis:
-
-                ##En caso que no haya clave para el elemento se crea
-                #if not body.get(y, False):
-                    #body[y] = []
-
-                #params = {}
-                #for ft in self.fts:
-                    #print "dicttable"
-                    #pprint(dicttable[ft])                       
-                    ##El elemento de la cabecera de table podria no coincidir con
-                    ##los indices recorridos porque table esta ordenado pero incompleto
-                    #if x == dicttable[ft].get('columns', False) and y == dicttable[ft].get('rows', False):
-                        #measuresList = self.cubiculos[ft].getMeasuresList()
-                        #print "measuresList"
-                        #pprint(measuresList)
-
-                        #for measure in measuresList:
-                            #params[measure] = dicttable[ft][measure] 
-
-                        #count[ft] += 1
-
-                        #try:
-                            #dicttable[ft] = dict(tables[ft][count[ft]])
-                        #except:
-                            #dicttable[ft] = {}
-
-
-                #value = self.member_function(**params)
-                #body[y].append(value)
-
-        #cube = Cube()
-        #cube.header = x_axis
-        #cube.body = body
-        #cube.body_order = y_axis
-        #return cube 
-        
+ 
     def get_sql(self, ft):
         return self.cubiculo.sql()
 
@@ -486,7 +420,7 @@ class Report:
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor_dwh.execute(sql)
         
-        if cursor_dwh.rowcount > 400:
+        if cursor_dwh.rowcount > too_many_rows:
             raise CubeTooBig
 
         return cursor_dwh.fetchall()
@@ -500,6 +434,9 @@ class Report:
     def complete_dimensions(self, cube, cubiculo):
         x_axis = self.dimension_values(1)
         y_axis = self.dimension_values(0)
+        
+        if len(x_axis) * len(y_axis) > too_many_cells:
+            raise CubeTooBig
 
         for x in x_axis:
             cube.add_x_value(str(x))
@@ -638,7 +575,7 @@ class Report2:
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor_dwh.execute(sql)
         
-        if cursor_dwh.rowcount > 400:
+        if cursor_dwh.rowcount > too_many_rows:
             raise CubeTooBig
 
         return cursor_dwh.fetchall()
@@ -652,6 +589,9 @@ class Report2:
     def complete_dimensions(self, cube, cubiculo):
         x_axis = self.dimension_values(1, cubiculo)
         y_axis = self.dimension_values(0, cubiculo)
+        
+        if len(x_axis) * len(y_axis) > too_many_cells:
+            raise CubeTooBig
 
         for x in x_axis:
             cube.add_x_value(str(x))
