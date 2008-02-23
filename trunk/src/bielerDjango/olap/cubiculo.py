@@ -282,6 +282,23 @@ class Cubiculo:
         self.drill_replacing(1, value1)
         
     def dice(self, main_axis, other_axis):
+        '''
+        Realiza una operación de dice (rotación de ejes del cubo)
+        
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
+        >>> c = getMainAxisList()
+        ['tiempo', 'pieza']
+        >>> c.dice('pieza', 'proveedor')
+        >>> c = getMainAxisList()
+        ['tiempo', 'povedoor']
+        >>> try:
+        ...    c.dice('pieza', 'proveedor')
+        ... except InvalidDimension:
+        ...    print "OK"
+        ...
+        OK
+        >>>
+        '''
         ma = self.dimensions.pop(main_axis)
         
         index = [self.ore.index(x) for x in self.ore if x[0] == other_axis][0]
