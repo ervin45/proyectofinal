@@ -278,6 +278,12 @@ class Cubiculo:
         self.drill(axis)
 
     def drill_replacing2(self, value0, value1):
+        '''
+        Realiza una operación de dice (rotación de ejes del cubo)
+        
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
+        >>> c = getMainAxisList()
+        '''
         self.drill_replacing(0, value0)
         self.drill_replacing(1, value1)
         
@@ -286,10 +292,10 @@ class Cubiculo:
         Realiza una operación de dice (rotación de ejes del cubo)
         
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
-        >>> c = getMainAxisList()
+        >>> c.getMainAxisList()
         ['tiempo', 'pieza']
         >>> c.dice('pieza', 'proveedor')
-        >>> c = getMainAxisList()
+        >>> c.getMainAxisList()
         ['tiempo', 'povedoor']
         >>> try:
         ...    c.dice('pieza', 'proveedor')
