@@ -1,10 +1,18 @@
 
---Rotacion por mes--
+--Rotacion por mes solo para el grupo_constructivo 184-3  --
 http://localhost:8000/report2/ventas/pieza/tiempo/modelo/mes/xr={'grupo_constructivo':['184'], 'modelo':['3']}/yr={}/ore={}/movimientos/pieza/tiempo/modelo/anio/xr={'grupo_constructivo':['184'], 'modelo':['3']}/yr={}/ore={}
+
+--Rotacion por mes para todas las piezas por pieza --
+http://localhost:8000/report2/ventas/pieza/tiempo/grupo_constructivo/mes/xr={}/yr={'anio': ['2006']}/ore={}/movimientos/pieza/tiempo/grupo_constructivo/anio/xr={}/yr={'anio': ['2006']}/ore={}
 
 --Rotacion por año--
 http://localhost:8000/report2/ventas/tiempo/pieza/anio/modelo/xr={}/yr={'grupo_constructivo':['184'], 'modelo':['3']}/ore={}/movimientos/tiempo/pieza/anio/modelo/xr={}/yr={'grupo_constructivo':['184'], 'modelo':['3']}/ore={}
 
+--Rotacion del grupo constructivo 184--
+http://localhost:8000/report2/ventas/tiempo/pieza/TODO/modelo/xr={}/yr={'grupo_constructivo':['184']}/ore={}/movimientos/tiempo/pieza/TODO/modelo/xr={}/yr={'grupo_constructivo':['184']}/ore={}
 
+
+
+http://localhost:8000/report/compras/tiempo/pieza/anio/grupo_constructivo/xr={}/yr={'grupo_constructivo': ['184']}/ore={}/
 
 

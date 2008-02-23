@@ -5,8 +5,9 @@ from django.http import HttpResponse
 from pprint import pprint
 import math
 
-def costo_promedio(**kw):
-    return kw.get("margen_dolares", 0)
+
+def costo_promedio(first):
+    return first.get("costo_dolar", 0)
 
 def ratio_ventas_compras(**kw):
     return kw.get("cantidad", 0)
@@ -14,28 +15,38 @@ def ratio_ventas_compras(**kw):
             return str(float(kw.get("precio_venta_dolares", 0)) / float(kw.get("costo_dolar", 0)))
     except ZeroDivisionError:
             return None
-    
+
 def rotacion(first, second):
-    
+
     if not first['cantidad'] or not second['stock']:
         return None
-    
+
     return first['cantidad'] / second['stock']
 
 
 def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
     report = models.Report(report_name, x, y, xl, yl, xr, yr, ore, costo_promedio)
+    
+    print "parameter"
+    print report_name, x, y, xl, yl, xr, yr, ore
 
+    
     try:
-        cube = report.build_cube()    
+        cube = report.build_cube()   
+        
+        header     = cube.dim_y
+        body       = get_body(cube)
+        body_order = cube.dim_x     
+            
         main_axis = report.getMainAxisList()
         other_axis = report.getOtherAxisList()
     
-        ofc_params = graph_data(cube.header, cube.body, cube.body_order)
-        
-        return render_to_response('reportes.html',locals())
-    except CubeTooBig:
-        return render_to_response('levemente_amanerado.html',locals())
+        #ofc_params = graph_data(cube.header, cube.body, cube.body_order)        
+        return render_to_response('reportes2.html',locals())
+    
+    except models.CubeTooBig:
+        return render_to_response('tooBig.html',locals())
+    
 
 def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2):
@@ -171,7 +182,7 @@ def parse_url(request):
     import urllib
     
     referer = urllib.unquote_plus(request.META['HTTP_REFERER'])
-    url_patter = '^http://%s:%s/report/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/([a-z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$' % (request.META['SERVER_NAME'], request.META['SERVER_PORT'])
+    url_patter = '^http://%s:%s/report/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$' % (request.META['SERVER_NAME'], request.META['SERVER_PORT'])
     p = re.compile(url_patter)    
     result = p.findall(referer)
     
