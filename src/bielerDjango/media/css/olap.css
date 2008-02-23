@@ -1,9 +1,9 @@
 table,tr,td,th{border-spacing:0;border:1px solid #d9d1cc;}
 table{width:80%;margin:1em auto;background:#efeeff;}
 caption{font-weight:bold;width:75%;margin:0 auto -1em;background:#ac1f0d;color:#efe;border-bottom:1px solid #d9d1cc;}
-th{background:#022B59;color:#333;border-bottom:1px solid #d9d1cc;}
+th{background:#DDD;color:#333;border-bottom:1px solid #d9d1cc;}
 tr{background:#feffee;color:#333;hover:expression(this.onmouseover=new Function("this.style.background='#AAA';"),this.onmouseout=new Function("this.style.background='#feffee';"));}
-tr:hover{background:#2C3563;}
+tr:hover{background:#EFEFEF;}
 td{text-align:left;}
 a{color:#666;}
 a:hover{color:#000;}

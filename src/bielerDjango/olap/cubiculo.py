@@ -6,12 +6,22 @@ class Meta:
                                         'pieza',
                                         'modificacion',
                                         'modelo', 
-                                        'grupo_constructivo'],
-                               'tiempo':['mes', 'anio'],
-                               'proveedor':['proveedor']
+                                        'grupo_constructivo',
+                                        'TODO'
+                                        ],
+                               'tiempo':['mes', 'anio', 'TODO'],
+                               'proveedor':['proveedor', 'TODO']
                             }
 
     def previous(self, dimension, nivel):
+        """
+        >>> c = Meta()
+        >>> c.previous('tiempo', 'anio')
+        'mes'
+        >>> c.previous('tiempo', 'TODO')
+        'anio'
+        >>>
+        """
         index = self.dimension_meta[dimension].index(nivel)
         result = self.dimension_meta[dimension][index - 1:index]
         if result == []:
@@ -30,10 +40,52 @@ class Meta:
         return result
 
     def parent_list(self, dimension, nivel):
-        niveles = self.dimension_meta[dimension]
-        result = niveles[niveles.index(nivel):]
-        result.reverse()
-        return result
+        '''
+        >>> c = Meta()
+        >>> c.parent_list('tiempo', 'mes')
+        ['td_tiempo.anio', 'td_tiempo.mes']
+        >>> c.parent_list('tiempo', 'anio')
+        ['td_tiempo.anio']
+        >>> c.parent_list('tiempo', 'TODO')
+        ['TODO']
+        >>>
+        '''
+        
+        if nivel == 'TODO':
+            return ['TODO']
+        else:
+            result = []
+        
+            niveles = self.dimension_meta[dimension]
+            niveles_superiores = niveles[niveles.index(nivel):]
+        
+            result = ["td_%s.%s" % (dimension, x)  for x in niveles_superiores if x != 'TODO']
+            result.reverse()
+            return result
+        
+    def parent_list_without_dimension(self, dimension, nivel):
+        '''
+        >>> c = Meta()
+        >>> c.parent_list_without_dimension('tiempo', 'mes')
+        ['anio', 'mes']
+        >>> c.parent_list_without_dimension('tiempo', 'anio')
+        ['anio']
+        >>> c.parent_list_without_dimension('tiempo', 'TODO')
+        ['TODO']
+        >>>
+        '''
+        
+        if nivel == 'TODO':
+            return ['TODO']
+        else:
+            result = []
+        
+            niveles = self.dimension_meta[dimension]
+            niveles_superiores = niveles[niveles.index(nivel):]
+        
+            result = [x for x in niveles_superiores if x != 'TODO']
+            result.reverse()
+            return result        
 
 
 '''
@@ -54,9 +106,6 @@ class Cubiculo:
         self.measures = measures
         self.ore = ore
         self.meta = Meta()
-        
-        
-        print "dimesion: " + str(self.dimensions)
 
     def add_dimension(self, a):
         try:
@@ -105,22 +154,26 @@ class Cubiculo:
     def dimension_values(self, axis):
         first_dimension = self.dimensions[self.dimensions_order[int(axis)]]
         levels_parent = self.meta.parent_list(first_dimension[0], first_dimension[1])
-        select = "|| ' - ' ||".join(levels_parent)
-        campos = ", ".join([x for x in levels_parent])
         
-        where = []
-        where_aux = []
-        for nivel, val in first_dimension[2].items():
-            valores = ", ".join([str(v) for v in val])
-            rest = "td_%s.%s in('%s')" % ( first_dimension[0], nivel, valores)
-            where_aux.append(rest)
-        where = "%s" % " and ".join(where_aux)
-        #where = "%s" % " and ".join(["td_%s.%s in(%s)" % ( first_dimension[0], nivel, ", ".join(val)) for nivel, val in first_dimension[2].items()])
-        if where:
-            where = "where %s" % where
-        sql = "select distinct(%s), %s from td_%s %s order by %s" % (select, campos, first_dimension[0], where, campos)
-        print sql
-        return sql          
+        if levels_parent == ['TODO']:
+            return "select 'TODO' as TODO"
+        else: 
+            select = "|| ' - ' ||".join(levels_parent)
+            campos = ", ".join([x for x in levels_parent])
+            
+            where = []
+            where_aux = []
+            for nivel, val in first_dimension[2].items():
+                valores = ", ".join([str(v) for v in val])
+                rest = "td_%s.%s in('%s')" % ( first_dimension[0], nivel, valores)
+                where_aux.append(rest)
+            where = "%s" % " and ".join(where_aux)
+            #where = "%s" % " and ".join(["td_%s.%s in(%s)" % ( first_dimension[0], nivel, ", ".join(val)) for nivel, val in first_dimension[2].items()])
+            if where:
+                where = "where %s" % where
+            sql = "select distinct(%s), %s from td_%s %s order by %s" % (select, campos, first_dimension[0], where, campos)
+            print sql
+            return sql          
 
     def drill_replacing(self, axis, value):
         nivel = self.dimensions[self.dimensions_order[int(axis)]][1]
@@ -128,7 +181,7 @@ class Cubiculo:
         self.del_restriccion(dimension[0])
         
         values = value.split(" - ")
-        niveles = self.meta.parent_list(dimension[0], nivel)
+        niveles = self.meta.parent_list_without_dimension(dimension[0], nivel)
         
         for nivel, value in zip(niveles, values):
             self.add_restriction(dimension[0], nivel, value)
@@ -153,58 +206,160 @@ class Cubiculo:
     
     def getOtherAxisList(self):
         return [x[0] for x in self.ore]
+    
+    def _select(self):
+        '''
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c._select()
+        "SELECT td_tiempo.anio|| ' - ' ||td_tiempo.mes as columns, td_pieza.grupo_constructivo as rows, sum(ft_ventas.cantidad) as cantidad"
+        >>>
+        '''
+        levels_with_parent = []
 
-    def sql(self):
-        """ devuelve el SQL """
-        ft = "ft_%s" % self.ft
-        sfrom = "from %s" % ft
+        for dimension in self.dimensions_order:
+            (name, level, restriction) = self.dimensions[dimension]
+            levels_with_parent.append(self.meta.parent_list(name, level)) 
+        
+        measures = ['%s(ft_%s.%s) as %s' % (x[1], self.ft ,x[0], x[0]) for x in self.measures]
+        
+        if levels_with_parent[0] == ["TODO"]:
+            columns_string = "'TODO' as columns"
+        else:
+            columns_string = "|| ' - ' ||".join(levels_with_parent[0]) + " as columns"
 
-        joins = ''
+        if levels_with_parent[1] == ["TODO"]:
+            rows_string = "'TODO' as rows"
+        else:
+            rows_string   = "|| ' - ' ||".join(levels_with_parent[1]) + " as rows"
+        
+        select = "SELECT %s, %s, %s"  % (columns_string, rows_string,','.join(measures)) 
+        
+        return select
+    
+    def _from(self):
+        '''
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c._from()
+        'FROM ft_ventas JOIN td_tiempo on (ft_ventas.fk_tiempo = td_tiempo.id) JOIN td_pieza on (ft_ventas.fk_pieza = td_pieza.id) '
+        >>>
+        '''
+        sfrom = "FROM ft_%s" % self.ft
+        
+        joins = ""
+        for dimension in self.dimensions_order:
+            (name, level, restriction) = self.dimensions[dimension]
+
+            joins += "JOIN td_%s on (ft_%s.fk_%s = td_%s.id) " % (name, self.ft, name, name)
+            
+        for other_dim in self.ore:
+            (name, level, restriction) = other_dim
+            joins += "JOIN td_%s on (ft_%s.fk_%s = td_%s.id) " % (name, self.ft, name, name)
+            
+        return "%s %s" % (sfrom, joins)
+    
+    def _where(self):
+        '''
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c._where()
+        ''
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c._where()
+        "WHERE td_tiempo.anio in('2005', '1999') "
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[['proveedor', 'proveedor', {'proveedor': ['Mercedez Benz']}]])
+        >>> c._where()
+        "WHERE td_tiempo.anio in('2005', '1999') AND td_proveedor.proveedor in('Mercedez Benz') "
+        '''
+        
         levels_with_parent = []
         where = []
 
         for dimension in self.dimensions_order:
             (name, level, restriction) = self.dimensions[dimension]
-
-            joins += "join td_%s on (%s.fk_%s = td_%s.id) " % (name, ft, name, name)
             levels_with_parent.append(self.meta.parent_list(name, level)) 
             if restriction:
                 for nivel, val in restriction.items():
-                    valores = ", ".join([str(v) for v in val])
-                    where.append("td_%s.%s in('%s')" % ( name, nivel, valores))
+                    valores = ", ".join(["'%s'" % v for v in val])
+                    where.append("td_%s.%s in(%s)" % ( name, nivel, valores))
         
         for other_dim in self.ore:
             (name, level, restriction) = other_dim
-            joins += "join td_%s on (%s.fk_%s = td_%s.id) " % (name, ft, name, name)
             if restriction:
                 for nivel, val in restriction.items():
-                    valores = ", ".join([str(v) for v in val])
-                    where.append("td_%s.%s in('%s')" % ( name, nivel, valores))            
-            
-        group_by = 'group by ' + ', '.join([", ".join(x) for x in levels_with_parent])
-        order_by = "order by %s " % ', '.join([", ".join(x) for x in levels_with_parent])
+                    valores = ", ".join(["'%s'" % v for v in val])
+                    where.append("td_%s.%s in(%s)" % ( name, nivel, valores))
+
         if where:
-            where = "where %s " % ' and '.join(where)
+            where = "WHERE %s " % ' AND '.join(where)
         else:
             where = ""
-
-        measures = ['%s(%s) as %s' % (x[1],x[0], x[0]) for x in self.measures]
-
-        columns_string = "|| ' - ' ||".join(levels_with_parent[0]) + " as columns"
-        rows_string   = "|| ' - ' ||".join(levels_with_parent[1]) + " as rows"
         
-        select = "select %s, %s, %s"  % (columns_string, rows_string,','.join(measures)) 
-
+        return where
         
-        sql = """
-%s
-%s
-%s
-%s
-%s
-%s
-""" % (select,sfrom, joins,where,group_by, order_by)
-        print sql
+    def _group_by(self):
+        '''
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c._group_by()
+        'GROUP BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo '
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c._group_by()
+        'GROUP BY td_tiempo.anio, td_tiempo.mes '
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'TODO', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c._group_by()
+        ''
+        >>>
+        '''
+        levels_with_parent = []
+
+        for dimension in self.dimensions_order:
+            (name, level, restriction) = self.dimensions[dimension]
+            if level != 'TODO':
+                levels_with_parent.append(self.meta.parent_list(name, level)) 
+        
+        if levels_with_parent == []:
+            return ''
+        else:
+            values = ', '.join([", ".join(x) for x in levels_with_parent])
+            group_by = 'GROUP BY %s ' % values
+            return group_by
+
+    
+    def _order_by(self):
+        '''
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c._order_by()
+        'ORDER BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo '
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c._order_by()
+        'ORDER BY td_tiempo.anio, td_tiempo.mes '
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'TODO', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c._order_by()
+        ''
+        >>>
+        '''        
+
+        levels_with_parent = []
+
+        for dimension in self.dimensions_order:
+            (name, level, restriction) = self.dimensions[dimension]
+            if level != 'TODO':
+                levels_with_parent.append(self.meta.parent_list(name, level)) 
+
+        if levels_with_parent == []:
+            return ''
+        else:
+            values = ', '.join([", ".join(x) for x in levels_with_parent])
+            order_by = "ORDER BY %s " % values
+            return order_by
+
+    def sql(self):
+        '''
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c.sql()
+        "SELECT td_tiempo.anio|| ' - ' ||td_tiempo.mes as columns, td_pieza.grupo_constructivo as rows, sum(ft_ventas.cantidad) as cantidad\\nFROM ft_ventas JOIN td_tiempo on (ft_ventas.fk_tiempo = td_tiempo.id) JOIN td_pieza on (ft_ventas.fk_pieza = td_pieza.id) \\n\\nGROUP BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo \\nORDER BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo \\n"
+        >>>
+        '''   
+
+        sql = "%s\n" * 5 % (self._select(),self._from(), self._where(), self._group_by(), self._order_by() )
 
         return sql
     
@@ -236,3 +391,10 @@ class Cubiculo:
 
 
 
+
+def _test():
+    import doctest
+    doctest.testmod()
+
+if __name__ == "__main__":
+    _test()

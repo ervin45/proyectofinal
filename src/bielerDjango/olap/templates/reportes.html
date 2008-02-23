@@ -77,7 +77,7 @@
 </tbody><tbody>
     <tr>
         <th></th>
-        {% for h in header %}
+        {% for h in cube.header %}
             
             <th>
                 <a href="/drill_replacing/0/{{h}}/">{{h}}</a>
@@ -85,12 +85,12 @@
         {% endfor %}
     </tr>
     
-    {% for valor in body_order %}
+    {% for valor in cube.body_order %}
     <tr>
         <th><a href="/drill_replacing/1/{{valor}}/">{{valor}}</a></th>
-        {% for v in body|hash:valor %}
+        {% for v in cube.body|hash:valor %}
         <td>        
-          <a href="/drill_replacing2/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{v|default_if_none:"&nbsp;"}}</a>
+          <a href="/drill_replacing2/{{ cube.header|hash:forloop.counter0 }}/{{valor}}/">{{v|default_if_none:"&nbsp;"}}</a>
         </td>
         {% endfor %}
     </tr>
@@ -119,12 +119,13 @@
 <script type="text/javascript" src="/media/js/swfobject.js"></script>
 <div id="flashcontent"></div>
 <script type="text/javascript">
-var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "1900", "600", "9", "#FFFFFF");
+/*var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "1000", "500", "9", "#FFFFFF");
 so.addVariable("variables","true");
 
 {{ofc_params}}
 
 so.write("flashcontent");
+*/
 </script>
 
 
