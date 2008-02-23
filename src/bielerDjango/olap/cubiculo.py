@@ -228,19 +228,19 @@ class Cubiculo:
         self.dimensions_order.append(a[0])
         self.dimensions[a[0]] = a
 
-    def add_measure(self, m):
+    def _add_measure(self, m):
         self.measures.append(m)
         
-    def add_restriction(self, dimension, level, value):
+    def _add_restriction(self, dimension, level, value):
         '''
         Agrega una restriccion a una dimension en un determinado nivel.
         value debe ser una lista de elementos a los cuales ser incluido
 
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
-        >>> c.add_restriction('pieza', 'grupo_constructivo', '184')
+        >>> c._add_restriction('pieza', 'grupo_constructivo', '184')
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {'grupo_constructivo': ['184']}]}
-        >>> c.add_restriction('pieza', 'grupo_constructivo', '185')
+        >>> c._add_restriction('pieza', 'grupo_constructivo', '185')
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {'grupo_constructivo': ['184', '185']}]}
         >>>
@@ -251,7 +251,7 @@ class Cubiculo:
         else:
             self.dimensions[dimension][2][level].append(value)
 
-    def del_restriccion(self, dimension):
+    def _del_restriccion(self, dimension):
         self.dimensions[dimension][2] = {}
 
 
@@ -307,7 +307,7 @@ class Cubiculo:
         dimension = self.dimensions_order[int(axis)]
         level = self.dimensions[dimension][1]
         new_level = self.meta.next(dimension, level)
-        self.del_restriccion(dimension)
+        self._del_restriccion(dimension)
         self.dimensions[dimension][1] = new_level
 
     def pivot(self):
@@ -324,13 +324,13 @@ class Cubiculo:
         (self.dimensions_order[0], self.dimensions_order[1]) = (self.dimensions_order[1], self.dimensions_order[0])
         
 
-    def getMeasuresList(self):
+    def get_measures_list(self):
         '''
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
-        >>> c.getMeasuresList()
+        >>> c.get_measures_list()
         ['stock', 'compras']
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
-        >>> c.getMeasuresList()
+        >>> c.get_measures_list()
         ['cantidad']
         '''
         return [x[0] for x in self.measures]
@@ -391,27 +391,34 @@ class Cubiculo:
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
         >>> try:
-        ...     c.drill_replacing(3, '5')
+        ...     c.drill_replacing(3, '1999')
         ... except InvalidDimension:
         ...     print "OK"
+        ...
+        OK
+        >>> try:
+        ...     c.drill_replacing('1', '1999')
+        ...     print "OK"
+        ... except InvalidDimension:
+        ...     print "WRONG"
         ...
         OK
         >>> 
         '''
         
-        if axis not in (0, 1):
+        if int(axis) not in (0, 1):
             raise InvalidDimension
         
         
         level = self.dimensions[self.dimensions_order[int(axis)]][1]
         dimension = self.dimensions[self.dimensions_order[int(axis)]]
-        self.del_restriccion(dimension[0])
+        self._del_restriccion(dimension[0])
         
         values = value.split(" - ")
         levels = self.meta.parent_list_without_dimension(dimension[0], level)
         
         for level, value in zip(levels, values):
-            self.add_restriction(dimension[0], level, value)
+            self._add_restriction(dimension[0], level, value)
         self.drill(axis)
 
     def drill_replacing2(self, value0, value1):
@@ -432,12 +439,12 @@ class Cubiculo:
         Realiza una operacion de dice (rotacion de ejes del cubo)
         
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
-        >>> c.getMainAxisList()
+        >>> c.get_main_axis_list()
         ['tiempo', 'pieza']
         >>> c.dice('pieza', 'proveedor')
-        >>> c.getMainAxisList()
+        >>> c.get_main_axis_list()
         ['tiempo', 'proveedor']
-        >>> c.getOtherAxisList()
+        >>> c.get_other_axis_list()
         ['pieza']
         >>> try:
         ...    c.dice('pieza', 'proveedor')
@@ -475,19 +482,19 @@ class Cubiculo:
         
         self.dimensions[other_axis] = other_dimension
 
-    def getMainAxisList(self):
+    def get_main_axis_list(self):
         '''
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
-        >>> c.getMainAxisList()
+        >>> c.get_main_axis_list()
         ['tiempo', 'pieza']
         >>>
         '''
         return self.dimensions.keys()
     
-    def getOtherAxisList(self):
+    def get_other_axis_list(self):
         '''
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
-        >>> c.getOtherAxisList()
+        >>> c.get_other_axis_list()
         ['proveedor']
         >>>
         '''

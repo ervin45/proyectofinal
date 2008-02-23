@@ -406,11 +406,11 @@ class Report:
 
         return axis_values
 
-    def getMainAxisList(self):
-        return self.cubiculo.getMainAxisList()
+    def get_main_axis_list(self):
+        return self.cubiculo.get_main_axis_list()
 
-    def getOtherAxisList(self):
-        return self.cubiculo.getOtherAxisList()
+    def get_other_axis_list(self):
+        return self.cubiculo.get_other_axis_list()
  
     def get_sql(self, ft):
         return self.cubiculo.sql()
@@ -558,13 +558,13 @@ class Report2:
 
         return axis_values
 
-    def getMainAxisList(self):
+    def get_main_axis_list(self):
         first_cubiculo = self.cubiculos[self.fts[0]]
-        return first_cubiculo.getMainAxisList()
+        return first_cubiculo.get_main_axis_list()
 
-    def getOtherAxisList(self):
+    def get_other_axis_list(self):
         first_cubiculo = self.cubiculos[self.fts[0]]
-        return first_cubiculo.getOtherAxisList()
+        return first_cubiculo.get_other_axis_list()
 
     def get_sql(self, ft):
         cubiculo = self.cubiculos[ft]

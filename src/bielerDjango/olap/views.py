@@ -38,8 +38,8 @@ def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
         body       = get_body(cube)
         body_order = cube.dim_x     
             
-        main_axis = report.getMainAxisList()
-        other_axis = report.getOtherAxisList()
+        main_axis = report.get_main_axis_list()
+        other_axis = report.get_other_axis_list()
     
         #ofc_params = graph_data(header, body, body_order)
         return render_to_response('reportes2.html',locals())
