@@ -317,7 +317,7 @@ class Cubiculo:
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'modelo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
         >>> c.pivot()        
         >>> c.dimensions
-        ['pieza', 'tiempo']
+        {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'modelo', {}]}
         >>> 
         '''
         
