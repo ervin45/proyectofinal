@@ -286,7 +286,7 @@ class Cubiculo:
         para 2 valores (uno por eje)
         
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
-        >>> c.dimensions2
+        >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
         >>> c.drill_replacing2('2007 - 6', '184')
         >>> c.dimensions
