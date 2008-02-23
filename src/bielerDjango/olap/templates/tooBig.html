@@ -1,0 +1,35 @@
+{% load hash_tags %}
+<!DCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''" /><title>Bieler Web Application</title>
+
+<script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/olap.css" media="screen" />
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $("#dice").click(function() {
+        
+        var main_axis = document.getElementById('main_axis').value
+        var other_axis = document.getElementById('other_axis').value
+        
+        window.location = "/dice/" + main_axis + "/" + other_axis +"/"
+      });
+    });
+
+</script>
+</head>
+<body>
+
+
+El cubo es muy GRANDE
+
+
+<form>
+
+<input type="button" value="Volver al Informe" onClick="history.back()">
+
+</form>
+</body>
+
+</html>
