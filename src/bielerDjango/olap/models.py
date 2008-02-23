@@ -18,7 +18,7 @@ def compare(a,b):
     primero = str(a).split(' - ')
     segundo = str(b).split(' - ')
     for x,y in zip(primero, segundo):
-        if isFloat(x) and isFloat(y):                                   
+        if isFloat(x) and isFloat(y):
             if float(x) > float(y):
                 return 1
             elif float(x) < float(y):

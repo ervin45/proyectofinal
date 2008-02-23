@@ -6,7 +6,7 @@ class SimpleTest(unittest.TestCase):
         # Every test needs a client.
         self.client = Client()
 
-    def test_details(self):
+    def test_rotacion_mes(self):
         # Issue a GET request.
         url = """/report2/ventas/pieza/tiempo/modelo/mes/xr={'grupo_constructivo':[184], 'modelo':[3]}/yr={}/ore={}/movimientos/pieza/tiempo/modelo/anio/xr={'grupo_constructivo':[184], 'modelo':[3]}/yr={}/ore={}/"""
         response=self.client.get(url)
