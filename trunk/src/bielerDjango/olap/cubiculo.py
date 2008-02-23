@@ -229,6 +229,35 @@ class Cubiculo:
         self.dimensions[a[0]] = a
 
     def _add_measure(self, m):
+        '''
+        Agrega un measure. 
+        
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> c.measures
+        [['cantidad','sum']]
+        >>> c._add_measure(['margen_dolares','sum'])
+        >>> c.measures
+        [['cantidad','sum'], ['margen_dolares','sum']]
+        >>> try:
+        ...    c._add_measure('margen_pesos')
+        ... except InvalidMeasure
+        ...    print "OK"
+        ...
+        OK
+        >>> try:
+        ...    c._add_measure(['margen_pesos'])
+        ... except InvalidMeasure
+        ...    print "OK"
+        ...
+        OK
+        >>> try:
+        ...    c._add_measure(['margen_pesos','sum','cualquiera'])
+        ... except InvalidMeasure
+        ...    print "OK"
+        ...
+        OK
+        >>> 
+        '''
         self.measures.append(m)
         
     def _add_restriction(self, dimension, level, value):
@@ -237,6 +266,8 @@ class Cubiculo:
         value debe ser una lista de elementos a los cuales ser incluido
 
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
         >>> c._add_restriction('pieza', 'grupo_constructivo', '184')
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {'grupo_constructivo': ['184']}]}
@@ -252,6 +283,14 @@ class Cubiculo:
             self.dimensions[dimension][2][level].append(value)
 
     def _del_restriccion(self, dimension):
+        '''
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> c._del_restriccion('pieza')
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
+
+        '''
+        
         self.dimensions[dimension][2] = {}
 
 
