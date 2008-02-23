@@ -54,17 +54,40 @@
 <table>
     <tr>
         <td></td>
-        <td><a href="/roll/0/">Arriba</a></td>
+        <td>
+{% if can_roll_x %}
+<a href="/roll/0/">Arriba</a>
+{% else %}
+Arriba
+{% endif %}
+
+</td>
         <td></td>
     </tr>
     <tr>
-        <td><a href="/roll/1/">Izq</a></td>
+        <td>{% if can_roll_y %}
+<a href="/roll/1/">Izq</a>
+{% else %}
+Izq
+{% endif %}</Arribatd>
         <td></td>
-        <td><a href="/drill/1/">Der</a></td>
+        <td>
+{% if can_drill_y %}
+<a href="/drill/1/">Derecha</a>
+{% else %}
+Derecha
+{% endif %}
+</td>
     </tr>
         <tr>
             <td></td>
-            <td><a href="/drill/0/">Abajo</a> </td>
+            <td>
+{% if can_drill_x %}
+<a href="/drill/0/">Abajo</a>
+{% else %}
+Abajo
+{% endif %}
+</td>
             <td></td>
         </tr>        
 </table> 

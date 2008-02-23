@@ -37,6 +37,12 @@ def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
         header     = cube.dim_y
         body       = get_body(cube)
         body_order = cube.dim_x     
+        
+        can_roll_x   = cube.can_roll_x()
+        can_roll_y   = cube.can_roll_y()
+        can_drill_x  = cube.can_drill_x()
+        can_drill_y  = cube.can_drill_y()
+         
             
         main_axis = report.get_main_axis_list()
         other_axis = report.get_other_axis_list()
