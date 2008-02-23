@@ -269,6 +269,32 @@ class Cubiculo:
             return sql          
 
     def drill_replacing(self, axis, value):
+        '''
+        Realiza una operación de drill en un eje determinado
+
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'anio', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
+        >>> c.drill_replacing(0, '2007')
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'mes', {'anio': ['2007']}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
+        >>> c.drill_replacing(0, '2007 - 6')
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
+        >>> try:
+        ...     c.drill_replacing(0, 'cualquiera')
+        ... except InvalidData:
+        ...     print "OK"
+        ...
+        OK
+        >>> try:
+        ...     c.drill_replacing(3, 'cualquiera')
+        ... except InvalidLevel:
+        ...     print "OK"
+        ...
+        OK
+        >>> 
+        '''
         level = self.dimensions[self.dimensions_order[int(axis)]][1]
         dimension = self.dimensions[self.dimensions_order[int(axis)]]
         self.del_restriccion(dimension[0])
