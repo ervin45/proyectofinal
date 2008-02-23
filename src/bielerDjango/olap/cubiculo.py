@@ -214,9 +214,9 @@ class Cubiculo:
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
         >>> c._add_dimension(['proveedor', 'proveedor', {'proveedor': ['Mercedez']}])
        >>> pprint(c.dimensions)
-        {'pieza': ['pieza', 'grupo_constructivo', {}],
-         'proveedor': ['proveedor', 'proveedor', {'proveedor': ['Mercedez']}],
-         'tiempo': ['tiempo', 'mes', {}]}
+       {'pieza': ['pieza', 'grupo_constructivo', {}],
+        'proveedor': ['proveedor', 'proveedor', {'proveedor': ['Mercedez']}],
+        'tiempo': ['tiempo', 'mes', {}]}
         ''' 
         try:
             self.dimensions_order[0]
@@ -292,12 +292,17 @@ class Cubiculo:
         'select distinct(td_pieza.grupo_constructivo), td_pieza.grupo_constructivo from td_pieza  order by td_pieza.grupo_constructivo'
         >>> try:
         ...    c.dimension_values(3)
-        ... except InvalidAxis:
+        ... except InvalidDimension:
         ...    print "OK"
         ...
         OK
         >>>
         '''
+        
+        if axis not in (0, 1):
+            raise InvalidDimension
+        
+        
         first_dimension = self.dimensions[self.dimensions_order[int(axis)]]
         levels_parent = self.meta.parent_list(first_dimension[0], first_dimension[1])
         
