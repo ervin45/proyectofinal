@@ -9,7 +9,7 @@ class InvalidLevel:
 class InvalidDimension:
     pass
 
-class InvalidValue:
+class InvalidData:
     pass
 
 class InvalidAxis:
@@ -317,7 +317,7 @@ class Cubiculo:
             if where:
                 where = "where %s" % where
             sql = "select distinct(%s), %s from td_%s %s order by %s" % (select, campos, first_dimension[0], where, campos)
-            print sql
+            
             return sql          
 
     def drill_replacing(self, axis, value):
@@ -334,19 +334,18 @@ class Cubiculo:
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
         >>> try:
-        ...     c.drill_replacing(0, 'cualquiera')
-        ... except InvalidData:
-        ...     print "OK"
-        ...
-        OK
-        >>> try:
-        ...     c.drill_replacing(3, 'cualquiera')
-        ... except InvalidAxis:
+        ...     c.drill_replacing(3, '5')
+        ... except InvalidDimension:
         ...     print "OK"
         ...
         OK
         >>> 
         '''
+        
+        if axis not in (0, 1):
+            raise InvalidDimension
+        
+        
         level = self.dimensions[self.dimensions_order[int(axis)]][1]
         dimension = self.dimensions[self.dimensions_order[int(axis)]]
         self.del_restriccion(dimension[0])
@@ -366,11 +365,6 @@ class Cubiculo:
         >>> c.drill_replacing2('2007 - 6', '184')
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'modelo', {'grupo_constructivo': ['184']}]}
-        >>> try:
-        ...    c.drill_replacing2('cualquiera', '184')
-        ... except InvalidValue:
-        ...    print "OK"
-        OK
         >>>
         '''
         self.drill_replacing(0, value0)
@@ -385,7 +379,9 @@ class Cubiculo:
         ['tiempo', 'pieza']
         >>> c.dice('pieza', 'proveedor')
         >>> c.getMainAxisList()
-        ['tiempo', 'povedoor']
+        ['tiempo', 'proveedor']
+        >>> c.getOtherAxisList()
+        ['pieza']
         >>> try:
         ...    c.dice('pieza', 'proveedor')
         ... except InvalidDimension:
@@ -398,19 +394,30 @@ class Cubiculo:
         if not main_axis in self.dimensions.keys():
             raise InvalidDimension
         
-        if not other_axis in self.ore.keys():
+        
+        other_dimensions = [x for x in self.meta.fact_table_meta[self.ft] if x not in self.dimensions.keys()]
+        if not other_axis in other_dimensions:
             raise InvalidDimension
+
+
+        main_dimension = self.dimensions.pop(main_axis)
         
+        #other_axis puede estar o no en self.ore
+        try:
+            #si esta
+            index = [self.ore.index(x) for x in self.ore if x[0] == other_axis][0]
+            other_dimension = self.ore[index]
+            self.ore[index] = main_dimension
+        except IndexError:
+            #si no esta
+            other_dimension = [other_axis, "TODO", {}]
+            self.ore.append(main_dimension)
+            
+        main_axis_order = self.dimensions_order.index(main_axis)
+        self.dimensions_order[main_axis_order] = other_axis
         
-        ma = self.dimensions.pop(main_axis)
-        
-        index = [self.ore.index(x) for x in self.ore if x[0] == other_axis][0]
-        oa = self.ore[index]
-        
-        self.dimensions_order[self.dimensions_order.index(main_axis)] = other_axis
-        self.ore[index] = ma
-        self.dimensions[other_axis] = oa
-        
+        self.dimensions[other_axis] = other_dimension
+
     def getMainAxisList(self):
         '''
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
