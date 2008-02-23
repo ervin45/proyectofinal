@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+#-*- coding: <encoding name> -*-
+
 from pprint import pprint
 
 class InvalidLevel:
@@ -279,10 +282,21 @@ class Cubiculo:
 
     def drill_replacing2(self, value0, value1):
         '''
-        Realiza una operación de dice (rotación de ejes del cubo)
+        Realiza una operación de drill_replacing en ambos ejes
+        para 2 valores (uno por eje)
         
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
-        >>> c = getMainAxisList()
+        >>> c.dimensions2
+        {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
+        >>> c.drill_replacing2('2007 - 6', '184')
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'modelo', {'grupo_constructivo': ['184']}]}
+        >>> try:
+        ...    c.drill_replacing2('cualquiera', '184')
+        ... except InvalidLevel:
+        ...    print "OK"
+        OK
+        >>>
         '''
         self.drill_replacing(0, value0)
         self.drill_replacing(1, value1)
