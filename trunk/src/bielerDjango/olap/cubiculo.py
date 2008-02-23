@@ -707,6 +707,18 @@ class Cubiculo:
     
     
     def absolute_url(self, request):
+        '''
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> class Minimal_request:
+        ...   def __init__(self,servername, serverport):
+        ...     self.META = {}
+        ...     self.META['SERVER_NAME'] = servername
+        ...     self.META['SERVER_PORT'] = serverport
+        ...
+        >>> request = Minimal_request('localhost','8000')
+        >>> c.absolute_url(request)
+        'http://localhost:8000/report/compras/tiempo/pieza/mes/grupo_constructivo/xr={}/yr={}/ore=[]/'
+        '''
         url = "http://%s:%s/report/compras/" % (request.META['SERVER_NAME'], request.META['SERVER_PORT'])
         dimension_url = "/".join(self.dimensions_order)
         url = url + dimension_url + "/"
