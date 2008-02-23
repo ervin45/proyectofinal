@@ -119,8 +119,10 @@ def get_tope(max_y):
     Toma max_y y devuelve un numero de tope de la tabla
     '''
     big_max_y = max_y * 1.05
-    
-    digitos = math.ceil(math.log10(big_max_y))
+    if max_y <= 1:
+        digitos = 1
+    else:    
+        digitos = math.ceil(math.log10(big_max_y))
     pos = [(x+1)*(10**(digitos-1)) for x in range(10)]
     tope = [x for x in pos if x > big_max_y][0]
     
