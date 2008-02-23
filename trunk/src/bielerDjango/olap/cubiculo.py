@@ -12,6 +12,9 @@ class InvalidDimension:
 class InvalidValue:
     pass
 
+class InvalidAxis:
+    pass
+
 
 class Meta:
     def __init__(self):
@@ -210,7 +213,7 @@ class Cubiculo:
         '''
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
         >>> c._add_dimension(['proveedor', 'proveedor', {'proveedor': ['Mercedez']}])
-        >>> pprint(c.dimensions)
+       >>> pprint(c.dimensions)
         {'pieza': ['pieza', 'grupo_constructivo', {}],
          'proveedor': ['proveedor', 'proveedor', {'proveedor': ['Mercedez']}],
          'tiempo': ['tiempo', 'mes', {}]}
@@ -229,6 +232,20 @@ class Cubiculo:
         self.measures.append(m)
         
     def add_restriction(self, dimension, level, value):
+        '''
+        Agrega una restriccion a una dimension en un determinado nivel.
+        value debe ser una lista de elementos a los cuales ser incluido
+
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> c.add_restriction('pieza', 'grupo_constructivo', '184')
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {'grupo_constructivo': ['184']}]}
+        >>> c.add_restriction('pieza', 'grupo_constructivo', '185')
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {'grupo_constructivo': ['184', '185']}]}
+        >>>
+        '''
+        
         if not self.dimensions[dimension][2].has_key(level):
             self.dimensions[dimension][2][level] = [value] 
         else:
@@ -256,9 +273,31 @@ class Cubiculo:
         
 
     def getMeasuresList(self):
+        '''
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
+        >>> c.getMeasuresList()
+        ['stock', 'compras']
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> c.getMeasuresList()
+        ['cantidad']
+        '''
         return [x[0] for x in self.measures]
 
     def dimension_values(self, axis):
+        '''
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
+        >>> c.dimension_values(0)
+        'select distinct(td_tiempo.anio), td_tiempo.anio from td_tiempo  order by td_tiempo.anio'
+        >>> c.dimension_values(1)
+        'select distinct(td_pieza.grupo_constructivo), td_pieza.grupo_constructivo from td_pieza  order by td_pieza.grupo_constructivo'
+        >>> try:
+        ...    c.dimension_values(3)
+        ... except InvalidAxis:
+        ...    print "OK"
+        ...
+        OK
+        >>>
+        '''
         first_dimension = self.dimensions[self.dimensions_order[int(axis)]]
         levels_parent = self.meta.parent_list(first_dimension[0], first_dimension[1])
         
@@ -285,7 +324,7 @@ class Cubiculo:
         '''
         Realiza una operación de drill en un eje determinado
 
-        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
         >>> c.dimensions
         {'tiempo': ['tiempo', 'anio', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
         >>> c.drill_replacing(0, '2007')
@@ -302,7 +341,7 @@ class Cubiculo:
         OK
         >>> try:
         ...     c.drill_replacing(3, 'cualquiera')
-        ... except InvalidLevel:
+        ... except InvalidAxis:
         ...     print "OK"
         ...
         OK
@@ -321,7 +360,7 @@ class Cubiculo:
 
     def drill_replacing2(self, value0, value1):
         '''
-        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
         >>> c.drill_replacing2('2007 - 6', '184')
@@ -341,7 +380,7 @@ class Cubiculo:
         '''
         Realiza una operacion de dice (rotacion de ejes del cubo)
         
-        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
         >>> c.getMainAxisList()
         ['tiempo', 'pieza']
         >>> c.dice('pieza', 'proveedor')
@@ -374,7 +413,7 @@ class Cubiculo:
         
     def getMainAxisList(self):
         '''
-        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
         >>> c.getMainAxisList()
         ['tiempo', 'pieza']
         >>>
@@ -383,7 +422,7 @@ class Cubiculo:
     
     def getOtherAxisList(self):
         '''
-        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
         >>> c.getOtherAxisList()
         ['proveedor']
         >>>
@@ -394,7 +433,7 @@ class Cubiculo:
     
     def _select(self):
         '''
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._select()
         "SELECT td_tiempo.anio|| ' - ' ||td_tiempo.mes as columns, td_pieza.grupo_constructivo as rows, sum(ft_ventas.cantidad) as cantidad"
         >>>
@@ -423,7 +462,7 @@ class Cubiculo:
     
     def _from(self):
         '''
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._from()
         'FROM ft_ventas JOIN td_tiempo on (ft_ventas.fk_tiempo = td_tiempo.id) JOIN td_pieza on (ft_ventas.fk_pieza = td_pieza.id) '
         >>>
@@ -444,10 +483,10 @@ class Cubiculo:
     
     def _where(self):
         '''
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._where()
         ''
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._where()
         "WHERE td_tiempo.anio in('2005', '1999') "
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[['proveedor', 'proveedor', {'proveedor': ['Mercedez Benz']}]])
@@ -482,13 +521,13 @@ class Cubiculo:
         
     def _group_by(self):
         '''
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._group_by()
         'GROUP BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo '
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._group_by()
         'GROUP BY td_tiempo.anio, td_tiempo.mes '
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'TODO', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'TODO', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._group_by()
         ''
         >>>
@@ -510,13 +549,13 @@ class Cubiculo:
     
     def _order_by(self):
         '''
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._order_by()
         'ORDER BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo '
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._order_by()
         'ORDER BY td_tiempo.anio, td_tiempo.mes '
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'TODO', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'TODO', {}], ['pieza', 'TODO', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._order_by()
         ''
         >>>
@@ -538,7 +577,7 @@ class Cubiculo:
 
     def sql(self):
         '''
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c.sql()
         "SELECT td_tiempo.anio|| ' - ' ||td_tiempo.mes as columns, td_pieza.grupo_constructivo as rows, sum(ft_ventas.cantidad) as cantidad\\nFROM ft_ventas JOIN td_tiempo on (ft_ventas.fk_tiempo = td_tiempo.id) JOIN td_pieza on (ft_ventas.fk_pieza = td_pieza.id) \\n\\nGROUP BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo \\nORDER BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo \\n"
         >>>
