@@ -67,6 +67,10 @@ class Cube:
         self.measures = []
         self.data = {}
         self.default = None
+        self._can_roll_x = True
+        self._can_roll_y = True
+        self._can_drill_x = True
+        self._can_drill_y = True 
     
     def set_default(self, value):
         ''' 
@@ -347,7 +351,19 @@ class Cube:
             temp = []
             for j in self.dim_y:
                 temp.extend([j] * factor_y)
-            self.dim_y = temp            
+            self.dim_y = temp
+            
+    def can_roll_x(self):
+        return self._can_roll_x
+    
+    def can_roll_y(self):
+        return self._can_roll_y
+    
+    def can_drill_x(self):
+        return self._can_drill_x
+    
+    def can_drill_y(self):
+        return self._can_drill_y
 
 class CubeTooBig:
     pass
@@ -369,7 +385,7 @@ class Report:
          
         dimensions = [[self.x,self.xl,eval(self.xr)],[self.y,self.yl,eval(self.yr)]]
         self.cubiculo = cubiculo.Cubiculo(self.ft,dimensions,self.measures, eval(self.ore))
-
+        
     def pivot(self, request):
         self.cubiculo.pivot()
         return self.cubiculo.absolute_url(request)
@@ -457,7 +473,12 @@ class Report:
                 temp_cube.add(x1, y1, {'result': temp})
 
         return temp_cube
-
+            
+    def set_can_flags(self, cube):
+        cube._can_roll_x = self.cubiculo.can_roll_x()
+        cube._can_roll_y = self.cubiculo.can_roll_y()
+        cube._can_drill_x = self.cubiculo.can_drill_x()
+        cube._can_drill_y = self.cubiculo.can_drill_y()
 
     def build_cube(self):
         cube = Cube()
@@ -468,11 +489,10 @@ class Report:
         self.fill_table(cube, incomplete_table)
         self.complete_dimensions(cube, self.cubiculo)
         final_cube = self.exec_member_function(cube)
+        
+        self.set_can_flags(final_cube)
 
-        print "DATA"
-        #pprint(final_cube.data)
-
-        return final_cube                        
+        return final_cube
 
 
 

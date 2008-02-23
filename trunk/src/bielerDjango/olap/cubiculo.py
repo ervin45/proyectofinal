@@ -15,6 +15,9 @@ class InvalidData:
 class InvalidAxis:
     pass
 
+class InvalidMeasure:
+    pass
+
 
 class Meta:
     def __init__(self):
@@ -234,30 +237,34 @@ class Cubiculo:
         
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c.measures
-        [['cantidad','sum']]
-        >>> c._add_measure(['margen_dolares','sum'])
+        [['cantidad', 'sum']]
+        >>> c._add_measure(['margen_dolares', 'sum'])
         >>> c.measures
-        [['cantidad','sum'], ['margen_dolares','sum']]
+        [['cantidad', 'sum'], ['margen_dolares', 'sum']]
         >>> try:
         ...    c._add_measure('margen_pesos')
-        ... except InvalidMeasure
+        ... except InvalidMeasure:
         ...    print "OK"
         ...
         OK
         >>> try:
         ...    c._add_measure(['margen_pesos'])
-        ... except InvalidMeasure
+        ... except InvalidMeasure:
         ...    print "OK"
         ...
         OK
         >>> try:
         ...    c._add_measure(['margen_pesos','sum','cualquiera'])
-        ... except InvalidMeasure
+        ... except InvalidMeasure:
         ...    print "OK"
         ...
         OK
         >>> 
         '''
+        
+        if len(m) != 2:
+            raise InvalidMeasure
+        
         self.measures.append(m)
         
     def _add_restriction(self, dimension, level, value):
@@ -733,6 +740,92 @@ class Cubiculo:
         url = url + xr_url + yr_url + ore_url
         
         return url
+    
+    def can_roll_x(self):
+        '''
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'pieza', {}]], measures=[['stock']], ore=[])
+        >>> c.can_roll_x()
+        True
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'TODO', {}], ['pieza', 'pieza', {}]], measures=[['stock']], ore=[])
+        >>> c.can_roll_x()
+        False
+        '''
+        
+        x_dimension = self.dimensions_order[0]
+        x_levels    = self.meta.dimension_meta[x_dimension]
+        
+        highest_level = x_levels[-1] 
+        actual_level = self.dimensions[x_dimension][1]
+        
+        if highest_level == actual_level:
+            return False
+        
+        return True
+    
+    def can_drill_x(self):
+        '''
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'pieza', {}]], measures=[['stock']], ore=[])
+        >>> c.can_drill_x()
+        False
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'pieza', {}]], measures=[['stock']], ore=[])
+        >>> c.can_drill_x()
+        True
+        '''
+        
+        x_dimension = self.dimensions_order[0]
+        x_levels    = self.meta.dimension_meta[x_dimension]
+        
+        lowest_level = x_levels[0] 
+        actual_level = self.dimensions[x_dimension][1]
+        
+        if lowest_level == actual_level:
+            return False
+        
+        return True
+
+
+    def can_roll_y(self):
+        '''
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['pieza', 'pieza', {}], ['tiempo', 'mes', {}]], measures=[['stock']], ore=[])
+        >>> c.can_roll_y()
+        True
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['pieza', 'pieza', {}], ['tiempo', 'TODO', {}]], measures=[['stock']], ore=[])
+        >>> c.can_roll_y()
+        False
+        '''
+        
+        y_dimension = self.dimensions_order[1]
+        y_levels    = self.meta.dimension_meta[y_dimension]
+        
+        highest_level = y_levels[-1] 
+        actual_level = self.dimensions[y_dimension][1]
+        
+        if highest_level == actual_level:
+            return False
+        
+        return True
+    
+    def can_drill_y(self):
+        '''
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['pieza', 'pieza', {}], ['tiempo', 'anio', {}]], measures=[['stock']], ore=[])
+        >>> c.can_drill_y()
+        True
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['pieza', 'pieza', {}], ['tiempo', 'mes', {}]], measures=[['stock']], ore=[])
+        >>> c.can_drill_y()
+        False
+        '''
+        
+        y_dimension = self.dimensions_order[1]
+        y_levels    = self.meta.dimension_meta[y_dimension]
+        
+        lowest_level = y_levels[0] 
+        actual_level = self.dimensions[y_dimension][1]
+        
+        if lowest_level == actual_level:
+            return False
+        
+        return True    
+
 
 
 #c = cubiculo.Cubiculo('vendido',
