@@ -313,6 +313,9 @@ class Cubiculo:
         OK
         >>>
         '''
+        if int(axis) not in (0, 1):
+            raise InvalidAxis
+        
         dimension = self.dimensions_order[int(axis)]
         level = self.dimensions[dimension][1]
         new_level = self.meta.previous(dimension, level)
@@ -343,6 +346,10 @@ class Cubiculo:
         OK
         >>>        
         '''
+        
+        if int(axis) not in (0, 1):
+            raise InvalidAxis        
+        
         dimension = self.dimensions_order[int(axis)]
         level = self.dimensions[dimension][1]
         new_level = self.meta.next(dimension, level)
@@ -374,47 +381,6 @@ class Cubiculo:
         '''
         return [x[0] for x in self.measures]
 
-    def dimension_values(self, axis):
-        '''
-        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
-        >>> c.dimension_values(0)
-        'select distinct(td_tiempo.anio), td_tiempo.anio from td_tiempo  order by td_tiempo.anio'
-        >>> c.dimension_values(1)
-        'select distinct(td_pieza.grupo_constructivo), td_pieza.grupo_constructivo from td_pieza  order by td_pieza.grupo_constructivo'
-        >>> try:
-        ...    c.dimension_values(3)
-        ... except InvalidDimension:
-        ...    print "OK"
-        ...
-        OK
-        >>>
-        '''
-        
-        if axis not in (0, 1):
-            raise InvalidDimension
-        
-        
-        first_dimension = self.dimensions[self.dimensions_order[int(axis)]]
-        levels_parent = self.meta.parent_list(first_dimension[0], first_dimension[1])
-        
-        if levels_parent == ['TODO']:
-            return "select 'TODO' as TODO"
-        else: 
-            select = "|| ' - ' ||".join(levels_parent)
-            campos = ", ".join([x for x in levels_parent])
-            
-            where = []
-            where_aux = []
-            for level, val in first_dimension[2].items():
-                valores = ", ".join([str(v) for v in val])
-                rest = "td_%s.%s in('%s')" % ( first_dimension[0], level, valores)
-                where_aux.append(rest)
-            where = "%s" % " and ".join(where_aux)
-            if where:
-                where = "where %s" % where
-            sql = "select distinct(%s), %s from td_%s %s order by %s" % (select, campos, first_dimension[0], where, campos)
-            
-            return sql          
 
     def drill_replacing(self, axis, value):
         '''
@@ -431,14 +397,14 @@ class Cubiculo:
         {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
         >>> try:
         ...     c.drill_replacing(3, '1999')
-        ... except InvalidDimension:
+        ... except InvalidAxis:
         ...     print "OK"
         ...
         OK
         >>> try:
         ...     c.drill_replacing('1', '1999')
         ...     print "OK"
-        ... except InvalidDimension:
+        ... except InvalidAxis:
         ...     print "WRONG"
         ...
         OK
@@ -446,7 +412,7 @@ class Cubiculo:
         '''
         
         if int(axis) not in (0, 1):
-            raise InvalidDimension
+            raise InvalidAxis
         
         
         level = self.dimensions[self.dimensions_order[int(axis)]][1]
@@ -520,6 +486,48 @@ class Cubiculo:
         self.dimensions_order[main_axis_order] = other_axis
         
         self.dimensions[other_axis] = other_dimension
+        
+    def dimension_values(self, axis):
+        '''
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
+        >>> c.dimension_values(0)
+        'select distinct(td_tiempo.anio), td_tiempo.anio from td_tiempo  order by td_tiempo.anio'
+        >>> c.dimension_values(1)
+        'select distinct(td_pieza.grupo_constructivo), td_pieza.grupo_constructivo from td_pieza  order by td_pieza.grupo_constructivo'
+        >>> try:
+        ...    c.dimension_values(3)
+        ... except InvalidAxis:
+        ...    print "OK"
+        ...
+        OK
+        >>>
+        '''
+        
+        if axis not in (0, 1):
+            raise InvalidAxis
+        
+        
+        first_dimension = self.dimensions[self.dimensions_order[int(axis)]]
+        levels_parent = self.meta.parent_list(first_dimension[0], first_dimension[1])
+        
+        if levels_parent == ['TODO']:
+            return "select 'TODO' as TODO"
+        else: 
+            select = "|| ' - ' ||".join(levels_parent)
+            campos = ", ".join([x for x in levels_parent])
+            
+            where = []
+            where_aux = []
+            for level, val in first_dimension[2].items():
+                valores = ", ".join([str(v) for v in val])
+                rest = "td_%s.%s in('%s')" % ( first_dimension[0], level, valores)
+                where_aux.append(rest)
+            where = "%s" % " and ".join(where_aux)
+            if where:
+                where = "where %s" % where
+            sql = "select distinct(%s), %s from td_%s %s order by %s" % (select, campos, first_dimension[0], where, campos)
+            
+            return sql                  
 
     def get_main_axis_list(self):
         '''
