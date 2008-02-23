@@ -41,7 +41,7 @@ def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
         main_axis = report.getMainAxisList()
         other_axis = report.getOtherAxisList()
     
-        #ofc_params = graph_data(cube.header, cube.body, cube.body_order)        
+        #ofc_params = graph_data(header, body, body_order)
         return render_to_response('reportes2.html',locals())
     
     except models.CubeTooBig:
@@ -64,9 +64,9 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     #main_axis = report2.getMainAxisList()
     #other_axis = report2.getOtherAxisList()
     
-    ofc_params = graph_data(header, body, body_order)
+    #ofc_params = graph_data(header, body, body_order)
     
-    return render_to_response('reportes.html',locals())
+    return render_to_response('reportes2.html',locals())
 
         
 def get_body(cube):

@@ -1,5 +1,12 @@
 from pprint import pprint
 
+class InvalidLevel:
+    pass
+
+class InvalidDimension:
+    pass
+
+
 class Meta:
     def __init__(self):
         self.dimension_meta = {'pieza':['codigo',
@@ -13,7 +20,7 @@ class Meta:
                                'proveedor':['proveedor', 'TODO']
                             }
 
-    def previous(self, dimension, nivel):
+    def previous(self, dimension, level):
         """
         >>> c = Meta()
         >>> c.previous('tiempo', 'anio')
@@ -21,25 +28,83 @@ class Meta:
         >>> c.previous('tiempo', 'TODO')
         'anio'
         >>>
+        >>> try:
+        ...    c.previous('tiempo', '')
+        ... except InvalidLevel:
+        ...    print "OK"
+        ... 
+        OK
+        >>> try:
+        ...    c.previous('tiempo', 'cualquiera')
+        ... except InvalidLevel:
+        ...    print "OK"
+        ... 
+        OK
+        >>> try:
+        ...    c.previous('', 'anio')
+        ... except InvalidDimension:
+        ...    print "OK"
+        ... 
+        OK
         """
-        index = self.dimension_meta[dimension].index(nivel)
+        if not dimension in self.dimension_meta.keys():
+            raise InvalidDimension
+        
+        if not level in self.dimension_meta[dimension]:
+            raise InvalidLevel
+        
+        index = self.dimension_meta[dimension].index(level)
         result = self.dimension_meta[dimension][index - 1:index]
         if result == []:
-            result = nivel
+            result = level
         else:
             result = result[0]
         return result
 
-    def next(self, dimension, nivel):
-        index = self.dimension_meta[dimension].index(nivel)
+    def next(self, dimension, level=""):
+        """
+        >>> c = Meta()
+        >>> c.next('tiempo', 'anio')
+        'TODO'
+        >>> c.next('tiempo', 'TODO')
+        'TODO'
+        >>>
+        >>> c.next('tiempo', 'mes')
+        'anio'
+        >>> try:
+        ...    c.next('tiempo', '')
+        ... except InvalidLevel:
+        ...    print "OK"
+        ... 
+        OK
+        >>> try:
+        ...    c.next('tiempo', 'cualquiera')
+        ... except InvalidLevel:
+        ...    print "OK"
+        ... 
+        OK
+        >>> try:
+        ...    c.next('', 'anio')
+        ... except InvalidDimension:
+        ...    print "OK"
+        ...
+        OK
+        """
+        if not dimension in self.dimension_meta.keys():
+            raise InvalidDimension
+        
+        if not level in self.dimension_meta[dimension]:
+            raise InvalidLevel
+        
+        index = self.dimension_meta[dimension].index(level)
         result = self.dimension_meta[dimension][index + 1:index + 2]
         if result == []:
-            result = nivel
+            result = level
         else:
             result = result[0]
         return result
 
-    def parent_list(self, dimension, nivel):
+    def parent_list(self, dimension, level):
         '''
         >>> c = Meta()
         >>> c.parent_list('tiempo', 'mes')
@@ -48,22 +113,39 @@ class Meta:
         ['td_tiempo.anio']
         >>> c.parent_list('tiempo', 'TODO')
         ['TODO']
-        >>>
+        >>> try:
+        ...    c.parent_list('tiempo', 'cualquiera')
+        ... except InvalidLevel:
+        ...    print "OK"
+        ... 
+        OK
+        >>> try:
+        ...    c.parent_list('', 'anio')
+        ... except InvalidDimension:
+        ...    print "OK"
+        ... 
+        OK
         '''
-        
-        if nivel == 'TODO':
+        if not dimension in self.dimension_meta.keys():
+            raise InvalidDimension
+
+        if not level in self.dimension_meta[dimension]:
+            raise InvalidLevel
+
+
+        if level == 'TODO':
             return ['TODO']
         else:
             result = []
         
-            niveles = self.dimension_meta[dimension]
-            niveles_superiores = niveles[niveles.index(nivel):]
+            levels = self.dimension_meta[dimension]
+            niveles_superiores = levels[levels.index(level):]
         
             result = ["td_%s.%s" % (dimension, x)  for x in niveles_superiores if x != 'TODO']
             result.reverse()
             return result
         
-    def parent_list_without_dimension(self, dimension, nivel):
+    def parent_list_without_dimension(self, dimension, level):
         '''
         >>> c = Meta()
         >>> c.parent_list_without_dimension('tiempo', 'mes')
@@ -75,13 +157,13 @@ class Meta:
         >>>
         '''
         
-        if nivel == 'TODO':
+        if level == 'TODO':
             return ['TODO']
         else:
             result = []
         
-            niveles = self.dimension_meta[dimension]
-            niveles_superiores = niveles[niveles.index(nivel):]
+            levels = self.dimension_meta[dimension]
+            niveles_superiores = levels[levels.index(level):]
         
             result = [x for x in niveles_superiores if x != 'TODO']
             result.reverse()
@@ -102,12 +184,20 @@ class Cubiculo:
         self.ft = ft
         self.dimensions = {}
         for a in dimensions:
-            self.add_dimension(a)
+            self._add_dimension(a)
         self.measures = measures
         self.ore = ore
         self.meta = Meta()
 
-    def add_dimension(self, a):
+    def _add_dimension(self, a):
+        '''
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore={})
+        >>> c._add_dimension(['proveedor', 'proveedor', {'proveedor': ['Mercedez']}])
+        >>> pprint(c.dimensions)
+        {'pieza': ['pieza', 'grupo_constructivo', {}],
+         'proveedor': ['proveedor', 'proveedor', {'proveedor': ['Mercedez']}],
+         'tiempo': ['tiempo', 'mes', {}]}
+        ''' 
         try:
             self.dimensions_order[0]
         except:
@@ -121,11 +211,11 @@ class Cubiculo:
     def add_measure(self, m):
         self.measures.append(m)
         
-    def add_restriction(self, dimension, nivel, value):
-        if not self.dimensions[dimension][2].has_key(nivel):
-            self.dimensions[dimension][2][nivel] = [value] 
+    def add_restriction(self, dimension, level, value):
+        if not self.dimensions[dimension][2].has_key(level):
+            self.dimensions[dimension][2][level] = [value] 
         else:
-            self.dimensions[dimension][2][nivel].append(value)
+            self.dimensions[dimension][2][level].append(value)
 
     def del_restriccion(self, dimension):
         self.dimensions[dimension][2] = {}
@@ -133,16 +223,16 @@ class Cubiculo:
 
     def drill(self, axis):
         dimension = self.dimensions_order[int(axis)]
-        nivel = self.dimensions[dimension][1]
-        nuevo_nivel = self.meta.previous(dimension, nivel)
-        self.dimensions[dimension][1] = nuevo_nivel
+        level = self.dimensions[dimension][1]
+        new_level = self.meta.previous(dimension, level)
+        self.dimensions[dimension][1] = new_level
 
     def roll(self, axis):
         dimension = self.dimensions_order[int(axis)]
-        nivel = self.dimensions[dimension][1]
-        nuevo_nivel = self.meta.next(dimension, nivel)
+        level = self.dimensions[dimension][1]
+        new_level = self.meta.next(dimension, level)
         self.del_restriccion(dimension)
-        self.dimensions[dimension][1] = nuevo_nivel
+        self.dimensions[dimension][1] = new_level
 
     def pivot(self):
         (self.dimensions_order[0], self.dimensions_order[1]) = (self.dimensions_order[1], self.dimensions_order[0])
@@ -163,12 +253,12 @@ class Cubiculo:
             
             where = []
             where_aux = []
-            for nivel, val in first_dimension[2].items():
+            for level, val in first_dimension[2].items():
                 valores = ", ".join([str(v) for v in val])
-                rest = "td_%s.%s in('%s')" % ( first_dimension[0], nivel, valores)
+                rest = "td_%s.%s in('%s')" % ( first_dimension[0], level, valores)
                 where_aux.append(rest)
             where = "%s" % " and ".join(where_aux)
-            #where = "%s" % " and ".join(["td_%s.%s in(%s)" % ( first_dimension[0], nivel, ", ".join(val)) for nivel, val in first_dimension[2].items()])
+            #where = "%s" % " and ".join(["td_%s.%s in(%s)" % ( first_dimension[0], level, ", ".join(val)) for level, val in first_dimension[2].items()])
             if where:
                 where = "where %s" % where
             sql = "select distinct(%s), %s from td_%s %s order by %s" % (select, campos, first_dimension[0], where, campos)
@@ -176,15 +266,15 @@ class Cubiculo:
             return sql          
 
     def drill_replacing(self, axis, value):
-        nivel = self.dimensions[self.dimensions_order[int(axis)]][1]
+        level = self.dimensions[self.dimensions_order[int(axis)]][1]
         dimension = self.dimensions[self.dimensions_order[int(axis)]]
         self.del_restriccion(dimension[0])
         
         values = value.split(" - ")
-        niveles = self.meta.parent_list_without_dimension(dimension[0], nivel)
+        levels = self.meta.parent_list_without_dimension(dimension[0], level)
         
-        for nivel, value in zip(niveles, values):
-            self.add_restriction(dimension[0], nivel, value)
+        for level, value in zip(levels, values):
+            self.add_restriction(dimension[0], level, value)
         self.drill(axis)
 
     def drill_replacing2(self, value0, value1):
@@ -277,16 +367,16 @@ class Cubiculo:
             (name, level, restriction) = self.dimensions[dimension]
             levels_with_parent.append(self.meta.parent_list(name, level)) 
             if restriction:
-                for nivel, val in restriction.items():
+                for level, val in restriction.items():
                     valores = ", ".join(["'%s'" % v for v in val])
-                    where.append("td_%s.%s in(%s)" % ( name, nivel, valores))
+                    where.append("td_%s.%s in(%s)" % ( name, level, valores))
         
         for other_dim in self.ore:
             (name, level, restriction) = other_dim
             if restriction:
-                for nivel, val in restriction.items():
+                for level, val in restriction.items():
                     valores = ", ".join(["'%s'" % v for v in val])
-                    where.append("td_%s.%s in(%s)" % ( name, nivel, valores))
+                    where.append("td_%s.%s in(%s)" % ( name, level, valores))
 
         if where:
             where = "WHERE %s " % ' AND '.join(where)
