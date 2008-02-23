@@ -292,9 +292,21 @@ class Cubiculo:
         self.dimensions[other_axis] = oa
         
     def getMainAxisList(self):
+        '''
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
+        >>> c.getMainAxisList()
+        ['tiempo', 'pieza']
+        >>>
+        '''
         return self.dimensions.keys()
     
     def getOtherAxisList(self):
+        '''
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore={})
+        >>> c.getOtherAxisList()
+        ['proveedor']
+        >>>
+        '''
         return [x[0] for x in self.ore]
     
     def _select(self):
