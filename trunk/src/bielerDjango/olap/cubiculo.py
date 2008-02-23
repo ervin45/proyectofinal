@@ -415,11 +415,18 @@ class Cubiculo:
         ...     print "WRONG"
         ...
         OK
-        >>> 
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'TODO', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
+        >>> c.drill_replacing('0', 'TODO')
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'anio', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
         '''
         
         if int(axis) not in (0, 1):
             raise InvalidAxis
+        
+        if value == "TODO":
+            self.drill(axis)
+            return
         
         
         level = self.dimensions[self.dimensions_order[int(axis)]][1]
