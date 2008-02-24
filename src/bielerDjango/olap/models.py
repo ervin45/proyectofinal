@@ -7,8 +7,8 @@ from pprint import pprint
 
 from odict import odict
 
-too_many_rows = 800
-too_many_cells = 1600
+too_many_rows = 15000
+too_many_cells = 20000
 
 def isFloat(s):
     try:

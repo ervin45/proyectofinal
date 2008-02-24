@@ -408,18 +408,6 @@ class Cubiculo:
         (self.dimensions_order[0], self.dimensions_order[1]) = (self.dimensions_order[1], self.dimensions_order[0])
         
 
-    def get_measures_list(self):
-        '''
-        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
-        >>> c.get_measures_list()
-        ['stock', 'compras']
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
-        >>> c.get_measures_list()
-        ['cantidad']
-        '''
-        return [x[0] for x in self.measures]
-
-
     def drill_replacing(self, axis, value):
         '''
         Realiza una operación de drill en un eje determinado
@@ -450,6 +438,11 @@ class Cubiculo:
         >>> c.drill_replacing('0', 'TODO')
         >>> c.dimensions
         {'tiempo': ['tiempo', 'anio', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
+        >>> c = Cubiculo(ft='movimientos', dimensions=[[':tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
+        >>> c.drill_replacing('0', '1999')
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'anio', {'anio': ['1999']}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
+        >>>
         '''
         
         if int(axis) not in (0, 1):
@@ -460,15 +453,20 @@ class Cubiculo:
             return
         
         
+        #Primero agrego la restriccion y despues hago el drill
+        dim = self.dimensions_order[int(axis)]
+        #if self.dimensions_fixed[dim]:
+            #return False        
+        
         level = self.dimensions[self.dimensions_order[int(axis)]][1]
         dimension = self.dimensions[self.dimensions_order[int(axis)]]
-        self._del_restriccion(dimension[0])
+        self._del_restriccion(dim)
         
         values = value.split(" - ")
         levels = self.meta.parent_list_without_dimension(dimension[0], level)
         
         for level, value in zip(levels, values):
-            self._add_restriction(dimension[0], level, value)
+            self._add_restriction(dim, level, value)
         self.drill(axis)
 
     def drill_replacing2(self, value0, value1):
@@ -531,6 +529,20 @@ class Cubiculo:
         self.dimensions_order[main_axis_order] = other_axis
         
         self.dimensions[other_axis] = other_dimension
+        
+
+    def get_measures_list(self):
+        '''
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
+        >>> c.get_measures_list()
+        ['stock', 'compras']
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> c.get_measures_list()
+        ['cantidad']
+        '''
+        return [x[0] for x in self.measures]
+
+        
         
     def dimension_values(self, axis):
         '''
@@ -769,7 +781,7 @@ class Cubiculo:
         
         dimensions = []
         for dim in self.dimensions_order:
-            if self.dimensions_fixed[dim]:
+            if self.dimensions_fixed.get(dim, False):
                 dimensions.append(":" + dim)
             else:
                 dimensions.append(dim)
