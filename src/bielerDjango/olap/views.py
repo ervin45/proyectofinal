@@ -46,7 +46,7 @@ def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
             
         main_axis = report.get_main_axis_list()
         other_axis = report.get_other_axis_list()
-    
+        
         #ofc_params = graph_data(header, body, body_order)
         return render_to_response('reportes2.html',locals())
     
@@ -124,10 +124,11 @@ def drill_replacing2(request, value0, value1):
     url = report.drill_replacing2(request, value0, value1)
     return HttpResponseRedirect(url)
 
-def dice(request, main_axix, other_axis):
+def dice(request, main_axis, other_axis):
     (report, x, y, xl, yl, xr, yr, ore) = parse_url(request)
     report = models.Report(report, x, y, xl, yl, xr, yr, ore, costo_promedio)
-    url = report.dice(request, main_axix, other_axis)
+    url = report.dice(request, main_axis, other_axis)
+    
     return HttpResponseRedirect(url)  
 
 

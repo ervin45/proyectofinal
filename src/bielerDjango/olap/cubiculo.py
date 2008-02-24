@@ -37,7 +37,7 @@ class Meta:
                                                 'proveedor',
                                                 'tipo_venta'],
                                 'compras':     ['tiempo',
-                                                'pieza'
+                                                'pieza',
                                                 'proveedor'],
                                 'movimientos': ['tiempo',
                                                 'pieza',
@@ -557,7 +557,9 @@ class Cubiculo:
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
         >>> c.get_other_axis_list()
         ['proveedor']
-        >>>
+        >>> c = Cubiculo(ft='compras', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
+        >>> c.get_other_axis_list()
+        ['proveedor']
         '''
         
         total_dimensions = self.meta.fact_table_meta[self.ft]

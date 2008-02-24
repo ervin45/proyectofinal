@@ -6,7 +6,7 @@ import cubiculo
 from pprint import pprint
 
 too_many_rows = 400
-too_many_cells = 800
+too_many_cells = 1600
 
 def isFloat(s):
     try:
@@ -409,6 +409,7 @@ class Report:
         return self.cubiculo.absolute_url(request)
         
     def dice(self, request, main_axis, other_axis):
+        self.cubiculo.dice(main_axis, other_axis)
         return self.cubiculo.absolute_url(request)
        
     def dimension_values(self, axis):
