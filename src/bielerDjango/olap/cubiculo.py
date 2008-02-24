@@ -477,6 +477,12 @@ class Cubiculo:
         >>> c.drill_replacing2('2007 - 6', '184')
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'modelo', {'grupo_constructivo': ['184']}]}
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], [':pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
+        >>> c.drill_replacing2('2007 - 6', '184')
+        >>> c.dimensions
+        {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'grupo_constructivo', {'grupo_constructivo': ['184']}]}
         >>>
         '''
         self.drill_replacing(0, value0)
