@@ -5,7 +5,9 @@ import copy
 import cubiculo
 from pprint import pprint
 
-too_many_rows = 400
+from odict import odict
+
+too_many_rows = 800
 too_many_cells = 1600
 
 def isFloat(s):
@@ -366,9 +368,12 @@ class Cube:
         return self._can_drill_y
 
 class CubeTooBig:
-    pass
+    def __init__(self):
+        cells = 0
+        rows  = 0
 
-class Report:
+
+class Report1:
     def __init__(self,report_name, x, y, xl, yl, xr, yr, ore, member_function):
         ##VIENE DE LA BD en base a report
         self.ft = "compras"
@@ -388,29 +393,40 @@ class Report:
         
     def pivot(self, request):
         self.cubiculo.pivot()
-        return self.cubiculo.absolute_url(request)
+        
+        parcial_url = self.cubiculo.parcial_url()
+        return self.absolute_url(request, parcial_url)
 
     def drill(self,request, axis):
         self.cubiculo.drill(axis)
-        return self.cubiculo.absolute_url(request)    
+        
+        parcial_url = self.cubiculo.parcial_url()
+        return self.absolute_url(request, parcial_url)
 
     def roll(self, request, axis):
         self.cubiculo.roll(axis)
-        return self.cubiculo.absolute_url(request)        
+        
+        parcial_url = self.cubiculo.parcial_url()
+        return self.absolute_url(request, parcial_url)
 
     def drill_replacing(self, request, axis, value):
         self.cubiculo.drill_replacing(axis, value)
-        return self.cubiculo.absolute_url(request)        
+        
+        parcial_url = self.cubiculo.parcial_url()
+        return self.absolute_url(request, parcial_url)
 
     def drill_replacing2(self, request, value0, value1):
         self.cubiculo.drill_replacing(0, value0)
         self.cubiculo.drill_replacing(1, value1)
 
-        return self.cubiculo.absolute_url(request)
+        parcial_url = self.cubiculo.parcial_url()
+        return self.absolute_url(request, parcial_url)
         
     def dice(self, request, main_axis, other_axis):
         self.cubiculo.dice(main_axis, other_axis)
-        return self.cubiculo.absolute_url(request)
+        
+        parcial_url = self.cubiculo.parcial_url()
+        return self.absolute_url(request, parcial_url)
        
     def dimension_values(self, axis):
         con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw_backup")
@@ -438,7 +454,9 @@ class Report:
         cursor_dwh.execute(sql)
         
         if cursor_dwh.rowcount > too_many_rows:
-            raise CubeTooBig
+            c = CubeTooBig()
+            c.rows = cursor_dwh.rowcount
+            raise c
 
         return cursor_dwh.fetchall()
 
@@ -453,7 +471,9 @@ class Report:
         y_axis = self.dimension_values(0)
         
         if len(x_axis) * len(y_axis) > too_many_cells:
-            raise CubeTooBig
+            c = CubeTooBig()
+            c.cells = len(x_axis) * len(y_axis)
+            raise c
 
         for x in x_axis:
             cube.add_x_value(str(x))
@@ -495,6 +515,11 @@ class Report:
 
         return final_cube
 
+    def absolute_url(self, request, parcial_url):
+        print "PARCIAL_URL", parcial_url
+        url = "http://%s:%s/report/%s" % (request.META['SERVER_NAME'], request.META['SERVER_PORT'], parcial_url)
+        print "URL", url
+        return url
 
 
 class Report2:
@@ -521,52 +546,65 @@ class Report2:
         cubiculo2   = cubiculo.Cubiculo(ft2, dimensions2, self.measures[ft2], eore2)
 
 
-        self.cubiculos = {}
+        self.cubiculos = odict()
         self.cubiculos[ft1] = cubiculo1
         self.cubiculos[ft2] = cubiculo2
 
     def pivot(self, request):
+        parcial_url = ""
+        
         for cubiculo in self.cubiculos.values():       
             cubiculo.pivot()
-
-        first_cubiculo = self.cubiculos[self.fts[0]]
-        return first_cubiculo.absolute_url(request)
+            parcial_url += cubiculo.parcial_url()
+            
+        return self.absolute_url(request, parcial_url)
 
     def drill(self,request, axis):
+        parcial_url = ""
+        
         for cubiculo in self.cubiculos.values():       
             cubiculo.drill(axis)
-
-        first_cubiculo = self.cubiculos[self.fts[0]]
-        return first_cubiculo.absolute_url(request)    
+            parcial_url += cubiculo.parcial_url()
+            
+        return self.absolute_url(request, parcial_url)
 
     def roll(self, request, axis):
+        parcial_url = ""
+        
         for cubiculo in self.cubiculos.values():       
             cubiculo.roll(axis)
-
-        first_cubiculo = self.cubiculos[self.fts[0]]
-        return first_cubiculo.absolute_url(request)        
+            parcial_url += cubiculo.parcial_url()
+            
+        return self.absolute_url(request, parcial_url)
 
     def drill_replacing(self, request, axis, value):
+        parcial_url = ""
+        
         for cubiculo in self.cubiculos.values():       
             cubiculo.drill_replacing(axis, value)
-
-        first_cubiculo = self.cubiculos[self.fts[0]]
-        return first_cubiculo.absolute_url(request)        
+            parcial_url += cubiculo.parcial_url()
+            
+        return self.absolute_url(request, parcial_url)
 
     def drill_replacing2(self, request, value0, value1):
+        parcial_url = ""
+        
         for cubiculo in self.cubiculos.values():       
             cubiculo.drill_replacing(0, value0)
             cubiculo.drill_replacing(1, value1)
-
-        first_cubiculo = self.cubiculos[self.fts[0]]
-        return first_cubiculo.absolute_url(request)
+            
+            parcial_url += cubiculo.parcial_url()
+            
+        return self.absolute_url(request, parcial_url)
 
     def dice(self, request, main_axis, other_axis):
+        parcial_url = ""
+        
         for cubiculo in self.cubiculos.values():       
             cubiculo.dice(main_axis, other_axis)
-
-        first_cubiculo = self.cubiculos[self.fts[0]]
-        return first_cubiculo.absolute_url(request)
+            parcial_url += cubiculo.parcial_url()
+            
+        return self.absolute_url(request, parcial_url)
 
     def dimension_values(self, axis, cubiculo):
         con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw_backup")
@@ -597,6 +635,8 @@ class Report2:
         cursor_dwh.execute(sql)
         
         if cursor_dwh.rowcount > too_many_rows:
+            c = CubeTooBig()
+            c.rows = cursor_dwh.rowcount
             raise CubeTooBig
 
         return cursor_dwh.fetchall()
@@ -612,6 +652,8 @@ class Report2:
         y_axis = self.dimension_values(0, cubiculo)
         
         if len(x_axis) * len(y_axis) > too_many_cells:
+            c = CubeTooBig()
+            c.cells = len(x_axis) * len(y_axis)
             raise CubeTooBig
 
         for x in x_axis:
@@ -650,6 +692,12 @@ class Report2:
 
         return temp_cube
 
+    def set_can_flags(self, cube):
+        cube._can_roll_x = self.cubiculo.can_roll_x()
+        cube._can_roll_y = self.cubiculo.can_roll_y()
+        cube._can_drill_x = self.cubiculo.can_drill_x()
+        cube._can_drill_y = self.cubiculo.can_drill_y()
+
     def build_cube(self):
         complete_cubes = []
         for ft in self.fts:
@@ -665,9 +713,15 @@ class Report2:
 
         final_cube = self.merge(complete_cubes)
 
-        pprint(final_cube.data)
+        #self.set_can_flags(cube)
 
         return final_cube
+        
+    def absolute_url(self, request, parcial_url):
+        url = "http://%s:%s/report2/%s" % (request.META['SERVER_NAME'], request.META['SERVER_PORT'], parcial_url)
+        return url
+        
+
     
 def _test():
     import doctest

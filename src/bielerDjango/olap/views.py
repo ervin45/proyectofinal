@@ -25,10 +25,7 @@ def rotacion(first, second):
 
 
 def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
-    report = models.Report(report_name, x, y, xl, yl, xr, yr, ore, costo_promedio)
-    
-    print "parameter"
-    print report_name, x, y, xl, yl, xr, yr, ore
+    report = models.Report1(report_name, x, y, xl, yl, xr, yr, ore, costo_promedio)
 
     
     try:
@@ -59,22 +56,64 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     report2 = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, rotacion)
     
-    
-    cube = report2.build_cube()
-    
-    header     = cube.dim_y
-    body       = get_body(cube)
-    body_order = cube.dim_x
-    
-    
-    #main_axis = report2.getMainAxisList()
-    #other_axis = report2.getOtherAxisList()
-    
-    #ofc_params = graph_data(header, body, body_order)
-    
-    return render_to_response('reportes2.html',locals())
-
+    try:
+        cube = report2.build_cube()
         
+        header     = cube.dim_y
+        body       = get_body(cube)
+        body_order = cube.dim_x
+        
+        can_roll_x   = cube.can_roll_x()
+        can_roll_y   = cube.can_roll_y()
+        can_drill_x  = cube.can_drill_x()
+        can_drill_y  = cube.can_drill_y()
+        
+        main_axis = report2.get_main_axis_list()
+        other_axis = report2.get_other_axis_list()
+        
+        #ofc_params = graph_data(header, body, body_order)
+        
+        return render_to_response('reportes2.html',locals())
+    
+    except models.CubeTooBig, e:
+        cells = e.cells
+        rows  = e.rows
+        
+        return render_to_response('tooBig.html',locals())
+
+def pivot(request):
+    report = get_report(request)
+    print "QUE", report
+    url = report.pivot(request)
+    return HttpResponseRedirect(url)
+    
+def roll(request, axis):
+    report = get_report(request)
+    url = report.roll(request, axis)
+    return HttpResponseRedirect(url)
+
+def drill(request, axis):
+    report = get_report(request)
+    url = report.drill(request, axis)
+    return HttpResponseRedirect(url)
+
+def drill_replacing(request, axis, value):
+    report = get_report(request)
+    url = report.drill_replacing(request, axis, value)
+    return HttpResponseRedirect(url)
+
+def drill_replacing2(request, value0, value1):
+    report = get_report(request)
+    url = report.drill_replacing2(request, value0, value1)
+    return HttpResponseRedirect(url)
+
+def dice(request, main_axis, other_axis):
+    report = get_report(request)
+    url = report.dice(request, main_axis, other_axis)
+    return HttpResponseRedirect(url)
+
+
+
 def get_body(cube):
     '''
     >>> from pprint import pprint
@@ -94,42 +133,60 @@ def get_body(cube):
         
     return result
 
-def pivot(request):
-    (report, x, y, xl, yl, xr, yr, ore) = parse_url(request)
-    report = models.Report(report, x, y, xl, yl, xr, yr, ore, costo_promedio)
-    url = report.pivot(request)
-    return HttpResponseRedirect(url)
+def get_report(request):
+    http_referer = request.META['HTTP_REFERER']
+    server_name  = request.META['SERVER_NAME']
+    server_port  = request.META['SERVER_PORT']
     
-def roll(request, axis):
-    (report, x, y, xl, yl, xr, yr, ore) = parse_url(request)
-    report = models.Report(report, x, y, xl, yl, xr, yr, ore, costo_promedio)
-    url = report.roll(request, axis)
-    return HttpResponseRedirect(url)
-
-def drill(request, axis):
-    (report, x, y, xl, yl, xr, yr, ore) = parse_url(request)
-    report = models.Report(report, x, y, xl, yl, xr, yr, ore, costo_promedio)
-    url = report.drill(request, axis)
-    return HttpResponseRedirect(url)
-
-def drill_replacing(request, axis, value):
-    (report, x, y, xl, yl, xr, yr, ore) = parse_url(request)
-    report = models.Report(report, x, y, xl, yl, xr, yr, ore, costo_promedio)
-    url = report.drill_replacing(request, axis, value)
-    return HttpResponseRedirect(url)
-
-def drill_replacing2(request, value0, value1):
-    (report, x, y, xl, yl, xr, yr, ore) = parse_url(request)
-    report = models.Report(report, x, y, xl, yl, xr, yr, ore, costo_promedio)
-    url = report.drill_replacing2(request, value0, value1)
-    return HttpResponseRedirect(url)
-
-def dice(request, main_axis, other_axis):
-    (report, x, y, xl, yl, xr, yr, ore) = parse_url(request)
-    report = models.Report(report, x, y, xl, yl, xr, yr, ore, costo_promedio)
-    url = report.dice(request, main_axis, other_axis)
+    print referer_type(http_referer, server_name, server_port)
     
-    return HttpResponseRedirect(url)  
+    if referer_type(http_referer, server_name, server_port) == "Report1":
+        parsed_url = parse_url(http_referer, server_name, server_port)
+        (report, x, y, xl, yl, xr, yr, ore) = parsed_url
+        report = models.Report1(report, x, y, xl, yl, xr, yr, ore, costo_promedio)
+    else:
+        parsed_url = parse_url2(http_referer, server_name, server_port)
+        (ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2) = parsed_url
+        report = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, rotacion)
+        
+    return report
+
+    
+def referer_type(http_referer, server_name, server_port):
+    if parse_url(http_referer, server_name, server_port):
+        return "Report1"
+    else:
+        return "Report2"
+
+def parse_url(http_referer, server_name, server_port):
+    import re
+    import urllib
+    
+    referer = urllib.unquote_plus(http_referer)
+    url_patter = '^http://%s:%s/report/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$' % (server_name, server_port)
+    p = re.compile(url_patter)
+    result = p.findall(referer)
+    
+    if result == []:
+        return False
+    
+    return result[0]
+
+def parse_url2(http_referer, server_name, server_port):
+    import re
+    import urllib
+    
+    referer = urllib.unquote_plus(http_referer)
+    
+    url_patter = '^http://%s:%s/report2/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$' % (server_name, server_port)
+    p = re.compile(url_patter)
+    result = p.findall(referer)
+    
+    if result == []:
+        return False
+    
+    return result[0]
+
 
 
 def get_tope(max_y):
@@ -183,25 +240,3 @@ def graph_data(header, body, body_order):
     graph.set_y_max(get_tope(max_y))
     
     return graph.render_js()
-
-def parse_url(request):
-    import re
-    import urllib
-    
-    referer = urllib.unquote_plus(request.META['HTTP_REFERER'])
-    url_patter = '^http://%s:%s/report/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$' % (request.META['SERVER_NAME'], request.META['SERVER_PORT'])
-    p = re.compile(url_patter)    
-    result = p.findall(referer)
-    
-    return result[0]
-
-def test(request):
-    return HttpResponse('hola')
-
-
-def _test():
-    import doctest
-    doctest.testmod()
-
-if __name__ == "__main__":
-    _test()
