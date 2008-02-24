@@ -368,9 +368,9 @@ class Cube:
         return self._can_drill_y
 
 class CubeTooBig:
-    def __init__(self):
-        cells = 0
-        rows  = 0
+    def __init__(self, cells, rows):
+        self.cells = cells
+        self.rows  = rows
 
 
 class Report1:
@@ -454,9 +454,8 @@ class Report1:
         cursor_dwh.execute(sql)
         
         if cursor_dwh.rowcount > too_many_rows:
-            c = CubeTooBig()
-            c.rows = cursor_dwh.rowcount
-            raise c
+            rows = cursor_dwh.rowcount
+            raise CubeTooBig(0, rows)
 
         return cursor_dwh.fetchall()
 
@@ -471,9 +470,8 @@ class Report1:
         y_axis = self.dimension_values(0)
         
         if len(x_axis) * len(y_axis) > too_many_cells:
-            c = CubeTooBig()
-            c.cells = len(x_axis) * len(y_axis)
-            raise c
+            cells = len(x_axis) * len(y_axis)
+            raise CubeTooBig(cells, 0)
 
         for x in x_axis:
             cube.add_x_value(str(x))
@@ -635,9 +633,8 @@ class Report2:
         cursor_dwh.execute(sql)
         
         if cursor_dwh.rowcount > too_many_rows:
-            c = CubeTooBig()
-            c.rows = cursor_dwh.rowcount
-            raise CubeTooBig
+            rows = cursor_dwh.rowcount
+            raise CubeTooBig(0, rows)
 
         return cursor_dwh.fetchall()
 
@@ -652,9 +649,8 @@ class Report2:
         y_axis = self.dimension_values(0, cubiculo)
         
         if len(x_axis) * len(y_axis) > too_many_cells:
-            c = CubeTooBig()
-            c.cells = len(x_axis) * len(y_axis)
-            raise CubeTooBig
+            cells = len(x_axis) * len(y_axis)
+            raise CubeTooBig(cells, 0)
 
         for x in x_axis:
             cube.add_x_value(str(x))

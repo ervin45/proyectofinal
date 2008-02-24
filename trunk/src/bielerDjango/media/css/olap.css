@@ -1,9 +1,11 @@
-table,tr,td,th{border-spacing:0;border:1px solid #d9d1cc;}
-table{width:80%;margin:1em auto;background:#efeeff;}
-caption{font-weight:bold;width:75%;margin:0 auto -1em;background:#ac1f0d;color:#efe;border-bottom:1px solid #d9d1cc;}
-th{background:#DDD;color:#333;border-bottom:1px solid #d9d1cc;}
-tr{background:#feffee;color:#333;hover:expression(this.onmouseover=new Function("this.style.background='#AAA';"),this.onmouseout=new Function("this.style.background='#feffee';"));}
-tr:hover{background:#EFEFEF;}
-td{text-align:left;}
-a{color:#666;}
-a:hover{color:#000;}
+table,tr,td,th{border-spacing:0;border:0px solid #d9d1cc;}
+
+.data_table table,.data_table tr,.data_table td,.data_table th{border-spacing:0;border:1px solid #d9d1cc;}
+.data_table table{width:80%;margin:1em auto;background:#efeeff;}
+.data_table caption{font-weight:bold;width:75%;margin:0 auto -1em;background:#ac1f0d;color:#efe;border-bottom:1px solid #d9d1cc;}
+.data_table th{background:#DDD;color:#333;border-bottom:1px solid #d9d1cc;}
+.data_table tr{background:#feffee;color:#333;}
+.data_table td{text-align:left;}
+.data_table a{color:#666;}
+.data_table a:hover{color:#000;}
+

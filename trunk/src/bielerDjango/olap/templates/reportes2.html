@@ -51,51 +51,52 @@
 <br>
 
 
-<table>
+<table width="200" border="0" cellspacing="0" cellpadding="0">
     <tr>
         <td></td>
         <td>
-{% if can_roll_x %}
-<a href="/roll/0/">Arriba</a>
-{% else %}
-Arriba
-{% endif %}
-
-</td>
+            {% if can_roll_x %}
+            <a href="/roll/0/"><img src="/media/img/up_arrow.gif" style="border:0" /></a>
+            {% else %}
+            <img src="/media/img/up_arrow_dis.gif" style="border:0" />
+            {% endif %}
+            
+        </td>
         <td></td>
     </tr>
     <tr>
         <td>{% if can_roll_y %}
-<a href="/roll/1/">Izq</a>
-{% else %}
-Izq
-{% endif %}</Arribatd>
+            <a href="/roll/1/"><img src="/media/img/left_arrow.gif" style="border:0" /></a>
+            {% else %}
+            <img src="/media/img/left_arrow_dis.gif" style="border:0" />
+            {% endif %}
+        </td>
         <td></td>
         <td>
-{% if can_drill_y %}
-<a href="/drill/1/">Derecha</a>
-{% else %}
-Derecha
-{% endif %}
-</td>
+            {% if can_drill_y %}
+            <a href="/drill/1/"><img src="/media/img/right_arrow.gif" style="border:0" /></a>
+            {% else %}
+            <img src="/media/img/right_arrow_dis.gif" style="border:0" />
+            {% endif %}
+        </td>
     </tr>
-        <tr>
-            <td></td>
-            <td>
-{% if can_drill_x %}
-<a href="/drill/0/">Abajo</a>
-{% else %}
-Abajo
-{% endif %}
-</td>
-            <td></td>
-        </tr>        
+    <tr>
+        <td></td>
+        <td>
+            {% if can_drill_x %}
+            <a href="/drill/0/"><img src="/media/img/down_arrow.gif" style="border:0" /></a>
+            {% else %}
+            <img src="/media/img/down_arrow_dis.gif" style="border:0" />
+            {% endif %}
+        </td>
+        <td></td>
+    </tr>        
 </table> 
 
 </div>
 
 
-<table>
+<table class="data_table">
 <tbody>
 </tbody><tbody>
     <tr>
@@ -113,7 +114,11 @@ Abajo
         <th><a href="/drill_replacing/1/{{valor}}/">{{valor}}</a></th>
         {% for v in body|hash:valor %}
         <td>        
-          <a href="/drill_replacing2/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{v|default_if_none:"&nbsp;"}}</a>
+          {% if not v %}
+            &nbsp;
+          {% else %}
+            <a href="/drill_replacing2/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{v|floatformat:2}}</a>
+          {% endif %}
         </td>
         {% endfor %}
     </tr>
@@ -125,18 +130,9 @@ Abajo
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+<br />
+<br />
+<br />
 
 
 <script type="text/javascript" src="/media/js/swfobject.js"></script>
@@ -150,7 +146,5 @@ so.addVariable("variables","true");
 so.write("flashcontent");
 </script>
 
-
 </body>
-
 </html>
