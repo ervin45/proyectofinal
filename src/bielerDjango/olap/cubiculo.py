@@ -756,18 +756,24 @@ class Cubiculo:
     def parcial_url(self):
         '''
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
-        >>> class Minimal_request:
-        ...   def __init__(self,servername, serverport):
-        ...     self.META = {}
-        ...     self.META['SERVER_NAME'] = servername
-        ...     self.META['SERVER_PORT'] = serverport
-        ...
-        >>> request = Minimal_request('localhost','8000')
-        >>> c.absolute_url(request)
-        'http://localhost:8000/report/compras/tiempo/pieza/mes/grupo_constructivo/xr={}/yr={}/ore=[]/'
+        >>> print c.parcial_url()
+        ventas/tiempo/pieza/mes/grupo_constructivo/xr={}/yr={}/ore=[]/
+        >>> c = Cubiculo(ft='compras', dimensions=[['tiempo', 'mes', {'anio': ['1998']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> print c.parcial_url()
+        compras/tiempo/pieza/mes/grupo_constructivo/xr={'anio': ['1998']}/yr={}/ore=[]/
+        >>> c = Cubiculo(ft='compras', dimensions=[[':tiempo', 'mes', {'anio': ['1998']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> print c.parcial_url()
+        compras/:tiempo/pieza/mes/grupo_constructivo/xr={'anio': ['1998']}/yr={}/ore=[]/
         '''
         url = self.ft + "/"
-        dimension_url = "/".join(self.dimensions_order)
+        
+        dimensions = []
+        for dim in self.dimensions_order:
+            if self.dimensions_fixed[dim]:
+                dimensions.append(":" + dim)
+            else:
+                dimensions.append(dim)
+        dimension_url = "/".join(dimensions)
         url = url + dimension_url + "/"
         
         level_url = "/".join([self.dimensions[x][1] for x in self.dimensions_order])
