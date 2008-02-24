@@ -206,11 +206,13 @@ class Cubiculo:
     def __init__(self,ft, dimensions, measures, ore):
         self.ft = ft
         self.dimensions = {}
+        self.dimensions_fixed = {}
         for a in dimensions:
             self._add_dimension(a)
         self.measures = measures
         self.ore = ore
         self.meta = Meta()
+        
 
     def _add_dimension(self, a):
         '''
@@ -221,6 +223,8 @@ class Cubiculo:
         'proveedor': ['proveedor', 'proveedor', {'proveedor': ['Mercedez']}],
         'tiempo': ['tiempo', 'mes', {}]}
         ''' 
+        dim_name = a[0]
+        
         try:
             self.dimensions_order[0]
         except:
@@ -228,8 +232,16 @@ class Cubiculo:
         
         if len(a) == 2:
             a.append({})
-        self.dimensions_order.append(a[0])
-        self.dimensions[a[0]] = a
+            
+        if dim_name.startswith(":"):
+            dim_name = dim_name[1:]
+            a[0]     = dim_name
+            self.dimensions_fixed[dim_name] = True
+        else:
+            self.dimensions_fixed[dim_name] = False
+            
+        self.dimensions_order.append(dim_name)
+        self.dimensions[dim_name] = a
 
     def _add_measure(self, m):
         '''
@@ -318,12 +330,22 @@ class Cubiculo:
         ...    print "OK"
         ...
         OK
-        >>>
+        >>> c = Cubiculo(ft='movimientos', dimensions=[[':tiempo', 'anio', {}], ['pieza', 'modelo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
+        >>> c.roll(0)
+        False
+        >>> c.dimensions['tiempo']
+        ['tiempo', 'anio', {}]
         '''
+        
         if int(axis) not in (0, 1):
             raise InvalidAxis
         
+        
         dimension = self.dimensions_order[int(axis)]
+        
+        if self.dimensions_fixed[dimension]:
+            return False 
+        
         level = self.dimensions[dimension][1]
         new_level = self.meta.previous(dimension, level)
         self.dimensions[dimension][1] = new_level
@@ -351,13 +373,22 @@ class Cubiculo:
         ...    print "OK"
         ...
         OK
-        >>>        
+        >>> c = Cubiculo(ft='movimientos', dimensions=[[':tiempo', 'mes', {}], ['pieza', 'modelo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
+        >>> c.roll(0)
+        False
+        >>> c.dimensions['tiempo']
+        ['tiempo', 'mes', {}]
+        
         '''
         
         if int(axis) not in (0, 1):
             raise InvalidAxis        
         
         dimension = self.dimensions_order[int(axis)]
+        
+        if self.dimensions_fixed[dimension]:
+            return False
+        
         level = self.dimensions[dimension][1]
         new_level = self.meta.next(dimension, level)
         self._del_restriccion(dimension)
@@ -722,7 +753,7 @@ class Cubiculo:
         return sql
     
     
-    def absolute_url(self, request):
+    def parcial_url(self):
         '''
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> class Minimal_request:
@@ -735,7 +766,7 @@ class Cubiculo:
         >>> c.absolute_url(request)
         'http://localhost:8000/report/compras/tiempo/pieza/mes/grupo_constructivo/xr={}/yr={}/ore=[]/'
         '''
-        url = "http://%s:%s/report/compras/" % (request.META['SERVER_NAME'], request.META['SERVER_PORT'])
+        url = self.ft + "/"
         dimension_url = "/".join(self.dimensions_order)
         url = url + dimension_url + "/"
         
