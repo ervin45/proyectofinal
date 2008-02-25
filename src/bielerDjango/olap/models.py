@@ -9,7 +9,7 @@ from odict import odict
 
 from member_functions import *
 
-too_many_rows = 15000
+too_many_rows = 2000
 too_many_cells = 20000
 
 def isFloat(s):
@@ -370,8 +370,8 @@ class Cube:
     def can_drill_y(self):
         return self._can_drill_y
     
-    def add_info(self, ft, dimensions, measures):
-        self.info.append([ft, dimensions, measures])
+    def add_info(self, ft, dimensions, measures, ore):
+        self.info.append([ft, dimensions, measures, ore])
         
     def get_info(self):
         return self.info
@@ -523,8 +523,9 @@ class Report1:
     def set_meta_info(self, cube):
         ft = self.cubiculo.ft
         dimensions = self.cubiculo.dimensions
-        measures = self.cubiculo.measures
-        cube.add_info(ft=ft, dimensions=dimensions, measures=measures)
+        measures   = self.cubiculo.measures
+        ore        = self.ore
+        cube.add_info(ft=ft, dimensions=dimensions, measures=measures, ore=ore)
 
     def build_cube(self):
         cube = Cube()
@@ -555,11 +556,11 @@ class Report1:
 
 
 class Report2:
-    def __init__(self,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, member_function=None):
+    def __init__(self,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, param):
         ##VIENE DE LA BD en base a report
         self.fts = [ft1, ft2]
-        self.measures = {'movimientos': [["stock", "avg"]], 'ventas': [["cantidad", "sum"], ["margen_dolares", "sum"]]}
-        self.member_function = member_function
+        self.measures = eval(param)
+        self.member_function = globals()[mf]
         ##VIENE DE LA BD
         exr1        = eval(xr1)
         d11         = [x1, xl1, exr1]
@@ -567,7 +568,8 @@ class Report2:
         d12         = [y1, yl1, eyr1]
         dimensions1 = [d11, d12]
         eore1       = eval(ore1)
-        cubiculo1   = cubiculo.Cubiculo(ft1,dimensions1, self.measures[ft1], eore1)
+
+        cubiculo1   = cubiculo.Cubiculo(ft1,dimensions1, self._split_measures(ft1), eore1)
 
         exr2 = eval(xr2)
         d21 = [x2, xl2,exr2]
@@ -575,12 +577,26 @@ class Report2:
         d22 = [y2, yl2, eyr2]
         dimensions2 = [d21, d22]
         eore2 = eval(ore2)
-        cubiculo2   = cubiculo.Cubiculo(ft2, dimensions2, self.measures[ft2], eore2)
+        cubiculo2   = cubiculo.Cubiculo(ft2, dimensions2, self._split_measures(ft2), eore2)
 
 
         self.cubiculos = odict()
         self.cubiculos[ft1] = cubiculo1
         self.cubiculos[ft2] = cubiculo2
+        
+    def _split_measures(self, ft):
+        '''
+        >>> r = Report2("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "movimiento", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "sumar", '[["ft_movimientos", "stock", "avg"], ["ft_ventas", "cantidad", "sum"], ["ft_ventas", "margen_dolares", "sum"]]')
+        >>> r._split_measures("movimientos")
+        [['ft_movimientos', 'stock', 'avg']]
+        >>> r._split_measures("ventas")
+        [['ft_ventas', 'cantidad', 'sum'], ['ft_ventas', 'margen_dolares', 'sum']]
+        '''
+        result = []
+        for measure in self.measures:
+            if ft == measure[0][3:]:
+                result.append(measure)
+        return result
 
     def pivot(self, request):
         parcial_url = ""
@@ -704,6 +720,33 @@ class Report2:
         for cube in complete_cubes:
             cube.fit(max_dimensions[0], max_dimensions[1])
 
+    def _member_function_params(self, x1, y1, cubes):
+        params = []
+        
+        measures_values = {}
+        for cube in cubes:
+            measures_values.update(cube.get(x1, y1))
+            
+        for ft, measure, agregation in self.measures:
+            params.append(measures_values["%s__%s" % (ft, measure)])
+
+        return params
+
+    def exec_member_function(self, cube):
+        temp_cube = Cube()
+
+        pprint(cube)
+
+        for x1 in cube.dim_x:
+            for y1 in cube.dim_y:
+
+                params = self._member_function_params(x1, y1, cube)
+
+                temp = self.member_function(*params)
+
+                temp_cube.add(x1, y1, {'result': temp})
+
+        return temp_cube
 
     def merge(self, cubes):
         first  = cubes[0]
@@ -711,12 +754,15 @@ class Report2:
 
         temp_cube = Cube()
 
-        for x1, x2 in zip(first.dim_x, second.dim_x):           
-            for y1, y2 in zip(first.dim_y, second.dim_y):                
+        for x1, x2 in zip(first.dim_x, second.dim_x):
+            for y1, y2 in zip(first.dim_y, second.dim_y):
+
+                params = self._member_function_params(x1, y1, cubes)
+
                 first_cube_values  = first.get(x1, y1)
                 second_cube_values = second.get(x2, y2)
 
-                temp = self.member_function(first = first_cube_values, second = second_cube_values)
+                temp = self.member_function(*params)
 
                 temp_cube.add(x1, y1, {'result': temp})
 
@@ -748,10 +794,11 @@ class Report2:
     def absolute_url(self, request, parcial_url):
         from django.conf import settings
         server_ip  = settings.IP
+        mf = self.member_function.__name__
+        param = str(self.measures)
         
-        url = "http://%s:%s/report2/%s" % (server_ip, request.META['SERVER_PORT'], parcial_url)
+        url = "http://%s:%s/report2/%s%s/param=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, param)
         return url
-        
 
     
 def _test():

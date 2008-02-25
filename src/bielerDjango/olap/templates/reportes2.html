@@ -129,7 +129,7 @@
     <tr>
 {% endfor %}
       <td>Dimensiones Ocultas</td>
-      <td></td>
+      <td>{{ore}}</td>
     </tr>
     <tr>
       <td></td>
@@ -137,7 +137,7 @@
     </tr>
     <tr>
       <td>Medidas</td>
-      <td></td>
+      <td>{{measures}}</td>
     </tr>
     <tr>
       <td></td>
@@ -156,20 +156,33 @@
         {% for h in header %}
             
             <th>
-                <a href="/drill_replacing/0/{{h}}/">{{h}}</a>
+		{% if can_drill_x %}
+                	<a href="/drill_replacing/0/{{h}}/">{{h}}</a>
+		{% else %}
+			{{h}}
+		{% endif %}
             </th>
         {% endfor %}
     </tr>
     
     {% for valor in body_order %}
     <tr>
-        <th><a href="/drill_replacing/1/{{valor}}/">{{valor}}</a></th>
+        <th>
+	{% if can_drill_y %}
+		<a href="/drill_replacing/1/{{valor}}/">{{valor}}</a></th>
+	{% else %}
+		{{valor}}
+	{% endif %}
         {% for v in body|hash:valor %}
         <td>        
           {% if not v %}
             &nbsp;
           {% else %}
-            <a href="/drill_replacing2/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{v|floatformat:2}}</a>
+		{% if can_drill_x or can_drill_y %}
+            		<a href="/drill_replacing2/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{v|floatformat:2}}</a>
+		{% else %}
+			{{v|floatformat:2}}
+		{% endif %}
           {% endif %}
         </td>
         {% endfor %}

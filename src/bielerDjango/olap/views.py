@@ -43,12 +43,13 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, param):
         cube_info    = cube.get_info()
         ft           = cube_info[0][0]
         dimensions   = cube_info[0][1]
-        measures     = cube_info[0][2] 
+        measures     = cube_info[0][2]
+        ore          = cube_info[0][3] 
             
         main_axis = report.get_main_axis_list()
         other_axis = report.get_other_axis_list()
         
-        #ofc_params = graph_data(header, body, body_order)
+        ofc_params = graph_data(header, body, body_order)
         return render_to_response('reportes2.html',locals())
     
     except models.CubeTooBig:
@@ -56,9 +57,9 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, param):
     
 
 def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
-    ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2):
+    ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, param):
     report2 = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
-    ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, rotacion)
+    ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, param)
     
     try:
         cube = report2.build_cube()
@@ -151,8 +152,8 @@ def get_report(request):
         report = models.Report1(report, x, y, xl, yl, xr, yr, ore, mf, param)
     else:
         parsed_url = parse_url2(http_referer, server_ip, server_port)
-        (ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2) = parsed_url
-        report = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, rotacion)
+        (ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, param) = parsed_url
+        report = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, param)
         
     return report
 
@@ -183,7 +184,7 @@ def parse_url2(http_referer, server_ip, server_port):
     
     referer = urllib.unquote_plus(http_referer)
     
-    url_patter = '^http://%s:%s/report2/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$' % (server_ip, server_port)
+    url_patter = '^http://%s:%s/report2/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/param=(.*)/$' % (server_ip, server_port)
     p = re.compile(url_patter)
     result = p.findall(referer)
     
