@@ -1,6 +1,9 @@
 
 --Rotacion por mes solo para el grupo_constructivo 184-3  --
-http://192.168.61.100:8000/report2/ventas/pieza/tiempo/modelo/mes/xr={'grupo_constructivo':['184'], 'modelo':['3']}/yr={}/ore=[]/movimientos/pieza/tiempo/modelo/anio/xr={'grupo_constructivo':['184'], 'modelo':['3']}/yr={}/ore=[]
+
+--precio promedio de venta por mes solo para el grupo_constructivo 184-3  --
+http://192.168.61.100:8000/report2/ventas/tiempo/pieza/anio/codigo/xr={}/yr={'grupo_constructivo': ['184'], 'modelo': ['3']}/ore=[]/movimientos/tiempo/pieza/TODO/codigo/xr={}/yr={'grupo_constructivo': ['184'], 'modelo': ['3']}/ore=[]/dividir/param=[['ft_ventas', 'cantidad', 'sum'], ['ft_movimientos', 'stock', 'avg']]/
+
 
 --Rotacion por mes para todas las piezas por pieza --
 http://192.168.61.100:8000/report2/ventas/pieza/tiempo/grupo_constructivo/mes/xr={}/yr={'anio': ['2006']}/ore=[]/movimientos/pieza/tiempo/grupo_constructivo/anio/xr={}/yr={'anio': ['2006']}/ore=[]
