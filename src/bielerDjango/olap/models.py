@@ -7,6 +7,8 @@ from pprint import pprint
 
 from odict import odict
 
+from member_functions import *
+
 too_many_rows = 15000
 too_many_cells = 20000
 
@@ -72,7 +74,8 @@ class Cube:
         self._can_roll_x = True
         self._can_roll_y = True
         self._can_drill_x = True
-        self._can_drill_y = True 
+        self._can_drill_y = True
+        self.info = []
     
     def set_default(self, value):
         ''' 
@@ -366,6 +369,12 @@ class Cube:
     
     def can_drill_y(self):
         return self._can_drill_y
+    
+    def add_info(self, ft, dimensions, measures):
+        self.info.append([ft, dimensions, measures])
+        
+    def get_info(self):
+        return self.info
 
 class CubeTooBig:
     def __init__(self, cells, rows):
@@ -374,11 +383,11 @@ class CubeTooBig:
 
 
 class Report1:
-    def __init__(self,report_name, x, y, xl, yl, xr, yr, ore, member_function):
+    def __init__(self,ft, x, y, xl, yl, xr, yr, ore, mf, param):
         ##VIENE DE LA BD en base a report
-        self.ft = "compras"
-        self.measures = [["cantidad", "sum"], ['costo_dolar', 'sum']]
-        self.member_function = member_function
+        self.ft = ft
+        self.measures = eval(param)
+        self.member_function = globals()[mf]
         ##VIENE DE LA BD
         self.x = x
         self.xl = xl
@@ -479,15 +488,27 @@ class Report1:
         for y in y_axis:
             cube.add_y_value(str(y))
             
+    def _member_function_params(self, x1, y1, cube):
+        params = []
+        
+        measures_values = cube.get(x1, y1)
+        for ft, measure, agregation in self.measures:
+            params.append(measures_values["%s__%s" % (ft, measure)])
+            
+        return params
+            
     def exec_member_function(self, cube):
-
         temp_cube = Cube()
+        
+        pprint(cube)
 
-        for x1 in cube.dim_x:           
-            for y1 in cube.dim_y:                
-                cube_values = cube.get(x1, y1)
+        for x1 in cube.dim_x:
+            for y1 in cube.dim_y:
+                
+                params = self._member_function_params(x1, y1, cube)
+                #cube_values = cube.get(x1, y1)
 
-                temp = self.member_function(first = cube_values)
+                temp = self.member_function(*params)
 
                 temp_cube.add(x1, y1, {'result': temp})
 
@@ -498,6 +519,12 @@ class Report1:
         cube._can_roll_y = self.cubiculo.can_roll_y()
         cube._can_drill_x = self.cubiculo.can_drill_x()
         cube._can_drill_y = self.cubiculo.can_drill_y()
+        
+    def set_meta_info(self, cube):
+        ft = self.cubiculo.ft
+        dimensions = self.cubiculo.dimensions
+        measures = self.cubiculo.measures
+        cube.add_info(ft=ft, dimensions=dimensions, measures=measures)
 
     def build_cube(self):
         cube = Cube()
@@ -510,12 +537,14 @@ class Report1:
         final_cube = self.exec_member_function(cube)
         
         self.set_can_flags(final_cube)
+        self.set_meta_info(final_cube)
 
         return final_cube
 
     def absolute_url(self, request, parcial_url):
-        print "PARCIAL_URL", parcial_url
-        url = "http://%s:%s/report/%s" % (request.META['SERVER_NAME'], request.META['SERVER_PORT'], parcial_url)
+        from django.conf import settings
+        server_ip  = settings.IP        
+        url = "http://%s:%s/report/%s" % (server_ip, request.META['SERVER_PORT'], parcial_url)
         print "URL", url
         return url
 
@@ -689,10 +718,10 @@ class Report2:
         return temp_cube
 
     def set_can_flags(self, cube):
-        cube._can_roll_x = self.cubiculo.can_roll_x()
-        cube._can_roll_y = self.cubiculo.can_roll_y()
-        cube._can_drill_x = self.cubiculo.can_drill_x()
-        cube._can_drill_y = self.cubiculo.can_drill_y()
+        cube._can_roll_x  = any(x.can_roll_x()  for x in self.cubiculos.values())
+        cube._can_roll_y  = any(x.can_roll_y()  for x in self.cubiculos.values())
+        cube._can_drill_x = any(x.can_drill_x() for x in self.cubiculos.values())
+        cube._can_drill_y = any(x.can_drill_y() for x in self.cubiculos.values())
 
     def build_cube(self):
         complete_cubes = []
@@ -706,15 +735,16 @@ class Report2:
             complete_cubes.append(cube)
 
         self.fit(complete_cubes)
-
         final_cube = self.merge(complete_cubes)
-
-        #self.set_can_flags(cube)
+        self.set_can_flags(final_cube)
 
         return final_cube
         
     def absolute_url(self, request, parcial_url):
-        url = "http://%s:%s/report2/%s" % (request.META['SERVER_NAME'], request.META['SERVER_PORT'], parcial_url)
+        from django.conf import settings
+        server_ip  = settings.IP
+        
+        url = "http://%s:%s/report2/%s" % (server_ip, request.META['SERVER_PORT'], parcial_url)
         return url
         
 

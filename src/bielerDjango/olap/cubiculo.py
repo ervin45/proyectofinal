@@ -29,16 +29,22 @@ class Meta:
                                         'TODO'
                                         ],
                                'tiempo':['mes', 'anio', 'TODO'],
-                               'proveedor':['proveedor', 'TODO']
+                               'proveedor':['proveedor', 'TODO'],
+                               'tipo_pieza':['tipo_pieza', 'TODO'],
+                               'tipo_venta':['tipo_venta', 'TODO']
                             }
                             
         self.fact_table_meta = {'ventas':      ['tiempo',
                                                 'pieza',
                                                 'proveedor',
-                                                'tipo_venta'],
+                                                'tipo_venta',
+                                                'tipo_pieza'],
+                                                
                                 'compras':     ['tiempo',
                                                 'pieza',
-                                                'proveedor'],
+                                                'proveedor',
+                                                'tipo_pieza'],
+                                                
                                 'movimientos': ['tiempo',
                                                 'pieza',
                                                 'proveedor']}
@@ -386,12 +392,13 @@ class Cubiculo:
         
         dimension = self.dimensions_order[int(axis)]
         
+        self._del_restriccion(dimension)
+        
         if self.dimensions_fixed[dimension]:
-            return False
+            return False        
         
         level = self.dimensions[dimension][1]
         new_level = self.meta.next(dimension, level)
-        self._del_restriccion(dimension)
         self.dimensions[dimension][1] = new_level
 
     def pivot(self):
@@ -626,9 +633,8 @@ class Cubiculo:
         for dimension in self.dimensions_order:
             (name, level, restriction) = self.dimensions[dimension]
             levels_with_parent.append(self.meta.parent_list(name, level)) 
-        
-        measures = ['%s(ft_%s.%s) as %s' % (x[1], self.ft ,x[0], x[0]) for x in self.measures]
-        
+        measures = ['%s(%s.%s) as %s__%s' % (x[2], x[0], x[1], x[0], x[1]) for x in self.measures]
+
         if levels_with_parent[0] == ["TODO"]:
             columns_string = "'TODO' as columns"
         else:

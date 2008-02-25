@@ -24,8 +24,8 @@ def rotacion(first, second):
     return first['cantidad'] / second['stock']
 
 
-def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
-    report = models.Report1(report_name, x, y, xl, yl, xr, yr, ore, costo_promedio)
+def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, param):
+    report = models.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, param)
 
     
     try:
@@ -40,6 +40,10 @@ def report(request,report_name, x, y, xl, yl, xr="", yr="", ore=""):
         can_drill_x  = cube.can_drill_x()
         can_drill_y  = cube.can_drill_y()
          
+        cube_info    = cube.get_info()
+        ft           = cube_info[0][0]
+        dimensions   = cube_info[0][1]
+        measures     = cube_info[0][2] 
             
         main_axis = report.get_main_axis_list()
         other_axis = report.get_other_axis_list()
@@ -134,36 +138,37 @@ def get_body(cube):
     return result
 
 def get_report(request):
+    from django.conf import settings
+    
     http_referer = request.META['HTTP_REFERER']
-    server_name  = request.META['SERVER_NAME']
+    server_ip  = settings.IP
     server_port  = request.META['SERVER_PORT']
     
-    print referer_type(http_referer, server_name, server_port)
-    
-    if referer_type(http_referer, server_name, server_port) == "Report1":
-        parsed_url = parse_url(http_referer, server_name, server_port)
-        (report, x, y, xl, yl, xr, yr, ore) = parsed_url
+    if referer_type(http_referer, server_ip, server_port) == "Report1":
+        parsed_url = parse_url(http_referer, server_ip, server_port)
+        (report, x, y, xl, yl, xr, yr, ore, mf, param) = parsed_url
+        print mf, param
         report = models.Report1(report, x, y, xl, yl, xr, yr, ore, costo_promedio)
     else:
-        parsed_url = parse_url2(http_referer, server_name, server_port)
+        parsed_url = parse_url2(http_referer, server_ip, server_port)
         (ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2) = parsed_url
         report = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, rotacion)
         
     return report
 
     
-def referer_type(http_referer, server_name, server_port):
-    if parse_url(http_referer, server_name, server_port):
+def referer_type(http_referer, server_ip, server_port):
+    if parse_url(http_referer, server_ip, server_port):
         return "Report1"
     else:
         return "Report2"
 
-def parse_url(http_referer, server_name, server_port):
+def parse_url(http_referer, server_ip, server_port):
     import re
     import urllib
     
     referer = urllib.unquote_plus(http_referer)
-    url_patter = '^http://%s:%s/report/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$' % (server_name, server_port)
+    url_patter = '^http://%s:%s/report/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/param=(.*)/$' % (server_ip, server_port)
     p = re.compile(url_patter)
     result = p.findall(referer)
     
@@ -172,13 +177,13 @@ def parse_url(http_referer, server_name, server_port):
     
     return result[0]
 
-def parse_url2(http_referer, server_name, server_port):
+def parse_url2(http_referer, server_ip, server_port):
     import re
     import urllib
     
     referer = urllib.unquote_plus(http_referer)
     
-    url_patter = '^http://%s:%s/report2/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$' % (server_name, server_port)
+    url_patter = '^http://%s:%s/report2/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/$' % (server_ip, server_port)
     p = re.compile(url_patter)
     result = p.findall(referer)
     
