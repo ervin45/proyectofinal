@@ -17,8 +17,6 @@ http://192.168.61.100:8000/report2/ventas/tiempo/pieza/mes/modelo/xr={}/yr={'gru
 http://192.168.61.100:8000/report2/ventas/tiempo/pieza/TODO/modelo/xr={}/yr={'grupo_constructivo':['184']}/ore=[]/movimientos/tiempo/pieza/TODO/modelo/xr={}/yr={'grupo_constructivo':['184']}/ore=[]
 
 
-
-
 http://192.168.61.100:8000/report/compras/tiempo/pieza/anio/grupo_constructivo/xr={}/yr={'grupo_constructivo': ['184']}/ore={}/
 
 
@@ -40,18 +38,68 @@ http://192.168.61.100:8000/report/ventas/tiempo/tipo_pieza/anio/grupo_constructi
 
 * Grupo constructivo 184 (Filtros de aceite y valvulas de sobrepresion)
  y Modelo 003 para el año 2006
-http://192.168.61.100:8000/report/ventas/tiempo/tipo_pieza/mes/grupo_constructivo/xr={}/yr={'anio':['2006']}/ore=[['pieza','grupo_constructivo', {'grupo_constructivo':['184'], 'modelo': ['3']}]]/same/param=[['ft_ventas', 'rentabilidad_dolares', 'sum']]/
+http://192.168.61.100:8000/report/ventas/tiempo/tipo_pieza/mes/tipo_pieza/xr={'anio':['2006']}/yr={}/ore=[['pieza','grupo_constructivo', {'grupo_constructivo':['184'], 'modelo': ['3']}]]/same/param=[['ft_ventas', 'margen_dolares', 'sum']]/
 
+* Grupo constructivo 184 (Filtros de aceite y valvulas de sobrepresion)
+ y Modelo 003 para el año 2006 separado por codigo
+http://192.168.61.100:8000/report/ventas/tiempo/pieza/mes/codigo/xr={'anio': ['2006']}/yr={'grupo_constructivo': ['184'], 'pieza': ['1'], 'modelo': ['3'], 'modificacion': ['33']}/ore=[['tipo_pieza', 'tipo_pieza', {}]]/same/param=[['ft_ventas', 'margen_dolares', 'sum']]/
 
 Facturacion en dolares:
+-------------------------
 
 * Todo
 http://192.168.61.100:8000/report/ventas/tiempo/tipo_pieza/anio/tipo_pieza/xr={}/yr={}/ore=[]/same/param=[['ft_ventas', 'precio_venta_dolares', 'sum']]/
 
 * Grupo constructivo 184 (Filtros de aceite y valvulas de sobrepresion)
  y Modelo 003 para el año 2006
-http://192.168.61.100:8000/report/ventas/tiempo/tipo_pieza/mes/grupo_constructivo/xr={}/yr={'anio':['2006']}/ore=[['pieza','grupo_constructivo', {'grupo_constructivo':['184'], 'modelo': ['3']}]]/same/param=[['ft_ventas', 'rentabilidad_dolares', 'sum']]/
+http://192.168.61.100:8000/report/ventas/tiempo/tipo_pieza/mes/tipo_pieza/xr={'anio':['2006']}/yr={}/ore=[['pieza','grupo_constructivo', {'grupo_constructivo':['184'], 'modelo': ['3'], 'modificacion':['33']}]]/same/param=[['ft_ventas', 'precio_venta_dolares', 'sum']]/
 
 
 * Grupo constructivo 184 (Filtros de aceite y valvulas de sobrepresion)
+ y Modelo 003 para el año 2006 separado por codigo
+http://192.168.61.100:8000/report/ventas/tiempo/pieza/mes/codigo/xr={'anio': ['2006']}/yr={'grupo_constructivo': ['184'], 'pieza': ['1'], 'modelo': ['3'], 'modificacion': ['33']}/ore=[['tipo_pieza', 'tipo_pieza', {}]]/same/param=[['ft_ventas', 'precio_venta_dolares', 'sum']]/
+
+* Grupo constructivo 184 (Filtros de aceite y valvulas de sobrepresion)
 http://192.168.61.100:8000/report/ventas/tiempo/tipo_pieza/anio/tipo_pieza/xr={}/yr={}/ore=[['pieza','grupo_constructivo', {'grupo_constructivo':['184']}]]/same/param=[['ft_ventas', 'precio_venta_dolares', 'sum']]/
+
+Compras
+-------
+* costos en dolares
+
+http://192.168.61.100:8000/report/compras/tiempo/tipo_pieza/anio/tipo_pieza/xr={}/yr={}/ore=[]/same/param=[['ft_compras', 'costo_dolar', 'sum']]/
+
+
+* Grupo constructivo 184 (Filtros de aceite y valvulas de sobrepresion)
+http://192.168.61.100:8000/report/compras/tiempo/tipo_pieza/anio/tipo_pieza/xr={}/yr={}/ore=[['pieza','grupo_constructivo', {'grupo_constructivo':['184']}]]/same/param=[['ft_compras', 'costo_dolar', 'sum']]/
+
+
+* Grupo constructivo 184 (Filtros de aceite y valvulas de sobrepresion)
+ y Modelo 003 para el año 2006 separado por codigo
+
+http://192.168.61.100:8000/report/compras/tiempo/pieza/mes/codigo/xr={'anio': ['2006']}/yr={'grupo_constructivo': ['184'], 'pieza': ['1'], 'modelo': ['3'], 'modificacion': ['33']}/ore=[]/same/param=[['ft_compras', 'costo_dolar', 'sum']]/
+
+
+Stock
+-----
+* Grupo constructivo 184 (Filtros de aceite y valvulas de sobrepresion)
+ y Modelo 003 para el año 2006 separado por codigo
+http://192.168.61.100:8000/report/movimientos/tiempo/pieza/mes/codigo/xr={'anio': ['2006']}/yr={'grupo_constructivo': ['184'], 'pieza': ['1'], 'modelo': ['3'], 'modificacion': ['33']}/ore=[]/same/param=[['ft_movimientos', 'stock', 'avg']]/
+
+
+* Grupo constructivo 184 (Filtros de aceite y valvulas de sobrepresion)
+ y Modelo 003 todos los años (el promedio mensual) separado por codigo
+http://192.168.61.100:8000/report/movimientos/tiempo/pieza/anio/codigo/xr={}/yr={'grupo_constructivo': ['184'], 'pieza': ['1'], 'modelo': ['3'], 'modificacion': ['33']}/ore=[]/same/param=[['ft_movimientos', 'stock', 'avg']]/
+
+
+
+* Devoluciones
+http://192.168.61.100:8000/report/movimientos/tiempo/pieza/anio/codigo/xr={}/yr={'grupo_constructivo': ['184'], 'pieza': ['1'], 'modelo': ['3'], 'modificacion': ['33']}/ore=[]/same/param=[['ft_movimientos', 'devolucion_salida1', 'avg']]/
+
+
+*Envios a rafaela
+ * promedio mensual
+http://192.168.61.100:8000/report/movimientos/tiempo/pieza/anio/codigo/xr={}/yr={'grupo_constructivo': ['184'], 'pieza': ['1'], 'modelo': ['3'], 'modificacion': ['33']}/ore=[]/same/param=[['ft_movimientos', 'envios_a_rafaela', 'avg']]/
+
+ * sumatoria
+http://192.168.61.100:8000/report/movimientos/tiempo/pieza/anio/codigo/xr={}/yr={'grupo_constructivo': ['184'], 'pieza': ['1'], 'modelo': ['3'], 'modificacion': ['33']}/ore=[]/same/param=[['ft_movimientos', 'envios_a_rafaela', 'sum']]/
+
