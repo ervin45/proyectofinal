@@ -148,7 +148,7 @@ def get_report(request):
         parsed_url = parse_url(http_referer, server_ip, server_port)
         (report, x, y, xl, yl, xr, yr, ore, mf, param) = parsed_url
         print mf, param
-        report = models.Report1(report, x, y, xl, yl, xr, yr, ore, costo_promedio)
+        report = models.Report1(report, x, y, xl, yl, xr, yr, ore, mf, param)
     else:
         parsed_url = parse_url2(http_referer, server_ip, server_port)
         (ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2) = parsed_url
