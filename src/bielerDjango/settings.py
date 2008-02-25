@@ -10,7 +10,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
-DATABASE_NAME = 'bieler_dw_backup'             # Or path to database file if using sqlite3.
+DATABASE_NAME = 'bieler_dw'             # Or path to database file if using sqlite3.
 DATABASE_USER = 'ncesar'             # Not used with sqlite3.
 DATABASE_PASSWORD = 'jjjj'         # Not used with sqlite3.
 DATABASE_HOST = '127.0.0.1'             # Set to empty string for localhost. Not used with sqlite3.

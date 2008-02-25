@@ -438,7 +438,7 @@ class Report1:
         return self.absolute_url(request, parcial_url)
        
     def dimension_values(self, axis):
-        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw_backup")
+        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor()
 
         sql_dimension_values = self.cubiculo.dimension_values(int(axis))
@@ -458,7 +458,7 @@ class Report1:
         return self.cubiculo.sql()
 
     def exec_sql(self, sql):
-        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw_backup")
+        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor_dwh.execute(sql)
         
@@ -543,8 +543,13 @@ class Report1:
 
     def absolute_url(self, request, parcial_url):
         from django.conf import settings
+        
+        
         server_ip  = settings.IP        
-        url = "http://%s:%s/report/%s" % (server_ip, request.META['SERVER_PORT'], parcial_url)
+        mf = self.member_function.__name__
+        param = str(self.measures)
+        
+        url = "http://%s:%s/report/%s%s/param=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, param)
         print "URL", url
         return url
 
@@ -634,7 +639,7 @@ class Report2:
         return self.absolute_url(request, parcial_url)
 
     def dimension_values(self, axis, cubiculo):
-        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw_backup")
+        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor()        
 
         sql_dimension_values = cubiculo.dimension_values(int(axis))
@@ -657,7 +662,7 @@ class Report2:
         return cubiculo.sql()
 
     def exec_sql(self, sql):
-        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw_backup")
+        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor_dwh.execute(sql)
         

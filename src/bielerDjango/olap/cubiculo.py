@@ -4,7 +4,11 @@
 from pprint import pprint
 
 class InvalidLevel:
-    pass
+    def __init__(self, level):
+        self.level = level
+        
+    def __repr__(self):
+        return "INVALID LEVEL %s" % self.level
 
 class InvalidDimension:
     pass
@@ -80,7 +84,7 @@ class Meta:
             raise InvalidDimension
         
         if not level in self.dimension_meta[dimension]:
-            raise InvalidLevel
+            raise InvalidLevel(level)
         
         index = self.dimension_meta[dimension].index(level)
         result = self.dimension_meta[dimension][index - 1:index]
@@ -123,7 +127,7 @@ class Meta:
             raise InvalidDimension
         
         if not level in self.dimension_meta[dimension]:
-            raise InvalidLevel
+            raise InvalidLevel(level)
         
         index = self.dimension_meta[dimension].index(level)
         result = self.dimension_meta[dimension][index + 1:index + 2]
@@ -159,7 +163,7 @@ class Meta:
             raise InvalidDimension
 
         if not level in self.dimension_meta[dimension]:
-            raise InvalidLevel
+            raise InvalidLevel(level)
 
 
         if level == 'TODO':
