@@ -1,12 +1,8 @@
 {% load hash_tags %}
 <!DCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"><head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''" /><title>Bieler Web Application</title>
-
-<script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
-<link rel="stylesheet" type="text/css" href="/media/css/olap.css" media="screen" />
-
-<script type="text/javascript">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''" /><title>Bieler Web Application</title><script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/olap.css" media="screen" /><script type="text/javascript">
     $(document).ready(function() {
       $("#dice").click(function() {
         
@@ -45,7 +41,7 @@
     <option>{{oa}}</option>
 {% endfor %}
 </select>
-<input id="dice" value="Dice" type="button" />
+<input id="dice" value="Rotar" type="button" />
 
 <br>
 <br>
@@ -87,14 +83,70 @@
             <a href="/drill/0/"><img src="/media/img/down_arrow.gif" style="border:0" /></a>
             {% else %}
             <img src="/media/img/down_arrow_dis.gif" style="border:0" />
-            {% endif %}
-        </td>
+            {% endif %} 
+                <br>
+                <br>
+                <br>
+              </td>
         <td></td>
     </tr>        
 </table> 
 
 </div>
 
+
+<table class="info">
+  <tbody>
+    <tr>
+      <td></td>
+      <td>{{ft}}</td>
+    </tr>
+    <tr>
+      <td>Dimensiones Principales</td>
+      <td>
+      </td>
+    </tr>
+{% for dim in dimensions %}
+    <tr>
+      <td valign="top">{{dim}}</td>
+      <td>
+
+<table>
+  <tbody>
+    <tr>
+      <td valign="top">Nivel: </td>
+      <td>{{dimensions|hash:dim|hash:1}}</td>
+    </tr>
+    <t>
+      <td valign="top">Restricciones: </td>
+      <td>{{dimensions|hash:dim|hash:2}}</td>
+    </tr|>
+  </tbody>
+</table>
+
+      </td>
+    </tr>
+    <tr>
+{% endfor %}
+      <td>Dimensiones Ocultas</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Medidas</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
 
 <table class="data_table">
 <tbody>
@@ -132,12 +184,8 @@
 
 <br />
 <br />
-<br />
-
-
-<script type="text/javascript" src="/media/js/swfobject.js"></script>
-<div id="flashcontent"></div>
-<script type="text/javascript">
+<br /><script type="text/javascript" src="/media/js/swfobject.js"></script>
+<div id="flashcontent"></div><script type="text/javascript">
 var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "1000", "500", "9", "#FFFFFF");
 so.addVariable("variables","true");
 

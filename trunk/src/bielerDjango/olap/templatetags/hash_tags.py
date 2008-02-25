@@ -5,5 +5,8 @@ register = template.Library()
 def hash(h, key):
     return h[key]
 
+@register.filter
+def sub(h, index):
+    return h[index]
 
 
