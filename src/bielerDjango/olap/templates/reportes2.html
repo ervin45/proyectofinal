@@ -148,6 +148,60 @@
 
 <br>
 
+
+<table class="info">
+  <tbody>
+    <tr>
+      <td></td>
+      <td>{{ft2}}</td>
+    </tr>
+    <tr>
+      <td>Dimensiones Principales</td>
+      <td>
+      </td>
+    </tr>
+{% for dim in dimensions2 %}
+    <tr>
+      <td valign="top">{{dim}}</td>
+      <td>
+
+<table>
+  <tbody>
+    <tr>
+      <td valign="top">Nivel: </td>
+      <td>{{dimensions2|hash:dim|hash:1}}</td>
+    </tr>
+    <t>
+      <td valign="top">Restricciones: </td>
+      <td>{{dimensions2|hash:dim|hash:2}}</td>
+    </tr|>
+  </tbody>
+</table>
+
+      </td>
+    </tr>
+    <tr>
+{% endfor %}
+      <td>Dimensiones Ocultas</td>
+      <td>{{ore2}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Medidas</td>
+      <td>{{measures2}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
 <table class="data_table">
 <tbody>
 </tbody><tbody>

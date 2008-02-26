@@ -720,33 +720,18 @@ class Report2:
         for cube in complete_cubes:
             cube.fit(max_dimensions[0], max_dimensions[1])
 
-    def _member_function_params(self, x1, y1, cubes):
+    def _member_function_params(self, x1, y1, x2, y2, cube1, cube2):
         params = []
         
         measures_values = {}
-        for cube in cubes:
-            measures_values.update(cube.get(x1, y1))
+        measures_values.update(cube1.get(x1, y1))
+        measures_values.update(cube2.get(x2, y2))
             
         for ft, measure, agregation in self.measures:
             params.append(measures_values["%s__%s" % (ft, measure)])
 
         return params
 
-    def exec_member_function(self, cube):
-        temp_cube = Cube()
-
-        pprint(cube)
-
-        for x1 in cube.dim_x:
-            for y1 in cube.dim_y:
-
-                params = self._member_function_params(x1, y1, cube)
-
-                temp = self.member_function(*params)
-
-                temp_cube.add(x1, y1, {'result': temp})
-
-        return temp_cube
 
     def merge(self, cubes):
         first  = cubes[0]
@@ -757,10 +742,7 @@ class Report2:
         for x1, x2 in zip(first.dim_x, second.dim_x):
             for y1, y2 in zip(first.dim_y, second.dim_y):
 
-                params = self._member_function_params(x1, y1, cubes)
-
-                first_cube_values  = first.get(x1, y1)
-                second_cube_values = second.get(x2, y2)
+                params = self._member_function_params(x1, y1, x2, y2, first, second)
 
                 temp = self.member_function(*params)
 
@@ -773,6 +755,21 @@ class Report2:
         cube._can_roll_y  = any(x.can_roll_y()  for x in self.cubiculos.values())
         cube._can_drill_x = any(x.can_drill_x() for x in self.cubiculos.values())
         cube._can_drill_y = any(x.can_drill_y() for x in self.cubiculos.values())
+        
+    def set_meta_info(self, cube):
+        ft = [x for x in self.fts]
+        dimensions = self.cubiculos[self.fts[0]].dimensions
+        measures   = [x.measures for x in self.cubiculos.values()]
+        ore        = [x.ore for x in self.cubiculos.values()]
+        cube.add_info(ft=ft, dimensions=dimensions, measures=measures, ore=ore)
+        
+    def set_meta_info(self, cube):
+        for ft in self.fts:
+            ft = self.cubiculos[ft].ft
+            dimensions = self.cubiculos[ft].dimensions
+            measures   = self.cubiculos[ft].measures
+            ore        = self.cubiculos[ft].ore
+            cube.add_info(ft=ft, dimensions=dimensions, measures=measures, ore=ore)        
 
     def build_cube(self):
         complete_cubes = []
@@ -788,6 +785,7 @@ class Report2:
         self.fit(complete_cubes)
         final_cube = self.merge(complete_cubes)
         self.set_can_flags(final_cube)
+        self.set_meta_info(final_cube)
 
         return final_cube
         

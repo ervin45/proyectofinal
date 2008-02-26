@@ -11,7 +11,11 @@ class InvalidLevel:
         return "INVALID LEVEL %s" % self.level
 
 class InvalidDimension:
-    pass
+    def __init__(self, dimension):
+        self.dimension = dimension
+        
+    def __repr__(self):
+        return "INVALID DIMENSION %s" % self.dimension
 
 class InvalidData:
     pass
@@ -81,7 +85,7 @@ class Meta:
         OK
         """
         if not dimension in self.dimension_meta.keys():
-            raise InvalidDimension
+            raise InvalidDimension(dimension)
         
         if not level in self.dimension_meta[dimension]:
             raise InvalidLevel(level)
@@ -124,7 +128,7 @@ class Meta:
         OK
         """
         if not dimension in self.dimension_meta.keys():
-            raise InvalidDimension
+            raise InvalidDimension(dimension)
         
         if not level in self.dimension_meta[dimension]:
             raise InvalidLevel(level)
@@ -160,7 +164,7 @@ class Meta:
         OK
         '''
         if not dimension in self.dimension_meta.keys():
-            raise InvalidDimension
+            raise InvalidDimension(dimension)
 
         if not level in self.dimension_meta[dimension]:
             raise InvalidLevel(level)
@@ -521,12 +525,12 @@ class Cubiculo:
         '''
         
         if not main_axis in self.dimensions.keys():
-            raise InvalidDimension
+            raise InvalidDimension(dimension)
         
         
         other_dimensions = [x for x in self.meta.fact_table_meta[self.ft] if x not in self.dimensions.keys()]
         if not other_axis in other_dimensions:
-            raise InvalidDimension
+            raise InvalidDimension(dimension)
 
 
         main_dimension = self.dimensions.pop(main_axis)

@@ -73,6 +73,17 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
         can_drill_x  = cube.can_drill_x()
         can_drill_y  = cube.can_drill_y()
         
+        cube_info    = cube.get_info()
+        ft           = cube_info[0][0]
+        dimensions   = cube_info[0][1]
+        measures     = cube_info[0][2]
+        ore          = cube_info[0][3]         
+        
+        ft2           = cube_info[1][0]
+        dimensions2   = cube_info[1][1]
+        measures2     = cube_info[1][2]
+        ore2          = cube_info[1][3]        
+        
         main_axis = report2.get_main_axis_list()
         other_axis = report2.get_other_axis_list()
         
