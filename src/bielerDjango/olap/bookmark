@@ -37,7 +37,7 @@ http://192.168.61.100:8000/report/ventas/tiempo/tipo_pieza/anio/tipo_pieza/xr={}
 
 
 * Grupo constructivo 184 (Filtros de aceite y valvulas de sobrepresion) y Modelo 003
-http://192.168.61.100:8000/report/ventas/tiempo/tipo_pieza/anio/grupo_constructivo/xr={}/yr={}/ore=[['pieza','grupo_constructivo', {'grupo_constructivo':['184'], 'modelo': '3'}]]/same/param=[['ft_ventas', 'rentabilidad_dolares', 'sum']]/
+http://192.168.61.100:8000/report/ventas/tiempo/tipo_pieza/anio/tipo_pieza/xr={}/yr={}/ore=[['pieza','grupo_constructivo', {'grupo_constructivo':['184'], 'modelo': '3'}]]/same/param=[['ft_ventas', 'margen_dolares', 'sum']]/
 
 * Grupo constructivo 184 (Filtros de aceite y valvulas de sobrepresion)
  y Modelo 003 para el año 2006
