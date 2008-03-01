@@ -28,145 +28,144 @@ class InvalidMeasure:
 
 
 class Meta:
-    def __init__(self):
-        self.dimension_meta = {'pieza':['codigo',
-                                        'pieza',
-                                        'modificacion',
-                                        'modelo', 
-                                        'grupo_constructivo',
-                                        'TODO'
-                                        ],
-                               'tiempo':['mes', 'anio', 'TODO'],
-                               'proveedor':['proveedor', 'TODO'],
-                               'tipo_pieza':['tipo_pieza', 'TODO'],
-                               'tipo_venta':['tipo_venta', 'TODO']
-                            }
-                            
-        self.fact_table_meta = {'ventas':      ['tiempo',
-                                                'pieza',
-                                                'proveedor',
-                                                'tipo_venta',
-                                                'tipo_pieza'],
+    dimension_meta = {'pieza':['codigo',
+                                    'pieza',
+                                    'modificacion',
+                                    'modelo', 
+                                    'grupo_constructivo',
+                                    'TODO'
+                                    ],
+                            'tiempo':['mes', 'anio', 'TODO'],
+                            'proveedor':['proveedor', 'TODO'],
+                            'tipo_pieza':['tipo_pieza', 'TODO'],
+                            'tipo_venta':['tipo_venta', 'TODO']
+                        }
+                        
+    fact_table_meta = {'ventas':      ['tiempo',
+                                            'pieza',
+                                            'proveedor',
+                                            'tipo_venta',
+                                            'tipo_pieza'],
+                                            
+                            'compras':     ['tiempo',
+                                            'pieza',
+                                            'proveedor',
+                                            'tipo_pieza'],
+                                            
+                            'movimientos': ['tiempo',
+                                            'pieza',
+                                            'proveedor']}
                                                 
-                                'compras':     ['tiempo',
-                                                'pieza',
-                                                'proveedor',
-                                                'tipo_pieza'],
-                                                
-                                'movimientos': ['tiempo',
-                                                'pieza',
-                                                'proveedor']}
-
-    def previous(self, dimension, level):
+    @staticmethod
+    def previous(dimension, level):
         """
-        >>> c = Meta()
-        >>> c.previous('tiempo', 'anio')
+        >>> Meta.previous('tiempo', 'anio')
         'mes'
-        >>> c.previous('tiempo', 'TODO')
+        >>> Meta.previous('tiempo', 'TODO')
         'anio'
         >>>
         >>> try:
-        ...    c.previous('tiempo', '')
+        ...    Meta.previous('tiempo', '')
         ... except InvalidLevel:
         ...    print "OK"
         ... 
         OK
         >>> try:
-        ...    c.previous('tiempo', 'cualquiera')
+        ...    Meta.previous('tiempo', 'cualquiera')
         ... except InvalidLevel:
         ...    print "OK"
         ... 
         OK
         >>> try:
-        ...    c.previous('', 'anio')
+        ...    Meta.previous('', 'anio')
         ... except InvalidDimension:
         ...    print "OK"
         ... 
         OK
         """
-        if not dimension in self.dimension_meta.keys():
+        if not dimension in Meta.dimension_meta.keys():
             raise InvalidDimension(dimension)
         
-        if not level in self.dimension_meta[dimension]:
+        if not level in Meta.dimension_meta[dimension]:
             raise InvalidLevel(level)
         
-        index = self.dimension_meta[dimension].index(level)
-        result = self.dimension_meta[dimension][index - 1:index]
+        index = Meta.dimension_meta[dimension].index(level)
+        result = Meta.dimension_meta[dimension][index - 1:index]
         if result == []:
             result = level
         else:
             result = result[0]
         return result
 
-    def next(self, dimension, level=""):
+    @staticmethod
+    def next(dimension, level=""):
         """
-        >>> c = Meta()
-        >>> c.next('tiempo', 'anio')
+        >>> Meta.next('tiempo', 'anio')
         'TODO'
-        >>> c.next('tiempo', 'TODO')
+        >>> Meta.next('tiempo', 'TODO')
         'TODO'
         >>>
-        >>> c.next('tiempo', 'mes')
+        >>> Meta.next('tiempo', 'mes')
         'anio'
         >>> try:
-        ...    c.next('tiempo', '')
+        ...    Meta.next('tiempo', '')
         ... except InvalidLevel:
         ...    print "OK"
         ... 
         OK
         >>> try:
-        ...    c.next('tiempo', 'cualquiera')
+        ...    Meta.next('tiempo', 'cualquiera')
         ... except InvalidLevel:
         ...    print "OK"
         ... 
         OK
         >>> try:
-        ...    c.next('', 'anio')
+        ...    Meta.next('', 'anio')
         ... except InvalidDimension:
         ...    print "OK"
         ...
         OK
         """
-        if not dimension in self.dimension_meta.keys():
+        if not dimension in Meta.dimension_meta.keys():
             raise InvalidDimension(dimension)
         
-        if not level in self.dimension_meta[dimension]:
+        if not level in Meta.dimension_meta[dimension]:
             raise InvalidLevel(level)
         
-        index = self.dimension_meta[dimension].index(level)
-        result = self.dimension_meta[dimension][index + 1:index + 2]
+        index = Meta.dimension_meta[dimension].index(level)
+        result = Meta.dimension_meta[dimension][index + 1:index + 2]
         if result == []:
             result = level
         else:
             result = result[0]
         return result
 
-    def parent_list(self, dimension, level):
+    @staticmethod
+    def parent_list(dimension, level):
         '''
-        >>> c = Meta()
-        >>> c.parent_list('tiempo', 'mes')
+        >>> Meta.parent_list('tiempo', 'mes')
         ['td_tiempo.anio', 'td_tiempo.mes']
-        >>> c.parent_list('tiempo', 'anio')
+        >>> Meta.parent_list('tiempo', 'anio')
         ['td_tiempo.anio']
-        >>> c.parent_list('tiempo', 'TODO')
+        >>> Meta.parent_list('tiempo', 'TODO')
         ['TODO']
         >>> try:
-        ...    c.parent_list('tiempo', 'cualquiera')
+        ...    Meta.parent_list('tiempo', 'cualquiera')
         ... except InvalidLevel:
         ...    print "OK"
         ... 
         OK
         >>> try:
-        ...    c.parent_list('', 'anio')
+        ...    Meta.parent_list('', 'anio')
         ... except InvalidDimension:
         ...    print "OK"
         ... 
         OK
         '''
-        if not dimension in self.dimension_meta.keys():
+        if not dimension in Meta.dimension_meta.keys():
             raise InvalidDimension(dimension)
 
-        if not level in self.dimension_meta[dimension]:
+        if not level in Meta.dimension_meta[dimension]:
             raise InvalidLevel(level)
 
 
@@ -175,21 +174,21 @@ class Meta:
         else:
             result = []
         
-            levels = self.dimension_meta[dimension]
+            levels = Meta.dimension_meta[dimension]
             niveles_superiores = levels[levels.index(level):]
         
             result = ["td_%s.%s" % (dimension, x)  for x in niveles_superiores if x != 'TODO']
             result.reverse()
             return result
         
-    def parent_list_without_dimension(self, dimension, level):
+    @staticmethod
+    def parent_list_without_dimension(dimension, level):
         '''
-        >>> c = Meta()
-        >>> c.parent_list_without_dimension('tiempo', 'mes')
+        >>> Meta.parent_list_without_dimension('tiempo', 'mes')
         ['anio', 'mes']
-        >>> c.parent_list_without_dimension('tiempo', 'anio')
+        >>> Meta.parent_list_without_dimension('tiempo', 'anio')
         ['anio']
-        >>> c.parent_list_without_dimension('tiempo', 'TODO')
+        >>> Meta.parent_list_without_dimension('tiempo', 'TODO')
         ['TODO']
         >>>
         '''
@@ -199,12 +198,33 @@ class Meta:
         else:
             result = []
         
-            levels = self.dimension_meta[dimension]
+            levels = Meta.dimension_meta[dimension]
             niveles_superiores = levels[levels.index(level):]
         
             result = [x for x in niveles_superiores if x != 'TODO']
             result.reverse()
-            return result        
+            return result
+        
+    @staticmethod
+    def get_dimensions(ft):
+        '''
+        >>> Meta.get_dimensions('ventas')
+        ['tiempo', 'pieza', 'proveedor', 'tipo_venta', 'tipo_pieza']
+        >>>
+        '''
+        
+        return Meta.fact_table_meta[ft]
+    
+    @staticmethod
+    def get_levels(dimension):
+        '''
+        >>> Meta.get_levels('tiempo')
+        ['mes', 'anio', 'TODO']
+        >>>
+        '''
+        
+        return Meta.dimension_meta[dimension]
+        
 
 
 '''
@@ -225,7 +245,6 @@ class Cubiculo:
             self._add_dimension(a)
         self.measures = measures
         self.ore = ore
-        self.meta = Meta()
         
 
     def _add_dimension(self, a):
@@ -361,7 +380,7 @@ class Cubiculo:
             return False 
         
         level = self.dimensions[dimension][1]
-        new_level = self.meta.previous(dimension, level)
+        new_level = Meta.previous(dimension, level)
         self.dimensions[dimension][1] = new_level
 
     def roll(self, axis):
@@ -406,7 +425,7 @@ class Cubiculo:
             return False        
         
         level = self.dimensions[dimension][1]
-        new_level = self.meta.next(dimension, level)
+        new_level = Meta.next(dimension, level)
         self.dimensions[dimension][1] = new_level
 
     def pivot(self):
@@ -478,7 +497,7 @@ class Cubiculo:
         self._del_restriccion(dim)
         
         values = value.split(" - ")
-        levels = self.meta.parent_list_without_dimension(dimension[0], level)
+        levels = Meta.parent_list_without_dimension(dimension[0], level)
         
         for level, value in zip(levels, values):
             self._add_restriction(dim, level, value)
@@ -525,10 +544,10 @@ class Cubiculo:
         '''
         
         if not main_axis in self.dimensions.keys():
-            raise InvalidDimension(dimension)
+            raise InvalidDimension(main_axis)
         
         
-        other_dimensions = [x for x in self.meta.fact_table_meta[self.ft] if x not in self.dimensions.keys()]
+        other_dimensions = [x for x in Meta.fact_table_meta[self.ft] if x not in self.dimensions.keys()]
         if not other_axis in other_dimensions:
             raise InvalidDimension(dimension)
 
@@ -586,7 +605,7 @@ class Cubiculo:
         
         
         first_dimension = self.dimensions[self.dimensions_order[int(axis)]]
-        levels_parent = self.meta.parent_list(first_dimension[0], first_dimension[1])
+        levels_parent = Meta.parent_list(first_dimension[0], first_dimension[1])
         
         if levels_parent == ['TODO']:
             return "select 'TODO' as TODO"
@@ -623,24 +642,24 @@ class Cubiculo:
         ['proveedor']
         >>> c = Cubiculo(ft='compras', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
         >>> c.get_other_axis_list()
-        ['proveedor']
+        ['proveedor', 'tipo_pieza']
         '''
         
-        total_dimensions = self.meta.fact_table_meta[self.ft]
+        total_dimensions = Meta.fact_table_meta[self.ft]
         return [x for x in total_dimensions if x not in (self.dimensions.keys())]
     
     def _select(self):
         '''
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['ft_ventas', 'cantidad', 'sum']], ore=[])
         >>> c._select()
-        "SELECT td_tiempo.anio|| ' - ' ||td_tiempo.mes as columns, td_pieza.grupo_constructivo as rows, sum(ft_ventas.cantidad) as cantidad"
+        "SELECT td_tiempo.anio|| ' - ' ||td_tiempo.mes as columns, td_pieza.grupo_constructivo as rows, sum(ft_ventas.cantidad) as ft_ventas__cantidad"
         >>>
         '''
         levels_with_parent = []
 
         for dimension in self.dimensions_order:
             (name, level, restriction) = self.dimensions[dimension]
-            levels_with_parent.append(self.meta.parent_list(name, level)) 
+            levels_with_parent.append(Meta.parent_list(name, level)) 
         measures = ['%s(%s.%s) as %s__%s' % (x[2], x[0], x[1], x[0], x[1]) for x in self.measures]
 
         if levels_with_parent[0] == ["TODO"]:
@@ -696,7 +715,7 @@ class Cubiculo:
 
         for dimension in self.dimensions_order:
             (name, level, restriction) = self.dimensions[dimension]
-            levels_with_parent.append(self.meta.parent_list(name, level)) 
+            levels_with_parent.append(Meta.parent_list(name, level)) 
             if restriction:
                 for level, val in restriction.items():
                     valores = ", ".join(["'%s'" % v for v in val])
@@ -734,7 +753,7 @@ class Cubiculo:
         for dimension in self.dimensions_order:
             (name, level, restriction) = self.dimensions[dimension]
             if level != 'TODO':
-                levels_with_parent.append(self.meta.parent_list(name, level)) 
+                levels_with_parent.append(Meta.parent_list(name, level)) 
         
         if levels_with_parent == []:
             return ''
@@ -763,7 +782,7 @@ class Cubiculo:
         for dimension in self.dimensions_order:
             (name, level, restriction) = self.dimensions[dimension]
             if level != 'TODO':
-                levels_with_parent.append(self.meta.parent_list(name, level)) 
+                levels_with_parent.append(Meta.parent_list(name, level)) 
 
         if levels_with_parent == []:
             return ''
@@ -774,9 +793,9 @@ class Cubiculo:
 
     def sql(self):
         '''
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['ft_ventas', 'cantidad', 'sum']], ore=[])
         >>> c.sql()
-        "SELECT td_tiempo.anio|| ' - ' ||td_tiempo.mes as columns, td_pieza.grupo_constructivo as rows, sum(ft_ventas.cantidad) as cantidad\\nFROM ft_ventas JOIN td_tiempo on (ft_ventas.fk_tiempo = td_tiempo.id) JOIN td_pieza on (ft_ventas.fk_pieza = td_pieza.id) \\n\\nGROUP BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo \\nORDER BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo \\n"
+        "SELECT td_tiempo.anio|| ' - ' ||td_tiempo.mes as columns, td_pieza.grupo_constructivo as rows, sum(ft_ventas.cantidad) as ft_ventas__cantidad\\nFROM ft_ventas JOIN td_tiempo on (ft_ventas.fk_tiempo = td_tiempo.id) JOIN td_pieza on (ft_ventas.fk_pieza = td_pieza.id) \\n\\nGROUP BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo \\nORDER BY td_tiempo.anio, td_tiempo.mes, td_pieza.grupo_constructivo \\n"
         >>>
         '''   
 
@@ -830,7 +849,7 @@ class Cubiculo:
         '''
         
         x_dimension = self.dimensions_order[0]
-        x_levels    = self.meta.dimension_meta[x_dimension]
+        x_levels    = Meta.dimension_meta[x_dimension]
         
         highest_level = x_levels[-1] 
         actual_level = self.dimensions[x_dimension][1]
@@ -851,7 +870,7 @@ class Cubiculo:
         '''
         
         x_dimension = self.dimensions_order[0]
-        x_levels    = self.meta.dimension_meta[x_dimension]
+        x_levels    = Meta.dimension_meta[x_dimension]
         
         lowest_level = x_levels[0] 
         actual_level = self.dimensions[x_dimension][1]
@@ -873,7 +892,7 @@ class Cubiculo:
         '''
         
         y_dimension = self.dimensions_order[1]
-        y_levels    = self.meta.dimension_meta[y_dimension]
+        y_levels    = Meta.dimension_meta[y_dimension]
         
         highest_level = y_levels[-1] 
         actual_level = self.dimensions[y_dimension][1]
@@ -894,7 +913,7 @@ class Cubiculo:
         '''
         
         y_dimension = self.dimensions_order[1]
-        y_levels    = self.meta.dimension_meta[y_dimension]
+        y_levels    = Meta.dimension_meta[y_dimension]
         
         lowest_level = y_levels[0] 
         actual_level = self.dimensions[y_dimension][1]
