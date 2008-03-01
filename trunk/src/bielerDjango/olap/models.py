@@ -3,6 +3,8 @@ import psycopg2.extras
 import copy
 
 import cubiculo
+
+import copy
 from pprint import pprint
 
 from odict import odict
@@ -797,8 +799,31 @@ class Report2:
         
         url = "http://%s:%s/report2/%s%s/param=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, param)
         return url
-
     
+class Ajax_responser:
+        @staticmethod
+        def get_dimensions(ft):
+            return cubiculo.Meta.get_dimensions(ft)
+
+        @staticmethod
+        def get_levels(dimension):
+            return copy.copy(cubiculo.Meta.get_levels(dimension))
+        
+        @staticmethod
+        def get_values(dimension, level):
+            con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+            cursor_dwh = con_dwh.cursor()
+
+            sql = "SELECT distinct(%s) FROM td_%s" % (level, dimension)
+            cursor_dwh.execute(sql)
+            
+            
+            return [str(x[0]) for x in cursor_dwh.fetchall()]
+        
+        @staticmethod
+        def get_measures(ft):
+            return cubiculo.Meta.get_measures(ft)        
+
 def _test():
     import doctest
     doctest.testmod()

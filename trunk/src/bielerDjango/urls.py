@@ -14,8 +14,18 @@ urlpatterns = patterns('',
     (r'^dice/(.*)/(.*)/$', olap.dice),
     (r'^graph_data/$', olap.graph_data),
 
+    (r'^report/formulario/$',olap.formulario),
+    (r'^report/formulario2/$',olap.formulario2),
+    (r'^report/get_dimensions/(.*)/$',olap.get_dimensions),
+    (r'^report/get_levels/(.*)/$',olap.get_levels),
+    (r'^report/get_levels_without_todo/(.*)/$',olap.get_levels_without_todo),
+    (r'^report/get_values/(.*)/(.*)/$',olap.get_values),
+    (r'^report/get_measures/(.*)/$',olap.get_measures),
+
     (r'^report/report_list/$', rm.report_list),
     (r'^report/delete/(\d{1,4})/$', rm.delete),
+
+
 
     (r'^admin/', include('django.contrib.admin.urls')),
 
