@@ -257,3 +257,47 @@ def graph_data(header, body, body_order):
     graph.set_y_max(get_tope(max_y))
     
     return graph.render_js()
+    
+    
+        
+        
+def formulario(request):
+    return render_to_response('formulario.html',locals())
+            
+def formulario2(request):
+    return render_to_response('formulario2.html',locals())
+            
+            
+####AJAX####
+from cubiculo import Meta
+
+def get_dimensions(request, ft):
+    response = models.Ajax_responser.get_dimensions(ft)
+    return HttpResponse("|".join(response))
+
+def get_measures(request, ft):
+    response = models.Ajax_responser.get_measures(ft)
+    response = ["ft_%s.%s" % (ft, x) for x in response]
+    return HttpResponse("|".join(response))
+
+def get_levels(request, dimension):
+    response = models.Ajax_responser.get_levels(dimension)
+    return HttpResponse("|".join(response))
+
+def get_levels_without_todo(request, dimension):
+    response = models.Ajax_responser.get_levels(dimension)
+    response.remove('TODO')
+    print "get_levels_without_todo"
+    pprint(response)
+    return HttpResponse("|".join(response))
+
+def get_values(request, dimension, level):
+    response = models.Ajax_responser.get_values(dimension, level)
+    print response
+    return HttpResponse("|".join(response))
+
+def get_mf(request):
+    return HttpResponse('')
+
+
+

@@ -41,7 +41,7 @@ class Meta:
                             'tipo_venta':['tipo_venta', 'TODO']
                         }
                         
-    fact_table_meta = {'ventas':      ['tiempo',
+    fact_table_dimensions_meta = {'ventas':['tiempo',
                                             'pieza',
                                             'proveedor',
                                             'tipo_venta',
@@ -55,7 +55,33 @@ class Meta:
                             'movimientos': ['tiempo',
                                             'pieza',
                                             'proveedor']}
-                                                
+                                            
+    fact_table_measures_meta   = {'ventas': ['cantidad',
+                                             'precio_venta_pesos',
+                                             'margen_pesos',
+                                             'precio_venta_dolares',
+                                             'margen_dolares'],
+                                   'compras': ['cantidad',
+                                               'costo_pesos',
+                                               'costo_dolar'],
+                                   'movimientos': ['stock',
+                                        	    'egresos',
+                                                    'ingresos',
+                                                    'ventas_por_taller',
+                                                    'ventas_por_mostrador',
+                                                    'compras1',
+                                                    'compras2',
+                                                    'envios_a_rafaela',
+                                                    'envios_a_reconquista',
+                                                    'entrada_de_rafaela',
+                                                    'entrada_de_reconquista',
+                                                    'ajuste_negativo',
+                                                    'ajuste_positivo',
+                                                    'devolucion_salida1',
+                                                    'devolucion_salida2',
+                                                    'otro']
+                                             }
+
     @staticmethod
     def previous(dimension, level):
         """
@@ -213,7 +239,7 @@ class Meta:
         >>>
         '''
         
-        return Meta.fact_table_meta[ft]
+        return Meta.fact_table_dimensions_meta[ft]
     
     @staticmethod
     def get_levels(dimension):
@@ -224,7 +250,17 @@ class Meta:
         '''
         
         return Meta.dimension_meta[dimension]
-        
+    
+    @staticmethod
+    def get_measures(ft):
+        '''
+        >>> Meta.get_measures('compras')
+        ['cantidad', 'costo_pesos', 'costo_dolar']
+        >>>
+        '''
+
+        return Meta.fact_table_measures_meta[ft]    
+
 
 
 '''
@@ -547,7 +583,7 @@ class Cubiculo:
             raise InvalidDimension(main_axis)
         
         
-        other_dimensions = [x for x in Meta.fact_table_meta[self.ft] if x not in self.dimensions.keys()]
+        other_dimensions = [x for x in Meta.fact_table_dimensions_meta[self.ft] if x not in self.dimensions.keys()]
         if not other_axis in other_dimensions:
             raise InvalidDimension(dimension)
 
@@ -645,7 +681,7 @@ class Cubiculo:
         ['proveedor', 'tipo_pieza']
         '''
         
-        total_dimensions = Meta.fact_table_meta[self.ft]
+        total_dimensions = Meta.fact_table_dimensions_meta[self.ft]
         return [x for x in total_dimensions if x not in (self.dimensions.keys())]
     
     def _select(self):
