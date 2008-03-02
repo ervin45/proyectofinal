@@ -60,7 +60,7 @@ def top_ordered(d, total_elements = 10, order = "desc"):
 
     temp.sort(order_func)
     rtn = temp[:total_elements]
-    return rtn
+    return dict(rtn)
 
 
 
@@ -787,7 +787,7 @@ class Report2:
         
 
     def order_and_slice_the_cube(self, cube, total_elements=2, order="desc"):
-        cube.data = dict(top_ordered(cube.data, total_elements, order))
+        cube.data = top_ordered(cube.data, total_elements, order)
         return cube
 
     def set_meta_info(self, cube):
