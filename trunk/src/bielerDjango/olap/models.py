@@ -37,6 +37,33 @@ def compare(a,b):
     print "returning 0"
     return 0
 
+def compare_dicts_asc(a, b):
+    if a[1] > b[1]:
+        return 1
+    elif a[1] < b[1]:
+        return -1
+    return 0
+
+def compare_dicts_desc(a, b):
+    if a[1] > b[1]:
+        return -1
+    elif a[1] < b[1]:
+        return 1
+    return 0
+
+def top_ordered(d, total_elements = 10, order = "desc"):
+    temp = d.items()
+    if order=="desc":
+        order_func = compare_dicts_desc
+    else:
+        order_func = compare_dicts_asc
+
+    temp.sort(order_func)
+    rtn = temp[:total_elements]
+    return rtn
+
+
+
 class Cube:
     '''
     >>> c = Cube()
@@ -758,6 +785,11 @@ class Report2:
         cube._can_drill_x = any(x.can_drill_x() for x in self.cubiculos.values())
         cube._can_drill_y = any(x.can_drill_y() for x in self.cubiculos.values())
         
+
+    def order_and_slice_the_cube(self, cube, total_elements=10, order="desc"):
+        cube.data = top_ordered(cube, total_elements, order)
+        return cube
+
     def set_meta_info(self, cube):
         ft = [x for x in self.fts]
         dimensions = self.cubiculos[self.fts[0]].dimensions
@@ -773,6 +805,8 @@ class Report2:
             ore        = self.cubiculos[ft].ore
             cube.add_info(ft=ft, dimensions=dimensions, measures=measures, ore=ore)        
 
+
+
     def build_cube(self):
         complete_cubes = []
         for ft in self.fts:
@@ -786,6 +820,8 @@ class Report2:
 
         self.fit(complete_cubes)
         final_cube = self.merge(complete_cubes)
+        ## if has_cube_function.... blah blah
+        final_cube = self.order_and_slice_the_cube(final_cube)
         self.set_can_flags(final_cube)
         self.set_meta_info(final_cube)
 
