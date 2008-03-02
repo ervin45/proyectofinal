@@ -112,6 +112,8 @@
 
 			$('#ft1_rest_legend').html(ft1)
 			$('#ft2_rest_legend').html(ft2)
+			
+			set_cf()
 
 			change_x()
 			change_y()
@@ -206,6 +208,21 @@
 					]
 				);
 			}
+		}
+
+		function set_cf(){
+			jQuery.getJSON("/report/get_cf/", function(json){
+				jQuery.each(json, function(k, v){
+
+					$('#cf').createAppend(
+						'option', {id: k}, v['label']
+					);
+
+					$('body').createPreppend(
+						''
+					;)
+				})
+			});
 		}
 
 		function _x_fixed(ft_prefix){
@@ -476,6 +493,17 @@
 				
 			</tbody>
 		</table>
+
+		<label>Funcion de Cubo</label>
+		<select id="cf">
+		</select>
+		<table>
+			<tbody id="cube_param_table_body">
+				
+			</tbody>
+		</table>
+
+
 		<br><br>
 		<input id="aceptar" type="button" value="Aceptar" />
 
