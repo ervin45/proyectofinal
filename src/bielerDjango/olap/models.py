@@ -105,6 +105,33 @@ class Cube:
         self._can_drill_x = True
         self._can_drill_y = True
         self.info = []
+
+    def clean(self):
+        """
+        Regenera las dimensiones en base al data.
+
+        Lo usamos luego de borrar elementos para mantener consistente
+        las dimensiones
+        >>> c = Cube()
+        >>> c.add('1','1',{"c":1})
+        >>> c.add('1','2',{"c":3})
+        >>> c.dim_y
+        ['1', '2']
+        >>> c.data = {('1', '1', 'c'): 1}
+        >>> c.clean()
+        >>> c.dim_y
+        ['1']
+        >>>
+
+        """
+        self.dim_x = [i[0] for i in self.data.keys()]
+        self.dim_x.sort(compare)
+
+        self.dim_y = [i[1] for i in self.data.keys()]
+        self.dim_y.sort(compare)
+
+        self.measures = [i[2] for i in self.data.keys()]
+        self.measures.sort(compare)
     
     def set_default(self, value):
         ''' 
@@ -788,6 +815,8 @@ class Report2:
 
     def order_and_slice_the_cube(self, cube, total_elements=2, order="desc"):
         cube.data = top_ordered(cube.data, total_elements, order)
+
+        cube.clean()
         return cube
 
     def set_meta_info(self, cube):
