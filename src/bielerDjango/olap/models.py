@@ -786,8 +786,8 @@ class Report2:
         cube._can_drill_y = any(x.can_drill_y() for x in self.cubiculos.values())
         
 
-    def order_and_slice_the_cube(self, cube, total_elements=10, order="desc"):
-        cube.data = top_ordered(cube, total_elements, order)
+    def order_and_slice_the_cube(self, cube, total_elements=2, order="desc"):
+        cube.data = dict(top_ordered(cube.data, total_elements, order))
         return cube
 
     def set_meta_info(self, cube):
