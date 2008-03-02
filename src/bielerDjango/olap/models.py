@@ -124,13 +124,13 @@ class Cube:
         >>>
 
         """
-        self.dim_x = [i[0] for i in self.data.keys()]
+        self.dim_x = list(set([i[0] for i in self.data.keys()]))
         self.dim_x.sort(compare)
 
-        self.dim_y = [i[1] for i in self.data.keys()]
+        self.dim_y = list(set([i[1] for i in self.data.keys()]))
         self.dim_y.sort(compare)
 
-        self.measures = [i[2] for i in self.data.keys()]
+        self.measures = list(set([i[2] for i in self.data.keys()]))
         self.measures.sort(compare)
     
     def set_default(self, value):
