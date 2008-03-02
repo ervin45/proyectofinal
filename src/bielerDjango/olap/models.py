@@ -11,6 +11,8 @@ from odict import odict
 
 from member_functions import *
 
+from cube_functions import *
+
 too_many_rows = 2000
 too_many_cells = 20000
 
@@ -36,32 +38,6 @@ def compare(a,b):
                 return -1
     print "returning 0"
     return 0
-
-def compare_dicts_asc(a, b):
-    if a[1] > b[1]:
-        return 1
-    elif a[1] < b[1]:
-        return -1
-    return 0
-
-def compare_dicts_desc(a, b):
-    if a[1] > b[1]:
-        return -1
-    elif a[1] < b[1]:
-        return 1
-    return 0
-
-def top_ordered(d, total_elements = 10, order = "desc"):
-    temp = d.items()
-    if order=="desc":
-        order_func = compare_dicts_desc
-    else:
-        order_func = compare_dicts_asc
-
-    temp.sort(order_func)
-    rtn = temp[:total_elements]
-    return dict(rtn)
-
 
 
 class Cube:
@@ -439,12 +415,8 @@ class CubeTooBig:
 
 
 class Report1:
-    def __init__(self,ft, x, y, xl, yl, xr, yr, ore, mf, param):
-        ##VIENE DE LA BD en base a report
+    def __init__(self,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         self.ft = ft
-        self.measures = eval(param)
-        self.member_function = globals()[mf]
-        ##VIENE DE LA BD
         self.x = x
         self.xl = xl
         self.y = y
@@ -452,6 +424,10 @@ class Report1:
         self.xr = xr
         self.yr = yr
         self.ore = ore
+        self.member_function = globals()[mf]
+        self.measures = eval(params)
+        #self.cube_function = globals()[cf]
+        self.cube_function_params = cf_params
          
         dimensions = [[self.x,self.xl,eval(self.xr)],[self.y,self.yl,eval(self.yr)]]
         self.cubiculo = cubiculo.Cubiculo(self.ft,dimensions,self.measures, eval(self.ore))
@@ -524,7 +500,7 @@ class Report1:
 
         return cursor_dwh.fetchall()
 
-    def fill_table(self, cube, incomplete_table):
+    def fill_cube(self, cube, incomplete_table):
         for row in incomplete_table:
             dict_row = dict(row)
             cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row) 
@@ -589,7 +565,7 @@ class Report1:
         sql = self.get_sql(self.ft)
         incomplete_table = self.exec_sql(sql)
 
-        self.fill_table(cube, incomplete_table)
+        self.fill_cube(cube, incomplete_table)
         self.complete_dimensions(cube, self.cubiculo)
         final_cube = self.exec_member_function(cube)
         
@@ -612,12 +588,13 @@ class Report1:
 
 
 class Report2:
-    def __init__(self,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, param):
-        ##VIENE DE LA BD en base a report
+    def __init__(self,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params):
         self.fts = [ft1, ft2]
-        self.measures = eval(param)
         self.member_function = globals()[mf]
-        ##VIENE DE LA BD
+        self.measures = eval(params)
+        self.cube_function = globals()[cf]
+        #self.cube_function = cf
+        self.cube_function_params = eval(cf_params)
         exr1        = eval(xr1)
         d11         = [x1, xl1, exr1]
         eyr1        = eval(yr1)
@@ -642,7 +619,7 @@ class Report2:
         
     def _split_measures(self, ft):
         '''
-        >>> r = Report2("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "movimiento", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "sumar", '[["ft_movimientos", "stock", "avg"], ["ft_ventas", "cantidad", "sum"], ["ft_ventas", "margen_dolares", "sum"]]')
+        >>> r = Report2("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "movimiento", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "sumar", '[["ft_movimientos", "stock", "avg"], ["ft_ventas", "cantidad", "sum"], ["ft_ventas", "margen_dolares", "sum"]]', 'order_and_slice_the_cube', '["3", "desc"]')
         >>> r._split_measures("movimientos")
         [['ft_movimientos', 'stock', 'avg']]
         >>> r._split_measures("ventas")
@@ -687,27 +664,27 @@ class Report2:
         for cubiculo in self.cubiculos.values():       
             cubiculo.drill_replacing(axis, value)
             parcial_url += cubiculo.parcial_url()
-            
+
         return self.absolute_url(request, parcial_url)
 
     def drill_replacing2(self, request, value0, value1):
         parcial_url = ""
-        
+
         for cubiculo in self.cubiculos.values():       
             cubiculo.drill_replacing(0, value0)
             cubiculo.drill_replacing(1, value1)
-            
+
             parcial_url += cubiculo.parcial_url()
-            
+
         return self.absolute_url(request, parcial_url)
 
     def dice(self, request, main_axis, other_axis):
         parcial_url = ""
-        
+
         for cubiculo in self.cubiculos.values():       
             cubiculo.dice(main_axis, other_axis)
             parcial_url += cubiculo.parcial_url()
-            
+
         return self.absolute_url(request, parcial_url)
 
     def dimension_values(self, axis, cubiculo):
@@ -737,14 +714,14 @@ class Report2:
         con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor_dwh.execute(sql)
-        
+
         if cursor_dwh.rowcount > too_many_rows:
             rows = cursor_dwh.rowcount
             raise CubeTooBig(0, rows)
 
         return cursor_dwh.fetchall()
 
-    def fill_table(self, cube, incomplete_table):
+    def fill_cube(self, cube, incomplete_table):
         for row in incomplete_table:
             dict_row = dict(row)
             cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row) 
@@ -753,7 +730,7 @@ class Report2:
     def complete_dimensions(self, cube, cubiculo):
         x_axis = self.dimension_values(1, cubiculo)
         y_axis = self.dimension_values(0, cubiculo)
-        
+
         if len(x_axis) * len(y_axis) > too_many_cells:
             cells = len(x_axis) * len(y_axis)
             raise CubeTooBig(cells, 0)
@@ -805,27 +782,21 @@ class Report2:
                 temp_cube.add(x1, y1, {'result': temp})
 
         return temp_cube
+            
+    def apply_cube_function(self, cube):
+        params = [cube]
+        params.extend(self.cube_function_params)
+        
+        print "PARAMS"
+        pprint(params)
+        self.cube_function(*params)
 
     def set_can_flags(self, cube):
         cube._can_roll_x  = any(x.can_roll_x()  for x in self.cubiculos.values())
         cube._can_roll_y  = any(x.can_roll_y()  for x in self.cubiculos.values())
         cube._can_drill_x = any(x.can_drill_x() for x in self.cubiculos.values())
         cube._can_drill_y = any(x.can_drill_y() for x in self.cubiculos.values())
-        
 
-    def order_and_slice_the_cube(self, cube, total_elements=2, order="desc"):
-        cube.data = top_ordered(cube.data, total_elements, order)
-
-        cube.clean()
-        return cube
-
-    def set_meta_info(self, cube):
-        ft = [x for x in self.fts]
-        dimensions = self.cubiculos[self.fts[0]].dimensions
-        measures   = [x.measures for x in self.cubiculos.values()]
-        ore        = [x.ore for x in self.cubiculos.values()]
-        cube.add_info(ft=ft, dimensions=dimensions, measures=measures, ore=ore)
-        
     def set_meta_info(self, cube):
         for ft in self.fts:
             ft = self.cubiculos[ft].ft
@@ -843,14 +814,14 @@ class Report2:
             incomplete_table = self.exec_sql(sql)
 
             cube = Cube()
-            self.fill_table(cube, incomplete_table)
+            self.fill_cube(cube, incomplete_table)
             self.complete_dimensions(cube, self.cubiculos[ft])
             complete_cubes.append(cube)
 
         self.fit(complete_cubes)
         final_cube = self.merge(complete_cubes)
-        ## if has_cube_function.... blah blah
-        final_cube = self.order_and_slice_the_cube(final_cube)
+        
+        self.apply_cube_function(final_cube)
         self.set_can_flags(final_cube)
         self.set_meta_info(final_cube)
 
@@ -860,9 +831,11 @@ class Report2:
         from django.conf import settings
         server_ip  = settings.IP
         mf = self.member_function.__name__
-        param = str(self.measures)
+        params = str(self.measures)
+        cf = self.cube_function
+        cf_params = str(self.cube_function_params)
         
-        url = "http://%s:%s/report2/%s%s/param=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, param)
+        url = "http://%s:%s/report2/%s%s/params=%s/%s/params=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, params, cf, cf_params)
         return url
     
 class Ajax_responser:
@@ -887,7 +860,21 @@ class Ajax_responser:
         
         @staticmethod
         def get_measures(ft):
-            return cubiculo.Meta.get_measures(ft)        
+            return cubiculo.Meta.get_measures(ft)
+
+        @staticmethod
+        def get_cf():
+            import cube_functions
+
+            cfs_temp = dir(cube_functions)
+            cfs = [x for x in cfs_temp if not x.startswith('_')]
+            result = {}
+
+            for cf in cfs:
+                function = globals()[cf]
+                result[cf] = function.meta
+
+            return result
 
 def _test():
     import doctest

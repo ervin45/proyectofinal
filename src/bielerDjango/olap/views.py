@@ -24,8 +24,8 @@ def rotacion(first, second):
     return first['cantidad'] / second['stock']
 
 
-def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, param):
-    report = models.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, param)
+def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
+    report = models.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
 
     
     try:
@@ -57,9 +57,9 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, param):
     
 
 def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
-    ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, param):
+    ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params):
     report2 = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
-    ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, param)
+    ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params)
     
     try:
         cube = report2.build_cube()
@@ -158,13 +158,13 @@ def get_report(request):
     
     if referer_type(http_referer, server_ip, server_port) == "Report1":
         parsed_url = parse_url(http_referer, server_ip, server_port)
-        (report, x, y, xl, yl, xr, yr, ore, mf, param) = parsed_url
+        (report, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params) = parsed_url
         print mf, param
-        report = models.Report1(report, x, y, xl, yl, xr, yr, ore, mf, param)
+        report = models.Report1(report, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
     else:
         parsed_url = parse_url2(http_referer, server_ip, server_port)
-        (ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, param) = parsed_url
-        report = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, param)
+        (ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params) = parsed_url
+        report = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params)
         
     return report
 
@@ -180,7 +180,7 @@ def parse_url(http_referer, server_ip, server_port):
     import urllib
     
     referer = urllib.unquote_plus(http_referer)
-    url_patter = '^http://%s:%s/report/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/param=(.*)/$' % (server_ip, server_port)
+    url_patter = '^http://%s:%s/report/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/params=(.*)/([a-zA-Z_]*)/params=(.*)/$' % (server_ip, server_port)
     p = re.compile(url_patter)
     result = p.findall(referer)
     
@@ -195,7 +195,7 @@ def parse_url2(http_referer, server_ip, server_port):
     
     referer = urllib.unquote_plus(http_referer)
     
-    url_patter = '^http://%s:%s/report2/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/param=(.*)/$' % (server_ip, server_port)
+    url_patter = '^http://%s:%s/report2/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/params=(.*)/([a-zA-Z_]*)/params=(.*)/$' % (server_ip, server_port)
     p = re.compile(url_patter)
     result = p.findall(referer)
     
@@ -298,6 +298,11 @@ def get_values(request, dimension, level):
 
 def get_mf(request):
     return HttpResponse('')
+
+def get_cf(request):
+    response = models.Ajax_responser.get_cf()
+    print str(response)
+    return HttpResponse(str(response))
 
 
 
