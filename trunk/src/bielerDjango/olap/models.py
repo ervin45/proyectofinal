@@ -1,43 +1,16 @@
 import psycopg2
 import psycopg2.extras
 import copy
-
-import cubiculo
-
-import copy
 from pprint import pprint
 
+import cubiculo
 from odict import odict
-
+from utils import *
 from member_functions import *
-
 from cube_functions import *
 
 too_many_rows = 2000
 too_many_cells = 20000
-
-def isFloat(s):
-    try:
-        return float(s) or True
-    except:
-        return False
-
-def compare(a,b):
-    primero = str(a).split(' - ')
-    segundo = str(b).split(' - ')
-    for x,y in zip(primero, segundo):
-        if isFloat(x) and isFloat(y):
-            if float(x) > float(y):
-                return 1
-            elif float(x) < float(y):
-                return -1
-        else:
-            if x > y:
-                return 1
-            elif x < y:
-                return -1
-    print "returning 0"
-    return 0
 
 
 class Cube:
@@ -426,7 +399,7 @@ class Report1:
         self.ore = ore
         self.member_function = globals()[mf]
         self.measures = eval(params)
-        #self.cube_function = globals()[cf]
+        self.cube_function = globals()[cf]
         self.cube_function_params = cf_params
          
         dimensions = [[self.x,self.xl,eval(self.xr)],[self.y,self.yl,eval(self.yr)]]
@@ -576,13 +549,13 @@ class Report1:
 
     def absolute_url(self, request, parcial_url):
         from django.conf import settings
-        
-        
-        server_ip  = settings.IP        
+        server_ip  = settings.IP
         mf = self.member_function.__name__
-        param = str(self.measures)
-        
-        url = "http://%s:%s/report/%s%s/param=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, param)
+        params = str(self.measures)
+        cf = self.cube_function.__name__
+        cf_params = str(self.cube_function_params)
+
+        url = "http://%s:%s/report/%s%s/params=%s/%s/params=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, params, cf, cf_params)
         print "URL", url
         return url
 
@@ -593,7 +566,6 @@ class Report2:
         self.member_function = globals()[mf]
         self.measures = eval(params)
         self.cube_function = globals()[cf]
-        #self.cube_function = cf
         self.cube_function_params = eval(cf_params)
         exr1        = eval(xr1)
         d11         = [x1, xl1, exr1]
@@ -832,7 +804,7 @@ class Report2:
         server_ip  = settings.IP
         mf = self.member_function.__name__
         params = str(self.measures)
-        cf = self.cube_function
+        cf = self.cube_function.__name__
         cf_params = str(self.cube_function_params)
         
         url = "http://%s:%s/report2/%s%s/params=%s/%s/params=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, params, cf, cf_params)

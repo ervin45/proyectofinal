@@ -1,6 +1,6 @@
 table,tr,td,th{border-spacing:0;border:0px solid #d9d1cc;}
 
-.data_table table,.data_table tr,.data_table td,.data_table th{border-spacing:0;border:1px solid #d9d1cc;}
+.data_table table,.data_table tr,.data_table td,.data_table th{border-spacing:0;border:1px solid #d9d1cc; font-family:verdana; font-size:11px}
 .data_table table{width:80%;margin:1em auto;background:#efeeff;}
 .data_table caption{font-weight:bold;width:75%;margin:0 auto -1em;background:#ac1f0d;color:#efe;border-bottom:1px solid #d9d1cc;}
 .data_table th{background:#DDD;color:#333;border-bottom:1px solid #d9d1cc;}
@@ -14,3 +14,6 @@ table,tr,td,th{border-spacing:0;border:0px solid #d9d1cc;}
 	background-color:#DDDEEE;
 }
 
+.axis_selection_table table, .axis_selection_table tr, .axis_selection_table td, .axis_selection_table th {border:0px;}
+
+.axis_selection_table {width:500px;}
