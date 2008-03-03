@@ -2,99 +2,64 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"><head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''" /><title>Bieler Web Application</title><script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
-<link rel="stylesheet" type="text/css" href="/media/css/olap.css" media="screen" /><script type="text/javascript">
+<link rel="stylesheet" type="text/css" href="/media/css/olap.css" media="screen" />
+<script type="text/javascript">
     $(document).ready(function() {
-      $("#dice").click(function() {
+      $("#dicex").click(function() {
         
-        var main_axis = document.getElementById('main_axis').value
-        var other_axis = document.getElementById('other_axis').value
+        var other_axis = document.getElementById('other_axis_x').value
         
-        window.location = "/dice/" + main_axis + "/" + other_axis +"/"
+        window.location = "/dice/{{dim_x}}/" + other_axis +"/"
       });
+      $("#dicex_expand").click(function() {
+        if  ( $("#expand_dim_x").css("display") == "none" ) {
+	  $("#expand_dim_x").slideDown();
+	} else {
+	  $("#expand_dim_x").slideUp();
+	}
+      });
+
+      $("#dicey").click(function() {
+        
+        var other_axis = document.getElementById('other_axis_y').value
+        
+        window.location = "/dice/{{dim_y}}/" + other_axis +"/"
+      });
+      $("#dicey_expand").click(function() {
+        if  ( $("#expand_dim_y").css("display") == "none" ) {
+	  $("#expand_dim_y").slideDown();
+	} else {
+	  $("#expand_dim_y").slideUp();
+	}
+      });
+
     });
 
 </script>
 </head>
 <body>
 
+
 <div class="outer-container">
-<div class="inner-container">
-<div class="header">
-<div class="title"> <span class="sitename"><a href="index.html">{{title}}</a></span>
-<div class="slogan"></div>
+
+<div class="path"> 
+ <a href="index.html">Inicio</a> » <span class="title">{{title}}</span>
 </div>
-</div>
-<div class="path"> <a href="index.html">Inicio</a> Este es el informe original
-<br>
-<br>
+
+<script type="text/javascript" src="/media/js/swfobject.js"></script>
+<div id="flashcontent"></div><script type="text/javascript">
+var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "600", "300", "9", "#FFFFFF");
+so.addVariable("variables","true");
+
+{{ofc_params}}
+
+so.write("flashcontent");
+</script>
+
+
 <a href="/pivot/">Pivot</a> 
-<br>
-<br />
-<select id="main_axis">
-{% for ma in main_axis %}
-    <option>{{ma}}</option>
-{% endfor %}
-</select>
 
-<select id="other_axis">
-{% for oa in other_axis %}
-    <option>{{oa}}</option>
-{% endfor %}
-</select>
-<input id="dice" value="Rotar" type="button" />
-
-<br>
-<br>
-
-
-<table width="200" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-        <td></td>
-        <td>
-            {% if can_roll_x %}
-            <a href="/roll/0/"><img src="/media/img/up_arrow.gif" style="border:0" /></a>
-            {% else %}
-            <img src="/media/img/up_arrow_dis.gif" style="border:0" />
-            {% endif %}
-            
-        </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>{% if can_roll_y %}
-            <a href="/roll/1/"><img src="/media/img/left_arrow.gif" style="border:0" /></a>
-            {% else %}
-            <img src="/media/img/left_arrow_dis.gif" style="border:0" />
-            {% endif %}
-        </td>
-        <td></td>
-        <td>
-            {% if can_drill_y %}
-            <a href="/drill/1/"><img src="/media/img/right_arrow.gif" style="border:0" /></a>
-            {% else %}
-            <img src="/media/img/right_arrow_dis.gif" style="border:0" />
-            {% endif %}
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>
-            {% if can_drill_x %}
-            <a href="/drill/0/"><img src="/media/img/down_arrow.gif" style="border:0" /></a>
-            {% else %}
-            <img src="/media/img/down_arrow_dis.gif" style="border:0" />
-            {% endif %} 
-                <br>
-                <br>
-                <br>
-              </td>
-        <td></td>
-    </tr>        
-</table> 
-
-</div>
-
-
+<div id="mas_detalles" style="display:none">
 <table class="info">
   <tbody>
     <tr>
@@ -199,14 +164,75 @@
     </tr>
   </tbody>
 </table>
-
-<br>
+</div>
 
 <table class="data_table">
 <tbody>
 </tbody><tbody>
     <tr>
-        <th></th>
+        <th width="300">
+<table class="axis_selection_table" cellspacing="0" cellpadding="0"  >
+
+<tr>
+ <td style="text-align:right;vertical-align:bottom;" colspan="2"><img src="/media/img/1.gif"></td>
+ <td>
+{% if can_roll_x %}
+ <a href="/roll/0/">+</a>
+{% else %}
++
+{% endif %}
+{% if can_drill_x %}
+<a href="/drill/0/">-</a>
+{% else %}
+-
+{% endif %}
+{{dim_x}}
+ <input id="dicex_expand" value="." type="button" />
+<div id="expand_dim_x" style="display:none">
+ <select id="other_axis_x">
+ {% for oa in other_axis_x %}
+    <option>{{oa}}</option>
+ {% endfor %}
+ </select>
+ <input id="dicex" value="Cambiar" type="button" />
+</div>
+
+</td>
+</tr>
+<tr>
+ <td>&nbsp;</td>
+ <td><img src="/media/img/2.gif"></td>
+ <td>&nbsp;</td>
+</tr>
+<tr>
+ <td>
+{% if can_roll_y %}
+ <a href="/roll/1/">+</a>
+{% else %}
++
+{% endif %}
+{% if can_drill_y %}
+<a href="/drill/1/">-</a>
+{% else %}
+-
+{% endif %}
+{{dim_y}}
+ <input id="dicey_expand" value="." type="button" />
+<div id="expand_dim_y" style="display:none">
+ <select id="other_axis_y">
+ {% for oa in other_axis %}
+    <option>{{oa}}</option>
+ {% endfor %}
+ </select>
+ <input id="dicey" value="Cambiar" type="button" />
+</div>
+
+</td>
+ <td valign="top" align="left" colspan="2"><img src="/media/img/3.gif"></td>
+</tr>
+</table>
+
+</th>
         {% for h in header %}
             
             <th>
@@ -246,20 +272,5 @@
 </table>
 
 </div>
-</div>
-
-
-<br />
-<br />
-<br /><script type="text/javascript" src="/media/js/swfobject.js"></script>
-<div id="flashcontent"></div><script type="text/javascript">
-var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "1000", "500", "9", "#FFFFFF");
-so.addVariable("variables","true");
-
-{{ofc_params}}
-
-so.write("flashcontent");
-</script>
-
 </body>
 </html>

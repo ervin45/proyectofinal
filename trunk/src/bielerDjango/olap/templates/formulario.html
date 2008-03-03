@@ -109,6 +109,7 @@
 
 		function aceptar(){
 			var server_and_port = $('#server_and_port').val()
+			var ft  = $('#ft').val()
 			var x   = $('#x').val()
 			var y   = $('#y').val()
 			var xl  = $('#xl').val()
@@ -129,6 +130,8 @@
 			var cf_params = _get_cf_params()
 
 			url += server_and_port
+			url += "/" + "report"
+			url += "/" + ft	
 			url += "/" + x
 			url += "/" + y
 			url += "/" + xl
@@ -143,6 +146,8 @@
 			url += "/"
 
 			$('#url').html(url)
+
+			//window.location.href = url
 		}
 
 		change_ft()
@@ -261,7 +266,7 @@
 		</table>
 		<input id="aceptar" type="button" value="Aceptar" />
 
-		<input id="server_and_port" type="hidden" value="localserver:8000" />
+		<input id="server_and_port" type="hidden" value="{{server_ip}}:8000" />
 	</form>
 
 	URL: <span id="url">&nbsp;</span>
