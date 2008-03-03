@@ -193,6 +193,86 @@ function _get_params(){
 	return temp
 }
 
+
+function change_cf(){
+	var cf_name = jQuery('#cf option:selected').attr('id')
+	cf_params = jQuery('#params_' + cf_name).html()
+	jQuery('#cube_param_table_body').html(cf_params)
+	
+}
+
+function _add_param_type(param){
+	if(param['type'] == "text"){
+
+		jQuery('#td_' + param['label']).createAppend(
+			'input', {type: 'text', class: 'param'}, ''
+		)	
+	}else if(param['type'] == "select"){
+		jQuery('#td_' + param['label']).createAppend(
+			'select', {id: 'select_' + param['label'], class: 'param'}, ''
+		)
+
+		jQuery.each(param['sequence'], function(i, v){
+			jQuery('#select_' + param['label']).createAppend(
+				'option', {}, v
+			)					
+		})	
+	}	
+}
+
+function set_cf(){
+	jQuery.getJSON("/report/get_cf/", function(json){
+		jQuery.each(json, function(k, v){
+
+			jQuery('#cf').createAppend(
+				'option', {id: k}, v['label']
+			);
+
+			jQuery('body').createAppend(
+				'table', {id: "params_" + k, style:'display:none'},''
+			)
+			jQuery.each(v['params'], function(i, param){
+				
+
+
+
+				jQuery("#params_" + k).createAppend(
+					'tr', {},[
+					'td', {}, ['label', {}, param['label']],
+					'td', {id: 'td_' + param['label']},''
+					]
+				)
+
+				
+				_add_param_type(param)
+
+			})
+		})
+	});
+
+	change_cf()
+}
+
+
+/*
+Devuelve un STRING que representa la lista de parametros para la cube_function que espera el DWP
+*/
+function _get_cf_params(){
+	var temp = ''
+
+	var size = jQuery('#cube_param_table_body .param').size()
+	for(var i = 0; i < size; i++){
+		p = jQuery('#cube_param_table_body .param').get()
+		cube_param = p[i].value
+		temp += "'" + cube_param + "', "
+	}
+	
+	temp = temp.substring(0, temp.length - 2)
+	temp = '[' + temp + ']'
+
+	return temp	
+}
+
 function borrar(){
 	jQuery(this).parent().parent().remove()
 	alternate_colors()

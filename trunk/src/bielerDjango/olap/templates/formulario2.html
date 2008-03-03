@@ -35,6 +35,8 @@
 
 		$('#mf').change(change_mf)
 
+		$('#cf').change(change_cf)
+
 		$('#agregar').click(agregar)
 		$('#ft1_agregar').click(ft1_agregar)
 		$('#ft2_agregar').click(ft2_agregar)
@@ -210,20 +212,6 @@
 			}
 		}
 
-		function set_cf(){
-			jQuery.getJSON("/report/get_cf/", function(json){
-				jQuery.each(json, function(k, v){
-
-					$('#cf').createAppend(
-						'option', {id: k}, v['label']
-					);
-
-					$('body').createPreppend(
-						''
-					;)
-				})
-			});
-		}
 
 		function _x_fixed(ft_prefix){
 			if( $('#' + ft_prefix + "_x_fixed").attr("checked") ){
@@ -283,12 +271,18 @@
 
 			var params = _get_params()
 
+			var cf = $('#cf option:selected').attr('id')
+
+			var cf_params = _get_cf_params()
+
 			var url = "http://" 
 			url += server_and_port
 			url += "/" + ft1_url
 			url += "/" + ft2_url
 			url += "/" + mf
 			url += "/" + params
+			url += "/" + cf
+			url += "/" + cf_params
 			url += "/"
 
 			$('#url').html(url)
@@ -493,7 +487,8 @@
 				
 			</tbody>
 		</table>
-
+		<br><br>
+		<br><br>
 		<label>Funcion de Cubo</label>
 		<select id="cf">
 		</select>

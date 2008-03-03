@@ -33,6 +33,8 @@
 
 		$('#mf').change(change_mf)
 
+		$('#cf').change(change_cf)
+
 		$('#agregar').click(agregar)
 
 		$('#aceptar').click(aceptar)
@@ -54,6 +56,7 @@
 			change_dimension()
 			change_level()
 			change_mf()
+			set_cf()
 		}
 
 		function change_x(){
@@ -121,6 +124,9 @@
 
 			var params = _get_params()
 
+			var cf = $('#cf option:selected').attr('id')
+
+			var cf_params = _get_cf_params()
 
 			url += server_and_port
 			url += "/" + x
@@ -132,6 +138,8 @@
 			url += "/" + ore
 			url += "/" + mf
 			url += "/" + params
+			url += "/" + cf
+			url += "/" + cf_params
 			url += "/"
 
 			$('#url').html(url)
@@ -242,6 +250,15 @@
 			</tbody>
 		</table>
 		<br><br>
+		<br><br>
+		<label>Funcion de Cubo</label>
+		<select id="cf">
+		</select>
+		<table>
+			<tbody id="cube_param_table_body">
+				
+			</tbody>
+		</table>
 		<input id="aceptar" type="button" value="Aceptar" />
 
 		<input id="server_and_port" type="hidden" value="localserver:8000" />
