@@ -277,6 +277,7 @@
 
 			var url = "http://" 
 			url += server_and_port
+			url += "/" + "report2"
 			url += "/" + ft1_url
 			url += "/" + ft2_url
 			url += "/" + mf
@@ -286,6 +287,8 @@
 			url += "/"
 
 			$('#url').html(url)
+
+			//window.location.href = url
 		}
 		
 
@@ -502,7 +505,7 @@
 		<br><br>
 		<input id="aceptar" type="button" value="Aceptar" />
 
-		<input id="server_and_port" type="hidden" value="localserver:8000" />
+		<input id="server_and_port" type="hidden" value="{{server_ip}}:8000" />
 
 	</form>
 
