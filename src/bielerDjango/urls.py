@@ -4,8 +4,8 @@ import olap.views as olap
 import report_management.views as rm
 
 urlpatterns = patterns('',
-    (r'^report/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/params=(.*)/([a-zA-Z_]*)/params=(.*)/$', olap.report),
-    (r'^report2/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/([a-zA-Z_:]*)/([a-zA-Z_:]*)/([a-zA-Z_]*)/([a-zA-Z_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z_]*)/params=(.*)/([a-zA-Z_]*)/params=(.*)/$', olap.report2),
+    (r'^report/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$', olap.report),
+    (r'^report2/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$', olap.report2),
     (r'^pivot/$', olap.pivot),
     (r'^drill/(.*)/$', olap.drill),
     (r'^drill_replacing/(.*)/(.*)/$', olap.drill_replacing),

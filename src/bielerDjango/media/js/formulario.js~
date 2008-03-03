@@ -195,25 +195,25 @@ function _get_params(){
 
 
 function change_cf(){
-	var cf_name = $('#cf option:selected').attr('id')
-	cf_params = $('#params_' + cf_name).html()
-	$('#cube_param_table_body').html(cf_params)
+	var cf_name = jQuery('#cf option:selected').attr('id')
+	cf_params = jQuery('#params_' + cf_name).html()
+	jQuery('#cube_param_table_body').html(cf_params)
 	
 }
 
 function _add_param_type(param){
 	if(param['type'] == "text"){
 
-		$('#td_' + param['label']).createAppend(
+		jQuery('#td_' + param['label']).createAppend(
 			'input', {type: 'text', class: 'param'}, ''
 		)	
 	}else if(param['type'] == "select"){
-		$('#td_' + param['label']).createAppend(
+		jQuery('#td_' + param['label']).createAppend(
 			'select', {id: 'select_' + param['label'], class: 'param'}, ''
 		)
 
 		jQuery.each(param['sequence'], function(i, v){
-			$('#select_' + param['label']).createAppend(
+			jQuery('#select_' + param['label']).createAppend(
 				'option', {}, v
 			)					
 		})	
@@ -224,11 +224,11 @@ function set_cf(){
 	jQuery.getJSON("/report/get_cf/", function(json){
 		jQuery.each(json, function(k, v){
 
-			$('#cf').createAppend(
+			jQuery('#cf').createAppend(
 				'option', {id: k}, v['label']
 			);
 
-			$('body').createAppend(
+			jQuery('body').createAppend(
 				'table', {id: "params_" + k, style:'display:none'},''
 			)
 			jQuery.each(v['params'], function(i, param){
@@ -236,7 +236,7 @@ function set_cf(){
 
 
 
-				$("#params_" + k).createAppend(
+				jQuery("#params_" + k).createAppend(
 					'tr', {},[
 					'td', {}, ['label', {}, param['label']],
 					'td', {id: 'td_' + param['label']},''

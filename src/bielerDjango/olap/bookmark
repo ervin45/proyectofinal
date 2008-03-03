@@ -106,3 +106,15 @@ http://192.168.61.100:8000/report/movimientos/tiempo/pieza/anio/codigo/xr={}/yr=
  * sumatoria
 http://192.168.61.100:8000/report/movimientos/tiempo/pieza/anio/codigo/xr={}/yr={'grupo_constructivo': ['184'], 'pieza': ['1'], 'modelo': ['3'], 'modificacion': ['33']}/ore=[]/same/param=[['ft_movimientos', 'envios_a_rafaela', 'sum']]/
 
+
+
+
+
+http://192.168.61.100:8000/report/compras/pieza/tipo_pieza/grupo_constructivo/tipo_pieza/xr=%7B%7D/yr=%7B%7D/ore=[]/same/params=[['ft_compras',%20'costo_dolar',%20'sum']]/order_and_slice_the_cube/params=[]/
+
+http://192.168.61.100:8000/report/pieza/tipo_pieza/grupo_constructivo/tipo_pieza/xr={}/yr={}/ore=[]/same/params=[['ft_compras', 'costo_dolar', 'sum']]/order_and_slice_the_cube/params=[]/
+
+http://192.168.61.100:8000/report2/ventas/pieza/tiempo/grupo_constructivo/mes/xr=%7B%7D/yr=%7B%7D/ore=%5B%5D/movimientos/pieza/:tiempo/grupo_constructivo/anio/xr=%7B%7D/yr=%7B%7D/ore=%5B%5D/dividir/params=%5B%5B'ft_ventas',%20'cantidad',%20'sum'%5D,%20%5B'ft_movimientos',%20'stock',%20'avg'%5D%5D/order_and_slice_the_cube2/params=%5B'',%20''%5D/
+
+http://192.168.61.100:8000/report2/ventas/pieza/tiempo/TODO/mes/xr={}/yr={}/ore=[]/movimientos/pieza/tiempo/TODO/anio/xr={}/yr={}/ore=[]/dividir/params=[['ft_ventas',%20'cantidad',%20'sum'%5D,%20%5B'ft_movimientos',%20'stock',%20'avg']]/order_and_slice_the_cube/params=%5B'8',%20'asc'%5D/
+
