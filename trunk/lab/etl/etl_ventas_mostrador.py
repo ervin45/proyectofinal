@@ -39,9 +39,9 @@ SELECT
  A.ART_CODIGO as Codigo,
  SUM(M.ART_CANTID) as Cantidad,
  SUM(M.ART_PREVT * M.ART_CANTID) as Precio_Vta_Pesos,
- SUM(M.ART_PREVT * M.ART_CANTID) / C.CAM_VENDED as Precio_Vta_Dolares,
- SUM((M.ART_PREVT - M.ART_PRECIO)* M.ART_CANTID) as Margen_Pesos,
- SUM((M.ART_PREVT - M.ART_PRECIO)* M.ART_CANTID) / C.CAM_VENDED as Margen_Dolares,
+ SUM(M.ART_PREVT/C.CAM_VENDED * M.ART_CANTID) as Precio_Vta_Dolares,
+ SUM((M.ART_PREVT - M.X_PRECIO_PESOS)* M.ART_CANTID) as Margen_Pesos,
+ SUM(((M.ART_PREVT/C.CAM_VENDED) - M.X_PRECIO_DOLARES)* M.ART_CANTID) as Margen_Dolares,
  'Mostrador' as Tipo 
 FROM
  `STS_ARTIC0` A 
@@ -52,7 +52,6 @@ WHERE
   and YEAR(M.ART_FECHA) =  '%s'
   and MONTH(M.ART_FECHA) = '%s'
   and M.ART_TIPMOV = 'S3'
-
 GROUP BY 
  A.ART_CODIGO
 """ % (anio,mes)
