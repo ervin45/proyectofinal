@@ -5,23 +5,84 @@ from django.http import HttpResponse
 from pprint import pprint
 import math
 
+def header_list_top(header):
+    if header == ['TODO']:
+        return [[['TODO', 1]]]
+    
+    levels_count = len(header[0].split("-"))
+    
+    result = []
+    caminos = []
+    
+    for i in range(levels_count):
+        result.append([])
+        caminos.append([])
+    
+    
+    
+    for x in header:
+        temp = x.split("-")
+        for i in range(levels_count):
+    
+            if not temp[:i + 1] in caminos[i]:
+                result[i].append([temp[i], 1])
+                caminos[i].append(temp[:i + 1])
+            else:
+                result[i][len(result[i]) - 1][1] += 1
 
-def costo_promedio(first):
-    return first.get("costo_dolar", 0)
+    return result
+        
+def _slide_col(t, start, end):
+    result = []
+    sum = 0
+    for tl in t:
+        sum += tl[1]
+        
+        if sum in range(start + 1, end + 1):
+            result.append(tl)
+            
+        if sum > end:
+            break
 
-def ratio_ventas_compras(**kw):
-    return kw.get("cantidad", 0)
-    try:
-            return str(float(kw.get("precio_venta_dolares", 0)) / float(kw.get("costo_dolar", 0)))
-    except ZeroDivisionError:
-            return None
+    return result
 
-def rotacion(first, second):
+def header_list_left(header):
+    if header == ['TODO']:
+        return [[['TODO', 1]]]
 
-    if not first['cantidad'] or not second['stock']:
-        return None
+    re = header_list_top(header)
 
-    return first['cantidad'] / second['stock']
+    temp = []
+    for x in range(len(re) - 1):
+        temp.append([])
+
+    last_level = re[len(re) - 1]
+    last_level = [x + ["LAST"] for x in last_level]
+
+    temp.append(last_level)
+
+    for x in range(len(re) - 2, -1, -1):
+        count = 0
+        for l in re[x]:
+            temp[x].append(l)
+            temp[x].extend(_slide_col(temp[x+1], count, count + l[1] * (len(re) - 1 -x)))
+
+            count = count + l[1]
+
+    rows = []
+    col = []
+    for x in temp[0]:
+        col.append(x)
+        try:
+            if x[2] == "LAST":
+                rows.append(col)
+                col = []
+        except:
+            pass
+        
+    pprint(rows)    
+    
+    return rows
 
 
 def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
@@ -32,6 +93,13 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         cube = report.build_cube()   
         
         header     = cube.dim_y
+        
+        header_top = header_list_top(cube.dim_y)
+        pprint(header_top)
+        
+        header_left = header_list_left(cube.dim_x)
+        pprint(header_left)
+        
         body       = get_body(cube)
         body_order = cube.dim_x     
         
@@ -57,7 +125,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         other_axis = ['Seleccionar..']
         other_axis.extend(report.get_other_axis_list())
         
-        ofc_params = graph_data(header, body, body_order)
+        #ofc_params = graph_data(header, body, body_order, x, xl)
         return render_to_response('reportes2.html',locals())
     
     except models.CubeTooBig:
@@ -228,12 +296,13 @@ def get_tope(max_y):
     return tope
 
 
-def graph_data(header, body, body_order):
+def graph_data(header, body, body_order, x_label_dim, x_label_level):
     import OpenFlashChart as ofc
     import itertools as it
     
     graph = ofc.graph()
-    graph.x_label_style="13,#9933CC,2"
+    graph.x_label_style = "11,#9933CC,2"
+    graph.y_label_style= "11,#9933CC,2"
     
     graph.set_tool_tip('#key# <br> #val#')
     
@@ -252,14 +321,15 @@ def graph_data(header, body, body_order):
         row_values_str = body[valor]
         row_values     = [float(x) for x in row_values_str if x]
         
-        graph.bar(alpha=50, colour=colour_iter.next(), text=valor, size=10)
+        graph.bar(alpha=50, colour=colour_iter.next(), text=valor, size=8)
         graph.set_data(row_values_str)
         
         max_y = max([max_y] + row_values)
         
     
     graph.set_x_labels([str(x) for x in header])
-    
+    graph.x_legend= '%s[%s],20,#736AFF' % (x_label_dim, x_label_level)
+    #graph.y_legend= 'ves in Feburary,20,#736AFF'
 
     graph.set_y_max(get_tope(max_y))
     

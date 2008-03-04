@@ -250,7 +250,7 @@ class graph:
 		if( len( colour ) > 0 ):
 			self.title_colour = colour
 
-	def set_x_legend( self, text, size=-1, colour='' ):
+	def set_x_legend( self, text, size=10, colour='' ):
 		self.x_legend = text
 		if( size > -1 ):
 			self.x_legend_size = size

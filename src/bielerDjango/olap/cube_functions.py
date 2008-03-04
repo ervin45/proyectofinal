@@ -48,10 +48,10 @@ order_and_slice_the_cube2.meta = {
                                 } 
 
 
-def same(cube):
+def same_cube(cube):
     pass
 
-same.meta = {
+same_cube.meta = {
                                 "label": "Ninguno",
                                 "params": []
                                 }

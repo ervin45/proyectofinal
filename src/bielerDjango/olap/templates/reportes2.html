@@ -416,10 +416,10 @@ so.write("flashcontent");
 
 <table class="data_table">
 <tbody>
-</tbody><tbody>
+
     <tr>
         <th width="300">
-<table class="axis_selection_table" cellspacing="0" cellpadding="0"  >
+              <table class="axis_selection_table" cellspacing="0" cellpadding="0"  >
 
 <tr>
  <td style="text-align:right;vertical-align:bottom;" colspan="2"><img src="/media/img/1.gif"></td>
@@ -478,7 +478,7 @@ so.write("flashcontent");
 </tr>
 </table>
 
-</th>
+        </th>
         {% for h in header %}
             
             <th>
@@ -517,6 +517,37 @@ so.write("flashcontent");
 </tbody>
 </table>
 
+
+
 </div>
+
+
+<table class="header_top">
+	{% for level in header_top%}
+	<tr border="1">
+		{% for val in level%}
+		<td border="1" colspan="{{val|hash:1}}" align="center">
+			{{val|hash:0}}
+		</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+
+</table>
+
+
+<table class="header_left">
+	{% for row in header_left%}
+	<tr border="1">
+		{% for col in row%}
+		<td border="1" rowspan="{{col|hash:1}}">
+			{{col|hash:0}}
+		</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+
+</table>
+
 </body>
 </html>
