@@ -7,7 +7,7 @@ import math
 
 def header_list_top(header):
     if header == ['TODO']:
-        return [[['TODO', 1]]]
+        return [[['TODO', 1]]], 1
     
     levels_count = len(header[0].split("-"))
     
@@ -47,8 +47,8 @@ def _slide_col(t, start, end):
     return result
 
 def header_list_left(header):
-    if header[0] == ['TODO']:
-        return [[['TODO', 1]]]
+    if header == ['TODO']:
+        return [[['TODO', 1]]], 1
 
     re = header_list_top(header)[0]
 
