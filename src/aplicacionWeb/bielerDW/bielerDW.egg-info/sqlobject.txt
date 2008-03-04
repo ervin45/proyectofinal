@@ -1,2 +1,0 @@
-db_module=bielerDW.model
-history_dir=$base/bielerDW/sqlobject-history
