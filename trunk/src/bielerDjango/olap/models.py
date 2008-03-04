@@ -400,7 +400,7 @@ class Report1:
         self.member_function = globals()[mf]
         self.measures = eval(params)
         self.cube_function = globals()[cf]
-        self.cube_function_params = cf_params
+        self.cube_function_params = eval(cf_params)
          
         dimensions = [[self.x,self.xl,eval(self.xr)],[self.y,self.yl,eval(self.yr)]]
         self.cubiculo = cubiculo.Cubiculo(self.ft,dimensions,self.measures, eval(self.ore))
@@ -519,6 +519,14 @@ class Report1:
 
         return temp_cube
             
+    def apply_cube_function(self, cube):
+        params = [cube]
+        params.extend(self.cube_function_params)
+        
+        print "PARAMS"
+        pprint(params)
+        self.cube_function(*params)
+            
     def set_can_flags(self, cube):
         cube._can_roll_x = self.cubiculo.can_roll_x()
         cube._can_roll_y = self.cubiculo.can_roll_y()
@@ -543,6 +551,8 @@ class Report1:
         self.complete_dimensions(cube, self.cubiculo)
         final_cube = self.exec_member_function(cube)
         
+        
+        self.apply_cube_function(final_cube)
         self.set_can_flags(final_cube)
         self.set_meta_info(final_cube)
         return final_cube

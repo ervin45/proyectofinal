@@ -15,19 +15,37 @@
 <script type="text/javascript">
     jQuery(document).ready(function($){
 
+      $("#more_details_expand").click(function() {
+        if  ( $("#more_details").css("display") == "none" ) {
+	  $("#more_details").show();
+	} else {
+	  $("#more_details").slideUp();
+	}
+      });
+
+      $('#other_axis_x').change(function(){
+        var other_axis = $('#other_axis_x').val()
+        window.location = "/dice/{{dim_x}}/" + other_axis +"/"
+      })
+
+      $('#other_axis_y').change(function(){
+        var other_axis = $('#other_axis_y').val()
+        window.location = "/dice/{{dim_y}}/" + other_axis +"/"
+      })
+
       $("#dicex_expand").click(function() {
         if  ( $("#expand_dim_x").css("display") == "none" ) {
-	  $("#expand_dim_x").slideDown();
+	  $("#expand_dim_x").show();
 	} else {
-	  $("#expand_dim_x").slideUp();
+	  $("#expand_dim_x").hide();
 	}
       });
 
       $("#dicey_expand").click(function() {
         if  ( $("#expand_dim_y").css("display") == "none" ) {
-	  $("#expand_dim_y").slideDown();
+	  $("#expand_dim_y").show();
 	} else {
-	  $("#expand_dim_y").slideUp();
+	  $("#expand_dim_y").hide();
 	}
       });
 
@@ -39,27 +57,28 @@
 	}
       });
 
-      $("#more_details_expand").click(function() {
-        if  ( $("#more_details").css("display") == "none" ) {
-	  $("#more_details").show();
-	} else {
-	  $("#more_details").slideUp();
-	}
-      });
+      //Mescla el HEADER de la izquierda con las filas de DATOS
+      var size = jQuery('.data_row').size()
 
-      $('#other_axis_x').change(function(){
-        var other_axis = document.getElementById('other_axis_x').value
-        window.location = "/dice/{{dim_x}}/" + other_axis +"/"
-      })
+      for(var i = 0; i < size; i++){
+		var header_row = $('.header_left_row')
+		header_html = header_row[i].innerHTML
 
-      $('#other_axis_y').change(function(){
-        var other_axis = document.getElementById('other_axis_y').value
-        window.location = "/dice/{{dim_y}}/" + other_axis +"/"
-      })
+		var data_row = $('.data_row')
+		data_row[i].innerHTML = header_html + data_row[i].innerHTML
+      }
+
+
+	
+      //html = $('#axis_selection_table').html()
+      //$('#axis_selection_table_cell').html(html)
+
 
     });
 
 </script>
+
+
 </head>
 <body>
 
@@ -289,8 +308,8 @@
     
     URL: <span id="url">&nbsp;</span>
 
-
 </div>
+<!-- FIN change_report -->
 
 <script type="text/javascript" src="/media/js/swfobject.js"></script>
 <div id="flashcontent"></div><script type="text/javascript">
@@ -384,7 +403,7 @@ so.write("flashcontent");
       <td valign="top">Nivel: </td>
       <td>{{dimensions2|hash:dim|hash:1}}</td>
     </tr>
-    <t>
+    <h>
       <td valign="top">Restricciones: </td>
       <td>{{dimensions2|hash:dim|hash:2}}</td>
     </tr|>
@@ -413,92 +432,100 @@ so.write("flashcontent");
   </tbody>
 </table>
 </div>
+<!-- FIN more_details -->
+
+
+
+
+
+
+
+
+
+<br /><br /><br />
 
 <table class="data_table">
-<tbody>
+	{% for level in header_top%}
+	<tr border="1">
+		{% if forloop.first %}
+			<th colspan="{{header_left_size}}" rowspan="{{header_top_size}}" width="100" >
+					<table id="axis_selection_table" cellpadding="0" cellspacing="0">
+						<tr>
+						<td style="text-align:right;vertical-align:bottom;" colspan="2">
+							<img src="/media/img/1.gif">
+						</td>
+						<td>
+								{% if can_roll_x %}
+								<a href="/roll/0/">+</a>
+								{% else %}
+								+
+								{% endif %}
+								{% if can_drill_x %}
+								<a href="/drill/0/">-</a>
+								{% else %}
+								-
+								{% endif %}
+								{{dim_x}}
+								<input id="dicex_expand" src="/media/img/options.gif" type="image" />
+								<div id="expand_dim_x" style="display:none">
+								<select id="other_axis_x">
+								{% for oa in other_axis %}
+								<option>{{oa}}</option>
+								{% endfor %}
+								</select>
+								</div>
+						
+						</td>
+						</tr>
+						<tr>
+						<td>&nbsp;</td>
+						<td><img src="/media/img/2.gif"></td>
+						<td>&nbsp;</td>
+						</tr>
+						<tr>
+						<td>
+								{% if can_roll_y %}
+								<a href="/roll/1/">+</a>
+								{% else %}
+								+ 
+								{% endif %}
+								{% if can_drill_y %}
+								<a href="/drill/1/">-</a>
+								{% else %}
+								-
+								{% endif %}
+								{{dim_y}}
+								<input id="dicey_expand" src="/media/img/options.gif" type="image" />
+								<div id="expand_dim_y" style="display:none">
+								<select id="other_axis_y">
+								{% for oa in other_axis %}
+								<option>{{oa}}</option>
+								{% endfor %}
+								</select>
+								</div>
+						
+						</td>
+						<td valign="top" align="left" colspan="2"><img src="/media/img/3.gif"></td>
+						</tr>
 
-    <tr>
-        <th width="300">
-              <table class="axis_selection_table" cellspacing="0" cellpadding="0"  >
+					</table>
+					<!-- FIN axis_selection_table_cell -->
 
-<tr>
- <td style="text-align:right;vertical-align:bottom;" colspan="2"><img src="/media/img/1.gif"></td>
- <td>
-{% if can_roll_x %}
- <a href="/roll/0/">+</a>
-{% else %}
-+
-{% endif %}
-{% if can_drill_x %}
-<a href="/drill/0/">-</a>
-{% else %}
--
-{% endif %}
-{{dim_x}}
- <input id="dicex_expand" src="/media/img/options.gif" type="image" />
-<div id="expand_dim_x" style="display:none">
- <select id="other_axis_x">
- {% for oa in other_axis %}
-    <option>{{oa}}</option>
- {% endfor %}
- </select>
-</div>
+			</th>
+		{% endif%}
 
-</td>
-</tr>
-<tr>
- <td>&nbsp;</td>
- <td><img src="/media/img/2.gif"></td>
- <td>&nbsp;</td>
-</tr>
-<tr>
- <td>
-{% if can_roll_y %}
- <a href="/roll/1/">+</a>
-{% else %}
-+ 
-{% endif %}
-{% if can_drill_y %}
-<a href="/drill/1/">-</a>
-{% else %}
--
-{% endif %}
-{{dim_y}}
- <input id="dicey_expand" src="/media/img/options.gif" type="image" />
-<div id="expand_dim_y" style="display:none">
- <select id="other_axis_y">
- {% for oa in other_axis %}
-    <option>{{oa}}</option>
- {% endfor %}
- </select>
-</div>
+		{% for val in level%}
+		<th border="1" colspan="{{val|hash:1}}" align="center">
+			{{val|hash:0}}
+		</th>
+		{% endfor %}
+	</tr>
+	{% endfor %}
 
-</td>
- <td valign="top" align="left" colspan="2"><img src="/media/img/3.gif"></td>
-</tr>
-</table>
-
-        </th>
-        {% for h in header %}
-            
-            <th>
-		{% if can_drill_x %}
-                	<a href="/drill_replacing/0/{{h}}/">{{h}}</a>
-		{% else %}
-			{{h}}
-		{% endif %}
-            </th>
-        {% endfor %}
-    </tr>
-    
     {% for valor in body_order %}
-    <tr>
-        <th>
-	{% if can_drill_y %}
-		<a href="/drill_replacing/1/{{valor}}/">{{valor}}</a></th>
-	{% else %}
-		{{valor}}
-	{% endif %}
+    <tr class="data_row">
+
+        
         {% for v in body|hash:valor %}
         <td>        
           {% if not v %}
@@ -514,40 +541,25 @@ so.write("flashcontent");
         {% endfor %}
     </tr>
     {% endfor %}
-</tbody>
-</table>
-
-
-
-</div>
-
-
-<table class="header_top">
-	{% for level in header_top%}
-	<tr border="1">
-		{% for val in level%}
-		<td border="1" colspan="{{val|hash:1}}" align="center">
-			{{val|hash:0}}
-		</td>
-		{% endfor %}
-	</tr>
-	{% endfor %}
 
 </table>
+<!-- FIN table_data -->
 
-
-<table class="header_left">
+<table class="header_left" style="display:none">
 	{% for row in header_left%}
-	<tr border="1">
+	<tr class="header_left_row" border="1">
 		{% for col in row%}
-		<td border="1" rowspan="{{col|hash:1}}">
+		<th border="1" rowspan="{{col|hash:1}}">
 			{{col|hash:0}}
-		</td>
+		</h>
 		{% endfor %}
 	</tr>
 	{% endfor %}
 
 </table>
+
+
+
 
 </body>
 </html>

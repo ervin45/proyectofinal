@@ -9,4 +9,7 @@ def hash(h, key):
 def sub(h, index):
     return h[index]
 
+@register.filter
+def size(h):
+    return len(h)
 
