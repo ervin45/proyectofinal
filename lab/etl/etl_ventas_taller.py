@@ -39,9 +39,9 @@ SELECT
  A.ART_CODIGO as Codigo,
  SUM(M.ART_CANTID) as Cantidad,
  SUM(M.ART_PREVT * M.ART_CANTID) as Precio_Vta_Pesos,
- SUM(M.ART_PREVT * M.ART_CANTID) / C.CAM_VENDED as Precio_Vta_Dolares,
- SUM((M.ART_PREVT - M.ART_PRECIO)* M.ART_CANTID) as Margen_Pesos,
- SUM((M.ART_PREVT - M.ART_PRECIO)* M.ART_CANTID) / C.CAM_VENDED as Margen_Dolares,
+ SUM(M.ART_PREVT/C.CAM_VENDED * M.ART_CANTID) as Precio_Vta_Dolares,
+ SUM((M.ART_PREVT - M.X_PRECIO_PESOS)* M.ART_CANTID) as Margen_Pesos,
+ SUM(((M.ART_PREVT/C.CAM_VENDED) - M.X_PRECIO_DOLARES)* M.ART_CANTID) as Margen_Dolares,
  'Taller' as Tipo 
 FROM
  `STS_ARTIC0` A 
@@ -90,6 +90,7 @@ GROUP BY
         proveedor_id=etlutils.get_id(cursor_dwh,'td_proveedor','id',{'id_octosis':proovedor})
 
         sql = 'insert into ft_ventas (fk_tiempo, fk_pieza, fk_proveedor, fk_tipo_venta, cantidad, precio_venta_pesos, precio_venta_dolares, margen_pesos,  margen_dolares) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
+        #print sql,(tiempo_id, pieza_id, proveedor_id, tipo_venta_id, cantidad, precio_vta_pesos,  precio_vta_dolares, margen_pesos,  margen_dolares)
         cursor_dwh.execute (sql, (tiempo_id, pieza_id, proveedor_id, tipo_venta_id, cantidad, precio_vta_pesos,  precio_vta_dolares, margen_pesos,  margen_dolares))
         con_dwh.commit()
 
