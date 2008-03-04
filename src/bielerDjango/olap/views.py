@@ -30,7 +30,7 @@ def header_list_top(header):
             else:
                 result[i][len(result[i]) - 1][1] += 1
 
-    return result
+    return result, len(result)
         
 def _slide_col(t, start, end):
     result = []
@@ -47,10 +47,10 @@ def _slide_col(t, start, end):
     return result
 
 def header_list_left(header):
-    if header == ['TODO']:
+    if header[0] == ['TODO']:
         return [[['TODO', 1]]]
 
-    re = header_list_top(header)
+    re = header_list_top(header)[0]
 
     temp = []
     for x in range(len(re) - 1):
@@ -80,9 +80,7 @@ def header_list_left(header):
         except:
             pass
         
-    pprint(rows)    
-    
-    return rows
+    return rows, len(re)
 
 
 def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
@@ -94,10 +92,10 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         
         header     = cube.dim_y
         
-        header_top = header_list_top(cube.dim_y)
+        header_top, header_top_size = header_list_top(cube.dim_y)
         pprint(header_top)
         
-        header_left = header_list_left(cube.dim_x)
+        header_left, header_left_size = header_list_left(cube.dim_x)
         pprint(header_left)
         
         body       = get_body(cube)
