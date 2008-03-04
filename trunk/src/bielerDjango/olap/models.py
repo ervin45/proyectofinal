@@ -537,14 +537,14 @@ class Report1:
 
         sql = self.get_sql(self.ft)
         incomplete_table = self.exec_sql(sql)
-
+        
         self.fill_cube(cube, incomplete_table)
+        
         self.complete_dimensions(cube, self.cubiculo)
         final_cube = self.exec_member_function(cube)
         
         self.set_can_flags(final_cube)
         self.set_meta_info(final_cube)
-
         return final_cube
 
     def absolute_url(self, request, parcial_url):

@@ -89,4 +89,4 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
 )
 
-IP = "192.168.61.100"
+IP = "192.168.1.150"
