@@ -381,6 +381,115 @@ class Cube:
     def get_info(self):
         return self.info
 
+    def reduce_x(self, func, measure):
+        """
+        >>> c = Cube()
+        >>> c.add('uno','1',{"c":'1'})
+        >>> c.add('uno','2',{"c":'3'})
+        >>> c.add('dos','1',{"c":'2'})
+        >>> c.add('dos','2',{"c":'7'})
+        >>> c.reduce_x(lambda x, y: float(x)+float(y), "c")
+        ['9.0', '4.0']
+        >>>
+        """
+        rtn = []
+        for x in self.dim_x:
+            rtn.append(str(reduce(func, self.rows(x, measure))))
+        return rtn
+
+    def total_x(self, measure):
+        """
+        >>> c = Cube()
+        >>> c.add('uno','1',{"c":'1'})
+        >>> c.add('uno','2',{"c":'3'})
+        >>> c.add('dos','1',{"c":'2'})
+        >>> c.add('dos','2',{"c":'7'})
+        >>> c.total_x("c")
+        ['9.0', '4.0']
+        >>>
+        """
+        return self.reduce_x(lambda x, y: float(x)+float(y), "c")
+
+    def reduce_y(self, func, measure):
+        """
+        >>> c = Cube()
+        >>> c.add('uno','1',{"c":'1'})
+        >>> c.add('uno','2',{"c":'3'})
+        >>> c.add('dos','1',{"c":'2'})
+        >>> c.add('dos','2',{"c":'7'})
+        >>> c.reduce_y(lambda x, y: float(x)+float(y), "c")
+        ['3.0', '10.0']
+        >>> c.reduce_y(lambda x, y: float(x)*float(y), "c")
+        ['2.0', '21.0']
+        >>>
+        """
+        rtn = []
+        for y in self.dim_y:
+            rtn.append(str(reduce(func, self.columns(y, measure))))
+        return rtn
+
+    def total_y(self, measure):
+        """
+        >>> c = Cube()
+        >>> c.add('uno','1',{"c":'1'})
+        >>> c.add('uno','2',{"c":'3'})
+        >>> c.add('dos','1',{"c":'2'})
+        >>> c.add('dos','2',{"c":'7'})
+        >>> c.total_y("c")
+        ['3.0', '10.0']
+        >>>
+        """
+        return self.reduce_y(lambda x, y: float(x)+float(y), "c")
+
+    def forecast_x_dummy(self,measure):
+        """
+        >>> c = Cube()
+        >>> c.add('uno','1',{"c":'1'})
+        >>> c.add('uno','2',{"c":'3'})
+        >>> c.add('dos','1',{"c":'2'})
+        >>> c.add('dos','2',{"c":'7'})
+        >>> c.forecast_x_dummy("c")
+        ['7', '3']
+        >>>
+        """
+        rtn = []
+        for x in self.dim_x:
+            rtn.append(list(self.rows(x, measure))[-1:][0])
+        return rtn
+
+
+    def forecast_x_median(self,n,measure):
+        """
+        >>> c = Cube()
+        >>> c.add('uno','1',{"c":'1'})
+        >>> c.add('uno','2',{"c":'3'})
+        >>> c.add('uno','3',{"c":'4'})
+        >>> c.add('uno','4',{"c":'3'})
+        >>> c.add('uno','5',{"c":'7'})
+        >>> c.add('uno','6',{"c":'3'})
+        >>> c.add('uno','7',{"c":'5'})
+        >>> c.add('uno','8',{"c":'9'})
+        >>> c.add('dos','1',{"c":'3'})
+        >>> c.add('dos','2',{"c":'6'})
+        >>> c.add('dos','3',{"c":'1'})
+        >>> c.add('dos','4',{"c":'8'})
+        >>> c.add('dos','5',{"c":'4'})
+        >>> c.add('dos','6',{"c":'4'})
+        >>> c.add('dos','7',{"c":'2'})
+        >>> c.add('dos','8',{"c":'1'})
+        >>> c.forecast_x_median(3,"c")
+        ['2.33333333333', '5.66666666667']
+        >>> c.forecast_x_median(5,"c")
+        ['3.8', '5.4']
+        >>>
+        """
+        rtn = []
+        for x in self.dim_x:
+            rtn.append(str(reduce(lambda x,y:float(x)+float(y), list(self.rows(x, measure))[-n:]) / float(n)))
+        return rtn
+
+
+
 class CubeTooBig:
     def __init__(self, cells, rows):
         self.cells = cells
