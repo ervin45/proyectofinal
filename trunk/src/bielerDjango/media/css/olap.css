@@ -16,9 +16,12 @@ table,tr,td,th{border-spacing:0;border:0px solid #d9d1cc;}
 
 #axis_selection_table table, #axis_selection_table tr, #axis_selection_table td, #axis_selection_table th {border:0px;}
 
-#axis_selection_table {width:150px;}
+#axis_selection_table {width:350px;}
 
+.roll_drill{display: inline}
 
 .header_top td{	border: 1px solid #888}
 
 .header_left td{border: 1px solid #888}
+
+#other_axis_x, #other_axis_y{font-family:verdana; font-size:10px}

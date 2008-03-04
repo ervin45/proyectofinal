@@ -455,15 +455,15 @@ so.write("flashcontent");
 							<img src="/media/img/1.gif">
 						</td>
 						<td>
-							<table class="roll_drill">
+							<table class="roll_drill" width="50">
 								<tr>
 									<td>
 										{% if can_roll_x %}
 										<a href="/roll/0/">
-											<img border="0" src="/media/img/roll_enable.gif" />
+											<img border="0" src="/media/img/roll_enabled.gif" />
 										</a>
 										{% else %}
-											<img src="/media/img/roll_disable.gif" />
+											<img src="/media/img/roll_disabled.gif" />
 										{% endif %}
 									</td>
 								</tr>
@@ -471,16 +471,16 @@ so.write("flashcontent");
 									<td>
 										{% if can_drill_x %}
 										<a href="/drill/0/">
-											<img border="0" src="/media/img/drill_enable.gif" />
+											<img border="0" src="/media/img/drill_enabled.gif" />
 										</a>
 										{% else %}
-											<img src="/media/img/drill_disable.gif" />
+											<img src="/media/img/drill_disabled.gif" />
 										{% endif %}
 							
 									</td>
 								</tr>
 							</table>
-
+							&nbsp;
 							{{dim_x}}
 							<input id="dicex_expand" src="/media/img/options.gif" type="image" />
 							<div id="expand_dim_x" style="display:none">
@@ -506,10 +506,10 @@ so.write("flashcontent");
 									<td>
 										{% if can_roll_y %}
 										<a href="/roll/1/">
-											<img border="0" src="/media/img/roll_enable.gif" />
+											<img border="0" src="/media/img/roll_enabled.gif" />
 										</a>
 										{% else %}
-											<img src="/media/img/roll_disable.gif" />
+											<img src="/media/img/roll_disabled.gif" />
 										{% endif %}
 									</td>
 								</tr>
@@ -517,16 +517,16 @@ so.write("flashcontent");
 									<td>
 										{% if can_drill_y %}
 										<a href="/drill/1/">
-											<img border="0" src="/media/img/drill_enable.gif" />
+											<img border="0" src="/media/img/drill_enabled.gif" />
 										</a>
 										{% else %}
-											<img src="/media/img/drill_disable.gif" />
+											<img src="/media/img/drill_disabled.gif" />
 										{% endif %}
 							
 									</td>
 								</tr>
 							</table>
-
+							&nbsp;
 							{{dim_y}}
 							<input id="dicey_expand" src="/media/img/options.gif" type="image" />
 							<div id="expand_dim_y" style="display:none">
