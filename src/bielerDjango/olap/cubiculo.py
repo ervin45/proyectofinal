@@ -54,7 +54,11 @@ class Meta:
                                             
                             'movimientos': ['tiempo',
                                             'pieza',
-                                            'proveedor']}
+                                            'proveedor'],
+                                            
+                            'test':        ['tiempo',
+                                            'pieza',
+                                            'tipo_pieza']                                            }
                                             
     fact_table_measures_meta   = {'ventas': ['cantidad',
                                              'precio_venta_pesos',
@@ -79,7 +83,10 @@ class Meta:
                                                     'ajuste_positivo',
                                                     'devolucion_salida1',
                                                     'devolucion_salida2',
-                                                    'otro']
+                                                    'otro'],
+
+                                   'test': ['cantidad',
+                                               'costo']
                                              }
 
     @staticmethod

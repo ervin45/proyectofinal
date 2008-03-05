@@ -3,75 +3,82 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"><head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''" /><title>Bieler Web Application</title>
 
-<script type="text/javascript" src="/media/js/prototype.js"></script>
 <script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
-<script type="text/javascript" src="/media/js/jquery/jquery.flydom.js"></script>
-
-<script type="text/javascript" src="/media/js/formulario.js"></script>
-<script type="text/javascript" src="/media/js/formulario1.js">></script>
-<script type="text/javascript" src="/media/js/formulario2.js">></script>
 
 <link rel="stylesheet" type="text/css" href="/media/css/olap.css" media="screen" />
 <script type="text/javascript">
-    jQuery(document).ready(function($){
+	jQuery(document).ready(function($){
 
-      $("#more_details_expand").click(function() {
-        if  ( $("#more_details").css("display") == "none" ) {
-	  $("#more_details").show();
-	} else {
-	  $("#more_details").slideUp();
+	$('#more_details_expand').click(function() {
+		if( $('#more_details').css("display") == "none" ) {
+			$('#more_details').show();
+		} else {
+			$('#more_details').slideUp();
+		}
+	});
+
+	$('#other_axis_x').change(function(){
+		var other_axis = $('#other_axis_x').val()
+		window.location = "/dice/{{dim_x}}/" + other_axis +"/"
+	})
+
+	$('#other_axis_y').change(function(){
+		var other_axis = $('#other_axis_y').val()
+		window.location = "/dice/{{dim_y}}/" + other_axis +"/"
+	})
+
+	$('#dicex_expand').click(function() {
+		if($('#expand_dim_x').css('display') == 'none' ) {
+			$('#expand_dim_x').show();
+		} else {
+			$('#expand_dim_x').hide();
+		}
+	});
+
+	$('#dicey_expand').click(function() {
+		if  ( $('#expand_dim_y').css('display') == 'none' ) {
+			$('#expand_dim_y').show();
+		} else {
+			$('#expand_dim_y').hide();
+		}
+	});
+
+	$('#change_report_expand').click(function() {
+		if ( $('#change_report').css('display') == 'none' ) {
+			$('#change_report').show();
+		} else {
+			$('#change_report').slideUp();
 	}
-      });
+	});
 
-      $('#other_axis_x').change(function(){
-        var other_axis = $('#other_axis_x').val()
-        window.location = "/dice/{{dim_x}}/" + other_axis +"/"
-      })
-
-      $('#other_axis_y').change(function(){
-        var other_axis = $('#other_axis_y').val()
-        window.location = "/dice/{{dim_y}}/" + other_axis +"/"
-      })
-
-      $("#dicex_expand").click(function() {
-        if  ( $("#expand_dim_x").css("display") == "none" ) {
-	  $("#expand_dim_x").show();
-	} else {
-	  $("#expand_dim_x").hide();
-	}
-      });
-
-      $("#dicey_expand").click(function() {
-        if  ( $("#expand_dim_y").css("display") == "none" ) {
-	  $("#expand_dim_y").show();
-	} else {
-	  $("#expand_dim_y").hide();
-	}
-      });
-
-      $("#change_report_expand").click(function() {
-        if  ( $("#change_report").css("display") == "none" ) {
-	  $("#change_report").show();
-	} else {
-	  $("#change_report").slideUp();
-	}
-      });
-
-      //Mescla el HEADER de la izquierda con las filas de DATOS
-      var size = jQuery('.data_row').size()
-
-      for(var i = 0; i < size; i++){
-		var header_row = $('.header_left_row')
-		header_html = header_row[i].innerHTML
-
-		var data_row = $('.data_row')
-		data_row[i].innerHTML = header_html + data_row[i].innerHTML
-      }
+	$('.form_loader').click(function(){
+		var href = $(this).attr('ref')
+		
+		if($(this).attr('type_form') == "1"){
+			var width  = "750";
+			var height = "600";
+		}else{
+			var width  = "900";
+			var height = "900";
+		}
 
 
-	
-      //html = $('#axis_selection_table').html()
-      //$('#axis_selection_table_cell').html(html)
+		$('#formulario_iframe').attr('src', href)
+		$('#formulario_iframe').attr('width', width)
+		$('#formulario_iframe').attr('height', height)
+		$('#formulario_iframe').css('display', 'block')
+	})
+
+//       //Mescla el HEADER de la izquierda con las filas de DATOS. Tiene baja performance
+//       var size = jQuery('.data_row').size()
+// 
+//       for(var i = 0; i < size; i++){
+// 		var header_row = $('.header_left_row')
+// 		header_html = header_row[i].innerHTML
+// 
+// 		var data_row = $('.data_row')
+// 		data_row[i].innerHTML = header_html + data_row[i].innerHTML
+//       }
 
 
     });
@@ -92,222 +99,12 @@
 <a id="change_report_expand">[[Cambiar Informe]]</a>
 
 <div id="change_report" style="display:none">
-    
-    <style>
-		.even{ background-color:#FFF; }
-		.odd{ background-color:#54F7FB; }
-    </style>
+	<a ref="http://192.168.61.100:8000/report/formulario/" type_form="1" class="form_loader" >1 Tabla</a>
+	<br />
+	<a ref="http://192.168.61.100:8000/report/formulario2/" type_form="2" class="form_loader" >2 Tablas</a>
+	<br /><br />
 
-
-
-    <form>
-            <select id="ft1">
-                    <option>ventas</option>
-                    <option>movimientos</option>
-                    <option>compras</option>
-            </select>
-            <select id="ft2">
-                    <option>ventas</option>
-                    <option>movimientos</option>
-                    <option>compras</option>
-            </select>
-    
-            <select id="ft1_measures" style="display:none"></select>
-            <select id="ft2_measures" style="display:none"></select>
-    
-            <select id="aggregations" style="display:none">
-                    <option>avg</option>
-                    <option>sum</option>
-            </select>
-    
-            <br><br>
-            <label>x</label>
-            <select id="x">
-                    <option>tiempo</option>
-                    <option>pieza</option>
-                    <option>proveedor</option>
-                    <option>tipo_venta</option>
-            </select>
-            <label>Nivel x</label>
-            <select id="ft1_xl">
-                    <option>anio</option>
-                    <option>mes</option>
-            </select>		
-            <label>Fijo</label>
-            <input id="ft1_x_fixed" type="checkbox" />
-            <label>Nivel x2</label>
-            <select id="ft2_xl">
-                    <option>anio</option>
-                    <option>mes</option>
-            </select>
-            <label>Fijo</label>
-            <input id="ft2_x_fixed" type="checkbox" />
-            <br><br>
-            <label>y</label>
-            <select id="y">
-                    <option>tiempo</option>
-                    <option>pieza</option>
-                    <option>proveedor</option>
-                    <option>tipo_venta</option>
-            </select>
-            <label>Nivel y</label>
-            <select id="ft1_yl">
-                    <option>grupo_constructivo</option>
-                    <option>modelo</option>
-            </select>
-            <label>Fijo</label>
-            <input id="ft1_y_fixed" type="checkbox" />
-            <label>Nivel y2</label>
-            <select id="ft2_yl">
-                    <option>grupo_constructivo</option>
-                    <option>modelo</option>
-            </select>
-            <label>Fijo</label>
-            <input id="ft2_y_fixed" type="checkbox" />
-    
-            <br><br>
-    
-            <fieldset>
-                    <legend>Restricciones Comunes</legend>
-                    <LABEL>Dimension</LABEL>
-                    <select id="dimension">
-                            <option>tiempo</option>
-                            <option>pieza</option>
-                            <option>proveedor</option>
-                            <option>tipo_venta</option>
-                    </select>
-    
-                    <LABEL>Nivel</LABEL>
-                    <select id="level">
-    
-                    </select>
-                    <LABEL>Valor</LABEL>
-                    <select id="val">
-    
-                    </select>
-    
-                    <INPUT id="agregar" type="button" value="Agregar" />
-                    <br><br>
-                    <table class="restriction_table">
-                            <tbody id="restriction_table_body">
-                                    <tr>
-                                            <td>Dimension</td>
-                                            <td>Nivel</td>
-                                            <td>Valor</td>
-                                            <td></td>
-                                    </tr>
-                            </tbody>
-                    </table>
-                    
-            </fieldset>
-    
-            <fieldset>
-                    <legend>Restricciones <span id="ft1_rest_legend">Hecho 1</span></legend>
-                    <LABEL>Dimension</LABEL>
-                    <select id="ft1_dimension">
-                            <option>tiempo</option>
-                            <option>pieza</option>
-                            <option>proveedor</option>
-                            <option>tipo_venta</option>
-                    </select>
-    
-                    <LABEL>Nivel</LABEL>
-                    <select id="ft1_level">
-    
-                    </select>
-                    <LABEL>Valor</LABEL>
-                    <select id="ft1_val">
-    
-                    </select>
-    
-                    <INPUT id="ft1_agregar" type="button" value="Agregar" />
-                    <br><br>
-                    <table class="ft1_restriction_table">
-                            <tbody id="ft1_restriction_table_body">
-                                    <tr>
-                                            <td>Dimension</td>
-                                            <td>Nivel</td>
-                                            <td>Valor</td>
-                                            <td></td>
-                                    </tr>
-                            </tbody>
-                    </table>
-                    
-            </fieldset>
-    
-            <fieldset>
-                    <legend>Restricciones <span id="ft2_rest_legend">Hecho 2</span></legend>
-                    <LABEL>Dimension</LABEL>
-                    <select id="ft2_dimension">
-                            <option>tiempo</option>
-                            <option>pieza</option>
-                            <option>proveedor</option>
-                            <option>tipo_venta</option>
-                    </select>
-    
-                    <LABEL>Nivel</LABEL>
-                    <select id="ft2_level">
-                            <option>anio</option>
-                            <option>mes</option>
-                    </select>
-                    <LABEL>Valor</LABEL>
-                    <select id="ft2_val">
-                            <option>1999</option>
-                            <option>2000</option>
-                    </select>
-    
-                    <INPUT id="ft2_agregar" type="button" value="Agregar" />
-                    <br><br>
-                    <table class="ft2_restriction_table">
-                            <tbody id="ft2_restriction_table_body">
-                                    <tr>
-                                            <td>Dimension</td>
-                                            <td>Nivel</td>
-                                            <td>Valor</td>
-                                            <td></td>
-                                    </tr>
-                            </tbody>
-                    </table>
-                    
-            </fieldset>
-    
-    
-    
-            <br><br>
-            <label>Funcion</label>
-            <select id="mf">
-                    <option params_length="2">sumar</option>
-                    <option params_length="2">dividir</option>
-                    <option params_length="2">multiplicar</option>
-                    <option params_length="2">restar</option>
-                    <option params_length="1">same</option>>
-            </select>
-            <table>
-                    <tbody id="param_table_body">
-                            
-                    </tbody>
-            </table>
-            <br><br>
-            <br><br>
-            <label>Funcion de Cubo</label>
-            <select id="cf">
-            </select>
-            <table>
-                    <tbody id="cube_param_table_body">
-                            
-                    </tbody>
-            </table>
-    
-    
-            <br><br>
-            <input id="aceptar" type="button" value="Aceptar" />
-    
-            <input id="server_and_port" type="hidden" value="{{server_ip}}:8000" />
-    
-    </form>
-    
-    URL: <span id="url">&nbsp;</span>
-
+	<iframe src="" id="formulario_iframe" width=750 height=700 style="display:none"></iframe>
 </div>
 <!-- FIN change_report -->
 
@@ -495,7 +292,7 @@ so.write("flashcontent");
 						</tr>
 						<tr>
 						<td>&nbsp;</td>
-						<td><img src="/media/img/2.gif"></td>
+						<td width="24"><img src="/media/img/2.gif"></td>
 						<td>&nbsp;</td>
 						</tr>
 						<tr>
@@ -571,6 +368,32 @@ so.write("flashcontent");
 
     {% for valor in body_order %}
     <tr class="data_row">
+
+
+
+
+
+
+
+
+		{% for col in header_left|hash:forloop.counter0 %}
+			{% if can_drill_y %}
+				<th border="1" rowspan="{{col|hash:1}}">
+					<a href="/drill_replacing/1/{{col|hash:0}}/">
+						{{col|hash:0}}
+					</a>
+				</th>
+			{% else %}
+				<th border="1" rowspan="{{col|hash:1}}">{{col|hash:0}}</th>
+			{% endif %}		
+		{% endfor %}
+
+
+
+
+
+
+
 
         
         {% for v in body|hash:valor %}
