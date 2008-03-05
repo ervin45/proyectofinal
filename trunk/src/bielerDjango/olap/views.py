@@ -93,10 +93,8 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         header     = cube.dim_y
         
         header_top, header_top_size = header_list_top(cube.dim_y)
-        pprint(header_top)
         
         header_left, header_left_size = header_list_left(cube.dim_x)
-        pprint(header_left)
         
         body       = get_body(cube)
         body_order = cube.dim_x     

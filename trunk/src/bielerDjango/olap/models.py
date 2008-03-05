@@ -498,13 +498,19 @@ class CubeTooBig:
 
 class Report1:
     def __init__(self,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
-        self.ft = ft
-        self.x = x
-        self.xl = xl
-        self.y = y
-        self.yl = yl
-        self.xr = xr
-        self.yr = yr
+        '''
+        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "same", "[]", "same_cube", "[]")
+        >>> str(r.cubiculo.__class__).split('.')[-1]
+        'Cubiculo'
+        >>>
+        '''
+        self.ft  = ft
+        self.x   = x
+        self.xl  = xl
+        self.y   = y
+        self.yl  = yl
+        self.xr  = xr
+        self.yr  = yr
         self.ore = ore
         self.member_function = globals()[mf]
         self.measures = eval(params)
@@ -515,6 +521,10 @@ class Report1:
         self.cubiculo = cubiculo.Cubiculo(self.ft,dimensions,self.measures, eval(self.ore))
         
     def pivot(self, request):
+        '''
+        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "same", "[]", "same_cube", "[]")
+        >>>
+        '''
         self.cubiculo.pivot()
         
         parcial_url = self.cubiculo.parcial_url()
@@ -552,7 +562,7 @@ class Report1:
         return self.absolute_url(request, parcial_url)
        
     def dimension_values(self, axis):
-        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+        con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor()
 
         sql_dimension_values = self.cubiculo.dimension_values(int(axis))
@@ -572,7 +582,7 @@ class Report1:
         return self.cubiculo.sql()
 
     def exec_sql(self, sql):
-        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+        con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor_dwh.execute(sql)
         
@@ -614,8 +624,6 @@ class Report1:
     def exec_member_function(self, cube):
         temp_cube = Cube()
         
-        pprint(cube)
-
         for x1 in cube.dim_x:
             for y1 in cube.dim_y:
                 
@@ -632,8 +640,6 @@ class Report1:
         params = [cube]
         params.extend(self.cube_function_params)
         
-        print "PARAMS"
-        pprint(params)
         self.cube_function(*params)
             
     def set_can_flags(self, cube):
@@ -779,7 +785,7 @@ class Report2:
         return self.absolute_url(request, parcial_url)
 
     def dimension_values(self, axis, cubiculo):
-        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+        con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor()        
 
         sql_dimension_values = cubiculo.dimension_values(int(axis))
@@ -802,7 +808,7 @@ class Report2:
         return cubiculo.sql()
 
     def exec_sql(self, sql):
-        con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+        con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor_dwh.execute(sql)
 
@@ -835,11 +841,7 @@ class Report2:
     def fit(self, complete_cubes):
         max_dimensions = (0, 0)
         for cube in complete_cubes:
-            pprint(cube.dimensions())
             max_dimensions = max(max_dimensions, cube.dimensions())
-
-        print "max dimensions"
-        pprint(max_dimensions)
 
         for cube in complete_cubes:
             cube.fit(max_dimensions[0], max_dimensions[1])
@@ -878,8 +880,6 @@ class Report2:
         params = [cube]
         params.extend(self.cube_function_params)
         
-        print "PARAMS"
-        pprint(params)
         self.cube_function(*params)
 
     def set_can_flags(self, cube):
@@ -928,7 +928,7 @@ class Report2:
         
         url = "http://%s:%s/report2/%s%s/params=%s/%s/params=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, params, cf, cf_params)
         return url
-    
+
 class Ajax_responser:
         @staticmethod
         def get_dimensions(ft):
@@ -940,7 +940,7 @@ class Ajax_responser:
         
         @staticmethod
         def get_values(dimension, level):
-            con_dwh = psycopg2.connect(host="127.0.0.1", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+            con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
             cursor_dwh = con_dwh.cursor()
 
             sql = "SELECT distinct(%s) FROM td_%s" % (level, dimension)

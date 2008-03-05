@@ -8,7 +8,8 @@ class SimpleTest(unittest.TestCase):
 
     def test_rotacion_mes(self):
         # Issue a GET request.
-        url = """/report2/ventas/pieza/tiempo/modelo/mes/xr={'grupo_constructivo':[184], 'modelo':[3]}/yr={}/ore={}/movimientos/pieza/tiempo/modelo/anio/xr={'grupo_constructivo':[184], 'modelo':[3]}/yr={}/ore={}/"""
+        url = """/report/compras/pieza/tipo_pieza/grupo_constructivo/tipo_pieza/xr={}/yr={}/ore=[]/same/params=[['ft_compras', 'costo_dolar', 'sum']]/order_and_slice_the_cube/params=[]/"""
+
         response=self.client.get(url)
 
         # Check that the respose is 200 OK.
