@@ -6,7 +6,7 @@ class SimpleTest(unittest.TestCase):
         # Every test needs a client.
         self.client = Client()
 
-    def test_rotacion_mes(self):
+    def __test_rotacion_mes(self):
         # Issue a GET request.
         url = """/report/compras/pieza/tipo_pieza/grupo_constructivo/tipo_pieza/xr={}/yr={}/ore=[]/same/params=[['ft_compras', 'costo_dolar', 'sum']]/order_and_slice_the_cube/params=[]/"""
 
@@ -14,3 +14,4 @@ class SimpleTest(unittest.TestCase):
 
         # Check that the respose is 200 OK.
         self.failUnlessEqual(response.status_code, 200)
+
