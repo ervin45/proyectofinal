@@ -18,8 +18,6 @@ def header_list_top(header):
         result.append([])
         caminos.append([])
     
-    
-    
     for x in header:
         temp = x.split("-")
         for i in range(levels_count):
@@ -86,47 +84,44 @@ def header_list_left(header):
 def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     report = models.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
 
-    
     try:
-        cube = report.build_cube()   
-        
+        cube = report.build_cube()
+
         header     = cube.dim_y
-        
         header_top, header_top_size = header_list_top(cube.dim_y)
-        
+
         header_left, header_left_size = header_list_left(cube.dim_x)
-        
+
         body       = get_body(cube)
         body_order = cube.dim_x     
-        
+
         can_roll_x   = cube.can_roll_x()
         can_roll_y   = cube.can_roll_y()
         can_drill_x  = cube.can_drill_x()
         can_drill_y  = cube.can_drill_y()
-         
+
         cube_info    = cube.get_info()
         ft           = cube_info[0][0]
         dimensions   = cube_info[0][1]
         measures     = cube_info[0][2]
         ore          = cube_info[0][3] 
-        
+
         dim_x = x
         dim_y = y
-        
+
         from django.conf import settings
-        server_ip = settings.IP        
-            
+        server_ip = settings.IP
+
         main_axis = report.get_main_axis_list()
-        
+
         other_axis = ['Seleccionar..']
         other_axis.extend(report.get_other_axis_list())
-        
+
         #ofc_params = graph_data(header, body, body_order, x, xl)
         return render_to_response('reportes2.html',locals())
-    
+
     except models.CubeTooBig:
         return render_to_response('tooBig.html',locals())
-    
 
 def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params):
@@ -348,7 +343,6 @@ def formulario2(request):
             
             
 ####AJAX####
-from cubiculo import Meta
 
 def get_dimensions(request, ft):
     response = models.Ajax_responser.get_dimensions(ft)
@@ -361,18 +355,17 @@ def get_measures(request, ft):
 
 def get_levels(request, dimension):
     response = models.Ajax_responser.get_levels(dimension)
+    response.reverse()
     return HttpResponse("|".join(response))
 
 def get_levels_without_todo(request, dimension):
     response = models.Ajax_responser.get_levels(dimension)
+    response.reverse()
     response.remove('TODO')
-    print "get_levels_without_todo"
-    pprint(response)
     return HttpResponse("|".join(response))
 
 def get_values(request, dimension, level):
     response = models.Ajax_responser.get_values(dimension, level)
-    print response
     return HttpResponse("|".join(response))
 
 def get_mf(request):
@@ -380,7 +373,6 @@ def get_mf(request):
 
 def get_cf(request):
     response = models.Ajax_responser.get_cf()
-    print str(response)
     return HttpResponse(str(response))
 
 

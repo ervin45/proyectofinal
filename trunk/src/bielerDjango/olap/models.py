@@ -397,7 +397,7 @@ class Cube:
             rtn.append(str(reduce(func, self.rows(x, measure))))
         return rtn
 
-    def total_x(self, measure):
+    def total_x(self, measure="result"):
         """
         >>> c = Cube()
         >>> c.add('uno','1',{"c":'1'})
@@ -408,7 +408,7 @@ class Cube:
         ['9.0', '4.0']
         >>>
         """
-        return self.reduce_x(lambda x, y: float(x)+float(y), "c")
+        return self.reduce_x(lambda x, y: float(x)+float(y), measure)
 
     def reduce_y(self, func, measure):
         """
@@ -428,7 +428,7 @@ class Cube:
             rtn.append(str(reduce(func, self.columns(y, measure))))
         return rtn
 
-    def total_y(self, measure):
+    def total_y(self, measure="result"):
         """
         >>> c = Cube()
         >>> c.add('uno','1',{"c":'1'})
@@ -439,7 +439,7 @@ class Cube:
         ['3.0', '10.0']
         >>>
         """
-        return self.reduce_y(lambda x, y: float(x)+float(y), "c")
+        return self.reduce_y(lambda x, y: float(x)+float(y), measure)
 
     def forecast_x_dummy(self,measure):
         """
@@ -582,6 +582,7 @@ class Report1:
         return self.cubiculo.sql()
 
     def exec_sql(self, sql):
+
         con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor_dwh.execute(sql)

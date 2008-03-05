@@ -75,7 +75,7 @@
 		
 		function change_dimension(){
 			var dimension = $('#dimension').val()
-			jQuery.get("/report/get_levels/" + dimension, {}, function(data){
+			jQuery.get("/report/get_levels_without_todo/" + dimension, {}, function(data){
 				_add_options("level", data)
 			})
 
@@ -147,7 +147,7 @@
 
 			$('#url').html(url)
 
-			//window.location.href = url
+			parent.location.href = url
 		}
 
 		change_ft()
@@ -169,6 +169,7 @@
 			<option>ventas</option>
 			<option>movimientos</option>
 			<option>compras</option>
+			<option>test</option>
 		</select>
 		<select id="measures" style="display:none"></select>
 		<select id="aggregations" style="display:none">
