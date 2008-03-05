@@ -2,9 +2,9 @@ from django.db import models
 
 class ReportTemplate(models.Model):
     id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=60)
-    ft = models.CharField(max_length=60)
-    default_dwp = models.CharField(max_length=600)
+    name = models.CharField()
+    ft = models.CharField()
+    default_dwp = models.CharField()
     user_id = models.IntegerField()
     
     class Admin:
