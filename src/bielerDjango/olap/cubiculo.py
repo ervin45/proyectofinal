@@ -543,10 +543,14 @@ class Cubiculo:
         ...
         WRONG
         '''
-        
+
         if int(axis) not in (0, 1):
             raise InvalidAxis
-        
+
+        if values == "TODO":
+            self.drill(axis)
+            return
+
         dim = self.dimensions_order[int(axis)]
         
         self.dimensions[dim][2] = {}
@@ -668,7 +672,7 @@ class Cubiculo:
         if levels_parent == ['TODO']:
             return "select 'TODO' as TODO"
         else: 
-            select = "|| ' - ' ||".join(levels_parent)
+            select = "|| '-' ||".join(levels_parent)
             campos = ", ".join([x for x in levels_parent])
             
             where = []
@@ -723,12 +727,12 @@ class Cubiculo:
         if levels_with_parent[0] == ["TODO"]:
             columns_string = "'TODO' as columns"
         else:
-            columns_string = "|| ' - ' ||".join(levels_with_parent[0]) + " as columns"
+            columns_string = "|| '-' ||".join(levels_with_parent[0]) + " as columns"
 
         if levels_with_parent[1] == ["TODO"]:
             rows_string = "'TODO' as rows"
         else:
-            rows_string   = "|| ' - ' ||".join(levels_with_parent[1]) + " as rows"
+            rows_string   = "|| '-' ||".join(levels_with_parent[1]) + " as rows"
         
         select = "SELECT %s, %s, %s"  % (columns_string, rows_string,','.join(measures)) 
         
@@ -762,10 +766,10 @@ class Cubiculo:
         ''
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._where()
-        "WHERE td_tiempo.anio in('2005', '1999') "
+        "WHERE trim(td_tiempo.anio) in('2005', '1999') "
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[['proveedor', 'proveedor', {'proveedor': ['Mercedez Benz']}]])
         >>> c._where()
-        "WHERE td_tiempo.anio in('2005', '1999') AND td_proveedor.proveedor in('Mercedez Benz') "
+        "WHERE trim(td_tiempo.anio) in('2005', '1999') AND trim(td_proveedor.proveedor) in('Mercedez Benz') "
         '''
         
         levels_with_parent = []
@@ -777,14 +781,14 @@ class Cubiculo:
             if restriction:
                 for level, val in restriction.items():
                     valores = ", ".join(["'%s'" % v for v in val])
-                    where.append("td_%s.%s in(%s)" % ( name, level, valores))
+                    where.append("trim(td_%s.%s) in(%s)" % ( name, level, valores))
         
         for other_dim in self.ore:
             (name, level, restriction) = other_dim
             if restriction:
                 for level, val in restriction.items():
                     valores = ", ".join(["'%s'" % v for v in val])
-                    where.append("td_%s.%s in(%s)" % ( name, level, valores))
+                    where.append("trim(td_%s.%s) in(%s)" % ( name, level, valores))
 
         if where:
             where = "WHERE %s " % ' AND '.join(where)

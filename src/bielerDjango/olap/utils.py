@@ -20,3 +20,13 @@ def compare(a,b):
                 return -1
     print "returning 0"
     return 0
+
+
+def sumar(a,b):
+    if a == None:
+        a = 0
+        
+    if b == None:
+        b = 0
+        
+    return a + b 

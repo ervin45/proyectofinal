@@ -6,8 +6,10 @@ from pprint import pprint
 import math
 
 def header_list_top(header):
+    print "header"
+    pprint(header)
     if header == ['TODO']:
-        return [[['TODO', 1]]], 1
+        return [[['TODO', 1,'TODO']]], 1
     
     levels_count = len(header[0].split("-"))
     
@@ -47,7 +49,7 @@ def _slide_col(t, start, end):
 
 def header_list_left(header):
     if header == ['TODO']:
-        return [[['TODO', 1]]], 1
+        return [[['TODO', 1,'TODO']]], 1
 
     re = header_list_top(header)[0]
 
@@ -88,8 +90,6 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     try:
         cube = report.build_cube()
 
-        pprint(cube.total_x())
-        pprint(cube.total_y())
 
         total_x = cube.total_x()
         total_y = cube.total_y()
@@ -189,6 +189,7 @@ def drill(request, axis):
 def replace_to(request, axis, values):
     report = get_report(request)
     url = report.replace_to(request, axis, values)
+    print 
     return HttpResponseRedirect(url)
 
 def replace_to_both_axis(request, value0, value1):

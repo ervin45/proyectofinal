@@ -336,20 +336,17 @@ so.write("flashcontent");
 
 
 		{% for val in level%}
-
-			
-			{% if can_drill_x %}
+ 			{% if not can_drill_x and forloop.parentloop.last %}
+					<th border="1" colspan="{{val|hash:1}}" align="center">
+						{{val|hash:0}}
+					</th>
+			{% else %}
 					<th border="1" colspan="{{val|hash:1}}" align="center">
 						<a href="/replace_to/0/{{val|hash:2}}/">
 							{{val|hash:0}}
 						</a>
-					</th>
-			
-				{% else %}
-					<th border="1" colspan="{{val|hash:1}}" align="center">
-						{{val|hash:0}}
-					</th>
-				{% endif %}
+					</th>					
+			{% endif %}
 			
 			
 		{% endfor %}
@@ -371,14 +368,14 @@ so.write("flashcontent");
 
 	<!-- AGREGAR COLUMNAS TITULOS IZQUIERDA -->
 	{% for col in header_left|hash:forloop.counter0 %}
-		{% if can_drill_y %}
+		{% if not can_drill_y and forloop.last %}
+			<th border="1" rowspan="{{col|hash:1}}">{{col|hash:0}}</th>
+		{% else %}
 			<th border="1" rowspan="{{col|hash:1}}">
-				<a href="/replace_to/1/{{col|hash:0}}/">
+				<a href="/replace_to/1/{{col|hash:2}}/">
 					{{col|hash:0}}
 				</a>
 			</th>
-		{% else %}
-			<th border="1" rowspan="{{col|hash:1}}">{{col|hash:0}}</th>
 		{% endif %}		
 	{% endfor %}
 	<!-- FIN AGREGAR COLUMNAS TITULOS IZQUIERDA -->
