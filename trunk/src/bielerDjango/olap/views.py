@@ -23,7 +23,8 @@ def header_list_top(header):
         for i in range(levels_count):
     
             if not temp[:i + 1] in caminos[i]:
-                result[i].append([temp[i], 1])
+                branch = "-".join(temp[:i + 1])
+                result[i].append([temp[i], 1, branch])
                 caminos[i].append(temp[:i + 1])
             else:
                 result[i][len(result[i]) - 1][1] += 1
@@ -72,7 +73,7 @@ def header_list_left(header):
     for x in temp[0]:
         col.append(x)
         try:
-            if x[2] == "LAST":
+            if x[3] == "LAST":
                 rows.append(col)
                 col = []
         except:
@@ -86,10 +87,10 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
     try:
         cube = report.build_cube()
-        
+
         pprint(cube.total_x())
         pprint(cube.total_y())
-        
+
         total_x = cube.total_x()
         total_y = cube.total_y()
 
@@ -123,7 +124,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         other_axis = ['Seleccionar..']
         other_axis.extend(report.get_other_axis_list())
 
-        #ofc_params = graph_data(header, body, body_order, x, xl)
+        ofc_params = graph_data(header, body, body_order, x, xl)
         return render_to_response('reportes2.html',locals())
 
     except models.CubeTooBig:
@@ -150,12 +151,12 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
         ft           = cube_info[0][0]
         dimensions   = cube_info[0][1]
         measures     = cube_info[0][2]
-        ore          = cube_info[0][3]         
+        ore          = cube_info[0][3]
         
         ft2           = cube_info[1][0]
         dimensions2   = cube_info[1][1]
         measures2     = cube_info[1][2]
-        ore2          = cube_info[1][3]        
+        ore2          = cube_info[1][3]
         
         main_axis = report2.get_main_axis_list()
         other_axis = report2.get_other_axis_list()
@@ -185,14 +186,14 @@ def drill(request, axis):
     url = report.drill(request, axis)
     return HttpResponseRedirect(url)
 
-def drill_replacing(request, axis, value):
+def replace_to(request, axis, values):
     report = get_report(request)
-    url = report.drill_replacing(request, axis, value)
+    url = report.replace_to(request, axis, values)
     return HttpResponseRedirect(url)
 
-def drill_replacing2(request, value0, value1):
+def replace_to_both_axis(request, value0, value1):
     report = get_report(request)
-    url = report.drill_replacing2(request, value0, value1)
+    url = report.replace_to_both_axis(request, value0, value1)
     return HttpResponseRedirect(url)
 
 def dice(request, main_axis, other_axis):

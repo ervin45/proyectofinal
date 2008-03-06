@@ -340,7 +340,7 @@ so.write("flashcontent");
 			
 			{% if can_drill_x %}
 					<th border="1" colspan="{{val|hash:1}}" align="center">
-						<a href="/drill_replacing/0/{{val|hash:0}}/">
+						<a href="/replace_to/0/{{val|hash:2}}/">
 							{{val|hash:0}}
 						</a>
 					</th>
@@ -373,7 +373,7 @@ so.write("flashcontent");
 	{% for col in header_left|hash:forloop.counter0 %}
 		{% if can_drill_y %}
 			<th border="1" rowspan="{{col|hash:1}}">
-				<a href="/drill_replacing/1/{{col|hash:0}}/">
+				<a href="/replace_to/1/{{col|hash:0}}/">
 					{{col|hash:0}}
 				</a>
 			</th>
@@ -391,7 +391,7 @@ so.write("flashcontent");
 		{% else %}
 
 		{% if can_drill_x or can_drill_y %}
-            		<a href="/drill_replacing2/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{v|floatformat:2}}</a>
+            		<a href="/replace_to_both_axis/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{v|floatformat:2}}</a>
 		{% else %}
 				{{v|floatformat:2}}
 			{% endif %}

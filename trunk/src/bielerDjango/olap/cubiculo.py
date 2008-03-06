@@ -96,7 +96,8 @@ class Meta:
         'mes'
         >>> Meta.previous('tiempo', 'TODO')
         'anio'
-        >>>
+        >>> Meta.previous('tiempo', 'mes')
+        'mes'
         >>> try:
         ...    Meta.previous('tiempo', '')
         ... except InvalidLevel:
@@ -516,94 +517,68 @@ class Cubiculo:
         del cubo
 
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'modelo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
-        >>> c.pivot()        
+        >>> c.pivot()
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'modelo', {}]}
         >>> 
         '''
         
         (self.dimensions_order[0], self.dimensions_order[1]) = (self.dimensions_order[1], self.dimensions_order[0])
-        
 
-    def drill_replacing(self, axis, value):
-        '''
-        Realiza una operación de drill en un eje determinado
+    def replace_to(self, axis, values):
+        '''Estable el nivel y las restricciones previas al nivel seguel el valor de values
 
-        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
-        >>> c.dimensions
-        {'tiempo': ['tiempo', 'anio', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
-        >>> c.drill_replacing(0, '2007')
-        >>> c.dimensions
-        {'tiempo': ['tiempo', 'mes', {'anio': ['2007']}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
-        >>> c.drill_replacing(0, '2007 - 6')
-        >>> c.dimensions
-        {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'modificacion', {'grupo_constructivo': ['184']}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
+        >>> c.replace_to(1, '184-1')
+        >>> c.dimensions['pieza']
+        ['pieza', 'modificacion', {'grupo_constructivo': ['184'], 'modelo': ['1']}]
+        >>> c.replace_to(1, '184-1-60')
+        >>> c.dimensions['pieza']
+        ['pieza', 'pieza', {'grupo_constructivo': ['184'], 'modelo': ['1'], 'modificacion': ['60']}]
         >>> try:
-        ...     c.drill_replacing(3, '1999')
-        ... except InvalidAxis:
-        ...     print "OK"
-        ...
-        OK
-        >>> try:
-        ...     c.drill_replacing('1', '1999')
+        ...     c.replace_to('3', '1999')
         ...     print "OK"
         ... except InvalidAxis:
         ...     print "WRONG"
         ...
-        OK
-        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'TODO', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
-        >>> c.drill_replacing('0', 'TODO')
-        >>> c.dimensions
-        {'tiempo': ['tiempo', 'anio', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
-        >>> c = Cubiculo(ft='movimientos', dimensions=[[':tiempo', 'anio', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
-        >>> c.drill_replacing('0', '1999')
-        >>> c.dimensions
-        {'tiempo': ['tiempo', 'anio', {'anio': ['1999']}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
-        >>>
+        WRONG
         '''
         
         if int(axis) not in (0, 1):
             raise InvalidAxis
         
-        if value == "TODO":
-            self.drill(axis)
-            return
-        
-        
-        #Primero agrego la restriccion y despues hago el drill
         dim = self.dimensions_order[int(axis)]
-        #if self.dimensions_fixed[dim]:
-            #return False        
         
-        level = self.dimensions[self.dimensions_order[int(axis)]][1]
-        dimension = self.dimensions[self.dimensions_order[int(axis)]]
-        self._del_restriccion(dim)
+        self.dimensions[dim][2] = {}
+        rest_values = str(values).split("-")
+        values_size = len(rest_values)
         
-        values = value.split(" - ")
-        levels = Meta.parent_list_without_dimension(dimension[0], level)
+        rest_levels = Meta.dimension_meta[dim][(values_size + 1) * -1: -1]
+        rest_levels.reverse()
         
-        for level, value in zip(levels, values):
-            self._add_restriction(dim, level, value)
-        self.drill(axis)
+        for level, value in zip(rest_levels, rest_values):
+            self.dimensions[dim][2][level] = [value]
+        
+        self.dimensions[dim][1] = Meta.previous(dim, rest_levels[-1])
 
-    def drill_replacing2(self, value0, value1):
+    def replace_to_both_axis(self, value0, value1):
         '''
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
-        >>> c.drill_replacing2('2007 - 6', '184')
+        >>> c.replace_to_both_axis('2007-6', '184')
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'modelo', {'grupo_constructivo': ['184']}]}
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], [':pieza', 'grupo_constructivo', {}]], measures=[['stock']], ore=[])
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
-        >>> c.drill_replacing2('2007 - 6', '184')
+        >>> c.replace_to_both_axis('2007-6', '184')
         >>> c.dimensions
-        {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'grupo_constructivo', {'grupo_constructivo': ['184']}]}
+        {'tiempo': ['tiempo', 'mes', {'anio': ['2007'], 'mes': ['6']}], 'pieza': ['pieza', 'modelo', {'grupo_constructivo': ['184']}]}
         >>>
         '''
-        self.drill_replacing(0, value0)
-        self.drill_replacing(1, value1)
+        self.replace_to(0, value0)
+        self.replace_to(1, value1)
         
     def dice(self, main_axis, other_axis):
         '''
