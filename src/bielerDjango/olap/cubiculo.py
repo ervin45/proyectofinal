@@ -239,6 +239,29 @@ class Meta:
             return result
         
     @staticmethod
+    def children_list_without_dimension(dimension, level):
+        '''
+        >>> Meta.children_list_without_dimension('tiempo', 'mes')
+        ['mes']
+        >>> Meta.children_list_without_dimension('tiempo', 'anio')
+        ['anio', 'mes']
+        >>> Meta.children_list_without_dimension('tiempo', 'TODO')
+        ['TODO']
+        >>>
+        '''
+        
+        if level == 'TODO':
+            return ['TODO']
+        else:
+        
+            levels = Meta.dimension_meta[dimension]
+            niveles_inferiores = levels[:levels.index(level) + 1]
+        
+            niveles_inferiores.reverse()
+        
+            return niveles_inferiores
+        
+    @staticmethod
     def get_dimensions(ft):
         '''
         >>> Meta.get_dimensions('ventas')
@@ -379,15 +402,30 @@ class Cubiculo:
 
     def _del_restriccion(self, dimension):
         '''
-        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
-        >>> c._del_restriccion('pieza')
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2007', '2006'], 'mes': ['1', '2', '5']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> c._del_restriccion('tiempo')
         >>> c.dimensions
         {'tiempo': ['tiempo', 'mes', {}], 'pieza': ['pieza', 'grupo_constructivo', {}]}
 
         '''
         
         self.dimensions[dimension][2] = {}
+        
+    def _del_restriccion_from_level(self, dimension, level):
+        '''
+        >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2007', '2006'], 'mes': ['1', '2', '5']}], ['pieza', 'grupo_constructivo', {'grupo_constructivo': ['184'], 'modificacion' :['121']}]], measures=[['cantidad', 'sum']], ore=[])
+        >>> c._del_restriccion_from_level('tiempo', 'mes')
+        >>> c.dimensions['tiempo']
+        ['tiempo', 'mes', {'anio': ['2007', '2006']}]
+        >>> c._del_restriccion_from_level('pieza', 'modelo')
+        >>> c.dimensions['pieza']
+        ['pieza', 'grupo_constructivo', {'grupo_constructivo': ['184']}]
+        '''
 
+        children_levels = Meta.children_list_without_dimension(dimension, level)
+        for level in children_levels:
+            if self.dimensions[dimension][2].has_key(level):
+                del(self.dimensions[dimension][2][level])
 
     def drill(self, axis):
         '''
@@ -452,22 +490,24 @@ class Cubiculo:
         >>> c = Cubiculo(ft='movimientos', dimensions=[[':tiempo', 'mes', {}], ['pieza', 'modelo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
         >>> c.roll(0)
         False
+        >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {'anio': ['2007'], 'mes': ['1','11']}], ['pieza', 'modelo', {}]], measures=[['stock','avg'], ['compras','sum']], ore=[])
+        >>> c.roll(0)
         >>> c.dimensions['tiempo']
-        ['tiempo', 'mes', {}]
-        
+        ['tiempo', 'anio', {'anio': ['2007']}]
+
         '''
         
         if int(axis) not in (0, 1):
             raise InvalidAxis        
         
         dimension = self.dimensions_order[int(axis)]
+        level = self.dimensions[dimension][1]
         
-        self._del_restriccion(dimension)
+        self._del_restriccion_from_level(dimension, level)
         
         if self.dimensions_fixed[dimension]:
             return False        
         
-        level = self.dimensions[dimension][1]
         new_level = Meta.next(dimension, level)
         self.dimensions[dimension][1] = new_level
 
