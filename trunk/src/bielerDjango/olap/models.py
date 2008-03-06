@@ -578,6 +578,14 @@ class Report1:
 
 
     def replace_to_both_axis(self, request, value0, value1):
+        '''
+        >>> r = Report1("test", "tiempo", "pieza", "TODO", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r.replace_to_both_axis(FakedRequest(), 'TODO', '184')
+        "http://192.168.61.100:8000/report/test/tiempo/pieza/anio/modelo/xr={}/yr={'grupo_constructivo': ['184']}/ore=[]/same/params=[]/same_cube/params=[]"
+        >>> r.replace_to_both_axis(FakedRequest(), '2006', '184')
+        "http://192.168.61.100:8000/report/test/tiempo/pieza/mes/modelo/xr={'anio': ['2006']}/yr={'grupo_constructivo': ['184']}/ore=[]/same/params=[]/same_cube/params=[]"
+        >>>
+        '''
         self.cubiculo.replace_to_both_axis(value0, value1)
 
         parcial_url = self.cubiculo.parcial_url()
