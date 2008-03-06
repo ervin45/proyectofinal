@@ -408,7 +408,8 @@ class Cube:
         ['9.0', '4.0']
         >>>
         """
-        return self.reduce_x(lambda x, y: float(x)+float(y), measure)
+        
+        return self.reduce_x(sumar, measure)
 
     def reduce_y(self, func, measure):
         """
@@ -439,7 +440,8 @@ class Cube:
         ['3.0', '10.0']
         >>>
         """
-        return self.reduce_y(lambda x, y: float(x)+float(y), measure)
+        
+        return self.reduce_y(sumar, measure)
 
     def forecast_x_dummy(self,measure):
         """
@@ -650,6 +652,7 @@ class Report1:
         return self.cubiculo.sql()
 
     def exec_sql(self, sql):
+        pprint(sql)
         '''
         ---
         '''
@@ -735,6 +738,7 @@ class Report1:
         self.fill_cube(cube, incomplete_table)
         
         self.complete_dimensions(cube, self.cubiculo)
+        
         final_cube = self.exec_member_function(cube)
         
         
