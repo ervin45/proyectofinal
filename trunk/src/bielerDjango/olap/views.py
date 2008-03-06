@@ -86,6 +86,12 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
     try:
         cube = report.build_cube()
+        
+        pprint(cube.total_x())
+        pprint(cube.total_y())
+        
+        total_x = cube.total_x()
+        total_y = cube.total_y()
 
         header     = cube.dim_y
         header_top, header_top_size = header_list_top(cube.dim_y)
