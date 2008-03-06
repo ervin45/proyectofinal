@@ -531,7 +531,7 @@ class Report1:
         >>>
         '''
         self.cubiculo.pivot()
-        
+
         parcial_url = self.cubiculo.parcial_url()
         return self.absolute_url(request, parcial_url)
 
@@ -543,7 +543,7 @@ class Report1:
         >>>
         '''
         self.cubiculo.drill(axis)
-        
+
         parcial_url = self.cubiculo.parcial_url()
         return self.absolute_url(request, parcial_url)
 
@@ -555,35 +555,24 @@ class Report1:
         >>>
         '''
         self.cubiculo.roll(axis)
-        
-        parcial_url = self.cubiculo.parcial_url()
-        return self.absolute_url(request, parcial_url)
-
-    def drill_replacing(self, request, axis, value):
-        '''
-        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
-        >>> r.drill_replacing(FakedRequest(), 0, '2006')
-        "http://192.168.61.100:8000/report/ventas/tiempo/pieza/mes/pieza/xr={'anio': ['2006']}/yr={}/ore=[]/same/params=[]/same_cube/params=[]"
-        >>>
-        '''
-        self.cubiculo.drill_replacing(axis, value)
-        
-        parcial_url = self.cubiculo.parcial_url()
-        return self.absolute_url(request, parcial_url)
-
-    def drill_replacing2(self, request, value0, value1):
-        '''
-        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
-        >>> r.drill_replacing2(FakedRequest(), '2006', '184 - 33 - 3 - 1')
-        "http://192.168.61.100:8000/report/ventas/tiempo/pieza/mes/codigo/xr={'anio': ['2006']}/yr={'grupo_constructivo': ['184'], 'pieza': ['1'], 'modelo': ['33'], 'modificacion': ['3']}/ore=[]/same/params=[]/same_cube/params=[]"
-        >>>
-        '''
-        self.cubiculo.drill_replacing(0, value0)
-        self.cubiculo.drill_replacing(1, value1)
 
         parcial_url = self.cubiculo.parcial_url()
         return self.absolute_url(request, parcial_url)
-        
+
+
+    def replace_to(self, request, axis, values):
+        self.cubiculo.replace_to(axis, values)
+
+        parcial_url = self.cubiculo.parcial_url()
+        return self.absolute_url(request, parcial_url)
+
+
+    def replace_to_both_axis(self, request, value0, value1):
+        self.cubiculo.replace_to_both_axis(value0, value1)
+
+        parcial_url = self.cubiculo.parcial_url()
+        return self.absolute_url(request, parcial_url)
+
     def dice(self, request, main_axis, other_axis):
         '''
         >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
@@ -592,10 +581,10 @@ class Report1:
         >>>
         '''
         self.cubiculo.dice(main_axis, other_axis)
-        
+
         parcial_url = self.cubiculo.parcial_url()
         return self.absolute_url(request, parcial_url)
-       
+
     def dimension_values(self, axis):
         '''
         >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
@@ -818,22 +807,20 @@ class Report2:
             
         return self.absolute_url(request, parcial_url)
 
-    def drill_replacing(self, request, axis, value):
+    def replace_to(self, request, axis, values):
         parcial_url = ""
-        
+
         for cubiculo in self.cubiculos.values():       
-            cubiculo.drill_replacing(axis, value)
+            cubiculo.replace_to(axis, values)
             parcial_url += cubiculo.parcial_url()
 
         return self.absolute_url(request, parcial_url)
 
-    def drill_replacing2(self, request, value0, value1):
+    def replace_to_both_axis(self, request, value0, value1):
         parcial_url = ""
 
         for cubiculo in self.cubiculos.values():       
-            cubiculo.drill_replacing(0, value0)
-            cubiculo.drill_replacing(1, value1)
-
+            cubiculo.replace_to_both_axis(axis, value0, value1)
             parcial_url += cubiculo.parcial_url()
 
         return self.absolute_url(request, parcial_url)

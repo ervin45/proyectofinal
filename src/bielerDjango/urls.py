@@ -8,8 +8,8 @@ urlpatterns = patterns('',
     (r'^report2/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$', olap.report2),
     (r'^pivot/$', olap.pivot),
     (r'^drill/(.*)/$', olap.drill),
-    (r'^drill_replacing/(.*)/(.*)/$', olap.drill_replacing),
-    (r'^drill_replacing2/(.*)/(.*)/$', olap.drill_replacing2),
+    (r'^replace_to/(.*)/(.*)/$', olap.replace_to),
+    (r'^replace_to_both_axis/(.*)/(.*)/$', olap.replace_to_both_axis),
     (r'^roll/(.*)/$', olap.roll),
     (r'^dice/(.*)/(.*)/$', olap.dice),
     (r'^graph_data/$', olap.graph_data),
@@ -22,10 +22,6 @@ urlpatterns = patterns('',
     (r'^report/get_values/(.*)/(.*)/$',olap.get_values),
     (r'^report/get_measures/(.*)/$',olap.get_measures),
     (r'^report/get_cf/$',olap.get_cf),
-
-    (r'^report/report_list/$', rm.report_list),
-    (r'^report/delete/(\d{1,4})/$', rm.delete),
-
 
 
     (r'^admin/', include('django.contrib.admin.urls')),
