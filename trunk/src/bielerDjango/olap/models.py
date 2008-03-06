@@ -495,6 +495,9 @@ class CubeTooBig:
         self.cells = cells
         self.rows  = rows
 
+class FakedRequest:
+    def __init__(self):
+        self.META = {'SERVER_IP':'192.168.61.100', 'SERVER_PORT':'8000'}
 
 class Report1:
     def __init__(self,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
@@ -522,7 +525,9 @@ class Report1:
         
     def pivot(self, request):
         '''
-        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "same", "[]", "same_cube", "[]")
+        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r.pivot(FakedRequest())
+        'http://192.168.61.100:8000/report/ventas/pieza/tiempo/pieza/anio/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
         >>>
         '''
         self.cubiculo.pivot()
@@ -531,24 +536,48 @@ class Report1:
         return self.absolute_url(request, parcial_url)
 
     def drill(self,request, axis):
+        '''
+        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r.drill(FakedRequest(), 0)
+        'http://192.168.61.100:8000/report/ventas/tiempo/pieza/mes/pieza/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
+        >>>
+        '''
         self.cubiculo.drill(axis)
         
         parcial_url = self.cubiculo.parcial_url()
         return self.absolute_url(request, parcial_url)
 
     def roll(self, request, axis):
+        '''
+        >>> r = Report1("ventas", "tiempo", "pieza", "mes", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r.roll(FakedRequest(), 0)
+        'http://192.168.61.100:8000/report/ventas/tiempo/pieza/anio/pieza/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
+        >>>
+        '''
         self.cubiculo.roll(axis)
         
         parcial_url = self.cubiculo.parcial_url()
         return self.absolute_url(request, parcial_url)
 
     def drill_replacing(self, request, axis, value):
+        '''
+        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r.drill_replacing(FakedRequest(), 0, '2006')
+        "http://192.168.61.100:8000/report/ventas/tiempo/pieza/mes/pieza/xr={'anio': ['2006']}/yr={}/ore=[]/same/params=[]/same_cube/params=[]"
+        >>>
+        '''
         self.cubiculo.drill_replacing(axis, value)
         
         parcial_url = self.cubiculo.parcial_url()
         return self.absolute_url(request, parcial_url)
 
     def drill_replacing2(self, request, value0, value1):
+        '''
+        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r.drill_replacing2(FakedRequest(), '2006', '184 - 33 - 3 - 1')
+        "http://192.168.61.100:8000/report/ventas/tiempo/pieza/mes/codigo/xr={'anio': ['2006']}/yr={'grupo_constructivo': ['184'], 'pieza': ['1'], 'modelo': ['33'], 'modificacion': ['3']}/ore=[]/same/params=[]/same_cube/params=[]"
+        >>>
+        '''
         self.cubiculo.drill_replacing(0, value0)
         self.cubiculo.drill_replacing(1, value1)
 
@@ -556,12 +585,26 @@ class Report1:
         return self.absolute_url(request, parcial_url)
         
     def dice(self, request, main_axis, other_axis):
+        '''
+        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r.dice(FakedRequest(), 'pieza', 'tipo_venta')
+        "http://192.168.61.100:8000/report/ventas/tiempo/tipo_venta/anio/TODO/xr={'anio': ['2006']}/yr={}/ore=[['pieza', 'pieza', {'grupo_constructivo': ['184']}]]/same/params=[]/same_cube/params=[]"
+        >>>
+        '''
         self.cubiculo.dice(main_axis, other_axis)
         
         parcial_url = self.cubiculo.parcial_url()
         return self.absolute_url(request, parcial_url)
        
     def dimension_values(self, axis):
+        '''
+        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r.dimension_values(1)
+        [u'184 - 0 - 14 - 71', ..., u'184 - 616 - 16 - 80']
+        >>> r.dimension_values(0)
+        [2006]
+        >>>
+        '''
         con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor()
 
@@ -573,17 +616,37 @@ class Report1:
         return axis_values
 
     def get_main_axis_list(self):
+        '''
+        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r.get_main_axis_list()
+        ['tiempo', 'pieza']
+        >>>
+        '''
         return self.cubiculo.get_main_axis_list()
 
     def get_other_axis_list(self):
+        '''
+        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r.get_other_axis_list()
+        ['tipo_pieza']
+        >>>
+        '''
         return self.cubiculo.get_other_axis_list()
  
     def get_sql(self, ft):
+        '''
+        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r.get_sql('test')
+        "SELECT td_tiempo.anio as columns,... td_pieza.pieza \\n"
+        >>>
+        '''
         return self.cubiculo.sql()
 
     def exec_sql(self, sql):
-
-        con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+        '''
+        ---
+        '''
+        con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")        
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor_dwh.execute(sql)
         
@@ -682,7 +745,6 @@ class Report1:
         cf_params = str(self.cube_function_params)
 
         url = "http://%s:%s/report/%s%s/params=%s/%s/params=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, params, cf, cf_params)
-        print "URL", url
         return url
 
 
