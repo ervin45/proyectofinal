@@ -55,7 +55,7 @@
 		var href = $(this).attr('ref')
 		
 		if($(this).attr('type_form') == "1"){
-			var width  = "750";
+			var width  = "900";
 			var height = "600";
 		}else{
 			var width  = "900";
@@ -68,18 +68,6 @@
 		$('#formulario_iframe').attr('height', height)
 		$('#formulario_iframe').css('display', 'block')
 	})
-
-//       //Mescla el HEADER de la izquierda con las filas de DATOS. Tiene baja performance
-//       var size = jQuery('.data_row').size()
-// 
-//       for(var i = 0; i < size; i++){
-// 		var header_row = $('.header_left_row')
-// 		header_html = header_row[i].innerHTML
-// 
-// 		var data_row = $('.data_row')
-// 		data_row[i].innerHTML = header_html + data_row[i].innerHTML
-//       }
-
 
     });
 
@@ -242,6 +230,8 @@ so.write("flashcontent");
 <br /><br /><br />
 
 <table class="data_table">
+
+	<!-- AGREGAR TITULOS DE ARRIBA -->
 	{% for level in header_top%}
 	<tr border="1">
 		{% if forloop.first %}
@@ -347,70 +337,95 @@ so.write("flashcontent");
 
 		{% for val in level%}
 
-
-       {% if can_drill_x %}
-		<th border="1" colspan="{{val|hash:1}}" align="center">
-			<a href="/drill_replacing/0/{{val|hash:0}}/">
-				{{val|hash:0}}
-			</a>
-		</th>
-
-        {% else %}
-		<th border="1" colspan="{{val|hash:1}}" align="center">
-			{{val|hash:0}}
-		</th>
-        {% endif %}
-
-
+			
+			{% if can_drill_x %}
+					<th border="1" colspan="{{val|hash:1}}" align="center">
+						<a href="/drill_replacing/0/{{val|hash:0}}/">
+							{{val|hash:0}}
+						</a>
+					</th>
+			
+				{% else %}
+					<th border="1" colspan="{{val|hash:1}}" align="center">
+						{{val|hash:0}}
+					</th>
+				{% endif %}
+			
+			
 		{% endfor %}
-	</tr>
-	{% endfor %}
 
+		{% if forloop.first %}
+			<th  rowspan="{{header_top_size}}" width="100" >
+				TOTAL
+			</th>
+		{% endif %}
+
+				</tr>
+	{% endfor %}
+	<!-- FIN AGREGAR TITULOS DE ARRIBA -->
+
+
+    <!-- AGREGAR FILAS DE DATOS -->
     {% for valor in body_order %}
     <tr class="data_row">
 
-
-
-
-
-
-
-
-		{% for col in header_left|hash:forloop.counter0 %}
-			{% if can_drill_y %}
-				<th border="1" rowspan="{{col|hash:1}}">
-					<a href="/drill_replacing/1/{{col|hash:0}}/">
-						{{col|hash:0}}
-					</a>
-				</th>
-			{% else %}
-				<th border="1" rowspan="{{col|hash:1}}">{{col|hash:0}}</th>
-			{% endif %}		
-		{% endfor %}
-
-
-
-
-
-
-
-
+	<!-- AGREGAR COLUMNAS TITULOS IZQUIERDA -->
+	{% for col in header_left|hash:forloop.counter0 %}
+		{% if can_drill_y %}
+			<th border="1" rowspan="{{col|hash:1}}">
+				<a href="/drill_replacing/1/{{col|hash:0}}/">
+					{{col|hash:0}}
+				</a>
+			</th>
+		{% else %}
+			<th border="1" rowspan="{{col|hash:1}}">{{col|hash:0}}</th>
+		{% endif %}		
+	{% endfor %}
+	<!-- FIN AGREGAR COLUMNAS TITULOS IZQUIERDA -->
         
+	<!-- AGREGAR COLUMNAS DE DATOS -->
         {% for v in body|hash:valor %}
         <td>        
-          {% if not v %}
-            &nbsp;
-          {% else %}
+		{% if not v %}
+		&nbsp;
+		{% else %}
+
 		{% if can_drill_x or can_drill_y %}
             		<a href="/drill_replacing2/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{v|floatformat:2}}</a>
 		{% else %}
-			{{v|floatformat:2}}
-		{% endif %}
-          {% endif %}
-        </td>
+				{{v|floatformat:2}}
+			{% endif %}
+                {% endif %}
+                </td>
+
+
+		
+
+		
         {% endfor %}
+	<!-- FIN AGREGAR COLUMNAS DE DATOS -->
+
+	<!-- Total FILA -->
+	<th>
+		{{total_x|hash:forloop.counter0}}
+	</th>
+	<!-- FIN Total FILA -->
+
+
     </tr>
     {% endfor %}
+
+    <!-- FIN FILAS DE DATOS -->
+
+    <tr>
+        <th align="right" colspan="{{header_left_size}}">TOTAL</th>
+    {% for ty in total_y %}
+	<th>
+		{{ty}}
+        </th>
+    {% endfor %}
+    
+	
 
 </table>
 <!-- FIN table_data -->
