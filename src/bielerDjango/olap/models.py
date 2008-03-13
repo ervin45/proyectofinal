@@ -1,3 +1,5 @@
+from django.conf import settings
+
 import psycopg2
 import psycopg2.extras
 import copy
@@ -499,7 +501,8 @@ class CubeTooBig:
 
 class FakedRequest:
     def __init__(self):
-        self.META = {'SERVER_IP':'192.168.61.100', 'SERVER_PORT':'8000'}
+        server_ip  = settings.IP
+        self.META = {'SERVER_IP':server_iP, 'SERVER_PORT':'8000'}
 
 class Report1:
     def __init__(self,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
@@ -614,7 +617,8 @@ class Report1:
         [2006]
         >>>
         '''
-        con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+        server_ip  = settings.IP
+        con_dwh = psycopg2.connect(host=server_ip, port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor()
 
         sql_dimension_values = self.cubiculo.dimension_values(int(axis))
@@ -656,7 +660,8 @@ class Report1:
         '''
         ---
         '''
-        con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")        
+        server_ip  = settings.IP
+        con_dwh = psycopg2.connect(host=server_ip, port=5432, user="ncesar", password=".,supermo", database="bieler_dw")        
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor_dwh.execute(sql)
         
@@ -857,7 +862,8 @@ class Report2:
         return self.absolute_url(request, parcial_url)
 
     def dimension_values(self, axis, cubiculo):
-        con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+        server_ip  = settings.IP
+        con_dwh = psycopg2.connect(host=server_ip, port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor()        
 
         sql_dimension_values = cubiculo.dimension_values(int(axis))
@@ -880,7 +886,8 @@ class Report2:
         return cubiculo.sql()
 
     def exec_sql(self, sql):
-        con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+        server_ip  = settings.IP
+        con_dwh = psycopg2.connect(host=server_ip, port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
         cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor_dwh.execute(sql)
 
@@ -1012,7 +1019,8 @@ class Ajax_responser:
         
         @staticmethod
         def get_values(dimension, level):
-            con_dwh = psycopg2.connect(host="192.168.61.100", port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
+            server_ip  = settings.IP
+            con_dwh = psycopg2.connect(host=server_ip, port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
             cursor_dwh = con_dwh.cursor()
 
             sql = "SELECT distinct(%s) FROM td_%s" % (level, dimension)
