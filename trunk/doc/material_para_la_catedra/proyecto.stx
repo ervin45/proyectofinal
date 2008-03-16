@@ -1,0 +1,19 @@
+%% Lineamientos de la catedra
+
+%% * El tamaño del papel debe ser 21cm x 29,7cm (tamaño A4). Los
+%%   márgenes deben ser los siguientes: superior 3,5cm; inferior, izquierdo
+%%   y derecho: 2,5 cm. Las páginas deben estar numeradas.
+
+%% * Los títulos de capítulos, secciones y subsecciones deben estar
+%%   numerados. Los títulos deben estar alineados a la izquierda. La fuente
+%%   del título de un capítulo debe ser Arial, tamaño 16. La fuente del
+%%   título de una sección debe ser Arial, cursiva, tamaño 14. La fuente
+%%   del título de una subsección debe ser Arial, tamaño 12.
+
+%% * Fuente texto normal: Times New Roman, tamaño 12. Interlineado
+%%   1,5. Sangría de primera línea: 0,7 cm.
+\setlength{\parindent}{0.7cm}
+   
+%%    * Los párrafos deben estar justificados. Espacio entre párrafos: 6 pto.
+\setlength{\parskip}{6pt}
+
