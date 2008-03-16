@@ -6,24 +6,22 @@ from pprint import pprint
 import math
 
 def header_list_top(header):
-    print "header"
-    pprint(header)
     if header == ['TODO']:
         return [[['TODO', 1,'TODO']]], 1
-    
+
     levels_count = len(header[0].split("-"))
-    
+
     result = []
     caminos = []
-    
+
     for i in range(levels_count):
         result.append([])
         caminos.append([])
-    
+
     for x in header:
         temp = x.split("-")
         for i in range(levels_count):
-    
+
             if not temp[:i + 1] in caminos[i]:
                 branch = "-".join(temp[:i + 1])
                 result[i].append([temp[i], 1, branch])
@@ -32,16 +30,17 @@ def header_list_top(header):
                 result[i][len(result[i]) - 1][1] += 1
 
     return result, len(result)
-        
+
+#toma un nivel un corta una tajada cuya suma incremental del COLSPAN este entre start y end
 def _slide_col(t, start, end):
     result = []
     sum = 0
     for tl in t:
         sum += tl[1]
-        
+
         if sum in range(start + 1, end + 1):
             result.append(tl)
-            
+
         if sum > end:
             break
 
@@ -62,13 +61,16 @@ def header_list_left(header):
 
     temp.append(last_level)
 
+
+    #La estructura jerarquica de la funcion header_list_top debe aplanarse (RAIZ, IZQUIERDO, DERECHO)
     for x in range(len(re) - 2, -1, -1):
         count = 0
         for l in re[x]:
             temp[x].append(l)
-            temp[x].extend(_slide_col(temp[x+1], count, count + l[1] * (len(re) - 1 -x)))
+            temp[x].extend(_slide_col(temp[x+1], count, count + l[1] * (len(re) - 1 - x)))
 
-            count = count + l[1]
+            #count = count + l[1]
+            count = count + l[1] * (len(re) - 1 - x)
 
     rows = []
     col = []
@@ -80,9 +82,11 @@ def header_list_left(header):
                 col = []
         except:
             pass
-        
+            
     return rows, len(re)
 
+def index(request):
+    return render_to_response('index.html',locals())
 
 def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     report = models.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
@@ -90,17 +94,18 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     try:
         cube = report.build_cube()
 
-
         total_x = cube.total_x()
         total_y = cube.total_y()
 
         header     = cube.dim_y
         header_top, header_top_size = header_list_top(cube.dim_y)
+        
+        pprint(cube.dim_y)
 
         header_left, header_left_size = header_list_left(cube.dim_x)
 
         body       = get_body(cube)
-        body_order = cube.dim_x     
+        body_order = cube.dim_x
 
         can_roll_x   = cube.can_roll_x()
         can_roll_y   = cube.can_roll_y()
@@ -134,48 +139,48 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params):
     report2 = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params)
-    
+
     try:
         cube = report2.build_cube()
-        
+
         header     = cube.dim_y
         body       = get_body(cube)
         body_order = cube.dim_x
-        
+
         can_roll_x   = cube.can_roll_x()
         can_roll_y   = cube.can_roll_y()
         can_drill_x  = cube.can_drill_x()
         can_drill_y  = cube.can_drill_y()
-        
+
         cube_info    = cube.get_info()
         ft           = cube_info[0][0]
         dimensions   = cube_info[0][1]
         measures     = cube_info[0][2]
         ore          = cube_info[0][3]
-        
+
         ft2           = cube_info[1][0]
         dimensions2   = cube_info[1][1]
         measures2     = cube_info[1][2]
         ore2          = cube_info[1][3]
-        
+
         main_axis = report2.get_main_axis_list()
         other_axis = report2.get_other_axis_list()
-        
+
         #ofc_params = graph_data(header, body, body_order)
-        
+
         return render_to_response('reportes2.html',locals())
-    
+
     except models.CubeTooBig, e:
         cells = e.cells
         rows  = e.rows
-        
+
         return render_to_response('tooBig.html',locals())
 
 def pivot(request):
     report = get_report(request)
     url = report.pivot(request)
     return HttpResponseRedirect(url)
-    
+
 def roll(request, axis):
     report = get_report(request)
     url = report.roll(request, axis)
@@ -189,7 +194,6 @@ def drill(request, axis):
 def replace_to(request, axis, values):
     report = get_report(request)
     url = report.replace_to(request, axis, values)
-    print 
     return HttpResponseRedirect(url)
 
 def replace_to_both_axis(request, value0, value1):
@@ -215,12 +219,12 @@ def get_body(cube):
     >>> pprint(c.body())
     {'dos': [2, 7], 'uno': [1, 3]}
     '''
-        
+
     result = {}
-    
+
     for x in cube.dim_x:
         result[x] = list(cube.rows(x, 'result'))
-        
+
     return result
 
 def get_report(request):
@@ -348,8 +352,13 @@ def formulario2(request):
     server_ip = settings.IP
         
     return render_to_response('formulario2.html',locals())
-            
-            
+
+
+
+def navigation_tree(request):
+    return render_to_response('navigation_tree.html',locals())
+
+
 ####AJAX####
 
 def get_dimensions(request, ft):

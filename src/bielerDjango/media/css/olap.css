@@ -1,3 +1,4 @@
+
 table,tr,td,th{border-spacing:0;border:0px solid #d9d1cc;}
 
 .data_table table,.data_table tr,.data_table td,.data_table th{border-spacing:0;border:1px solid #d9d1cc; font-family:verdana; font-size:11px}
@@ -30,5 +31,10 @@ iframe#formulario_iframe {
 	border:1px dashed #666;
 	padding-right:1em
   }
+
+frame{
+	padding: 0px;
+	margin: 0px;
+}
 
 a{cursor: pointer}

@@ -4,6 +4,7 @@ import olap.views as olap
 import report_management.views as rm
 
 urlpatterns = patterns('',
+    (r'^$', olap.index),
     (r'^report/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$', olap.report),
     (r'^report2/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$', olap.report2),
     (r'^pivot/$', olap.pivot),
@@ -13,6 +14,8 @@ urlpatterns = patterns('',
     (r'^roll/(.*)/$', olap.roll),
     (r'^dice/(.*)/(.*)/$', olap.dice),
     (r'^graph_data/$', olap.graph_data),
+        
+    (r'^navigation_tree/$', olap.navigation_tree),
 
     (r'^report/formulario/$',olap.formulario),
     (r'^report/formulario2/$',olap.formulario2),

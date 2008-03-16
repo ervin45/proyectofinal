@@ -1,3 +1,13 @@
+alert("f.js")
+
+function ajax_beforeSend(){
+	jQuery('#ajax_loading').show()
+}
+
+function ajax_complete(){
+	jQuery('#ajax_loading').hide()
+}
+
 function agregar(){
 	_agregar('')
 }
@@ -164,35 +174,6 @@ function _add_options(select, data){
 		})
 }
 
-/*
-Devuelve un STRING que representa la lista de parametros para la member_function que espera el DWP
-*/
-function _get_params(){
-	var temp = '['
-
-	var size = jQuery('#param_table_body td.params select').size()
-	for(var i = 0; i < size; i++){
-		temp += '['
-		p = jQuery('#param_table_body td.params select').get()
-		ft_and_measure = p[i].value.split(".")
-		ft = ft_and_measure[0]
-		measure = ft_and_measure[1]
-		
-		temp += "'" + ft + "', "
-		temp += "'" + measure + "', "
-
-		a = jQuery('#param_table_body td.aggregations select').get()
-		agregation = "'" + a[i].value + "'"
-		temp += agregation
-		temp += "], "
-	}
-	
-	temp = temp.substring(0, temp.length - 2)
-	temp += ']'
-
-	return temp
-}
-
 
 function change_cf(){
 	var cf_name = jQuery('#cf option:selected').attr('id')
@@ -253,6 +234,35 @@ function set_cf(){
 	change_cf()
 }
 
+/*
+Devuelve un STRING que representa la lista de parametros para la member_function que espera el DWP
+*/
+function _get_params(){
+	var temp = ''
+
+	var size = jQuery('#param_table_body td.params select').size()
+	for(var i = 0; i < size; i++){
+		temp += '['
+		p = jQuery('#param_table_body td.params select').get()
+		ft_and_measure = p[i].value.split(".")
+		ft = ft_and_measure[0]
+		measure = ft_and_measure[1]
+		
+		temp += "'" + ft + "', "
+		temp += "'" + measure + "', "
+
+		a = jQuery('#param_table_body td.aggregations select').get()
+		agregation = "'" + a[i].value + "'"
+		temp += agregation
+		temp += "], "
+	}
+	
+	temp = temp.substring(0, temp.length - 2)
+	temp = 'params=[' + temp + ']'
+
+	return temp
+}
+
 
 /*
 Devuelve un STRING que representa la lista de parametros para la cube_function que espera el DWP
@@ -268,7 +278,7 @@ function _get_cf_params(){
 	}
 	
 	temp = temp.substring(0, temp.length - 2)
-	temp = '[' + temp + ']'
+	temp = 'params=[' + temp + ']'
 
 	return temp	
 }

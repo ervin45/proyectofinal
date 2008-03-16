@@ -63,13 +63,24 @@
 		}
 
 
+
 		$('#formulario_iframe').attr('src', href)
 		$('#formulario_iframe').attr('width', width)
 		$('#formulario_iframe').attr('height', height)
 		$('#formulario_iframe').css('display', 'block')
+
+		$('#iframe_loading').show()
+		$('#formulario_iframe').hide()
 	})
 
+	$('iframe').load(function(){
+		$('#iframe_loading').hide()
+		$('#formulario_iframe').show()
+	});
+
     });
+
+
 
 </script>
 
@@ -87,11 +98,12 @@
 <a id="change_report_expand">[[Cambiar Informe]]</a>
 
 <div id="change_report" style="display:none">
-	<a ref="http://192.168.61.100:8000/report/formulario/" type_form="1" class="form_loader" >1 Tabla</a>
+	<a ref="http://localhost:8000/report/formulario/" type_form="1" class="form_loader" >1 Tabla</a>
 	<br />
-	<a ref="http://192.168.61.100:8000/report/formulario2/" type_form="2" class="form_loader" >2 Tablas</a>
+	<a ref="http://localhost:8000/report/formulario2/" type_form="2" class="form_loader" >2 Tablas</a>
 	<br /><br />
-
+	
+	<img id="iframe_loading" src="/media/img/loading2.gif" width="70" style="display:none" />
 	<iframe src="" id="formulario_iframe" width=750 height=700 style="display:none"></iframe>
 </div>
 <!-- FIN change_report -->
@@ -379,10 +391,10 @@ so.write("flashcontent");
 		{% endif %}		
 	{% endfor %}
 	<!-- FIN AGREGAR COLUMNAS TITULOS IZQUIERDA -->
-        
+ 
 	<!-- AGREGAR COLUMNAS DE DATOS -->
         {% for v in body|hash:valor %}
-        <td>        
+        <td>
 		{% if not v %}
 		&nbsp;
 		{% else %}
