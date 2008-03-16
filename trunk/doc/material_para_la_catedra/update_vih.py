@@ -32,7 +32,10 @@ for version in results:
      version_desc,
      load_factor) = version
 
-    print 'Version %s: %s' % (version_id, version_name)
+    t = """Version %s: %s""" % (version_id, version_name)
+    print t
+    print "=" * len(t)
+    
 
     sql2 = '''
     select
@@ -58,6 +61,6 @@ for version in results:
          iter_weight) = iteration
 
         print " * ", iter_name
-    print "-----"
+    print "\n\n"
         
      

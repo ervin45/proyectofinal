@@ -1,8 +1,37 @@
+%% Portada
+
+  \renewcommand{\maketitle}{
+    \begin{titlepage}
+     
+      \begin{center}
+      \textsf{\Huge Proyecto Final de Carrera} \\
+	\vspace{4.0cm}
+      \textsf{\Large Sistema de soporte de decisiones para Bieler S.A.} \\
+	\vspace{4.0cm}
+      \textsf{\LARGE Nicol\'{a}s Daniel C\'{E}SAR} \\
+      \textsf{\LARGE Mariano Nicol\'{a}s GAL\'{A}N} \\
+	\vspace{4.0cm}
+      \textsf{\Large Abril 2008} \\      
+      \end{center}
+    \end{titlepage}
+  }
+
+
 %% Lineamientos de la catedra
 
 %% * El tamaño del papel debe ser 21cm x 29,7cm (tamaño A4). Los
 %%   márgenes deben ser los siguientes: superior 3,5cm; inferior, izquierdo
 %%   y derecho: 2,5 cm. Las páginas deben estar numeradas.
+
+%%\setlength\topmargin{0in}
+%%\setlength\headheight{0in}
+%%\setlength\headsep{0in}
+%%\setlength\textheight{7.7in}
+%%\setlength\textwidth{6.5in}
+%%\setlength\oddsidemargin{0in}
+%%\setlength\evensidemargin{0in}
+%%\setlength\parindent{0.25in}
+%%\setlength\parskip{0.25in}
 
 %% * Los títulos de capítulos, secciones y subsecciones deben estar
 %%   numerados. Los títulos deben estar alineados a la izquierda. La fuente
