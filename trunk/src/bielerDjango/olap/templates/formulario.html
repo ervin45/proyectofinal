@@ -16,7 +16,9 @@
 
 		$.ajaxSetup( {
 			type: "POST",
-			async: false
+			async: false,
+			beforeSend: ajax_beforeSend,
+			complete: ajax_complete
 		} );
 
 		/* EVENTOS*/
@@ -163,6 +165,7 @@
 
   </head>
   <body>
+	<img id="ajax_loading" src="/media/img/loading.gif" width="70" style="display:none" />
 	<form>
 		<label>Hecho</label>
 		<select id="ft">

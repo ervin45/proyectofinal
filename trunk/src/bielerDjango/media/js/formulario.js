@@ -1,3 +1,11 @@
+function ajax_beforeSend(){
+	jQuery('#ajax_loading').show()
+}
+
+function ajax_complete(){
+	jQuery('#ajax_loading').hide()
+}
+
 function agregar(){
 	_agregar('')
 }

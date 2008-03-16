@@ -5,8 +5,8 @@ def isFloat(s):
         return False
 
 def compare(a,b):
-    primero = str(a).split(' - ')
-    segundo = str(b).split(' - ')
+    primero = str(a).split('-')
+    segundo = str(b).split('-')
     for x,y in zip(primero, segundo):
         if isFloat(x) and isFloat(y):
             if float(x) > float(y):
