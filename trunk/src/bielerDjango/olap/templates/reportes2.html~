@@ -43,6 +43,41 @@
 		}
 	});
 
+	$('#change_report_expand').click(function() {
+		if ( $('#change_report').css('display') == 'none' ) {
+			$('#change_report').show();
+		} else {
+			$('#change_report').slideUp();
+	}
+	});
+
+	$('.form_loader').click(function(){
+		var href = $(this).attr('ref')
+		
+		if($(this).attr('type_form') == "1"){
+			var width  = "900";
+			var height = "600";
+		}else{
+			var width  = "900";
+			var height = "900";
+		}
+
+
+
+		$('#formulario_iframe').attr('src', href)
+		$('#formulario_iframe').attr('width', width)
+		$('#formulario_iframe').attr('height', height)
+		$('#formulario_iframe').css('display', 'block')
+
+		$('#iframe_loading').show()
+		$('#formulario_iframe').hide()
+	})
+
+	$('iframe').load(function(){
+		$('#iframe_loading').hide()
+		$('#formulario_iframe').show()
+	});
+
 	$('#save_expand').click(function(){
 		if ( $('#save').css('display') == 'none' ) {
 			$('#save').show();
@@ -51,6 +86,13 @@
 		}
 	})
 
+	$('#categoria_expand').click(function(){
+		if ( $('#categoria').css('display') == 'none' ) {
+			$('#categoria').show();
+		} else {
+			$('#categoria').slideUp();
+		}
+	})
 
 	$('#save_aceptar').click(function(){
 		var href = window.location
@@ -62,6 +104,16 @@
 		var categoria_id = $('#categoria_id').val()
 
 		jQuery.post("/save_report/" , {dwp: dwp, nombre: nombre, categoria_id: categoria_id}, function(data){
+			parent.frames.browser.location.reload()
+		})
+
+		
+	})
+
+	$('#categoria_aceptar').click(function(){
+		var nombre = $('#categoria_nombre').val()
+
+		jQuery.post("/save_categoria/" , {nombre: nombre}, function(data){
 			parent.frames.browser.location.reload()
 		})
 
@@ -105,6 +157,36 @@
 </div>
 
 <br /><br />	
+
+<a id="categoria_expand">CATEGORIA</a>
+
+<div id="categoria" style="display:none">
+	<table>
+		<tbody>
+		<tr>
+			<td><label>Nombre</label></td>
+			<td><input type="text" value="" id="categoria_nombre" /></td>
+		</tr>
+		</tbody>
+	</table>
+	
+	<input type="button" value="Aceptar" id="categoria_aceptar"/>
+</div>
+
+<br /><br />
+
+<a id="change_report_expand">[[Cambiar Informe]]</a>
+
+<div id="change_report" style="display:none">
+	<a ref="http://localhost:8000/report/formulario/" type_form="1" class="form_loader" >1 Tabla</a>
+	<br />
+	<a ref="http://localhost:8000/report/formulario2/" type_form="2" class="form_loader" >2 Tablas</a>
+	<br /><br />
+	
+	<img id="iframe_loading" src="/media/img/loading2.gif" width="70" style="display:none" />
+	<iframe src="" id="formulario_iframe" width=750 height=700 style="display:none"></iframe>
+</div>
+<!-- FIN change_report -->
 
 <script type="text/javascript" src="/media/js/swfobject.js"></script>
 <div id="flashcontent"></div><script type="text/javascript">

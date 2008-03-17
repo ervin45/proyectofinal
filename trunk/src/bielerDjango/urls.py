@@ -14,10 +14,17 @@ urlpatterns = patterns('',
     (r'^roll/(.*)/$', olap.roll),
     (r'^dice/(.*)/(.*)/$', olap.dice),
     (r'^graph_data/$', olap.graph_data),
-        
+
     (r'^navigation_tree/$', olap.navigation_tree),
+    (r'^create_report/$', olap.create_report),
+    (r'^adm_report/$', olap.adm_report),
+    (r'^adm_categoria/$', olap.adm_categoria),
+
     (r'^save_report/$', olap.save_report),
     (r'^delete_report/$', olap.delete_report),
+
+    (r'^save_categoria/$', olap.save_categoria),
+    (r'^delete_categoria/$', olap.delete_categoria),
 
     (r'^report/formulario/$',olap.formulario),
     (r'^report/formulario2/$',olap.formulario2),

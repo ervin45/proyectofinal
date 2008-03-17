@@ -73,7 +73,6 @@
 </div>
 
 <table>
-  <tr><th>Acciones</th></tr>
   <tbody>
     <tr>
       <td><a target="detail" href="/create_report/">Nuevo Reporte</a></td>
@@ -87,5 +86,13 @@
   </tbody>
 </table>
 
+<ul><li>dddddd</li>
+<li>dddddd</li>
+<li>dddddd</li>
+<li>dddddd</li>
+<li>dddddd</li>
+<li>dddddd</li>
+<li>dddddd</li>
+</ul>
  
 </body></html>

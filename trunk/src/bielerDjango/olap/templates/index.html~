@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en_US">
+<head>
+<title>Bieler S.A.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" href="/media/css/olap.css" type="text/css" />
+</head>
+<frameset cols="200,*">
+
+
+	<frame src="/navigation_tree/" name="browser" id="browser" frameborder="1" />
+
+<frame src="/report/test/tiempo/tipo_pieza/mes/tipo_pieza/xr=%7B'anio':%20%5B'2002'%5D%7D/yr=%7B%7D/ore=%5B%5B'pieza',%20'modificacion',%20%7B'grupo_constructivo':%20%5B'184'%5D%7D%5D%5D/same/params=%5B%5B'ft_test',%20'cantidad',%20'sum'%5D%5D/same_cube/params=%5B%5D/" name="detail" id="detail" frameborder="0" />
+	<noframes>
+	<body>
+		This application works best with a frames-enabled browser, but can be used without frames by following the link below.<br />
+		<a href="intro.php">Use without frames</a>
+	</body>
+	</noframes>
+
+</frameset>
+
+</html>

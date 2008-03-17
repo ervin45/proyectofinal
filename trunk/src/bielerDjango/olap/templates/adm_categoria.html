@@ -1,0 +1,80 @@
+{% load hash_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''" /><title>Bieler Web Application</title>
+
+<script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/media/css/olap.css" media="screen" />
+<script type="text/javascript">
+	jQuery(document).ready(function($){
+
+		$('.categoria_delete').click(function(){
+			if (confirm("Esta seguro que desea borrar la categoria?")) { 
+				var id = $(this).attr("categoria_id")
+				jQuery.post("/delete_categoria/" , {id: id}, function(data){
+					parent.frames.browser.location.reload()
+					window.location.reload()
+				})
+			}
+		})
+
+		$('#categoria_aceptar').click(function(){
+			var nombre = $('#categoria_nombre').val()
+	
+			jQuery.post("/save_categoria/" , {nombre: nombre}, function(data){
+				parent.frames.browser.location.reload()
+				window.location.reload()
+			})	
+		})
+	
+    });
+
+</script>
+
+
+</head>
+<body>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th></th>
+				<th></th>
+			</tr>		
+		</thead>
+		<tbody>
+		{% for cat in categorias %}
+			<tr>
+				<td>{{cat.nombre}}</td>
+				<td>MODIFICAR</td>
+				<td>
+					<a class="categoria_delete" categoria_id="{{cat.id}}"><img border="0" src="/media/img/del.png" width="13" /></a>
+				</td>
+			</tr>
+		{% endfor %}
+
+		</tbody>
+	</table>
+
+	<br>	
+
+	<fieldset>
+	<legend>Nueva Categoria</legend>
+	<table>
+		<tbody>
+		<tr>
+			<td><label>Nombre</label></td>
+			<td><input type="text" value="" id="categoria_nombre" /></td>
+		</tr>
+		</tbody>
+	</table>
+	<br>
+	<input type="button" value="Aceptar" id="categoria_aceptar"/>
+	</fieldset>
+</div>
+
+
+</body>
+</html>
