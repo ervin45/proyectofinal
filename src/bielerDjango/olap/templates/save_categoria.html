@@ -1,0 +1,44 @@
+{% load hash_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''" /><title>Bieler Web Application</title>
+
+<script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/media/css/olap.css" media="screen" />
+<script type="text/javascript">
+	jQuery(document).ready(function($){
+
+	$('#categoria_aceptar').click(function(){
+		var nombre = $('#categoria_nombre').val()
+
+		jQuery.post("/save_categoria/" , {nombre: nombre}, function(data){
+			parent.frames.browser.location.reload()
+		})	
+	})
+	
+    });
+
+</script>
+
+
+</head>
+<body>
+
+
+<div id="categoria" >
+	<table>
+		<tbody>
+		<tr>
+			<td><label>Nombre</label></td>
+			<td><input type="text" value="" id="categoria_nombre" /></td>
+		</tr>
+		</tbody>
+	</table>
+	
+	<input type="button" value="Aceptar" id="categoria_aceptar"/>
+</div>
+
+
+</body>
+</html>

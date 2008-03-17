@@ -14,18 +14,12 @@
 
 	 jQuery(document).ready(function($){
 
-// 		$.ajaxSetup( {
-// 			type: "POST",
-// 			async: false,
-// 			beforeSend: ajax_beforeSend,
-// 			complete: ajax_complete
-// 		} );
-
 		$.ajaxSetup( {
 			type: "POST",
-			async: false
+			async: false,
+			beforeSend: ajax_beforeSend,
+			complete: ajax_complete
 		} );
-
 
 		/* EVENTOS*/
 

@@ -8,7 +8,9 @@ $(document).ready(function(){
 	});
 	
 	// second example
-	$("#browser").treeview();
+	$("#browser").treeview({
+		animated: "fast"
+	});
 	$("#add").click(function() {
 		var branches = $("<li><span class='folder'>New Sublist</span><ul>" + 
 			"<li><span class='file'>Item1</span></li>" + 

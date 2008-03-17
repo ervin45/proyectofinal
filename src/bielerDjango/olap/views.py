@@ -130,6 +130,9 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         other_axis.extend(report.get_other_axis_list())
 
         ofc_params = graph_data(header, body, body_order, x, xl)
+        
+        categorias = models.Categoria.objects.all()
+        
         return render_to_response('reportes2.html',locals())
 
     except models.CubeTooBig:
@@ -356,8 +359,18 @@ def formulario2(request):
 
 
 def navigation_tree(request):
-    reportes = models.ReportTemplate.objects.all()
+    categorias = models.Categoria.objects.all()
     return render_to_response('navigation_tree.html',locals())
+
+def adm_categoria(request):
+    categorias = models.Categoria.objects.all()
+    return render_to_response('adm_categoria.html',locals())
+
+def create_report(request):
+    return render_to_response('create_report.html',locals())
+
+def adm_report(request):
+    return render_to_response('adm_report.html',locals())
 
 
 ####AJAX####
@@ -395,17 +408,33 @@ def get_cf(request):
 
 
 def save_report(request):
-    name        = request.POST.get('name')
-    default_dwp = request.POST.get('default_dwp')
+    nombre         = request.POST.get('nombre')
+    dwp  = request.POST.get('dwp')
+    categoria_id = request.POST.get('categoria_id')
+    
+    categoria = models.Categoria.objects.get(id=categoria_id)
 
-    reporte  = models.ReportTemplate(name=name, default_dwp=default_dwp)
+    reporte  = models.Reporte(nombre=nombre, dwp=dwp, categoria=categoria, user_id='2')
     reporte.save()
 
     return HttpResponse("")
 
 def delete_report(request):
     id        = request.POST.get('id')
-    models.ReportTemplate.objects.get(id=id).delete()
+    models.Reporte.objects.get(id=id).delete()
 
     return HttpResponse("")
 
+def save_categoria(request):
+    nombre         = request.POST.get('nombre', False)
+
+    categoria  = models.Categoria(nombre=nombre)
+    categoria.save()
+
+    return HttpResponse('')
+
+def delete_categoria(request):
+    id = request.POST.get('id')
+    models.Categoria.objects.get(id=id).delete()
+
+    return HttpResponse('')

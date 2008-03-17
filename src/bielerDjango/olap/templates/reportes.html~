@@ -1,0 +1,133 @@
+{% load hash_tags %}
+<!DCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''" /><title>Bieler Web Application</title>
+
+<script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="/media/css/olap.css" media="screen" />
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $("#dice").click(function() {
+        
+        var main_axis = document.getElementById('main_axis').value
+        var other_axis = document.getElementById('other_axis').value
+        
+        window.location = "/dice/" + main_axis + "/" + other_axis +"/"
+      });
+    });
+
+</script>
+</head>
+<body>
+
+<div class="outer-container">
+<div class="inner-container">
+<div class="header">
+<div class="title"> <span class="sitename"><a href="index.html">{{title}}</a></span>
+<div class="slogan"></div>
+</div>
+</div>
+<div class="path"> <a href="index.html">Inicio</a> Este es el informe original
+<br>
+<br>
+<a href="/pivot/">Pivot</a> 
+<br>
+<br />
+<select id="main_axis">
+{% for ma in main_axis %}
+    <option>{{ma}}</option>
+{% endfor %}
+</select>
+
+<select id="other_axis">
+{% for oa in other_axis %}
+    <option>{{oa}}</option>
+{% endfor %}
+</select>
+<input id="dice" value="Dice" type="button" />
+
+<br>
+<br>
+
+
+<table>
+    <tr>
+        <td></td>
+        <td><a href="/roll/0/">Arriba</a></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><a href="/roll/1/">Izq</a></td>
+        <td></td>
+        <td><a href="/drill/1/">Der</a></td>
+    </tr>
+        <tr>
+            <td></td>
+            <td><a href="/drill/0/">Abajo</a> </td>
+            <td></td>
+        </tr>        
+</table> 
+
+</div>
+
+
+<table>
+<tbody>
+</tbody><tbody>
+    <tr>
+        <th></th>
+        {% for h in cube.header %}
+            
+            <th>
+                <a href="/drill_replacing/0/{{h}}/">{{h}}</a>
+            </th>
+        {% endfor %}
+    </tr>
+    
+    {% for valor in cube.body_order %}
+    <tr>
+        <th><a href="/drill_replacing/1/{{valor}}/">{{valor}}</a></th>
+        {% for v in cube.body|hash:valor %}
+        <td>        
+          <a href="/drill_replacing2/{{ cube.header|hash:forloop.counter0 }}/{{valor}}/">{{v|default_if_none:"&nbsp;"}}</a>
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/media/js/swfobject.js"></script>
+<div id="flashcontent"></div>
+<script type="text/javascript">
+var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "1000", "500", "9", "#FFFFFF");
+so.addVariable("variables","true");
+
+{{ofc_params}}
+
+so.write("flashcontent");
+</script>
+
+
+</body>
+
+</html>
