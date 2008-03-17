@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## actualizacion de versiones-iteraciones... etc
-#./update.sh
+./update.sh
 
 rst2latex --language=es \
           --no-doc-title \

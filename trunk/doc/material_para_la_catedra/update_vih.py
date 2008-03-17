@@ -35,6 +35,9 @@ for version in results:
     t = """Version %s: %s""" % (version_id, version_name)
     print t
     print "=" * len(t)
+
+    print version_desc
+    print "\nIteraciones involucradas:\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     
 
     sql2 = '''
