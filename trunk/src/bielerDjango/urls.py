@@ -16,6 +16,8 @@ urlpatterns = patterns('',
     (r'^graph_data/$', olap.graph_data),
         
     (r'^navigation_tree/$', olap.navigation_tree),
+    (r'^save_report/$', olap.save_report),
+    (r'^delete_report/$', olap.delete_report),
 
     (r'^report/formulario/$',olap.formulario),
     (r'^report/formulario2/$',olap.formulario2),

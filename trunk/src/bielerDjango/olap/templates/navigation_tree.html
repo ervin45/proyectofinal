@@ -15,6 +15,21 @@
 	
 	<script type="text/javascript" src="/media/js/jquery/demo.js"></script>
 	
+	<script type="text/javascript">
+		jQuery(document).ready(function($){
+			$('.delete').click(function(){
+				if (confirm("Esta seguro que desea borrar el reporte?")) { 
+					var id = $(this).attr("report_id")
+					jQuery.post("/delete_report/" , {id: id}, function(data){
+						window.location.reload()
+					})
+				}
+			})
+		});
+	</script>
+
+
+
 	</head>
 	<body style="border-right: 1px dashed #000; margin: 0px">
 	
@@ -23,11 +38,9 @@
 	<ul id="browser" class="filetree">
 		<li><span class="folder">Reportes</span>
 			<ul>
-
-				<li><a target="detail" href="http://localhost:8000/report/test/tiempo/pieza/mes/modificacion/xr=%7B'anio':%20%5B'2002'%5D%7D/yr=%7B'grupo_constructivo':%20%5B'184'%5D%7D/ore=%5B%5B'tipo_pieza',%20'tipo_pieza',%20%7B%7D%5D%5D/same/params=%5B%5B'ft_test',%20'cantidad',%20'sum'%5D%5D/same_cube/params=%5B%5D/" class="file">Rotacion</a></li>
-				<li><a target="detail" href="http://localhost:8000/report/test/tiempo/tipo_pieza/mes/tipo_pieza/xr=%7B'anio':%20%5B'2002'%5D%7D/yr=%7B%7D/ore=%5B%5B'pieza',%20'modificacion',%20%7B'grupo_constructivo':%20%5B'184'%5D%7D%5D%5D/same/params=%5B%5B'ft_test',%20'cantidad',%20'sum'%5D%5D/same_cube/params=%5B%5D/
-" class="file">Compras</a></li>
-				<li><a target="detail" href="http://localhost:8000/report/test/pieza/tipo_pieza/modificacion/tipo_pieza/xr=%7B'grupo_constructivo':%20%5B'184'%5D%7D/yr=%7B%7D/ore=%5B%5B'tiempo',%20'mes',%20%7B'anio':%20%5B'2002'%5D%7D%5D%5D/same/params=%5B%5B'ft_test',%20'cantidad',%20'sum'%5D%5D/same_cube/params=%5B%5D/" class="file">Ventas</a></li>
+				{% for rep in reportes %}
+					<li><a target="detail" href="{{rep.default_dwp}}" class="file">{{rep.name}}</a> <a target="detail" class="delete" report_id="{{rep.id}}">[-]</a></li>			
+				{% endfor %}
 			</ul>
 
 		</li>

@@ -78,6 +78,29 @@
 		$('#formulario_iframe').show()
 	});
 
+	$('#save_expand').click(function(){
+		if ( $('#save').css('display') == 'none' ) {
+			$('#save').show();
+		} else {
+			$('#save').slideUp();
+		}
+	})
+
+	$('#save_aceptar').click(function(){
+		var href = window.location
+		var str = new String(href)
+		var str_arre = str.split("8000")
+
+		var default_dwp = str_arre[1]
+		var report_name = $('#report_name').val()
+
+		jQuery.post("/save_report/" , {default_dwp: default_dwp, name: report_name}, function(data){
+			parent.frames.browser.location.reload()
+		})
+
+		
+	})
+	
     });
 
 
@@ -91,9 +114,15 @@
 
 <div class="outer-container">
 
-<div class="path"> 
- <a href="index.html">Inicio</a> » <span class="title">{{title}}</span>
+<a id="save_expand">GUARDAR</a>
+
+<div id="save" style="display:none">
+	<label>Nombre</label>
+	<input type="text" value="" id="report_name" />
+	<input type="button" value="Aceptar" id="save_aceptar"/>
 </div>
+
+<br /><br />	
 
 <a id="change_report_expand">[[Cambiar Informe]]</a>
 
