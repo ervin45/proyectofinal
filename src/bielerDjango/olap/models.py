@@ -1,3 +1,4 @@
+from django.db import models
 from django.conf import settings
 
 import psycopg2
@@ -13,6 +14,15 @@ from cube_functions import *
 
 too_many_rows = 2000
 too_many_cells = 20000
+
+class ReportTemplate(models.Model):
+    name = models.CharField(maxlength=60)
+    default_dwp = models.CharField(maxlength=600)
+    user_id = models.IntegerField()
+    class Meta:
+        db_table = 'reportes'
+
+
 
 
 class Cube:

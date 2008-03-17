@@ -356,6 +356,7 @@ def formulario2(request):
 
 
 def navigation_tree(request):
+    reportes = models.ReportTemplate.objects.all()
     return render_to_response('navigation_tree.html',locals())
 
 
@@ -393,4 +394,18 @@ def get_cf(request):
     return HttpResponse(str(response))
 
 
+def save_report(request):
+    name        = request.POST.get('name')
+    default_dwp = request.POST.get('default_dwp')
+
+    reporte  = models.ReportTemplate(name=name, default_dwp=default_dwp)
+    reporte.save()
+
+    return HttpResponse("")
+
+def delete_report(request):
+    id        = request.POST.get('id')
+    models.ReportTemplate.objects.get(id=id).delete()
+
+    return HttpResponse("")
 
