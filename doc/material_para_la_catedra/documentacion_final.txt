@@ -341,11 +341,6 @@ Se elige una metáfora del sistema para que el nombrado de clases,
 etcétera, siga una misma línea, facilitando la reutilización y la
 comprensión del código.
 
-Se escriben tarjetas CRC (class-responsabilities-collaboration) de
-clase-responsabilidades-colaboración para cada objeto, que permiten
-abstraerse el pensamiento estructurado y que el equipo de desarrollo
-al completo participe en el diseño.
-
 Se "refactoriza sin piedad". Básicamente, consiste en no tener miedo
 de cambiar un diseño o eliminar un código que ya no sirve, o al menos
 que ya no es claramente la mejor solución.
