@@ -146,7 +146,7 @@ producto Mondrian descripto en la sección ..., y nos resultó muy complicada la
 instalación y configuración.
 
 Una vez configurado, la performance de la aplicación Java era muy
-pobre. Entonces decidimos ver alternativas
+pobre. Entonces decidimos ver alternativas.
 
 ------------------------------------------------------------------------
 Python
@@ -172,13 +172,83 @@ XPWeb
 Turbo Gears
 ------------------------------------------------------------------------
 
+Es un framework de desarrollo web para Python. Subdivide el problema
+du una aplicación web en capas que interactuan entre si. La filosofía
+del proyecto es la reutilización de tecnologías existentes
+maduras. Las tecnologías utilizadas son:
+
+
+:MochiKit: es una biblioteca para simplificar el desarrollo en Javascript.
+
+:Kid: es un sistema de templates amigable tanto para el diseñador
+      gráfico como para el programador.
+
+:CherryPy: es una biblioteca para manejar de manera sencilla el
+	   entrada/salida de los sistemas web en Python.
+
+:SQLObject: tratamiento de objetos con persistencia de objetos en
+	    bases de datos relacionales sin una ocultación total de la
+	    base de datos.
+
+El comienzo del proyecto fue realizado en Turbo Gears pero encontramos
+algunas debilidades como por ejemplo:
+
+* En caso de error los informes eran escasos y ambigüos.
+
+* La comunidad de desarrolladores del proyecto no respondía de la
+  manera esperada.
+
+* La documentación del proyecto estaba desactualizada e incompleta.
+
+
 ------------------------------------------------------------------------
 Django
 ------------------------------------------------------------------------
 
+Django es un framework para desarrollo web en Python basado en el
+patron de diseño MVC (Model-View-Controller). A diferencia de Turbo
+Gears no se apoya en tecnologías existentes, sino implementa cada una
+de las 3 capas logrando una integración superior.
+
+También posee herramientas para un correcto mapeo entre las URLs a
+utilizar en la aplicación y los métodos a ser llamados. De esta forma
+se pueden realizar cambios de comportamiento sin que afecte la
+perspectiva del usuario/cliente web. Esta característica nos brindó la
+posibilidad de prototipado rápido y adaptaciones sucesivas.
+
+Una de las premisas del proyecto es el feedback hacia el programador
+en el momento del desarrollo de la aplicacion. Nos sorprendió el nivel
+de detalle en los informes de errores y las opciones de depuración de
+código, esto nos posibilitó acortar los tiempos de iteración en el
+desarrollo.
+
+------------------------------------------------------------------------
+Turbo Gear vs. Django
+------------------------------------------------------------------------
+
+Luego de probar ambas tecnologías encontramos ventajas y desventajas
+en ambas:
+
+Turbo Gear (pros-contras)
+--------------------------------
+
+* malisimo
+
+
+Django (pros-contras)
+--------------------------------
+
+* buenisimo.
+
+Nos decidimos por Django
+
 ------------------------------------------------------------------------
 Mondrian
 ------------------------------------------------------------------------
+
+Mondrian es el servidor de cubos de la suite de Inteligencia de
+Negocios de Pentaho. Está escrito en Java y pretende emular un motor
+de consulta multidimensaional XMLA.
 
 Rápidamente lo encontramos rígido para realizar ciertas modificaciones
 y su interfaz de consulta multidimensional (XMLA estandar de facto
