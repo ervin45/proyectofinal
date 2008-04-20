@@ -35,6 +35,19 @@ Organización del documento
 Terminología utilizada
 ------------------------------------------------------------------------
 
+:Base de datos multidimensional: Es una base de datos con tablas
+      dimensionales. 
+
+:ETL: Extracción, Transformación y Carga de datos. Referido
+      normalmente al proceso de..
+
+:Data Warehouse: kasjdlkasjd
+
+:Data Mining: asddasd
+
+:XMLA: XML ..for analysis
+
+
 ------------------------------------------------------------------------
 Metodología elegida
 ------------------------------------------------------------------------
@@ -47,24 +60,42 @@ Motivación
                         Tecnología Investigada
 ========================================================================
 
-.. estructura gral: un párrafo explica QUE ES, 2do parrafo Nuestra
+.. estructura gral un párrafo explica QUE ES, 2do parrafo Nuestra
    experiencia. Tercer parrafo: veredicto.
 
 
 ------------------------------------------------------------------------
-Java
+Java y aplicaciones Tomcat
 ------------------------------------------------------------------------
 
-Java es un lenguaje... blah bla
+Java es un lenguaje de programación de propósito general orientado a
+objetos desarrollado por Sun Microsystems a principios de los años
+90. Las aplicaciones Java están típicamente compiladas en un bytecode
+que es interpretado o compilado a código nativo para su ejecución.
+
+Las aplicaciones libres existentes con funcionalidades de Data
+Warehouse, OLAP o similares, están en su mayoría implementadas en
+Java. La suite de herramientas Pentaho[1], posee varias herramientas
+para realizar ETL, Data Mining, etc. todas implementadas sobre Tomcat[2].
+
+.. [1] http://www.pentaho.com
+.. [2] http://tomcat.apache.org
+
+En el comienzo del proyecto, investigamos la suite Pentaho, en particular el
+producto Mondrian descripto en la sección ..., y nos resultó muy complicada la
+instalación y configuración.
+
+Una vez configurado, la performance de la aplicación Java era muy
+pobre. Entonces decidimos ver alternativas
 
 ------------------------------------------------------------------------
 Python
 ------------------------------------------------------------------------
 
 Python es un lenguaje de programación creado por Guido van Rossum en
-el año 1990[1].
+el año 1990[3].
 
-.. [1] http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
+.. [3] http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
 
 Es comparado habitualmente con TCL, Perl, Scheme, Java y Ruby. En la
 actualidad Python se desarrolla como un proyecto de código abierto,
@@ -87,6 +118,11 @@ Django
 ------------------------------------------------------------------------
 Mondrian
 ------------------------------------------------------------------------
+
+Rápidamente lo encontramos rígido para realizar ciertas modificaciones
+y su interfaz de consulta multidimensional (XMLA estandar de facto
+realizado por Microsoft) resultó ser incompatible con las herraminetas
+libres que utilizabamos.
 
 ------------------------------------------------------------------------
 SVN
