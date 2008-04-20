@@ -171,18 +171,33 @@ Organización del documento
 Terminología utilizada
 ------------------------------------------------------------------------
 
-:Base de datos multidimensional: Es una base de datos con tablas que representan hechos (ejemplo: ventas, compras)
-y tablas que representan dimensiones sobre esos hechos (ejemplo: tiempo, sucursal, cliente). 
+:Base de datos multidimensional: Es una base de datos con tablas que
+      representan hechos (ejemplo: ventas, compras) y tablas que
+      representan dimensiones sobre esos hechos (ejemplo: tiempo,
+      sucursal, cliente).
 
-:Data Warehouse: Coleccion de datos almacenados orientados a un determinado ambito cuyo. Es una copia de las transacciones de datos específicamente estructurada para la consulta y el análisis.
+:Data Warehouse: Coleccion de datos almacenados orientados a un
+      determinado ambito cuyo. Es una copia de las transacciones de
+      datos específicamente estructurada para la consulta y el
+      análisis.
 
-:OLAP: Es una solución utilizada en el campo de la llamada Inteligencia empresarial (o Business Intelligence) cuyo objetivo es agilizar la consulta de grandes cantidades de datos. Para ello utiliza estructuras multidimensionales (o Cubos OLAP) que contienen datos resumidos de grandes Bases de Datos o Sistemas Transaccionales (OLTP).
+:OLAP: Es una solución utilizada en el campo de la llamada
+       Inteligencia empresarial (o Business Intelligence) cuyo
+       objetivo es agilizar la consulta de grandes cantidades de
+       datos. Para ello utiliza estructuras multidimensionales (o
+       Cubos OLAP) que contienen datos resumidos de grandes Bases de
+       Datos o Sistemas Transaccionales (OLTP).
 
 :ETL: Extracción, Transformación y Carga de datos. Referido
-      normalmente al proceso de extraer datos de los almacenamientos necesarios, realizar un procesamientos o transformacion de estos y almacenarlos o cargarlos en la estructura del Data Warehouse
+      normalmente al proceso de extraer datos de los almacenamientos
+      necesarios, realizar un procesamientos o transformacion de estos
+      y almacenarlos o cargarlos en la estructura del Data Warehouse
 
 
-:Data Mining: proceso que consiste en la extracción de conocimiento procesable, implícito en las bases de datos. Es decir lograr sacar conclusiones utiles a partir de un conjunto de datos no orientado a estas.
+:Data Mining: proceso que consiste en la extracción de conocimiento
+      procesable, implícito en las bases de datos. Es decir lograr
+      sacar conclusiones utiles a partir de un conjunto de datos no
+      orientado a estas.
 
 :XMLA: XML ..for analysis
 
@@ -191,83 +206,215 @@ y tablas que representan dimensiones sobre esos hechos (ejemplo: tiempo, sucursa
 Metodología elegida
 ------------------------------------------------------------------------
 
-La programación extrema o eXtreme Programming (XP) es un enfoque de la ingeniería del Sofware. Consiste en un conjunto de prácticas que a lo largo de los años han demostrado ser las mejores prácticas de desarrollo de software, llevadas al extremo, fundamentadas en un conjunto de valores.
+La programación extrema o eXtreme Programming (XP) es un enfoque de la
+ingeniería del Sofware. Consiste en un conjunto de prácticas que a lo
+largo de los años han demostrado ser las mejores prácticas de
+desarrollo de software, llevadas al extremo, fundamentadas en un
+conjunto de valores.
 
-Es la más destacada de los procesos ágiles de desarrollo de software. Al igual que éstos, la programación extrema se diferencia de las metodologías tradicionales principalmente en que pone más énfasis en la adaptabilidad que en la previsibilidad. 
+Es la más destacada de los procesos ágiles de desarrollo de
+software. Al igual que éstos, la programación extrema se diferencia de
+las metodologías tradicionales principalmente en que pone más énfasis
+en la adaptabilidad que en la previsibilidad.
 
-Los defensores de XP consideran que los cambios de requisitos sobre la marcha son un aspecto natural, inevitable e incluso deseable del desarrollo de proyectos. Creen que ser capaz de adaptarse a los cambios de requisitos en cualquier punto de la vida del proyecto es una aproximación mejor y más realista que intentar definir todos los requisitos al comienzo del proyecto e invertir esfuerzos después en controlar los cambios en los requisitos. Se puede considerar la programación extrema como la adopción de las mejores metodologías de desarrollo de acuerdo a lo que se pretende llevar a cabo con el proyecto, y aplicarlo de manera dinámica durante el ciclo de vida del software.
+Los defensores de XP consideran que los cambios de requisitos sobre la
+marcha son un aspecto natural, inevitable e incluso deseable del
+desarrollo de proyectos. Creen que ser capaz de adaptarse a los
+cambios de requisitos en cualquier punto de la vida del proyecto es
+una aproximación mejor y más realista que intentar definir todos los
+requisitos al comienzo del proyecto e invertir esfuerzos después en
+controlar los cambios en los requisitos. Se puede considerar la
+programación extrema como la adopción de las mejores metodologías de
+desarrollo de acuerdo a lo que se pretende llevar a cabo con el
+proyecto, y aplicarlo de manera dinámica durante el ciclo de vida del
+software.
 
 
 Valores
+-------
 
-XP promueve una serie de valores que sientan los pilares los pilares de la metodología. Estos valores son:
+XP promueve una serie de valores que sientan los pilares los pilares
+de la metodología. Estos valores son:
 
-:Comunicación: los desarrolladores necesitan intercambiar información e ideas sobre el proyecto, a los directivos, y a los clientes de forma honrada, confiable y fácil. La información debe fluir de manera continua y rápida.
+:Comunicación: los desarrolladores necesitan intercambiar información
+	       e ideas sobre el proyecto, a los directivos, y a los
+	       clientes de forma honrada, confiable y fácil. La
+	       información debe fluir de manera continua y rápida.
 
-:Sencillez: siempre que sea posible hay que elegir soluciones simples. Esto no significa estar equivocado o aplicar enfoques simplistas.
+:Sencillez: siempre que sea posible hay que elegir soluciones
+	    simples. Esto no significa estar equivocado o aplicar
+	    enfoques simplistas.
 
-:Retroalimentación: en todos los niveles las personas deberían obtener una retroalimentación muy rápida sobre lo que hacen. Los clientes, los directivos y los desarrolladores tienen que alcanzar una comprensión común de la meta del proyecto, y también acerca del estado actual del proyecto.
+:Retroalimentación: en todos los niveles las personas deberían obtener
+		    una retroalimentación muy rápida sobre lo que
+		    hacen. Los clientes, los directivos y los
+		    desarrolladores tienen que alcanzar una
+		    comprensión común de la meta del proyecto, y
+		    también acerca del estado actual del proyecto.
 
-:Valor: cada persona implicada en el proyecto debería de tener el valor (y el derecho) de expresar su valoración sobre el proyecto. Todos deberían de tener el valor de ser abiertos y dejar que todos examinasen e incluso modificasen su trabajo.
+:Valor: cada persona implicada en el proyecto debería de tener el
+	valor (y el derecho) de expresar su valoración sobre el
+	proyecto. Todos deberían de tener el valor de ser abiertos y
+	dejar que todos examinasen e incluso modificasen su trabajo.
 
 Prácticas
+---------
 
-XP esta compuesta por un conjunto de practicas que están estrechamente relacionadas y que aplicadas todas juntas son capaces de dar soporte a las debilidades de cada practica. Estas practicas no son nuevas, sino que han venido usando a lo largo de la corta historia del desarrollo de software, la novedad radica en la utilización de estas prácticas de forma conjunta y llevadas al extremo.
+XP esta compuesta por un conjunto de practicas que están estrechamente
+relacionadas y que aplicadas todas juntas son capaces de dar soporte a
+las debilidades de cada practica. Estas practicas no son nuevas, sino
+que han venido usando a lo largo de la corta historia del desarrollo
+de software, la novedad radica en la utilización de estas prácticas de
+forma conjunta y llevadas al extremo.
 
 Las prácticas fundamentales de la metodología son: 
 
-:Desarrollo iterativo e incremental: pequeñas mejoras, unas tras otras. 
+:Desarrollo iterativo e incremental: pequeñas mejoras, unas tras
+	    otras.	
 
-:Pruebas unitarias continuas: frecuentemente repetidas y automatizadas. Se aconseja escribir el código de la prueba antes de la codificación.
+:Pruebas unitarias continuas: frecuentemente repetidas y
+	 automatizadas. Se aconseja escribir el código de la prueba
+	 antes de la codificación.
 
-:Programación en Parejas: se recomienda que las tareas de desarrollo se lleven a cabo por dos personas en un mismo puesto. Se supone que la mayor calidad del código escrito de esta manera -el código es revisado y discutido mientras se escribe- es más importante que la posible pérdida de productividad inmediata. 
+:Programación en Parejas: se recomienda que las tareas de desarrollo
+	      se lleven a cabo por dos personas en un mismo puesto. Se
+	      supone que la mayor calidad del código escrito de esta
+	      manera -el código es revisado y discutido mientras se
+	      escribe- es más importante que la posible pérdida de
+	      productividad inmediata.
 
-:Frecuente interacción del equipo de programación con el cliente o usuario: Se recomienda que un representante del cliente trabaje junto al equipo de desarrollo.
+:Frecuente interacción del equipo de programación con el cliente o
+	   usuario: Se recomienda que un representante del cliente
+	   trabaje junto al equipo de desarrollo.
 
-:Corrección de todos los errores antes de añadir nueva funcionalidad: realizar entregas frecuentes. 
+:Corrección de todos los errores antes de añadir nueva funcionalidad:
+realizar entregas frecuentes.
 
-:Refactorizacion del código: es decir, reescribir ciertas partes del código para aumentar su legibilidad y mantenibilidad pero sin modificar su comportamiento. Las pruebas han de garantizar que en la refactorización no se ha introducido ningún fallo. 
+:Refactorizacion del código: es decir, reescribir ciertas partes del
+código para aumentar su legibilidad y mantenibilidad pero sin
+modificar su comportamiento. Las pruebas han de garantizar que en la
+refactorización no se ha introducido ningún fallo.
 
-:Propiedad del código compartida: en vez de dividir la responsabilidad en el desarrollo de cada módulo en grupos de trabajo distintos, este método promueve el que todo el personal pueda corregir y extender cualquier parte del proyecto. Las frecuentes pruebas de regresión garantizan que los posibles errores serán detectados. 
+:Propiedad del código compartida: en vez de dividir la responsabilidad
+en el desarrollo de cada módulo en grupos de trabajo distintos, este
+método promueve el que todo el personal pueda corregir y extender
+cualquier parte del proyecto. Las frecuentes pruebas de regresión
+garantizan que los posibles errores serán detectados.
 
-:Simplicidad en el código: es la mejor manera de que las cosas funcionen. Cuando todo funcione se podrá añadir funcionalidad si es necesario. La programación extrema apuesta que en más sencillo hacer algo simple y tener un poco de trabajo extra para cambiarlo si se requiere, que realizar algo complicado y quizás nunca utilizarlo.  
+:Simplicidad en el código: es la mejor manera de que las cosas
+funcionen. Cuando todo funcione se podrá añadir funcionalidad si es
+necesario. La programación extrema apuesta que en más sencillo hacer
+algo simple y tener un poco de trabajo extra para cambiarlo si se
+requiere, que realizar algo complicado y quizás nunca utilizarlo. 
 
 Etapas del proceso
+------------------
 
-Cabe aclarar que el orden en el que son citadas las etapas no indica el orden de seguimiento de estas sino una aproximación. En XP se trabaja pasando en forma constante de una etapa a la otra en la  medida de lo posible. Las etapas son las siguientes:
+Cabe aclarar que el orden en el que son citadas las etapas no indica
+el orden de seguimiento de estas sino una aproximación. En XP se
+trabaja pasando en forma constante de una etapa a la otra en la 
+medida de lo posible. Las etapas son las siguientes:
 
 Plantificación
+--------------
 
-Se escriben historias, cuya idea principal es describir un caso de uso en dos o tres líneas con terminología del cliente (de hecho, se supone que deben ser escritos por el mismo), de tal manera que se creen test de aceptación para la y permita hacer una estimación de tiempo de desarrollo del mismo. 
-Se crea un plan de lanzamiento que debe servir para crear un calendario que todos puedan cumplir y en cuyo desarrollo hayan participado todas las personas involucradas en el proyecto. Se usará como base las historias, participando el cliente en la elección de los que se desarrollarán, y según las estimaciones de tiempo de los mismos se crearán las iteraciones del proyecto. 
-El desarrollo se divide en iteraciones, cada una de las cuales comienza con un plan de iteración para el que se eligen las historias a desarrollar y las tareas de desarrollo. 
+Se escriben historias, cuya idea principal es describir un caso de uso
+en dos o tres líneas con terminología del cliente (de hecho, se supone
+que deben ser escritos por el mismo), de tal manera que se creen test
+de aceptación para la y permita hacer una estimación de tiempo de
+desarrollo del mismo.  Se crea un plan de lanzamiento que debe servir
+para crear un calendario que todos puedan cumplir y en cuyo desarrollo
+hayan participado todas las personas involucradas en el proyecto. Se
+usará como base las historias, participando el cliente en la elección
+de los que se desarrollarán, y según las estimaciones de tiempo de los
+mismos se crearán las iteraciones del proyecto.  El desarrollo se
+divide en iteraciones, cada una de las cuales comienza con un plan de
+iteración para el que se eligen las historias a desarrollar y las
+tareas de desarrollo.
 
 Diseño
+------
 
-Se eligen los diseños más simples que funcionen. 
-Se elige una metáfora del sistema para que el nombrado de clases, etcétera, siga una misma línea, facilitando la reutilización y la comprensión del código. 
-Se escriben tarjetas CRC (class-responsabilities-collaboration) de clase-responsabilidades-colaboración para cada objeto, que permiten abstraerse el pensamiento estructurado y que el equipo de desarrollo al completo participe en el diseño. 
-Se "refactoriza sin piedad". Básicamente, consiste en no tener miedo de cambiar un diseño o eliminar un código que ya no sirve, o al menos que ya no es claramente la mejor solución. 
+Se eligen los diseños más simples que funcionen.
+
+Se elige una metáfora del sistema para que el nombrado de clases,
+etcétera, siga una misma línea, facilitando la reutilización y la
+comprensión del código.
+
+Se escriben tarjetas CRC (class-responsabilities-collaboration) de
+clase-responsabilidades-colaboración para cada objeto, que permiten
+abstraerse el pensamiento estructurado y que el equipo de desarrollo
+al completo participe en el diseño.
+
+Se "refactoriza sin piedad". Básicamente, consiste en no tener miedo
+de cambiar un diseño o eliminar un código que ya no sirve, o al menos
+que ya no es claramente la mejor solución.
 
 Codificación
+------------
 
-El cliente está siempre disponible, a ser posible cara a cara. La idea es que forme parte del equipo de desarrollo, y esté presente en todas las fases de XP. La idea es usar el tiempo del cliente para estas tareas en vez de para que cree una detalladísima especificación de requisitos, y evitar la entrega de un producto peor que le hará perder tiempo. 
-El código se ajustará a unos estándares de codificación, asegurando la consistencia y facilitando la comprensión y refactorización del código. 
-Las pruebas unitarias se codifican antes que el código en sí, haciéndo que la codificación de este último sea más rápida, y que cuando se afronte la misma se tenga más claro qué objetivos tiene que cumplir lo que se va a codificar. 
-La programación del código se realizará en parejas, para aumentar la calidad del mismo.
-Se integra código y se lanza dicha integración de manera frecuente, evitando divergencias en el desarrollo y permitiendo que todo el mundo trabaje con la última versión del desarrollo. De esta manera, se evitará pasar grandes periodos de tiempo integrando el código al final del desarrollo, ya que las incompatibilidades habrán sido detectadas enseguida. 
-Se usa la propiedad colectiva del código, lo que se traduce en que cualquier programador puede cambiar cualquier parte del código. El objetivo es fomentar la contribución de ideas por parte de todo el equipo de desarrollo 
+El cliente está siempre disponible, a ser posible cara a cara. La idea
+es que forme parte del equipo de desarrollo, y esté presente en todas
+las fases de XP. La idea es usar el tiempo del cliente para estas
+tareas en vez de para que cree una detalladísima especificación de
+requisitos, y evitar la entrega de un producto peor que le hará perder
+tiempo.
+
+El código se ajustará a unos estándares de codificación, asegurando la
+consistencia y facilitando la comprensión y refactorización del
+código.  Las pruebas unitarias se codifican antes que el código en sí,
+haciéndo que la codificación de este último sea más rápida, y que
+cuando se afronte la misma se tenga más claro qué objetivos tiene que
+cumplir lo que se va a codificar.
+
+La programación del código se realizará en parejas, para aumentar la
+calidad del mismo.
+
+Se integra código y se lanza dicha integración de manera frecuente,
+evitando divergencias en el desarrollo y permitiendo que todo el mundo
+trabaje con la última versión del desarrollo. De esta manera, se
+evitará pasar grandes periodos de tiempo integrando el código al final
+del desarrollo, ya que las incompatibilidades habrán sido detectadas
+enseguida.
+
+Se usa la propiedad colectiva del código, lo que se traduce en que
+cualquier programador puede cambiar cualquier parte del código. El
+objetivo es fomentar la contribución de ideas por parte de todo el
+equipo de desarrollo
 
 Pruebas
+-------
 
-Todo el código debe tener pruebas unitarias, y debe pasarlas antes de ser lanzado. 
-Cuando se encuentra un error de codificación o bug, se desarrollan pruebas para evitar volver a caer en el mismo. 
-Se realizan pruebas de aceptación frecuentemente, publicando los resultados de las mismas. Estas pruebas son generadas a partir de las historias elegidas para la iteración, y son "pruebas de caja negra", en las que el cliente verifica el correcto funcionamiento de lo que se está probando. Cuando se pasa la prueba de aceptación, se considera que la correspondiente historia se ha completado. 
+
+Todo el código debe tener pruebas unitarias, y debe pasarlas antes de
+ser lanzado.
+
+Cuando se encuentra un error de codificación o bug, se desarrollan
+pruebas para evitar volver a caer en el mismo.
+
+Se realizan pruebas de aceptación frecuentemente, publicando los
+resultados de las mismas. Estas pruebas son generadas a partir de las
+historias elegidas para la iteración, y son "pruebas de caja negra",
+en las que el cliente verifica el correcto funcionamiento de lo que se
+está probando.
+
+Cuando se pasa la prueba de aceptación, se considera que la
+correspondiente historia se ha completado.
 
 Documentación
+-------------
 
-Al utilizar la metodología XP, el grupo de desarrollo no documenta de la misma manera que en las metodologías tradicionales. La documentación relevante en esta metodología es: aquella intrínseca del código como comentarios, estándares de codificación, las historias de usuarios, los casos de prueba, entre otros. 
-Por otra parte, la comunicación oral de manera informal es incentivada por esta metodología y la formalización por escrito de los procedimientos es mínima en comparación con las metodologías tradicionales. Realizaremos documentación de mantenimiento del sistema para futuras mejoras y expansiones.
+Al utilizar la metodología XP, el grupo de desarrollo no documenta de
+la misma manera que en las metodologías tradicionales. La
+documentación relevante en esta metodología es: aquella intrínseca del
+código como comentarios, estándares de codificación, las historias de
+usuarios, los casos de prueba, entre otros.
+
+Por otra parte, la comunicación oral de manera informal es incentivada
+por esta metodología y la formalización por escrito de los
+procedimientos es mínima en comparación con las metodologías
+tradicionales. Realizaremos documentación de mantenimiento del sistema
+para futuras mejoras y expansiones.
 
 ------------------------------------------------------------------------
 Motivación
