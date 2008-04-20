@@ -47,6 +47,8 @@ En el transcursos de los años en lo que funciona la empresa, esta ha ido acumul
 
 La empresa no tenia una manera sencilla y eficaz de analizar sus datos operacionales. No era posible realizar una comparacion de los datos en diferentes variables en un tiempo razonable que permita la toma de decisiones. Esto era un problema a la hora de decidir el tipo de compras en materia de autos, camiones y repuestos para alcanzar objetivos como ser maximizar las ganancias.
 
+Ricardo C. Bieler S.A. consta de un casa central y dos sucursales en la provincia. Las decisiones solo eran posibles desde el punto central por ser el unico que tenia acceso a toda la información de la empresa. Esto provocaba que el proceso de toma de decisiones estuviera centralizado en muy pocas personas y los aportes de gerentes de las sucursales fueran minimos. Por esta causa se hacia muy necesario tener la posibilidad de acceder a las funcionalidades del sistema desde cualquiera de estos puntos de decisión y asi agilizar los mecanismos decisionales.
+
 La lógica de almacenamiento de información empresarial en los últimos años ha sido analizada y desarrollada bajo distintas ópticas. Data Warehouse, propuesta por Bill Inmon y Ralph Kimball, entre otros, a finales de los '90 demostró ser una de las formas más destacadas de organizar, almacenar y visualizar la información crítica para ser llevada a los niveles de decisión estratégica de las organizaciones.
 Para la aplicación de esta técnica en la toma de decisiones es necesario un volumen significativo de datos sensibles (como la facturación).
 
@@ -57,6 +59,8 @@ Debido a las características particulares de la estructura de sistemas de infor
 ------------------------------------------------------------------------
 Objetivos y alcances
 ------------------------------------------------------------------------
+
+El sistema funcionará en las sucursales de Rafaela, Reconquista y casa central en Santa Fe de Ricardo C. Bieler S.A. y los decisores  podrán consultarlo desde donde deseen a través de Internet.
 
 El sistema permitirá la generación de informes semanales, alarmas y sugerencias en la toma de decisiones para los gerentes y dueños de la empresa, acerca de la totalidad de las unidades y repuestos comprados y vendidos en los últimos siete años.
 
