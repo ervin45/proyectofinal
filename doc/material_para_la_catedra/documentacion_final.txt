@@ -407,12 +407,9 @@ de consulta multidimensaional XMLA.
 
 Rápidamente lo encontramos rígido para realizar ciertas modificaciones
 y su interfaz de consulta multidimensional (XMLA estandar de facto
-realizado por Microsoft) resultó ser incompatible con las herraminetas
+realizado por Microsoft) resultó ser incompatible con las herramientas
 libres que utilizabamos.
 
-------------------------------------------------------------------------
-SVN
-------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
 Exportacion DBF
@@ -424,6 +421,42 @@ AJAX
 
 ------------------------------------------------------------------------
 Postgre
+------------------------------------------------------------------------
+
+========================================================================
+                              Herramientas
+========================================================================
+
+------------------------------------------------------------------------
+Subversion
+------------------------------------------------------------------------
+
+El principal objetivo de Subversion (conocido popularmente como SVN)
+es la administración de código fuente entre distintos
+programadores. Pueden estar separados geográficamente (o bien realizar
+cambios de forma asincróna) y mantener de manera simple un repositorio
+central y con metadatos relacionados al proceso de desarrollo.
+
+Se pueden restituir versiones anteriores del proyecto como también
+generar nuevas ramas de desarrollo, por ejemplo para experimentación
+de una funcionalidad en concreto.
+
+
+------------------------------------------------------------------------
+Wiki
+------------------------------------------------------------------------
+
+Las anotaciones del proyecto las realizamos con una herramientas web
+de filosofía Wiki, provista por Google Code[1]. Esto nos permitió
+realizar una base de conocimientos en hipertexto de manera sencilla y
+rápida.
+
+.. [1] http://code.google.com/p/proyectofinal
+
+
+
+------------------------------------------------------------------------
+ReStructured Text (RST)
 ------------------------------------------------------------------------
 
 ========================================================================
