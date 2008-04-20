@@ -13,13 +13,69 @@
 Temática
 ------------------------------------------------------------------------
 
+La Empresa Ricardo C. Bieler se dedica a la comercialización de vehículos
+(autos, camionetas y camiones), repuestos y servicios relacionados con el rubro
+automotor. Tiene la concesión de venta exclusiva de  Mercedes-Benz, Chrysler,
+Jeep y Dodge. La empresa cuenta con 60 empleados en diversas áreas, desde el
+salón comercial hasta un importante taller. Posee dos sucursales en Reconquista y
+Rafaela.
+
+La empresa Ricardo C. Bieler S.A. no posee, en la actualidad, un sistema de
+soporte de decisiones en lo que se refiere a la compra y venta de unidades
+(camiones, utilitarios y automóviles). En el caso de los repuestos, los
+movimientos de entrada y salida se basan en estimaciones por parte del personal
+actual con un soporte informático mínimo.
+
+Dentro de las competencias de un ingeniero en sistema se encuentran el diseño,
+análisis e implementación de un sistema de soporte de decisiones.
+
+El presente proyecto propone utilizar técnicas aprendidas en el transcurso de la
+carrera para diseñar un sistema que permita a los dueños y gerentes de la firma
+obtener un diagnóstico estratégico de su negocio.
+
+Los productos existentes que brindan una parte de este tipo de soluciones son:
+Agata Report, Jasper, Pentaho Reporting para reportes y Mondrian, Palo  para
+OLAP (On Line Analytical Processing). Como soporte de datos para el modelado
+dimensional, utilizan Data Warehouses sobre bases de datos como Oracle, MS-SQL
+Server, Postgre, MySQL, entre otros.
+
 ------------------------------------------------------------------------
 Problemática
 ------------------------------------------------------------------------
 
+En el transcursos de los años en lo que funciona la empresa, esta ha ido acumulando datos acerca de las operaciones que realiza para para poder devenvolverse en su ambito de negocio. Todos estos datos solo fueron acumulados en los sistemas internos que utiliza la empresa sin la posibilidad de realizar un analisis mas completo que permita la toma de decisiones en un nivel estrategico basado no solo en intuición del empresario sino tambien en datos cuantitativos y objetivos.
+
+La empresa no tenia una manera sencilla y eficaz de analizar sus datos operacionales. No era posible realizar una comparacion de los datos en diferentes variables en un tiempo razonable que permita la toma de decisiones. Esto era un problema a la hora de decidir el tipo de compras en materia de autos, camiones y repuestos para alcanzar objetivos como ser maximizar las ganancias.
+
+La lógica de almacenamiento de información empresarial en los últimos años ha sido analizada y desarrollada bajo distintas ópticas. Data Warehouse, propuesta por Bill Inmon y Ralph Kimball, entre otros, a finales de los '90 demostró ser una de las formas más destacadas de organizar, almacenar y visualizar la información crítica para ser llevada a los niveles de decisión estratégica de las organizaciones.
+Para la aplicación de esta técnica en la toma de decisiones es necesario un volumen significativo de datos sensibles (como la facturación).
+
+En nuestro caso, Ricardo C. Bieler S.A. nos facilitó las bases de datos de facturación de los últimos siete años, evitando la necesidad de comenzar la tediosa tarea de recolección de los mismos en otra empresa. Por otro lado el cliente tiene la imperiosa necesidad de herramientas de diagnóstico y ayuda en la toma de decisiones para mejorar el funcionamiento de su empresa, ya que en la actualidad no existe ningún sistema que le brinde esta funcionalidad en tiempo real.
+
+Debido a las características particulares de la estructura de sistemas de información de la empresa, es necesario realizar adaptaciones a medida para la generación de informes personalizados que sean de facil generación y consulta. Las herramientas comerciales del mercado no ofrecen la flexibilidad suficiente para esta tarea.
+
 ------------------------------------------------------------------------
 Objetivos y alcances
 ------------------------------------------------------------------------
+
+El sistema permitirá la generación de informes semanales, alarmas y sugerencias en la toma de decisiones para los gerentes y dueños de la empresa, acerca de la totalidad de las unidades y repuestos comprados y vendidos en los últimos siete años.
+
+* Diseñar el Data WareHouse. Se diseñarán las tablas de hechos y dimensiones que responderán a los informes.
+* Diseñar el ETL. Se desarrollara una herramienta que hará la extracción, transformación y carga de * información en el Data Warehouse.
+* Diseñar la arquitectura, esto implica relevar de requisitos no funcionales del sistema.
+* Gestionar informes de Compra y Venta de Unidades (camiones y autos)
+* Gestionar informes de Compra y Venta de Repuestos y accesorios
+* Gestionar informes de Stock de Unidades.
+* Gestionar informes de Stock de Repuestos.
+* Gestionar informes de control de comisiones de taller mecánico.
+* Gestionar informes comparativos de ventas entre las sucursales. La empresa tiene sucursales en Santa Fe, * Rafaela y Reconquista.
+* Gestionar informes comparativos de ventas de Mercedes Benz de Ricardo C. Bieler con las demás * concesionarias del país.
+* Gestionar Pronósticos de Ventas. El sistema permitirá realizar pronósticos de con distintas técnicas para * mejorar la toma de decisiones.
+* Permitir la gestión de alertas. El sistema debe permitir la definición de eventos importantes como vencimientos y encargarse de emitir el alerta correspondiente cuando este tiene lugar.
+* Gestionar informes de seguimiento de compra en relación a objetivos de compra establecidos por los proovedores de unidades, principalmente Mercedes Benz y Chrysler. 
+* Diseñar la red de información que le dará conectividad al sistema de información.
+* Emisión e impresión de reportes necesarios para la toma de decisiones.
+* Gestión de usuarios. El sistema permitirá a la empresa definir diferentes roles con determinados permisos.
 
 ------------------------------------------------------------------------
 Organización del documento
@@ -95,7 +151,8 @@ Python
 Python es un lenguaje de programación creado por Guido van Rossum en
 el año 1990[3].
 
-.. [3] http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
+.. [3]
+http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
 
 Es comparado habitualmente con TCL, Perl, Scheme, Java y Ruby. En la
 actualidad Python se desarrolla como un proyecto de código abierto,
