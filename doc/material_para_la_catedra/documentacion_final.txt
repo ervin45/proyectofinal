@@ -606,18 +606,16 @@ Subversion
 ------------------------------------------------------------------------
 
 El principal objetivo de Subversion (conocido popularmente como SVN)
-es la administración de código fuente entre distintos
-programadores. Pueden estar separados geográficamente (o bien realizar
-cambios de forma asincróna) y mantener de manera simple un repositorio
-central y con metadatos relacionados al proceso de desarrollo.
+es la administración de los cambios sobre los archivos de un proyecto.
+El equipo de desarrollo puede estar separados geográficamente (o bien
+realizar cambios de forma asincróna) y mantener de manera simple un
+repositorio central con metadatos relacionados con el proceso.
 
 Se pueden restituir versiones anteriores del proyecto como también
 generar nuevas ramas de desarrollo, por ejemplo para experimentación
-de una funcionalidad en concreto.
-------
-Subversion es un sistema de versionado concurrente como una evolución de CVS. Esta implementado bajo una arquitectura cliente/servidor. Un sistema de versionado basicamente gestiona los cambios sobre los archivos de un proyecto. 
+de una funcionalidad en concreto. Está implementado bajo una
+arquitectura cliente/servidor.
 
-Las dos operaciones más basicas de subversion son UPDATE y COMMIT. Con UPDATE se obtienen todos los cambios que otros desarrolladores hayan realizado y con COMMIT se agregan los cambios que un desarrolladore realiza al repositorio central. Hace posible que uno o mas desarrolladores puedan realizar cambios sobre una parte del proyecto teniendo la tranquilidad que cualquier conflicto que tuvieran con otro desarrollador será rapidadamente detectado. 
 
 ------------------------------------------------------------------------
 Wiki
