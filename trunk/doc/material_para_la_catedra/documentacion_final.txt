@@ -727,4 +727,117 @@ los usuarios.
                               Bibliografia
 ========================================================================
 
+---------
+Python
+--------
+
+Fecha: 2007-08-23 
+Titulo: Dive into python Autor: Mark Pilgrim
+URL:http://www.diveintopython.org/
+
+Titulo: Rapid Web Application with TurboGears?: Using Python to Create
+Ajax-Powered Sites Autores: Mark Ramm, Kevin Dangoor, Gigi Sayfan
+Editorial: Prentice Hall URL:
+
+Fecha: 2007-08-23 Titulo: "Dive Into Python", Capitulo 12 "SOAP Web
+Services" Autor: Copyright © 2000, 2001, 2002, 2003, 2004 Mark Pilgrim
+URL: http://www.diveintopython.org/soap_web_services/index.html
+
+Fecha: 2007-09-20 
+Titulo: XML for Analysis Specification version 1.1
+Autores: A.M. Kuchling <amk@amk.ca> 
+URL:http://www.amk.ca/talks/2006-02-07/
+
+Fecha: 2007-09-20 
+Titulo: Elements and Element Trees Autores:
+URL:http://effbot.org/zone/element.htm
+
+-----------------
+DataWarehouse
+-----------------
+
+-----------------
+AJAX
+-----------------
+
+----------------
+JavaScript
+----------------
+
+---------------
+CSS
+---------------
+
+------------
+Django
+------------
+Fecha: 2007-08-22
+Titulo: The Django Book
+URL: http://www.djangobook.com/
+
+Fecha: 2007-08-12
+Titulo: The web framework for perfectionists with deadlines
+URL: http://www.djangoproject.com/
+
+Fecha: 2008-03-15
+Titulo: Como correr Django en Apache
+URL: http://www.zoia.org/blog/2006/12/16/como-correr-django-y-python-usando-apache-y-fastcgi/
+
+Fecha: 2008-02-19
+Titulo: Modelo de datos de Django
+URL: http://tomascasquero.com/django/modelo-de-datos-de-django-i/
+
+-------
+XMLA
+-------
+
+Fecha: 2007-09-06 
+Titulo: XML for Analysis Specification version 1.1
+Autores: (c) 2002 Microsoft Corporation
+URL:http://dev.hyperion.com/downloads/XML_Analysis_11_spec2.pdf
+
+Fecha: 2007-09-20 
+Titulo: Especificacion de MDDataSets Autores: (c)
+2002 Microsoft Corporation
+URL:http://msdn2.microsoft.com/en-us/library/ms186704.aspx
+
+Fecha: 2007-08-23 Titulo: SQL Server TechCenter?, Execute Method(XMLA)
+Autor: © 2007 Microsoft Corporation.
+URL:http://technet.microsoft.com/en-us/library/ms186691.aspx
+
+Fecha: 2007-08-24
+Titulo: XMLA 1.1 'Execute'−requests − SOAP/XML
+namespace problems Autor: Marek Pikulski (fecha 2004-08-06)
+URL:http://www.tech-archive.net/pdf/Archive/Data/microsoft.public.data.xmlanalysis/2004-08/0015.pdf
+
+----------
+Postgres
+----------
+
+fecha: 2007-05-17
+Titulo: PostgreSQL or MySQL?
+URL: http://www-css.fnal.gov/dsg/external/freeware/pgsql-vs-mysql.html
+
+fecha: 2007-12-16 
+URL: http://www.guia-ubuntu.org/index.php?title=PostgreSQL
+
+fecha: 2008-02-13
+Titulo: PostgreSQL, Documentation Manual
+URL: http://www.postgresql.org/docs/8.3/static/index.html
+
+------------
+Pronostico
+------------
+
+Titulo: Operation Management Autor: (c) 1998 Roberta Russell, Bernard
+W. Taylor III. Ed. Prentice Hall
+
+Titulo: Pronósticos en los negocios Autor: (c) 1996 John E. Hanke,
+Arthur G. Reitsgh. Prentice Hall
+
+
+
+================================================================================
+                          Otros Recursos Utilizados
+================================================================================
 
