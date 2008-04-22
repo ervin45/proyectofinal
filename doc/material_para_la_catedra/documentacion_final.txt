@@ -467,11 +467,22 @@ anunció la llegada de la versión 3.0 para el 2008).
 XPWeb
 ------------------------------------------------------------------------
 
-Es una herramienta web para administrar proyectos que siguen la metodologia XP. Con esta herramienta es posible realizar la planificación, gestionar las metaforas, utilizar un calendario, imprimir reportes con estadisticas y exportar proyectos. Desarrollada en el lenguaje PHP y de libre uso y distribucion.
+Es una herramienta web para administrar proyectos que siguen la
+metodologia XP. Con esta herramienta es posible realizar la
+planificación, gestionar las metaforas, utilizar un calendario,
+imprimir reportes con estadisticas y exportar proyectos. Desarrollada
+en el lenguaje PHP y de libre uso y distribucion.
 
-Para la planificación permite representar iteraciones, historias de usuarios y tareas. Es posible introducir tiempos de estimación para la realización de las tareas e historias y en base a esto realiza estadisticas de cumplimientos de fechas límite y advierte en pantalla acerca de vencimientos proximos.
+Para la planificación permite representar iteraciones, historias de
+usuarios y tareas. Es posible introducir tiempos de estimación para la
+realización de las tareas e historias y en base a esto realiza
+estadisticas de cumplimientos de fechas límite y advierte en pantalla
+acerca de vencimientos proximos.
 
-Al ser una herramienta web es de muy facil instalación y publicación, gracias a ello es muy sencillo acceder a su contenido y edición por parte de todo el equipo implicado en el desarrollo y planificación del proyecto.
+Al ser una herramienta web es de muy facil instalación y publicación,
+gracias a ello es muy sencillo acceder a su contenido y edición por
+parte de todo el equipo implicado en el desarrollo y planificación del
+proyecto.
 
 ------------------------------------------------------------------------
 Turbo Gears
