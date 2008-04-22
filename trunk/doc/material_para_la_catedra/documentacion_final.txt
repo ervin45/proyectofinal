@@ -543,19 +543,36 @@ Nos decidimos por Django
 Mondrian
 ------------------------------------------------------------------------
 
-Mondrian es el servidor de cubos de la suite de Inteligencia de
-Negocios de Pentaho. Está escrito en Java y pretende emular un motor
-de consulta multidimensaional XMLA.
+Según su propia descripcion:
 
-Rápidamente lo encontramos rígido para realizar ciertas modificaciones
-y su interfaz de consulta multidimensional (XMLA estandar de facto
-realizado por Microsoft) resultó ser incompatible con las herramientas
-libres que utilizabamos.
+"Mondrian es un servidor OLAP escrito en Java. Permite analizar
+interactivamente conjuntos de datos de gran tamaño guardados en base
+de datos SQL sin escribir SQL."
+
+Mondrian es parte de la suite de Inteligencia de Negocios de Pentaho,
+y ofrece una interfaz XMLA para consultas multidimensional. Es el lenguaje
+de facto en el área, impuesto por SQL Server 2000 de Microsoft.
+
+Nuestra experiencia fue negativa con Mondrian, principalmente por
+la incompatibilidad de las herramientas libres disponibles y su
+implementación de XMLA. 
 
 
 ------------------------------------------------------------------------
-Exportacion DBF
+Exportacion XBase -> SQL
 ------------------------------------------------------------------------
+
+Los datos de la empresa estaban almacenados en datos XBase (conocidas
+popularmente por sus archivos .dbf), de acceso lento y sin integridad
+referencial.
+
+Inicialmente, el volumen de datos a trabajar era de 2.0 Gigabytes,
+distribuidos más de 1000 archivos. Esto requería de una opción más
+confiable y veloz, por lo que decidimos migrarlos utilizando
+dbf2mysql hacia un motor de base de datos relacional como es MySQL.
+
+Luego utilizamos SQL para extraer los datos y crear las bases de datos
+multidimensional
 
 ------------------------------------------------------------------------
 AJAX
