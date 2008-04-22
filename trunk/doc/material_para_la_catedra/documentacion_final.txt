@@ -676,6 +676,64 @@ ReStructured Text (RST)
 Introducción
 ------------------------------------------------------------------------
 
+En los primeros meses de este proyecto, la arquitectura inicial
+elegida, era la siguiente:
+
+[Grafico con mondrian como server de cubos]
+
+En la implemenación de esta arquitectura tuvimos dificultades en las
+instalación, parametrización y utilización del servidor OLAP (Mondrian).
+A continuación una resumida lista de problemas encontrados:
+
+* No poseiamos experiencia en la administración del servidor de
+  aplicaciones Tomcat.
+
+* Existían diferencias substanciales entre las distintas
+  instalaciones, sobre todo en el aspecto de seguridad dependiendo de
+  la distribución de GNU/Linux elegida.
+
+* La configuración de los cubos y los cubos virtuales eran realizadas
+  en un complejísimo archivo XML donde habitualmente teníamos
+  inconsistencias.
+
+* No poseíamos experiencia en el lenguaje de consulta MDX y a medida
+  que lo utilizábamos nos dábamos cuenta que la implementación en
+  Modrian es escasa y errónea en algunas características.
+
+* La implementación del protocolo XMLA (XML+SOAP) es incompatible con
+  las bibliotecas de SOAP de Python (SOAPy) y luego de hacer nuestro
+  propia implementación, las bibliotecas estándares XML no podían
+  procesar la salida de Mondrian (que coincide perfectamente con las
+  salidas de SQL server 2000 de Microsoft)
+
+Estos inconvenientes nos llevaron a evaluar la posibilidad de realizar
+nuestro propio servidor de cubos utilizando un soporte de base de
+datos relacional. Evaluamos el subconjunto de funcionalidades
+necesarias y posibles optimizaciones basadas en nuestra necesidad, y
+desarrollamos cubículo.
+
+------------------------------------------------------------------------
+Cubiculo
+------------------------------------------------------------------------
+
+La piedra fundamental de cubiculo es la descripción de un determinado
+informe a obtener. Los parámetros necesiarios son:
+
+:Hecho: es el conjunto de datos individuales y las columnas a
+	relacionarlas con las dimensiones.
+
+:Ejes: son dos dimensiones que posteriormente serán los ejes de la
+       tabla del informe
+
+:Restricciones: son ecuaciones a realizar sobre los niveles de las
+		dimensiones, tanto las elegidas como ejes como otras
+		que posee el hecho
+
+:Medidas: son los elementos individuales que podrán ser sumarizados (u
+	  otros tipos de agregación),
+
+:Funcion: es para el postprocesamiento del cubo
+
 ------------------------------------------------------------------------
 ETL
 ------------------------------------------------------------------------
