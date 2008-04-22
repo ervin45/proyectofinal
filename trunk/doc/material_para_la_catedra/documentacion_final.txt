@@ -454,7 +454,8 @@ Python
 Python es un lenguaje de programación creado por Guido van Rossum en
 el año 1990[3].
 
-.. [3] http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
+.. [3]
+http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
 
 Es comparado habitualmente con TCL, Perl, Scheme, Java y Ruby. En la
 actualidad Python se desarrolla como un proyecto de código abierto,
@@ -592,6 +593,26 @@ multidimensional
 AJAX
 ------------------------------------------------------------------------
 
+AJAX, acrónimo de Asynchronous JavaScript And XML (JavaScript
+asíncrono y XML), es una técnica de desarrollo web para crear
+aplicaciones interactivas. Actualmente es soportada por la mayoria de los
+navegadores web.
+
+Ajax no es una tecnología en sí mismo. En realidad, se trata de la
+unión de varias tecnologías que se desarrollan de forma autónoma y que
+se unen de formas nuevas y sorprendentes. Entre otras tecnologias que
+integran AJAX se encuentran JavaScript, XML y CSS.
+
+En las aplicaciones web tradicionales, las acciones del usuario en la
+página desencadenan llamadas al servidor. Una vez procesada la
+petición del usuario, el servidor devuelve una nueva página HTML al
+navegador del usuario. Mediante el uso de AJAX las aplicaciones se
+ejecutan en el cliente, es decir, en el navegador de los usuarios y
+mantiene comunicación asíncrona con el servidor en segundo plano. De
+esta forma es posible realizar cambios sobre la misma página sin
+necesidad de recargarla. Esto significa aumentar la interactividad,
+velocidad y usabilidad en la misma.
+
 ------------------------------------------------------------------------
 Postgre
 ------------------------------------------------------------------------
@@ -605,27 +626,31 @@ Subversion
 ------------------------------------------------------------------------
 
 El principal objetivo de Subversion (conocido popularmente como SVN)
-es la administración de los cambios sobre los archivos de un proyecto.
-El equipo de desarrollo puede estar separados geográficamente (o bien
-realizar cambios de forma asincróna) y mantener de manera simple un
-repositorio central con metadatos relacionados con el proceso.
+es la administración de código fuente entre distintos
+programadores. Pueden estar separados geográficamente (o bien realizar
+cambios de forma asincróna) y mantener de manera simple un repositorio
+central y con metadatos relacionados al proceso de desarrollo.
 
 Se pueden restituir versiones anteriores del proyecto como también
 generar nuevas ramas de desarrollo, por ejemplo para experimentación
-de una funcionalidad en concreto. Está implementado bajo una
-arquitectura cliente/servidor.
+de una funcionalidad en concreto.
+------
+Subversion es un sistema de versionado concurrente como una evolución de CVS. Esta implementado bajo una arquitectura cliente/servidor. Un sistema de versionado basicamente gestiona los cambios sobre los archivos de un proyecto. 
 
+Las dos operaciones más basicas de subversion son UPDATE y COMMIT. Con UPDATE se obtienen todos los cambios que otros desarrolladores hayan realizado y con COMMIT se agregan los cambios que un desarrolladore realiza al repositorio central. Hace posible que uno o mas desarrolladores puedan realizar cambios sobre una parte del proyecto teniendo la tranquilidad que cualquier conflicto que tuvieran con otro desarrollador será rapidadamente detectado. 
 
 ------------------------------------------------------------------------
 Wiki
 ------------------------------------------------------------------------
 
 Las anotaciones del proyecto las realizamos con una herramientas web
-de filosofía Wiki, provista por Google Code[5]. Esto nos permitió
+de filosofía Wiki, provista por Google Code[1]. Esto nos permitió
 realizar una base de conocimientos en hipertexto de manera sencilla y
 rápida.
 
-.. [5] http://code.google.com/p/proyectofinal
+.. [1] http://code.google.com/p/proyectofinal
+
+
 
 ------------------------------------------------------------------------
 ReStructured Text (RST)
@@ -674,6 +699,17 @@ Codigo de cubiculo
 ------------------------------------------------------------------------
 Licencia GPL
 ------------------------------------------------------------------------
+
+La licencia pública general de GNU o mas conocida por su nombre en
+inglés GNU General Public License o simplemente su acrónimo del inglés
+GNU GPL. 
+
+Es una licencia creada por la Free Software Foundation a mediados de
+los 80, y está orientada principalmente a proteger la libre
+distribución, modificación y uso de software. Su propósito es declarar
+que el software cubierto por esta licencia es software libre y
+protegerlo de intentos de apropiación que restrinjan esas libertadesa
+los usuarios.
 
 ========================================================================
                               Bibliografia
