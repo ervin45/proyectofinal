@@ -457,7 +457,7 @@ el año 1990[3].
 .. [3]
 http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
 
-Es comparado habitualmente con TCL, Perl, Scheme, Java y Ruby. En la
+Es comparado habitualmente con TCL, Perl, Scheme, Java y Ruby. En la6500
 actualidad Python se desarrolla como un proyecto de código abierto,
 administrado por la Python Software Foundation. La última versión
 estable del lenguaje es actualmente la 2.5.1 (18 de abril de 2007)(Se
@@ -617,6 +617,23 @@ velocidad y usabilidad en la misma.
 Postgre
 ------------------------------------------------------------------------
 
+PostgreSQL es un Sistema de Gestión de Bases de Datos
+Objeto-Relacionales (ORDBMS) que ha sido desarrollado de varias formas
+desde 1977. Comenzó como un proyecto denominado Ingres en la
+Universidad Berkeley de California. Ingres fue más tarde desarrollado
+comercialmente por la Relational Technologies/Ingres Corporation.
+
+En 1986 otro equipo dirigido por Michael Stonebraker de Berkeley
+continuó el desarrollo del código de Ingres para crear un sistema de
+bases de datos objeto-relacionales llamado Postgres. En 1996, debido a
+un nuevo esfuerzo de código abierto y a la incrementada funcionalidad
+del software, Postgres fue renombrado a PostgreSQL, tras un breve
+periplo como Postgres95. El proyecto PostgreSQL sigue actualmente un
+activo proceso de desarrollo a nivel mundial gracias a un equipo de
+desarrolladores y contribuidores de código abierto.
+
+
+
 ========================================================================
                               Herramientas
 ========================================================================
@@ -634,10 +651,6 @@ central y con metadatos relacionados al proceso de desarrollo.
 Se pueden restituir versiones anteriores del proyecto como también
 generar nuevas ramas de desarrollo, por ejemplo para experimentación
 de una funcionalidad en concreto.
-------
-Subversion es un sistema de versionado concurrente como una evolución de CVS. Esta implementado bajo una arquitectura cliente/servidor. Un sistema de versionado basicamente gestiona los cambios sobre los archivos de un proyecto. 
-
-Las dos operaciones más basicas de subversion son UPDATE y COMMIT. Con UPDATE se obtienen todos los cambios que otros desarrolladores hayan realizado y con COMMIT se agregan los cambios que un desarrolladore realiza al repositorio central. Hace posible que uno o mas desarrolladores puedan realizar cambios sobre una parte del proyecto teniendo la tranquilidad que cualquier conflicto que tuvieran con otro desarrollador será rapidadamente detectado. 
 
 ------------------------------------------------------------------------
 Wiki
