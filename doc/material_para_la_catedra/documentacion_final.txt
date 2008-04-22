@@ -193,14 +193,12 @@ Terminología utilizada
       necesarios, realizar un procesamientos o transformacion de estos
       y almacenarlos o cargarlos en la estructura del Data Warehouse
 
-
 :Data Mining: proceso que consiste en la extracción de conocimiento
       procesable, implícito en las bases de datos. Es decir lograr
       sacar conclusiones utiles a partir de un conjunto de datos no
       orientado a estas.
 
 :XMLA: XML ..for analysis
-
 
 ------------------------------------------------------------------------
 Metodología elegida
@@ -229,12 +227,13 @@ desarrollo de acuerdo a lo que se pretende llevar a cabo con el
 proyecto, y aplicarlo de manera dinámica durante el ciclo de vida del
 software.
 
-
 Valores
 -------
 
+
 XP promueve una serie de valores que sientan los pilares los pilares
 de la metodología. Estos valores son:
+
 
 :Comunicación: los desarrolladores necesitan intercambiar información
 	       e ideas sobre el proyecto, a los directivos, y a los
@@ -301,6 +300,7 @@ método promueve el que todo el personal pueda corregir y extender
 cualquier parte del proyecto. Las frecuentes pruebas de regresión
 garantizan que los posibles errores serán detectados.
 
+
 :Simplicidad en el código: es la mejor manera de que las cosas
 funcionen. Cuando todo funcione se podrá añadir funcionalidad si es
 necesario. La programación extrema apuesta que en más sencillo hacer
@@ -334,6 +334,7 @@ tareas de desarrollo.
 
 Diseño
 ------
+
 
 Se eligen los diseños más simples que funcionen.
 
@@ -379,7 +380,6 @@ equipo de desarrollo
 
 Pruebas
 -------
-
 
 Todo el código debe tener pruebas unitarias, y debe pasarlas antes de
 ser lanzado.
@@ -454,7 +454,8 @@ Python
 Python es un lenguaje de programación creado por Guido van Rossum en
 el año 1990[3].
 
-.. [3] http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
+.. [3]
+http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
 
 Es comparado habitualmente con TCL, Perl, Scheme, Java y Ruby. En la
 actualidad Python se desarrolla como un proyecto de código abierto,
@@ -465,6 +466,12 @@ anunció la llegada de la versión 3.0 para el 2008).
 ------------------------------------------------------------------------
 XPWeb
 ------------------------------------------------------------------------
+
+Es una herramienta web para administrar proyectos que siguen la metodologia XP. Con esta herramienta es posible realizar la planificación, gestionar las metaforas, utilizar un calendario, imprimir reportes con estadisticas y exportar proyectos. Desarrollada en el lenguaje PHP y de libre uso y distribucion.
+
+Para la planificación permite representar iteraciones, historias de usuarios y tareas. Es posible introducir tiempos de estimación para la realización de las tareas e historias y en base a esto realiza estadisticas de cumplimientos de fechas límite y advierte en pantalla acerca de vencimientos proximos.
+
+Al ser una herramienta web es de muy facil instalación y publicación, gracias a ello es muy sencillo acceder a su contenido y edición por parte de todo el equipo implicado en el desarrollo y planificación del proyecto.
 
 ------------------------------------------------------------------------
 Turbo Gears
@@ -496,7 +503,6 @@ algunas debilidades como por ejemplo:
   manera esperada.
 
 * La documentación del proyecto estaba desactualizada e incompleta.
-
 
 ------------------------------------------------------------------------
 Django
@@ -531,7 +537,6 @@ Turbo Gear (pros-contras)
 
 * malisimo
 
-
 Django (pros-contras)
 --------------------------------
 
@@ -556,7 +561,6 @@ de facto en el área, impuesto por SQL Server 2000 de Microsoft.
 Nuestra experiencia fue negativa con Mondrian, principalmente por
 la incompatibilidad de las herramientas libres disponibles y su
 implementación de XMLA. 
-
 
 ------------------------------------------------------------------------
 Exportacion XBase -> SQL
@@ -599,7 +603,10 @@ central y con metadatos relacionados al proceso de desarrollo.
 Se pueden restituir versiones anteriores del proyecto como también
 generar nuevas ramas de desarrollo, por ejemplo para experimentación
 de una funcionalidad en concreto.
+------
+Subversion es un sistema de versionado concurrente como una evolución de CVS. Esta implementado bajo una arquitectura cliente/servidor. Un sistema de versionado basicamente gestiona los cambios sobre los archivos de un proyecto. 
 
+Las dos operaciones más basicas de subversion son UPDATE y COMMIT. Con UPDATE se obtienen todos los cambios que otros desarrolladores hayan realizado y con COMMIT se agregan los cambios que un desarrolladore realiza al repositorio central. Hace posible que uno o mas desarrolladores puedan realizar cambios sobre una parte del proyecto teniendo la tranquilidad que cualquier conflicto que tuvieran con otro desarrollador será rapidadamente detectado. 
 
 ------------------------------------------------------------------------
 Wiki
