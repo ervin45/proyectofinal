@@ -454,8 +454,7 @@ Python
 Python es un lenguaje de programación creado por Guido van Rossum en
 el año 1990[3].
 
-.. [3]
-http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
+.. [3] http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
 
 Es comparado habitualmente con TCL, Perl, Scheme, Java y Ruby. En la6500
 actualidad Python se desarrolla como un proyecto de código abierto,
@@ -657,11 +656,11 @@ Wiki
 ------------------------------------------------------------------------
 
 Las anotaciones del proyecto las realizamos con una herramientas web
-de filosofía Wiki, provista por Google Code[1]. Esto nos permitió
+de filosofía Wiki, provista por Google Code[4]. Esto nos permitió
 realizar una base de conocimientos en hipertexto de manera sencilla y
 rápida.
 
-.. [1] http://code.google.com/p/proyectofinal
+.. [4] http://code.google.com/p/proyectofinal
 
 
 
