@@ -163,9 +163,6 @@ Organización del documento
 
 
 
-========================================================================
-                             Desarrollo
-========================================================================
 
 ------------------------------------------------------------------------
 Terminología utilizada
@@ -631,6 +628,12 @@ periplo como Postgres95. El proyecto PostgreSQL sigue actualmente un
 activo proceso de desarrollo a nivel mundial gracias a un equipo de
 desarrolladores y contribuidores de código abierto.
 
+========================================================================
+                             Desarrollo
+========================================================================
+
+.. En este capitulo explicamos las elecciones de diseño, el transcurso
+   de la implementacion etc. etc
 
 
 ========================================================================
