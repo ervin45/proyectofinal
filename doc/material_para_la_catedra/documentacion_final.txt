@@ -690,6 +690,44 @@ procedimientos es mínima en comparación con las metodologías
 tradicionales. Realizaremos documentación de mantenimiento del sistema
 para futuras mejoras y expansiones.
 
+-----------------------------------------------------------------------
+Integración con Subversion (SVN)
+-----------------------------------------------------------------------
+
+A continuación se explicará brevemente la forma en la que se han ido
+integrando los cambio a lo largo del proyecto con la utilización de la
+herramienta SVN.
+
+Ya sabemos que la metodologia XP tiene como una de sus prácticas la
+integración del codigo fuente u otro tipo de archivos que sean
+modificados por uno o mas desarrolladores, pero no es exclusivo de XP
+sino que puede ser aprovechada por cualquier metodologia estandar o
+híbrida. Para este propósito se utilizó SVN.
+
+SVN es un herramienta para el control de versiones de
+archivos. Permite sacar fotografias del proyecto en cualquier momento
+del desarrollo, volver a cualquiera de esos puntos, mesclar los
+cambios realizados por mas de un desarrollador sobre un archivo y
+resolver conflictos. Su arquitectura es cliente/servidor. En el
+servidor se encuentra el repositorio de datos que es donde se
+almacenarán todas las versiones y en cada uno de los clientes habrá
+una copia de trabajo que estará sincronizada con la del servidor.
+
+Lo primero que hay que hacer es crear una copia de trabajo en la
+maquina clientemediante una operación de CHECK OUT. El ciclo de
+trabajo consiste en actualizar, realizar cambios, enviar cambios. La
+actualización se realiza con la operación UPDATE para obtener los
+cambios nuevos en el repositorio. Luego se realizan cambios en la
+copia local, entre los mas importantes que se pueden hacer sobre un
+archivo estan: modificar su contenido, marcarlo para agregar o
+marcarlo para borrar. Por ultimo todos estos cambios que se hicieron
+sobre uno o mas archivos deben ser sincronizados mediante la operación
+COMMIT. Tanto en el uso de UPDATE como de COMMIT puede surgir lo que
+se conoce como un conflicto. Estos conflictos se deben a que mas de un
+desarrollador modifico la misma para de un archivo sin haber notado
+los cambios que realizo el otro, pero gracias a SVN es bastante
+sencillo de resolver y continuar asi un desarrollo consistente.
+
 ------------------------------------------------------------------------
 Estandares de codificación adoptados
 ------------------------------------------------------------------------
