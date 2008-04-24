@@ -202,13 +202,6 @@ Terminología utilizada
 Data Warehouse
 -----------------------------------------------------------------------
 
-BIBLIOGRAFIA:
-
-* http://www.monografias.com/trabajos17/data-warehouse/data-warehouse.shtml
-* http://en.wikipedia.org/wiki/Data_warehouse
-* http://www.frsf.utn.edu.ar/matero/visitante/index.php?id_catedra=70&ver=novedades2.php# (PAGINA DE SGII)
-
-
 Definición
 -------------------
 
@@ -415,30 +408,33 @@ Las prácticas fundamentales de la metodología son:
 	      escribe- es más importante que la posible pérdida de
 	      productividad inmediata.
 
-:Frecuente interacción del equipo de programación con el cliente o
-	   usuario: Se recomienda que un representante del cliente
+:Frecuente interacción: del equipo de programación con el cliente o
+	   usuario Se recomienda que un representante del cliente
 	   trabaje junto al equipo de desarrollo.
 
 :Corrección de todos los errores antes de añadir nueva funcionalidad:
-realizar entregas frecuentes.
+	    realizar entregas frecuentes.
 
 :Refactorizacion del código: es decir, reescribir ciertas partes del
-código para aumentar su legibilidad y mantenibilidad pero sin
-modificar su comportamiento. Las pruebas han de garantizar que en la
-refactorización no se ha introducido ningún fallo.
+		 código para aumentar su legibilidad y mantenibilidad
+		 pero sin modificar su comportamiento. Las pruebas han
+		 de garantizar que en la refactorización no se ha
+		 introducido ningún fallo.
 
 :Propiedad del código compartida: en vez de dividir la responsabilidad
-en el desarrollo de cada módulo en grupos de trabajo distintos, este
-método promueve el que todo el personal pueda corregir y extender
-cualquier parte del proyecto. Las frecuentes pruebas de regresión
-garantizan que los posibles errores serán detectados.
+	   en el desarrollo de cada módulo en grupos de trabajo
+	   distintos, este método promueve el que todo el personal
+	   pueda corregir y extender cualquier parte del proyecto. Las
+	   frecuentes pruebas de regresión garantizan que los posibles
+	   errores serán detectados.
 
 
 :Simplicidad en el código: es la mejor manera de que las cosas
-funcionen. Cuando todo funcione se podrá añadir funcionalidad si es
-necesario. La programación extrema apuesta que en más sencillo hacer
-algo simple y tener un poco de trabajo extra para cambiarlo si se
-requiere, que realizar algo complicado y quizás nunca utilizarlo.
+	     funcionen. Cuando todo funcione se podrá añadir
+	     funcionalidad si es necesario. La programación extrema
+	     apuesta que en más sencillo hacer algo simple y tener un
+	     poco de trabajo extra para cambiarlo si se requiere, que
+	     realizar algo complicado y quizás nunca utilizarlo.
 
 Etapas del proceso
 --------------------
@@ -559,6 +555,17 @@ de desarrollo:
 ------------------------------------------------------------------------
 Motivación
 ------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Estructura de numeracion de repuestos
+------------------------------------------------------------------------
+
+Mercedez Benz posee un sistema de identificacion de partes muy particular.
+
+Detallamos parte los componentes en el numero identificacatorio:
+
+[Graficos que nos dio Gustavo]
 
 ========================================================================
                         Tecnología Investigada
@@ -914,6 +921,16 @@ Codigo de cubiculo
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
+Guias de instalacion de componentes
+------------------------------------------------------------------------
+
+Django
+------
+
+Postgre
+-------
+
+------------------------------------------------------------------------
 Licencia GPL
 ------------------------------------------------------------------------
 
@@ -928,177 +945,131 @@ que el software cubierto por esta licencia es software libre y
 protegerlo de intentos de apropiación que restrinjan esas libertadesa
 los usuarios.
 
-========================================================================
-                              Bibliografia
-========================================================================
-
----------
-Python
----------
-
-Fecha: 2007-08-23 
-
-Título: Dive into python Autor: Mark Pilgrim
-
-URL: http://www.diveintopython.org/
-
-
-
-Título: Rapid Web Application with TurboGears?: Using Python to Create
-Ajax-Powered Sites Autores: Mark Ramm, Kevin Dangoor, Gigi Sayfan
-
-Editorial: Prentice Hall
-
-
-
-Fecha: 2007-08-23 
-
-Título: "Dive Into Python", Capitulo 12 "SOAP Web Services" Autor:
-Copyright © 2000, 2001, 2002, 2003, 2004 Mark Pilgrim
-
-URL: http://www.diveintopython.org/soap_web_services/index.html
-
-
-
-Fecha: 2007-09-20 
-
-Título: XML for Analysis Specification version 1.1
-
-Autores: A.M. Kuchling <amk@amk.ca> 
-
-URL: http://www.amk.ca/talks/2006-02-07/
-
-
-
-Fecha: 2007-09-20 
-
-Título: Elements and Element Trees Autores:
-
-URL: http://effbot.org/zone/element.htm
-
-
------------------
-DataWarehouse
------------------
-
------------------
-AJAX
------------------
-
-----------------
-JavaScript
-----------------
-
----------------
-CSS
----------------
-
-------------
-Django
-------------
-
-Fecha: 2007-08-22
-
-Título: The Django Book
-
-URL: http://www.djangobook.com/
-
-
-Fecha: 2007-08-12
-
-Título: The web framework for perfectionists with deadlines
-
-URL: http://www.djangoproject.com/
-
-
-Fecha: 2008-03-15
-
-Título: Como correr Django en Apache
-
-URL: http://www.zoia.org/blog/2006/12/16/como-correr-django-y-python-usando-apache-y-fastcgi/
-
-
-Fecha: 2008-02-19
-
-Título: Modelo de datos de Django
-
-URL: http://tomascasquero.com/django/modelo-de-datos-de-django-i/
-
--------
-XMLA
--------
-
-Fecha: 2007-09-06 
-
-Título: XML for Analysis Specification version 1.1
-
-Autores: © 2002 Microsoft Corporation
-
-URL: http://dev.hyperion.com/downloads/XML_Analysis_11_spec2.pdf
-
-
-Fecha: 2007-09-20 
-
-Título: Especificacion de MDDataSets
-
-Autores: © 2002 Microsoft Corporation
-
-URL: http://msdn2.microsoft.com/en-us/library/ms186704.aspx
-
-
-Fecha: 2007-08-23 Título: SQL Server TechCenter, Execute Method(XMLA)
-
-Autor: © 2007 Microsoft Corporation.
-
-URL: http://technet.microsoft.com/en-us/library/ms186691.aspx
-
-
-Fecha: 2007-08-24
-
-Título: XMLA 1.1 'Execute'-requests - SOAP/XML namespace problems
-
-Autor: Marek Pikulski (fecha 2004-08-06)
-
-URL: http://www.tech-archive.net/pdf/Archive/Data/microsoft.public.data.xmlanalysis/2004-08/0015.pdf
-
-----------
-Postgres
-----------
-
-Fecha: 2007-05-17
-
-Título: PostgreSQL or MySQL?
-
-URL: http://www-css.fnal.gov/dsg/external/freeware/pgsql-vs-mysql.html
-
-
-Fecha: 2007-12-16 
-
-URL: http://www.guia-ubuntu.org/index.php?title=PostgreSQL
-
-
-Fecha: 2008-02-13
-
-Título: PostgreSQL, Documentation Manual
-
-URL: http://www.postgresql.org/docs/8.3/static/index.html
-
-------------
-Pronostico
-------------
-
-Título: Operation Management
-
-Autor: © 1998 Roberta Russell, Bernard W. Taylor III. Ed. Prentice
-Hall
-
-Título: Pronósticos en los negocios 
-
-Autor: © 1996 John E. Hanke, Arthur G. Reitsgh. Prentice Hall
-
-
-
-================================================================================
-                          Otros Recursos Utilizados
-================================================================================
+.. raw:: latex
+
+  \begin{thebibliography}{90}
+ 
+  \bibitem{lamport94}
+    Leslie Lamport,
+    \emph{\LaTeX: A Document Preparation System}.
+    Addison Wesley, Massachusetts,
+    2nd Edition,
+    1994.
+   
+  \bibitem{pilgrim07}
+    Mark Pilgrim,
+    \emph{Dive into python},
+    http://www.diveintopython.org,
+    2004
+
+  \bibitem{ramm}
+    Mark Ramm, Kevin Dangoor, Gigi Sayfan,
+    \emph{Rapid Web Application with TurboGears;
+    Using Python to Create Ajax-Powered Sites},
+    Prentice Hall,
+    1ra Edicion,
+    2005
+
+  \bibitem{amk}
+    A. M. Kuchling,
+    \emph{XML for Analysis Specification version 1.1},
+    http://www.amk.ca/talks/2006-02-07,
+    2006
+
+  \bibitem{lundh}
+    Fredrik Lundh,
+    \emph{Elements and Element Trees},
+    http://effbot.org/zone/element.htm
+    2007
+
+  \bibitem{dbook}
+    Adrian Holovaty, Jacob Kaplan-Moss,
+    \emph{The definitive guide to Django}
+    Apress,
+    1ra Edicion,
+    2007
+
+  \bibitem{django}
+    Adrian Holovaty, Jacob Kaplan-Moss,
+    \emph{The web framework for perfectionists with deadlines},
+    http://www.djangoproject.com,
+    2008
+
+  \bibitem{apache}
+    Roberto Zoia,
+    \emph{Como correr Django en Apache},
+    http://tinyurl.com/5w4gda,
+    2006
+
+  \bibitem{modelo}
+    Tomás Casquero,
+    \emph{Modelo de datos de Django},
+    http://tinyurl.com/5nncvz,
+    2008
+
+  \bibitem{mddatasets}
+    Microsoft Corporation,
+    \emph{Especificacion de MDDataSets},
+    http://msdn2.microsoft.com/en-us/library/ms186704.aspx,
+    2002
+
+  \bibitem{execute}
+    Microsoft Corporation,
+    \emph{SQL Server TechCenter, Execute Method(XMLA)},
+    http://technet.microsoft.com/en-us/library/ms186691.aspx,
+    2007
+
+  \bibitem{soapxml}
+    Marek Pikulski,
+    \emph{XMLA 1.1 'Execute'-requests - SOAP/XML namespace problems}
+    http://tinyurl.com/5vz3wn,
+    2004
+
+  \bibitem{psqldoc}
+    The PostgreSQL Global Development Group,
+    \emph{PostgreSQL, Documentation}
+    http://www.postgresql.org/docs/8.3/static/index.html,
+    2008
+
+  \bibitem{guiaubuntu}
+    \emph{Guia Ubuntu, sección PostgreSQL}
+    http://www.guia-ubuntu.org/index.php?title=PostgreSQL,
+    2007
+
+  \bibitem{psqlvsmysql}
+    Mark Kaletka, Irwin Gaines,
+    \emph{PostgreSQL or MySQL?}
+    http://www-css.fnal.gov/dsg/external/freeware/pgsql-vs-mysql.html,
+    2005
+
+  \bibitem{wikidwh}
+    Wikipedia, la enciclopedia libre,
+    \emph{Data Warehouse},
+    http://en.wikipedia.org/wiki/Data\_warehouse,
+    2008
+
+  \bibitem{gutierrez}
+    Damián Gutiérrez Echeverría, Universidad Iberoamericana
+    \emph{Data Warehouse}
+    http://tinyurl.com/64nxxf,
+
+  \bibitem{catedra}
+    Catedra de Sistemas de Gestion II,
+    \emph{Apuntes de la catedra},
+    http://tinyurl.com/6m58ta
+    2007
+
+  \bibitem{russell}
+    Roberta Russell, Bernard W. Taylor III,
+    \emph{Operation Management},
+    Ed. Prentice Hall,
+    1998
+
+  \bibitem{hanke}
+    John E. Hanke, Arthur G. Reitsgh,
+    \emph{Pronósticos en los negocios},
+    Prentice Hall,
+    1996
+    
+  \end{thebibliography}
 
