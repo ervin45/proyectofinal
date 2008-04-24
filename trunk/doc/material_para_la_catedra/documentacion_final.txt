@@ -325,6 +325,47 @@ Elementos que integran un Data Warehouse
 :Monitorización: monitorea los datos en las fuentes e informa al ETL
 		 los cambios de interes para el datawarehouse
 
+------------------------------------------------------------------------
+OLAP
+------------------------------------------------------------------------
+
+OLAP es el acrónimo en inglés de procesamiento analítico en línea
+(On-Line Analytical Processing). Es una solución utilizada en el campo
+de la llamada Inteligencia empresarial (o Business Intelligence) cuyo
+objetivo es agilizar la consulta de grandes cantidades de datos. Para
+ello utiliza estructuras multidimensionales (o Cubos OLAP) que
+contienen datos resumidos de grandes Bases de Datos o Sistemas
+Transaccionales (OLTP). Se usa en informes de negocios de ventas,
+marketing, informes de dirección, minería de datos y áreas similares.
+
+La razón de usar OLAP para las consultas es la velocidad de
+respuesta. Una base de datos relacional almacena entidades en tablas
+discretas si han sido normalizadas. Esta estructura es buena en un
+sistema OLTP pero para las complejas consultas multitabla es
+relativamente lenta. Un modelo mejor para búsquedas, aunque peor desde
+el punto de vista operativo, es una base de datos multidimensional.
+Éstas pueden verse como bases de datos de una sola tabla, su
+peculiaridad es que por cada dimensión tienen un campo (o columna), y
+otro campo por cada métrica o hecho, es decir estas tablas almacenan
+registros cuyos campos son de la forma:
+
+.. raw:: latex
+
+   $$ (d_1,d_2,d_3,...,f_1,f_2,f_3,...) $$
+
+Donde los campos 
+
+.. raw:: latex
+
+   $ d_i $
+
+hacen referencia a las dimensiones de la tabla, y los campos 
+
+.. raw:: latex
+
+   $ f_i $
+
+a las métricas o hechos que se quiere almacenar, estudiar o analizar.
 
 ------------------------------------------------------------------------
 Metodología elegida
