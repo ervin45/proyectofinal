@@ -367,6 +367,115 @@ hacen referencia a las dimensiones de la tabla, y los campos
 
 a las métricas o hechos que se quiere almacenar, estudiar o analizar.
 
+
+Cubos OLAP
+-----------
+
+Nos referimos a cubos OLAP cuando hablamos de bases de datos
+multidimensionales, en las cuales el almacenamiento físico de los
+datos se realiza en vectores multidimensionales. Los cubos OLAP se
+pueden considerar como una ampliación de las dos dimensiones de una
+hoja de cálculo. Por ejemplo, una empresa podría analizar algunos
+datos financieros por producto, por período de tiempo, por ciudad, por
+tipo de ingresos y de gastos, y mediante la comparación de los datos
+reales con un presupuesto. Estos parámetros en función de los cuales
+se analizan los datos se conocen como dimensiones. Para acceder a los
+datos sólo es necesario indexarlos a partir de los valores de las
+dimensiones o ejes.
+
+El almacenar físicamente los datos de esta forma tiene sus pros y sus
+contras. Por ejemplo, en estas bases de datos las consultas de
+selección son muy rápidas (de hecho, casi en tiempo real). Pero uno de
+los problemas más grandes de esta forma de almacenamiento es que una
+vez poblada la base de datos ésta no puede recibir cambios en su
+estructura. Para ello sería necesario rediseñar el cubo.
+
+En un sistema OLAP puede haber más de tres dimensiones, por lo que a
+los cubos OLAP también reciben el nombre de hipercubos. Las
+herramientas comerciales OLAP tienen diferentes métodos de creación y
+vinculación de estos cubos o hipercubos
+
+Dimensiones y jerarquías
+------------------------
+
+Cada una de las dimensiones de un cubo OLAP puede resumirse mediante
+una jerarquía. Por ejemplo si se considera una escala (o dimensión)
+temporal "Mayo de 2005" se puede incluir en "Segundo Trimestre de
+2005", que a su vez se incluye en "Año 2005". De igual manera, otra
+dimensión de un cubo que refleje una situación geográfica, las
+ciudades se pueden incluir en regiones, países o regiones mundiales;
+los productos podrían clasificarse por categorías, y las partidas de
+gastos podrían agruparse en tipos de gastos. En cambio, el analista
+podría comenzar en un nivel muy resumido, como por ejemplo el total de
+la diferencia entre los resultados reales y lo presupuestado, para
+posteriormente descender en el cubo (en sus jerarquías) para poder
+observar con un mayor nivel de detalle que le permita descubrir en el
+cubo los lugares en los que se ha producido esta diferencia, según los
+productos y períodos.
+
+Definición técnica
+------------------
+
+En teoría de bases de datos, un cubo OLAP es una representación
+abstracta de la proyección de una relación de un RDBMS (Sistema
+administrador de bases de datos relacionales). Dada una relación de
+orden N, se considera la posibilidad de una proyección que dispone de
+los campos X, Y, Z como clave de la relación y de W como atributo
+residual. Categorizando esto como una función se tiene que:
+
+.. raw:: latex
+
+   $$   W : (X,Y,Z) \rightarrow W $$
+
+Los atributos X, Y, Z se corresponden con los ejes del cubo, mientras
+que el valor de W devuelto por cada tripleta (X, Y, Z) se corresponde
+con el dato o elemento que se rellena en cada celda del cubo.
+
+Debido a que los dispositivos de salida (monitores, impresoras, ...)
+sólo cuentan con dos dimensiones, no pueden caracterizar fácilmente
+cuatro dimensiones, es más práctico proyectar "rebanadas" o secciones
+de los datos del cubo (se dice proyectar en el sentido clásico vector
+analítico de reducción dimensional, no en el sentido de SQL, aunque
+los dos conceptos son claramente análogos), tal vez la expresión:
+
+.. raw:: latex
+
+   $$    W : (X,Y) \rightarrow W $$
+
+Aunque no se conserve la clave del cubo (al faltar el parámetro Z),
+puede tener algún significado semántico, sin embargo, también puede
+que una sección de la representación funcional con tres parámetros
+para un determinado valor de Z también resulte de interés.
+
+La motivación que hay tras OLAP vuelve a mostrar de nuevo el paradigma
+de los informes de tablas cruzadas de los sistema de gestión de base
+de datos de los 80. Se puede desear una visualización al estilo de una
+hoja de cálculo, donde los valores de X se encuentran en la fila $1,
+los valores de Y aparecen en la columna $A, y los valores de 
+
+.. raw:: latex
+
+  $ W: (X,Y) \rightarrow W $
+
+se encuentran en las celdas individuales a partir de la celda $B2
+y desde ahí, hacia abajo y hacia la derecha. Si bien se puede utilizar
+el Lenguaje de Manipulación de Datos (o DML) de SQL para mostrar las
+tuplas (X,Y,W), este formato de salida no es tan deseable como la
+alternativa de tablas cruzadas. El primer método requiere que se
+realice una búsqueda lineal para cada par (X,Y) dado, para determinar
+el correspondiente valor de W, mientras que el segundo permite
+realizar una búsqueda más convenientemente permitiendo localizar el
+valor W en la intersección de la columna X apropiada con la fila Y
+correspondiente.
+
+Se ha desarrollado el lenguaje MDX (MultiDimensional eXpressions o
+expresiones multidimensionales) para poder expresar problemas OLAP de
+forma fácil. Aunque es posible traducir algunas sus sentencias a SQL
+tradicional, con frecuencia se requieren expresiones SQL poco claras
+incluso para las sentencias más simples del MDX. Este lenguaje ha sido
+acogido por la gran mayoría de los proveedores de OLAP y se ha
+convertido en norma de hecho para estos sistemas.
+
 ------------------------------------------------------------------------
 Metodología elegida
 ------------------------------------------------------------------------
@@ -1087,6 +1196,12 @@ los usuarios.
     Wikipedia, la enciclopedia libre,
     \emph{Data Warehouse},
     http://en.wikipedia.org/wiki/Data\_warehouse,
+    2008
+
+  \bibitem{wikiolap}
+    Wikipedia, la enciclopedia libre,
+    \emph{OLAP},
+    http://en.wikipedia.org/wiki/OLAP,
     2008
 
   \bibitem{gutierrez}
