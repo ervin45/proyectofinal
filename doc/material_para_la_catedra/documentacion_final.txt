@@ -986,16 +986,16 @@ datos relacional. Evaluamos el subconjunto de funcionalidades
 necesarias y posibles optimizaciones basadas en nuestra necesidad, y
 desarrollamos cubículo.
 
-Cubiculo
+Cubículo
 ------------------------------------------------------------------------
 
-La piedra fundamental de cubiculo es la descripción de un determinado
+La piedra fundamental de cubículo es la descripción de un determinado
 informe a obtener. Los parámetros necesiarios son:
 
 :Hecho: es el conjunto de datos individuales y las columnas a
 	relacionarlas con las dimensiones.
 
-:Ejes: son dos dimensiones que posteriormente serán los ejes de la
+:Ejes: son dos dimensiones que serán los ejes de la
        tabla del informe
 
 :Restricciones: son ecuaciones a realizar sobre los niveles de las
