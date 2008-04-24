@@ -409,6 +409,18 @@ tradicionales. Realizaremos documentación de mantenimiento del sistema
 para futuras mejoras y expansiones.
 
 ------------------------------------------------------------------------
+Estandares de codificación adoptados
+------------------------------------------------------------------------
+
+Los siguientes estandares de codificación fueron adoptados por el equipo
+de desarrollo:
+
+* Identación con 4 espacios
+* Nombres de variables en minusculas
+* Nombres de funciones de en minúsculas y con guiones bajos (ejemplo: obtener_peticion(), realizar_informe())
+* ...
+
+------------------------------------------------------------------------
 Motivación
 ------------------------------------------------------------------------
 
