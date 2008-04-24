@@ -145,7 +145,7 @@ y vendidos en los últimos siete años.
 
 * Gestionar informes de seguimiento de compra en relación a objetivos
   de compra establecidos por los proovedores de unidades,
-  principalmente Mercedes Benz y Chrysler. 
+  principalmente Mercedes Benz y Chrysler.
 
 * Diseñar la red de información que le dará conectividad al sistema de
   información.
@@ -302,14 +302,14 @@ garantizan que los posibles errores serán detectados.
 funcionen. Cuando todo funcione se podrá añadir funcionalidad si es
 necesario. La programación extrema apuesta que en más sencillo hacer
 algo simple y tener un poco de trabajo extra para cambiarlo si se
-requiere, que realizar algo complicado y quizás nunca utilizarlo. 
+requiere, que realizar algo complicado y quizás nunca utilizarlo.
 
 Etapas del proceso
 ------------------
 
 Cabe aclarar que el orden en el que son citadas las etapas no indica
 el orden de seguimiento de estas sino una aproximación. En XP se
-trabaja pasando en forma constante de una etapa a la otra en la 
+trabaja pasando en forma constante de una etapa a la otra en la
 medida de lo posible. Las etapas son las siguientes:
 
 Plantificación
@@ -636,46 +636,12 @@ desarrolladores y contribuidores de código abierto.
    de la implementacion etc. etc
 
 
-========================================================================
-                              Herramientas
-========================================================================
 
 ------------------------------------------------------------------------
-Subversion
-------------------------------------------------------------------------
-
-El principal objetivo de Subversion (conocido popularmente como SVN)
-es la administración de código fuente entre distintos
-programadores. Pueden estar separados geográficamente (o bien realizar
-cambios de forma asincróna) y mantener de manera simple un repositorio
-central y con metadatos relacionados al proceso de desarrollo.
-
-Se pueden restituir versiones anteriores del proyecto como también
-generar nuevas ramas de desarrollo, por ejemplo para experimentación
-de una funcionalidad en concreto.
-
-------------------------------------------------------------------------
-Wiki
-------------------------------------------------------------------------
-
-Las anotaciones del proyecto las realizamos con una herramientas web
-de filosofía Wiki, provista por Google Code[4]. Esto nos permitió
-realizar una base de conocimientos en hipertexto de manera sencilla y
-rápida.
-
-.. [4] http://code.google.com/p/proyectofinal
-
-
-
-------------------------------------------------------------------------
-ReStructured Text (RST)
-------------------------------------------------------------------------
-
-========================================================================
                           Servidor de cubos
-========================================================================
-
 ------------------------------------------------------------------------
+
+
 Introducción
 ------------------------------------------------------------------------
 
@@ -715,7 +681,6 @@ datos relacional. Evaluamos el subconjunto de funcionalidades
 necesarias y posibles optimizaciones basadas en nuestra necesidad, y
 desarrollamos cubículo.
 
-------------------------------------------------------------------------
 Cubiculo
 ------------------------------------------------------------------------
 
@@ -766,6 +731,37 @@ Tests
 ========================================================================
 
 ------------------------------------------------------------------------
+Herramientas: Subversion
+------------------------------------------------------------------------
+
+El principal objetivo de Subversion (conocido popularmente como SVN)
+es la administración de código fuente entre distintos
+programadores. Pueden estar separados geográficamente (o bien realizar
+cambios de forma asincróna) y mantener de manera simple un repositorio
+central y con metadatos relacionados al proceso de desarrollo.
+
+Se pueden restituir versiones anteriores del proyecto como también
+generar nuevas ramas de desarrollo, por ejemplo para experimentación
+de una funcionalidad en concreto.
+
+------------------------------------------------------------------------
+Herramientas: Wiki
+------------------------------------------------------------------------
+
+Las anotaciones del proyecto las realizamos con una herramientas web
+de filosofía Wiki, provista por Google Code[4]. Esto nos permitió
+realizar una base de conocimientos en hipertexto de manera sencilla y
+rápida.
+
+.. [4] http://code.google.com/p/proyectofinal
+
+
+
+------------------------------------------------------------------------
+Herramientas: ReStructured Text (RST)
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
 Codigo de cubiculo
 ------------------------------------------------------------------------
 
@@ -801,7 +797,7 @@ Ajax-Powered Sites Autores: Mark Ramm, Kevin Dangoor, Gigi Sayfan
 Editorial: Prentice Hall URL:
 
 Fecha: 2007-08-23 Titulo: "Dive Into Python", Capitulo 12 "SOAP Web
-Services" Autor: Copyright © 2000, 2001, 2002, 2003, 2004 Mark Pilgrim
+Services" Autor: Copyright (c) 2000, 2001, 2002, 2003, 2004 Mark Pilgrim
 URL: http://www.diveintopython.org/soap_web_services/index.html
 
 Fecha: 2007-09-20 
@@ -863,11 +859,11 @@ Titulo: Especificacion de MDDataSets Autores: (c)
 URL:http://msdn2.microsoft.com/en-us/library/ms186704.aspx
 
 Fecha: 2007-08-23 Titulo: SQL Server TechCenter?, Execute Method(XMLA)
-Autor: © 2007 Microsoft Corporation.
+Autor: (c) 2007 Microsoft Corporation.
 URL:http://technet.microsoft.com/en-us/library/ms186691.aspx
 
 Fecha: 2007-08-24
-Titulo: XMLA 1.1 'Execute'−requests − SOAP/XML
+Titulo: XMLA 1.1 'Execute'-requests - SOAP/XML
 namespace problems Autor: Marek Pikulski (fecha 2004-08-06)
 URL:http://www.tech-archive.net/pdf/Archive/Data/microsoft.public.data.xmlanalysis/2004-08/0015.pdf
 
