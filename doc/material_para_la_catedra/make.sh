@@ -7,10 +7,11 @@ rst2latex --language=es \
           --no-doc-title \
 	  --use-latex-footnotes \
 	  --documentclass=book \
-	  --documentoptions=12pt,a4paper,spanish \
+	  --documentoptions=12pt,oneside,a4paper \
 	  --stylesheet=proyecto.stx \
 	  --section-numbering \
 	  --file-insertion-enabled \
+	  --use-latex-citations  \
 	  --use-latex-toc  < documentacion_final.txt > documentacion_final.tex
 	  
 RESULT=$?
