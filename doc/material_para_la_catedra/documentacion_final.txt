@@ -202,6 +202,13 @@ Terminología utilizada
 Data Warehouse
 -----------------------------------------------------------------------
 
+BIBLIOGRAFIA:
+
+* http://www.monografias.com/trabajos17/data-warehouse/data-warehouse.shtml
+* http://en.wikipedia.org/wiki/Data_warehouse
+* http://www.frsf.utn.edu.ar/matero/visitante/index.php?id_catedra=70&ver=novedades2.php# (PAGINA DE SGII)
+
+
 Definición
 -------------------
 
@@ -217,7 +224,7 @@ herramientas de análisis y consulta, y utilidades para la extracción,
 transformación y carga de datos de diversos origenes de datos como
 pueden ser sistemas empresariales, webs o planillas de cálculo.
 
-Objetivos
+Benficios
 ------------------
 
 :Información accesible: los contenidos del Data WareHouse son
@@ -280,12 +287,45 @@ relación temporal o clave temporal.
 :Datos volátiles: Los datos ademas de ser leidos pueden ser
 modificados en cualquier momento que la aplicación lo requiera.
 
-Componentes de integración
----------------------------
 
+DataMarks
+------------
 
+Manaja conceptos similares a los de un datawarehouse, pero con la
+diferencia de que estos estan orientados a la toma de decisiones a
+nivel departamental en lugar de hacerlo para toda la
+organización. 
 
+Segun sigamos a Bill Inmon o a Raph Kimball la relación
+entre un datawarehouse y un datamark será conciderablemente
+distinta. Para Inmon el datamark es cargado desde el datawarehouse
+mediante programas de carga, visión TOP-DOWN. Para Kimball el datamark
+es una porcion del datawarehouse y es cargado directamente desde las
+bases de datos operacionales, visión BOTTOM-UP.
 
+Elementos que integran un Data Warehouse
+-----------------------------------------
+
+:Metadatos: son datos que que se refieren a los del datawarehouse. Su
+función es ayudar a los analistas a localizar los contenidos, guiar a
+los algoritmos utilizados para la sumarización/agregación y describir
+el método por el cual es dato fue transformado desde su estado
+original hasta el que es mantenido en el datawarehouse.
+
+:ETL: sabemos que los datos que se encuentran en el datawarehouse
+provienen de muchos origentes, el encargado de realizar la
+conciliación se llama ETL. Este componente es el encargado de realizar
+la extracción, transformación y carga de los datos hacia el
+datawarehouse. La extracción consite en obtener los datos nuevos de
+los origenes. La transformación se encarga de cambiar la forma de los
+datos y adaptarla a la que es necesaria en el datawarehouse, este el
+punto en todo el proceso que mas esfuerzo lleva. La carga es el
+proceso de escritura de los datos transformados en el datawarehouse,
+es el único proceso que escribe en el almacenamiento del
+datawarehouse.
+
+:Monitorización: monitorea los datos en las fuentes e informa al ETL
+los cambios de interes para el datawarehouse
 
 
 ------------------------------------------------------------------------
@@ -396,7 +436,7 @@ algo simple y tener un poco de trabajo extra para cambiarlo si se
 requiere, que realizar algo complicado y quizás nunca utilizarlo.
 
 Etapas del proceso
-------------------
+--------------------
 
 Cabe aclarar que el orden en el que son citadas las etapas no indica
 el orden de seguimiento de estas sino una aproximación. En XP se
@@ -404,7 +444,7 @@ trabaja pasando en forma constante de una etapa a la otra en la
 medida de lo posible. Las etapas son las siguientes:
 
 Plantificación
---------------
+------------------
 
 Se escriben historias, cuya idea principal es describir un caso de uso
 en dos o tres líneas con terminología del cliente (de hecho, se supone
