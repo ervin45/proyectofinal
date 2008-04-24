@@ -197,6 +197,97 @@ Terminología utilizada
 
 :XMLA: XML ..for analysis
 
+
+-----------------------------------------------------------------------
+Data Warehouse
+-----------------------------------------------------------------------
+
+Definición
+-------------------
+
+Es una colección de datos orientada a un determinado ámbito (empresa,
+organización, etc.), integrado, no volátil y variable en el tiempo,
+que ayuda a la toma de decisiones en la entidad en la que se
+utiliza. Se trata, sobre todo, de un expediente completo de una
+organización, más allá de la información transaccional y operacional.
+
+La definición no quedaria completa sin mensionar que la organización
+de los datos no es lo unico que implica un datawarehouse. Ademas incluye
+herramientas de análisis y consulta, y utilidades para la extracción,
+transformación y carga de datos de diversos origenes de datos como
+pueden ser sistemas empresariales, webs o planillas de cálculo.
+
+Objetivos
+------------------
+
+:Información accesible: los contenidos del Data WareHouse son
+entendibles y navegables, y el acceso a ellos es caracterizado por el
+rápido desempeño. Estos requerimientos no tienen fronteras y tampoco
+limites fijos. Cuando hablamos de entendible significa, que los
+niveles de la información sean correctos y obvios. Y Navegables
+significa el reconocer el destino en la pantalla y llegar a donde
+queramos con solo un clic. Rápido desempeño significa, bajo tiempo de
+espera.
+
+:Información consistente: la información de una parte de la
+organización puede hacerse coincidir con la información de la otra
+parte de la organización. Si dos medidas de la organización tienen el
+mismo nombre, entonces deben significar la misma cosa. Y a la inversa,
+si dos medidas no significan la misma cosa, entonces son etiquetados
+diferentes. Información consistente significa, información de alta
+calidad.
+
+:Información adaptable y elástica: el Data WareHouse esta diseñado
+para cambios continuos. Cuando se le hacen nuevas preguntas al Data
+WareHouse, los datos existentes y las tecnologías no cambian ni se
+corrompen. Cuando se agregan datos nuevos al Data WareHouse, los datos
+existentes y las tecnologías tampoco cambian ni se corrompen.
+
+:Toma de decisiones: este es el objetivo fundamental y que justifica
+su existencia. El datawarehose presenta la materia prima para el
+proceso de toma de decisiciones, la información. Por esto el
+datawarehouse muchas veces se puede considerar el eje de los sistemas
+de soporte de decisiones.
+
+Propiedades
+-----------------
+
+:Orientado a temas: Los datos en la base de datos estás organizados de
+manera que todos los elementos de datos relativos al mismo evento u
+objeto del mundo real están unidos entre sí.
+
+:Variante en el tiempo: Los cambios producidos en los datos a lo largo
+del tiempo quedan registrados para que los informes que se puedan
+generar reflejen esas variaciones.
+
+:No volátil: La información no se modifica ni se elimina, una vez
+almacenado un dato, éste se convierte en información de sólo lectura,
+y se mantiene para futuras consultas.
+
+:Integrado: La base de datos contiene datos de sistemas operacionales
+de la organización, sistemas externos y de cualquier dato que se pueda
+conseguir en medios digitales. Esta diversidad de datos debe ser
+consistentes para poder obtener informes confiables y utiles.
+
+Por otro lado una base de datos relacional posee las siguientes diferencias:
+
+:Orientada a las aplicaciones: El diseño esta adaptado a los procesos
+o funciones que debe gestionar la aplicación.
+
+:Tiempo: Los datos almacenados no deben tener necesariamente un
+relación temporal o clave temporal.
+
+:Datos volátiles: Los datos ademas de ser leidos pueden ser
+modificados en cualquier momento que la aplicación lo requiera.
+
+Componentes de integración
+---------------------------
+
+
+
+
+
+
 ------------------------------------------------------------------------
 Metodología elegida
 ------------------------------------------------------------------------
