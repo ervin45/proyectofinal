@@ -3,7 +3,7 @@
 import MySQLdb
 
 # Create a connection object and create a cursor
-con = MySQLdb.Connect(host="192.168.61.100", port=3306, user="proyecto", passwd="123456", db="xpweb")
+con = MySQLdb.Connect(host="192.168.61.103", port=3306, user="proyecto", passwd="123456", db="xpweb")
 cursor = con.cursor()
 cursor2 = con.cursor()
 
@@ -34,7 +34,7 @@ for version in results:
 
     t = """Version %s: %s""" % (version_id, version_name)
     print t
-    print "=" * len(t)
+    print "-" * len(t)
 
     print version_desc
     print "\nIteraciones involucradas:\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
