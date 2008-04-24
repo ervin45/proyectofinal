@@ -228,64 +228,68 @@ Benficios
 ------------------
 
 :Información accesible: los contenidos del Data WareHouse son
-entendibles y navegables, y el acceso a ellos es caracterizado por el
-rápido desempeño. Estos requerimientos no tienen fronteras y tampoco
-limites fijos. Cuando hablamos de entendible significa, que los
-niveles de la información sean correctos y obvios. Y Navegables
-significa el reconocer el destino en la pantalla y llegar a donde
-queramos con solo un clic. Rápido desempeño significa, bajo tiempo de
-espera.
+	     entendibles y navegables, y el acceso a ellos es
+	     caracterizado por el rápido desempeño. Estos
+	     requerimientos no tienen fronteras y tampoco limites
+	     fijos. Cuando hablamos de entendible significa, que los
+	     niveles de la información sean correctos y obvios. Y
+	     Navegables significa el reconocer el destino en la
+	     pantalla y llegar a donde queramos con solo un
+	     clic. Rápido desempeño significa, bajo tiempo de espera.
 
 :Información consistente: la información de una parte de la
-organización puede hacerse coincidir con la información de la otra
-parte de la organización. Si dos medidas de la organización tienen el
-mismo nombre, entonces deben significar la misma cosa. Y a la inversa,
-si dos medidas no significan la misma cosa, entonces son etiquetados
-diferentes. Información consistente significa, información de alta
-calidad.
+	     organización puede hacerse coincidir con la información
+	     de la otra parte de la organización. Si dos medidas de la
+	     organización tienen el mismo nombre, entonces deben
+	     significar la misma cosa. Y a la inversa, si dos medidas
+	     no significan la misma cosa, entonces son etiquetados
+	     diferentes. Información consistente significa,
+	     información de alta calidad.
 
 :Información adaptable y elástica: el Data WareHouse esta diseñado
-para cambios continuos. Cuando se le hacen nuevas preguntas al Data
-WareHouse, los datos existentes y las tecnologías no cambian ni se
-corrompen. Cuando se agregan datos nuevos al Data WareHouse, los datos
-existentes y las tecnologías tampoco cambian ni se corrompen.
+	     para cambios continuos. Cuando se le hacen nuevas
+	     preguntas al Data WareHouse, los datos existentes y las
+	     tecnologías no cambian ni se corrompen. Cuando se agregan
+	     datos nuevos al Data WareHouse, los datos existentes y
+	     las tecnologías tampoco cambian ni se corrompen.
 
 :Toma de decisiones: este es el objetivo fundamental y que justifica
-su existencia. El datawarehose presenta la materia prima para el
-proceso de toma de decisiciones, la información. Por esto el
-datawarehouse muchas veces se puede considerar el eje de los sistemas
-de soporte de decisiones.
+      su existencia. El datawarehose presenta la materia prima para el
+      proceso de toma de decisiciones, la información. Por esto el
+      datawarehouse muchas veces se puede considerar el eje de los
+      sistemas de soporte de decisiones.
 
 Propiedades
 -----------------
 
 :Orientado a temas: Los datos en la base de datos estás organizados de
-manera que todos los elementos de datos relativos al mismo evento u
-objeto del mundo real están unidos entre sí.
+	   manera que todos los elementos de datos relativos al mismo
+	   evento u objeto del mundo real están unidos entre sí.
 
 :Variante en el tiempo: Los cambios producidos en los datos a lo largo
-del tiempo quedan registrados para que los informes que se puedan
-generar reflejen esas variaciones.
+	  del tiempo quedan registrados para que los informes que se
+	  puedan generar reflejen esas variaciones.
 
 :No volátil: La información no se modifica ni se elimina, una vez
-almacenado un dato, éste se convierte en información de sólo lectura,
-y se mantiene para futuras consultas.
+    almacenado un dato, éste se convierte en información de sólo
+    lectura, y se mantiene para futuras consultas.
 
 :Integrado: La base de datos contiene datos de sistemas operacionales
-de la organización, sistemas externos y de cualquier dato que se pueda
-conseguir en medios digitales. Esta diversidad de datos debe ser
-consistentes para poder obtener informes confiables y utiles.
+	    de la organización, sistemas externos y de cualquier dato
+	    que se pueda conseguir en medios digitales. Esta
+	    diversidad de datos debe ser consistentes para poder
+	    obtener informes confiables y utiles.
 
 Por otro lado una base de datos relacional posee las siguientes diferencias:
 
 :Orientada a las aplicaciones: El diseño esta adaptado a los procesos
-o funciones que debe gestionar la aplicación.
+	   o funciones que debe gestionar la aplicación.
 
 :Tiempo: Los datos almacenados no deben tener necesariamente un
-relación temporal o clave temporal.
+	 relación temporal o clave temporal.
 
 :Datos volátiles: Los datos ademas de ser leidos pueden ser
-modificados en cualquier momento que la aplicación lo requiera.
+       modificados en cualquier momento que la aplicación lo requiera.
 
 
 DataMarks
@@ -307,25 +311,26 @@ Elementos que integran un Data Warehouse
 -----------------------------------------
 
 :Metadatos: son datos que que se refieren a los del datawarehouse. Su
-función es ayudar a los analistas a localizar los contenidos, guiar a
-los algoritmos utilizados para la sumarización/agregación y describir
-el método por el cual es dato fue transformado desde su estado
-original hasta el que es mantenido en el datawarehouse.
+	    función es ayudar a los analistas a localizar los
+	    contenidos, guiar a los algoritmos utilizados para la
+	    sumarización/agregación y describir el método por el cual
+	    es dato fue transformado desde su estado original hasta el
+	    que es mantenido en el datawarehouse.
 
 :ETL: sabemos que los datos que se encuentran en el datawarehouse
-provienen de muchos origentes, el encargado de realizar la
-conciliación se llama ETL. Este componente es el encargado de realizar
-la extracción, transformación y carga de los datos hacia el
-datawarehouse. La extracción consite en obtener los datos nuevos de
-los origenes. La transformación se encarga de cambiar la forma de los
-datos y adaptarla a la que es necesaria en el datawarehouse, este el
-punto en todo el proceso que mas esfuerzo lleva. La carga es el
-proceso de escritura de los datos transformados en el datawarehouse,
-es el único proceso que escribe en el almacenamiento del
-datawarehouse.
+      provienen de muchos origentes, el encargado de realizar la
+      conciliación se llama ETL. Este componente es el encargado de
+      realizar la extracción, transformación y carga de los datos
+      hacia el datawarehouse. La extracción consite en obtener los
+      datos nuevos de los origenes. La transformación se encarga de
+      cambiar la forma de los datos y adaptarla a la que es necesaria
+      en el datawarehouse, este el punto en todo el proceso que mas
+      esfuerzo lleva. La carga es el proceso de escritura de los datos
+      transformados en el datawarehouse, es el único proceso que
+      escribe en el almacenamiento del datawarehouse.
 
 :Monitorización: monitorea los datos en las fuentes e informa al ETL
-los cambios de interes para el datawarehouse
+		 los cambios de interes para el datawarehouse
 
 
 ------------------------------------------------------------------------
