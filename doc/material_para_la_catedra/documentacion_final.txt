@@ -476,6 +476,69 @@ incluso para las sentencias más simples del MDX. Este lenguaje ha sido
 acogido por la gran mayoría de los proveedores de OLAP y se ha
 convertido en norma de hecho para estos sistemas.
 
+
+------------------------------------------------------------------------
+Porque Python y no Java
+------------------------------------------------------------------------
+
+En el mercado de los lenguajes de programación Java se ha impuesto
+gracias al concepto de la maquina virtual multiplataforma, una
+plataforma que ofrece muchos servicios y a fuerza de mucho
+marketing. Esto no quiere decir que Java deba se utilizado para
+cualquier desarrollo como opción por defecto. 
+
+En nuestro proyecto hemos elegido Python por ser un lenguaje que nos
+hace posible maximizar nuestra velocidad de desarrollo y nos permite
+pensar el problema desde una perspectiva de mayor nivel. Lenguajes
+como Java o C suelen ser mas rapidos en la ejecución. A diferencia de
+Java Python esta diseñado para ser una verdadera ayuda para el
+desarrollador.
+
+Python presenta una serie de ventajas que lo hacen muy atractivo,
+tanto para su uso profesional como para el aprendizaje de la
+programación. Está en un proceso de continuo desarrollo por una gran
+comunidad de desarrolladores.
+
+Se puede destacar de Python:
+
+:Tiene una gran librería estándar: usada para una diversidad de
+       tareas. Esto viene de la filosofía "baterías incluidas"
+       ("batteries included") para módulos de Python.
+
+:Es un lenguaje muy expresivo: es decir, los programas Python son muy
+    compactos: un programa Python suele ser bastante más corto que su
+    equivalente en lenguajes como Java. Python llega a ser considerado
+    por muchos un lenguaje de programación de muy alto nivel.
+
+:Es muy legible: la sintaxis de Python es muy elegante y permite la
+    escritura de programas cuya lectura resulta más fácil que si
+    utilizaremos otros lenguajes de programación. Esto es muy
+    importante a la hora de realizar el mantenimiento en el
+    futuro. Python ofrece un entorno interactivo que facilita la
+    realización de pruebas y ayuda a despejar dudas acerca de ciertas
+    características del lenguaje.
+
+:Es un lenguaje de programación multiparadigma: esto significa que más
+    que forzar a los programadores a adoptar un estilo particular de
+    programación, permite varios estilos: programación orientada a
+    objetos, programación estructurada y programación funcional.Posee
+    un rico juego de estructuras de datos que se pueden manipular de
+    modo sencillo.Python usa tipo de dato dinámico y fuerte
+
+:Facil de extender: nuevos módulos se pueden escribir fácilmente en C
+       o C++. Python puede utilizarse como un lenguaje de extensión
+       para módulos y aplicaciones que necesitan de una interfaz
+       programable.
+
+Resumiendo, Python es un lenguaje ideal para realizar desarrollos en un fracción
+de tiempo respecto a la mayoria de los lenguajes del mercado
+reduciendo considerablemente los costos de desarrollo y lenguajes como
+Java y C son mas apropiados cuando es muy alto el requerimiento de
+performance. Como conclusión, nosotros pensamos que el tiempo de
+desarrollo es un requisito mucho mas critico que la performance para
+nuestro proyecto, hemos elegido Python.
+
+
 ------------------------------------------------------------------------
 Metodología elegida
 ------------------------------------------------------------------------
