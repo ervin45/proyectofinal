@@ -816,7 +816,7 @@ Mercedez Benz posee un sistema de identificacion de partes muy particular.
 
 Detallamos parte los componentes en el numero identificacatorio:
 
-.. image :: Numeracion_Mercedes_Benz.eps
+.. image :: numeracion_mercedes_benz.eps
 
 Fue muy importante conocer la nomenclatura de los elementos de
 Mercedes Benz, porque la jerarquía de elementos no es intuitiva, al
@@ -832,6 +832,18 @@ El sistema legacy (Octosis) incorporó campos finales que identifican,
 por ejemplo, el proveedor. Logrando en algunos casos hasta 27 numeros
 para caracterizar una pieza en particular. Estos datos eran usados
 para completar las dimensiones de los cubos.
+
+Los grupos constructivos se dividen en 2 partes, la primera de ellas son
+números del 00 al 99 que clasifican al elemento de la siguiente manera:
+
+* Piezas de motor: Grupos del 01 al 23, 25 y 54
+* Piezas de chasis: Grupos del 24 al 59
+* Piezas de cabina/carrocería: Grupos del 60 a 97
+* Piezas en general: Grupos 98 y 99
+
+Esta división se expande a un total de 1000 subgrupos, que no viene al
+caso mencionarlos en este proyecto.
+
 
 ========================================================================
                         Tecnología Investigada
