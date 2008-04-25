@@ -753,7 +753,22 @@ Mercedez Benz posee un sistema de identificacion de partes muy particular.
 
 Detallamos parte los componentes en el numero identificacatorio:
 
-[Graficos que nos dio Gustavo]
+.. image :: Numeracion_Mercedes_Benz.eps
+
+Fue muy importante conocer la nomenclatura de los elementos de
+Mercedes Benz, porque la jerarquía de elementos no es intuitiva, al
+menos no inicialmente. Se detalla a continuación la jerarquia de los
+elementos de tipo A (Elementos Constructivos):
+
+* Grupo Constructivo
+* Modelo o Baumuster
+* Identificación de pieza
+* Numero de modificación
+
+El sistema legacy (Octosis) incorporó campos finales que identifican,
+por ejemplo, el proveedor. Logrando en algunos casos hasta 27 numeros
+para caracterizar una pieza en particular. Estos datos eran usados
+para completar las dimensiones de los cubos.
 
 ========================================================================
                         Tecnología Investigada
