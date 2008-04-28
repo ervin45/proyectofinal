@@ -476,6 +476,9 @@ incluso para las sentencias más simples del MDX. Este lenguaje ha sido
 acogido por la gran mayoría de los proveedores de OLAP y se ha
 convertido en norma de hecho para estos sistemas.
 
+-----------------------------------------------------
+Porque Web y no Standalone
+-----------------------------------------------------
 
 ------------------------------------------------------------------------
 Porque Python y no Java
@@ -538,6 +541,100 @@ performance. Como conclusión, nosotros pensamos que el tiempo de
 desarrollo es un requisito mucho mas critico que la performance para
 nuestro proyecto, hemos elegido Python.
 
+-----------------------------------------------------------------------
+Framework Utilizado
+-----------------------------------------------------------------------
+
+Para el proyecto se eligio el framework web python. A continuación se
+explicará en que consiste el flujo de información del framework.
+
+Django fue diseñado para promover la alta cohesión y el bajo
+acoplamiento entre las piezas de una aplicación. Siguiendo esta
+filosofía es fácil hacer cambios en un lugar particular de la
+aplicación sin afectar otras piezas.
+
+Nucleo del Framework
+---------------------------
+
+Consta basicamente de tres piezas -- la lógica de acceso a la base de
+datos, la lógica de negocios, y la lógica de presentación --
+comprenden un concepto que a veces es llamado el patrón de arquitectura
+de software Modelo-Vista-Controlador (MVC). En este patrón, el
+"Modelo" hace referencia al acceso a la capa de datos, la "Vista" se
+refiere a la parte del sistema que selecciona qué mostrar y cómo
+mostrarlo, y el "Controlador" implica la parte del sistema que decide
+cual vista usar, dependiendo de la entrada del usuario, accediendo al
+modelo si es necesario.  Django sigue este patrón MVC lo
+suficientemente estrecho que puede ser llamado un framework MVC. Aquí
+se encuentra más o menos como la M, V y C se separan en Django:
+
+:M: la porción de acceso a la base de datos, es manejada por la capa
+    de la bse de datos de Django.  
+:V: la porción que selecciona cuales datos mostrar y
+    cómo mostrarlos, es manejada por la vista y los templates.  
+:C: la porción que delega a la vista dependiendo de la entrada del
+    usuario, es manejada por el framework mismo siguiendo las URLConf
+    y llamando a la función apropiada de Python para la URL obtenida.
+
+Debido a que la "C" es manejada por el mismo framework y la parte mas
+interesante se sucede en los modelos, las plantillas y las vistas,
+Django es referenciado como un Framework MTV.
+
+En el patrón de diseño MTV:
+
+:M: significa "Model", la capa de acceso a la base de datos. Esta capa
+    contiene toda la información sobre los datos: como acceder a
+    estos, como validarlos, cual es el comportamiento que tiene, y las
+    relaciones entre los datos. Django lo implementa por medio de un
+    ORM (Mapeo objeto/relacional) con un lenguaje de consultas
+    bastante flexible.
+
+:T: significa "Template", la capa de presentación. Esta capa contiene
+    las decisiones relacionadas a la presentación: como algunas cosas
+    son mostradas sobre una página web o otro tipo de
+    documento. Django Posee un sistema propio de templates esta
+    formado por bloques y filtros que se encargan de visualizar
+    adecuadamente objetos provenientes de las "View"
+
+:V: significa "View", la capa de la lógica de negocios. Esta capa
+    contiene la lógica que accede al modelo y la delega a la plantilla
+    apropiada: puedes pensar en esto como un puente entre el modelos y
+    las plantillas. Esta logica esta implementada integramente en
+    Python por lo que es posible utilizar cualquiera de las
+    construcciones y modulos externos propios del lenguaje.
+
+
+Si estás familiarizados con otros frameworks de desarrollo web MVC,
+quizás se pueda considerar que las vistas de Django pueden ser el
+"controlador" y las plantillas de Django pueden ser la "vista". Esto
+es una confusión desafortuna a raízñ de las diferentes
+interpretaciones de MVC. En la interpretación de Django de MVC, la
+"vista" describe los datos que son presentados al usuario; no
+necesariamente el cómo se mostrarán, pero si cuales datos son
+presentados. En contraste otros frameworks sugieren que el trabajo del
+controlador incluya la decisión de cuales datos son presentados al
+usuario, mientras que la vista sea estrictamente el como serán
+presentados y no cuales.
+
+Ninguna de las interpretaciones es más "correcta" que otras. Lo
+importante es entender el concepto subyacente.
+
+Configuración
+-------------------
+
+Django aisla toda la configuración en un solo archivo. Aqui se
+espcifica la configuracion de la base de datos, los directorios de los
+templates y demas archivos multimedia (imagenes, javascript, css,
+flash, etc) y demas metainformación del sistema.
+
+Mapeo de Vista/URL
+---------------------
+
+Una funcionalidad muy práctica de este framework es la flexibilidad
+con la que se puede relacionar una URL con una salida
+determinada. Para lograr esto, Django provee un archivo que dado un
+expresion regular de una URL relaciona esta con una función que sea
+capaz de devolver un objeto que represente una respuesta http.
 
 ------------------------------------------------------------------------
 Metodología elegida
@@ -967,17 +1064,22 @@ Turbo Gear vs. Django
 Luego de probar ambas tecnologías encontramos ventajas y desventajas
 en ambas:
 
-Turbo Gear (pros-contras)
---------------------------------
 
-* malisimo
+===========================  ==================  ===================
+    Topico                          Django              Turbo Gear
+===========================  ==================  ===================
+    Mapeo URL                  Flexible            Rigido
+    Servidor de Desarrollo     Estable             Inestable
+    Información de Errores     Muy Buena           Regular
+    Documentación              Amplia              Escasa
+    Comunidad                  Activa              Pasiva   
+    Mapeo Objeto/Relacional    Limitado            Potente
+===========================  ==================  ===================
 
-Django (pros-contras)
---------------------------------
+Finalmente escogimos Django como Framework de desarrollo para el proyecto. 
 
-* buenisimo.
-
-Nos decidimos por Django
+Los puntos mas importantes fueron la abundancia de su documentación y lo activa
+que es su comunidad de usuarios y desarrolladores.
 
 ------------------------------------------------------------------------
 Mondrian
