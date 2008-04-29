@@ -896,9 +896,27 @@ Los siguientes estandares de codificación fueron adoptados por el equipo
 de desarrollo:
 
 * Identación con 4 espacios
+
 * Nombres de variables en minusculas
-* Nombres de funciones de en minúsculas y con guiones bajos (ejemplo: obtener_peticion(), realizar_informe())
-* ...
+
+* Nombres de funciones en minúsculas y con guiones bajos (ejemplo:
+  obtener_peticion(), realizar_informe())
+
+* Nombre de clases con notación camello o CapWord (ejemplo: NombreClase)
+
+* Separa las funciones y las definiciones de clases con
+  dos líneas en blanco.
+
+* Las definiciones de métodos dentro de una misma clase se separan con
+  una línea en blanco.
+
+* Despues de ":" (nuevo bloque) va un retorno de carro.
+
+* A ambos lados de un operador aritmético/lógico hay espacios en blanco.
+
+* 
+
+
 
 ------------------------------------------------------------------------
 Estructura de numeracion de repuestos
