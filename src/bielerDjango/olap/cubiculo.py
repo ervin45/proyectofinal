@@ -92,6 +92,10 @@ class Meta:
     @staticmethod
     def previous(dimension, level):
         """
+        Method(s) tested:
+            - L{blogger.Blogger.delete_all_entries}
+            - L{blogger.Blogger.get_num_entries}
+
         >>> Meta.previous('tiempo', 'anio')
         'mes'
         >>> Meta.previous('tiempo', 'TODO')
