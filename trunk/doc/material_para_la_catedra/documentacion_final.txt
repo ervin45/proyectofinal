@@ -161,7 +161,134 @@ y vendidos en los últimos siete años.
 Organización del documento
 ------------------------------------------------------------------------
 
+------------------------------------------------------------------------
+Porque elegimos Sofware Libre
+------------------------------------------------------------------------
 
+Definición de Sofware Libre
+----------------------------
+
+Software libre es la denominación del software que brinda libertad a
+los usuarios sobre su producto adquirido y por tanto, una vez
+obtenido, puede ser usado, copiado, estudiado, modificado y
+redistribuido libremente. Según la Free Software Foundation, el
+software libre se refiere a la libertad de los usuarios para ejecutar,
+copiar, distribuir, estudiar, cambiar y mejorar el software; de modo
+más preciso, se refiere a cuatro libertades de los usuarios del
+software: 
+
+:Libertad 0: La libertad de usar el programa, con cualquier propósito.
+
+:Libertad 1: La libertad de estudiar el funcionamiento del programa, y
+	  adaptarlo a las necesidades.
+
+:Libertad 2: La libertad de distribuir copias, con lo que puede ayudar a otros.
+
+:Libertad 3: La libertad de mejorar el programa y hacer públicas las
+	  mejoras, de modo que toda la comunidad se beneficie (para la
+	  segunda y última libertad mencionadas, el acceso al código
+	  fuente es un requisito previo).
+
+Ventajas Genéricas
+----------------------
+
+1. Económico
+
+El bajo o nulo coste de los productos libres permiten proporcionar a
+las PYMES servicios y ampliar sus infraestructuras sin que se vean
+mermados sus intentos de crecimiento por no poder hacer frente al pago
+de grandes cantidades en licencias.
+
+2. Libertad de uso y redistribución
+
+Las licencias de software libre existentes permiten la instalación del
+software tantas veces y en tantas máquinas como el usuario desee.
+
+3. Independencia tecnológica
+
+El acceso al código fuente permite el desarrollo de nuevos productos
+sin la necesidad de desarrollar todo el proceso partiendo de cero. El
+secreto tecnológico es uno de los grandes frenos y desequilibrios
+existentes para el desarrollo en el modelo de propiedad intelectual.
+
+4. Fomento de la libre competencia al basarse en servicios y no licencias
+
+Uno de los modelos de negocio que genera el software libre es la
+contratación de servicios de atención al cliente. Este sistema permite
+que las compañías que den el servicio compitan en igualdad de
+condiciones al no poseer la propiedad del producto del cual dan el
+servicio.
+
+Esto, además, produce un cambio que redunda en una mayor atención al
+cliente y contratación de empleados, en contraposición a sistemas
+mayoritariamente sostenidos por la venta de licencias y desatención
+del cliente.
+
+5. Formatos estándar
+
+Los formatos estándar permiten una interoperatividad más alta entre
+sistemas, evitando incompatibilidades. Los estándares de facto son
+válidos en ocasiones para lograr una alta interoperatividad si se
+omite el hecho que estos exigen el pago de royalties a terceros y por
+razones de mercado expuestas en el anterior punto no interesa que se
+perpetúen mucho tiempo.
+
+Los formatos estándares afectan a todos los niveles. Un ejemplo lo
+estamos viendo en los documentos emitidos por las administraciones
+publicas en distintos formatos y versiones, que producen retrasos y
+dificultades en el acceso adecuado a la información para las mismas
+administraciones y para sus usuarios. Algunas administraciones de la
+unión europea ya están dando el paso a formatos abiertos como ODF
+(Open Document Format).
+
+6. Sistemas sin puertas traseras y más seguros
+
+El acceso al código fuente permite que tanto hackers como empresas de
+seguridad de todo el mundo puedan auditar los programas, por lo que la
+existencia de puertas traseras es ilógica ya que se pondría en
+evidencia y contraviene el interés de la comunidad que es la que lo
+genera.
+
+7. Corrección mas rápida y eficiente de fallos
+
+El funcionamiento e interés conjunto de la comunidad ha demostrado
+solucionar mas rápidamente los fallos de seguridad en elsoftware
+libre, algo que desgraciadamente en el software propietario es mas
+difícil y costoso. Cuando se notifica a las empresas propietarias del
+software, éstas niegan inicialmente la existencia de dichos fallos por
+cuestiones de imagen y cuando finalmente admiten la existencia de esos
+bugs tardan meses hasta proporcionar los parches de seguridad.
+
+8. Métodos simples y unificados de gestión de software
+
+Actualmente la mayoría de distribuciones de Linux incorporan alguno de
+los sistemas que unifican el método de instalación de programas,
+librerías, etc. por parte de los usuarios. Esto llega a simplificar
+hasta el grado de marcar o desmarcar una casilla para la gestión del
+software, y permiten el acceso a las miles de aplicaciones existentes
+de forma segura y gratuita a la par que evitan tener que recurrir a
+páginas web de dudosa ética desde las que los usuarios instalan sin
+saberlo spyware o virus informáticos en sus sistemas. Este sistema de
+acceso y gestión del software se hace practicamente utópico si se
+extrapola al mercado propietario.
+
+9. Sistema en expansión
+
+Las ventajas especialmente económicas que aportan las soluciones
+libres a muchas empresas y las aportaciones de la comunidad han
+permitido un constante crecimiento del software libre, hasta superar
+en ocasiones como en el de los servidores web, al mercado propietario.
+
+El software libre ya no es una promesa, es una realidad y se utiliza
+en sistemas de producción por algunas de las empresas tecnológicas mas
+importantes como IBM, SUN Microsystems, Google, Hewlett-Packard,
+etc. Paradojicamente, incluso Microsoft, que posee sus propias
+herramientas, emplea GNU Linux en muchos de sus servidores. Podemos
+augurar sin lugar a dudas un futuro crecimiento de su empleo y una
+consolidación bien merecida.
+
+Ventajas para nuestro proyecto
+--------------------------------
 
 
 ------------------------------------------------------------------------
