@@ -3,7 +3,7 @@
 import MySQLdb
 
 # Create a connection object and create a cursor
-con = MySQLdb.Connect(host="192.168.61.103", port=3306, user="proyecto", passwd="123456", db="xpweb")
+con = MySQLdb.Connect(host="192.168.61.102", port=3306, user="proyecto", passwd="123456", db="xpweb")
 cursor = con.cursor()
 cursor2 = con.cursor()
 
@@ -26,18 +26,18 @@ id
 cursor.execute(sql)
 
 results = cursor.fetchall()
-for version in results:
-    (version_id,
-     version_name,
-     version_desc,
-     load_factor) = version
+for iteracion in results:
+    (iteracion_id,
+     iteracion_name,
+     iteracion_desc,
+     load_factor) = iteracion
 
-    t = """Version %s: %s""" % (version_id, version_name)
+    t = """Iteracion: %s""" % (iteracion_name,)
     print t
     print "-" * len(t)
 
-    print version_desc
-    print "\nIteraciones involucradas:\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+    print iteracion_desc
+    print "\nHistorias involucradas:\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     
 
     sql2 = '''
@@ -52,7 +52,7 @@ for version in results:
      stories
     where
      iteration_id = '%s'
-     ''' % version_id 
+     ''' % iteracion_id 
 
     cursor2.execute(sql2)
     for iteration in cursor2.fetchall():
