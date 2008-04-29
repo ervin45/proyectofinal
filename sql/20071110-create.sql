@@ -1,7 +1,3 @@
-;; This buffer is for notes you don't want to save, and for Lisp evaluation.
-;; If you want to create a file, visit that file with C-x C-f,
-;; then enter the text in that file's own buffer.
-
 CREATE TABLE td_pieza (
     id serial CONSTRAINT pieza_id_primary PRIMARY KEY,
     grupo_constructivo integer NOT NULL,
@@ -48,7 +44,7 @@ CREATE TABLE ft_compras (
    cantidad  integer,
    costo_pesos numeric(14,2),
    costo_dolar numeric(14,2),
-   PRIMARY KEY (fk_tiempo, fk_pieza, fk_proveedor)
+   PRIMARY KEY (fk_tiempo, fk_pieza, fk_proveedor, fk_tipo_pieza)
 
 );
 
@@ -84,3 +80,12 @@ update ft_ventas   set fk_tipo_pieza=2 where fk_proveedor <> 1;
 update ft_compras  set fk_tipo_pieza=1 where fk_proveedor =  1;
 update ft_compras  set fk_tipo_pieza=2 where fk_proveedor <> 1;
 
+
+CREATE TABLE ft_test (
+   fk_tiempo integer,
+   fk_pieza integer,
+   fk_tipo_pieza integer,
+   cantidad  integer,
+   costo numeric(14,2),
+   PRIMARY KEY (fk_tiempo, fk_pieza, fk_tipo_pieza)
+);
