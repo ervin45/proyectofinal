@@ -1,8 +1,8 @@
 from django.db import models
 from django.conf import settings
 
-import psycopg2
-import psycopg2.extras
+import dw_connect
+
 import copy
 from pprint import pprint
 
@@ -516,8 +516,7 @@ class CubeTooBig:
 
 class FakedRequest:
     def __init__(self):
-        server_ip  = settings.IP
-        self.META = {'SERVER_IP':server_iP, 'SERVER_PORT':'8000'}
+        self.META = {'SERVER_IP':"", 'SERVER_PORT':'8000'}
 
 class Report1:
     def __init__(self,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
@@ -632,9 +631,7 @@ class Report1:
         [2006]
         >>>
         '''
-        server_ip  = settings.IP
-        con_dwh = psycopg2.connect(host=server_ip, port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
-        cursor_dwh = con_dwh.cursor()
+        cursor_dwh = dw_connect.cursor()
 
         sql_dimension_values = self.cubiculo.dimension_values(int(axis))
         cursor_dwh.execute(sql_dimension_values)
@@ -671,13 +668,11 @@ class Report1:
         return self.cubiculo.sql()
 
     def exec_sql(self, sql):
-        pprint(sql)
         '''
         ---
         '''
-        server_ip  = settings.IP
-        con_dwh = psycopg2.connect(host=server_ip, port=5432, user="ncesar", password=".,supermo", database="bieler_dw")        
-        cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
+        
+        cursor_dwh = dw_connect.cursor()
         cursor_dwh.execute(sql)
         
         if cursor_dwh.rowcount > too_many_rows:
@@ -768,14 +763,12 @@ class Report1:
         return final_cube
 
     def absolute_url(self, request, parcial_url):
-        from django.conf import settings
-        server_ip  = settings.IP
         mf = self.member_function.__name__
         params = str(self.measures)
         cf = self.cube_function.__name__
         cf_params = str(self.cube_function_params)
 
-        url = "http://%s:%s/report/%s%s/params=%s/%s/params=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, params, cf, cf_params)
+        url = "/report/%s%s/params=%s/%s/params=%s" % (parcial_url, mf, params, cf, cf_params)
         return url
 
 
@@ -877,9 +870,7 @@ class Report2:
         return self.absolute_url(request, parcial_url)
 
     def dimension_values(self, axis, cubiculo):
-        server_ip  = settings.IP
-        con_dwh = psycopg2.connect(host=server_ip, port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
-        cursor_dwh = con_dwh.cursor()        
+        cursor_dwh = dw_connect.cursor()
 
         sql_dimension_values = cubiculo.dimension_values(int(axis))
         cursor_dwh.execute(sql_dimension_values)
@@ -901,9 +892,7 @@ class Report2:
         return cubiculo.sql()
 
     def exec_sql(self, sql):
-        server_ip  = settings.IP
-        con_dwh = psycopg2.connect(host=server_ip, port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
-        cursor_dwh = con_dwh.cursor(cursor_factory=psycopg2.extras.DictCursor) 
+        cursor_dwh = dw_connect.cursor()
         cursor_dwh.execute(sql)
 
         if cursor_dwh.rowcount > too_many_rows:
@@ -1013,14 +1002,12 @@ class Report2:
         return final_cube
         
     def absolute_url(self, request, parcial_url):
-        from django.conf import settings
-        server_ip  = settings.IP
         mf = self.member_function.__name__
         params = str(self.measures)
         cf = self.cube_function.__name__
         cf_params = str(self.cube_function_params)
         
-        url = "http://%s:%s/report2/%s%s/params=%s/%s/params=%s" % (server_ip, request.META['SERVER_PORT'], parcial_url, mf, params, cf, cf_params)
+        url = "/report2/%s%s/params=%s/%s/params=%s" % (parcial_url, mf, params, cf, cf_params)
         return url
 
 class Ajax_responser:
@@ -1031,19 +1018,16 @@ class Ajax_responser:
         @staticmethod
         def get_levels(dimension):
             return copy.copy(cubiculo.Meta.get_levels(dimension))
-        
+
         @staticmethod
         def get_values(dimension, level):
-            server_ip  = settings.IP
-            con_dwh = psycopg2.connect(host=server_ip, port=5432, user="ncesar", password=".,supermo", database="bieler_dw")
-            cursor_dwh = con_dwh.cursor()
+            cursor_dwh = dw_connect.cursor()
 
             sql = "SELECT distinct(%s) FROM td_%s" % (level, dimension)
             cursor_dwh.execute(sql)
-            
-            
+
             return [str(x[0]) for x in cursor_dwh.fetchall()]
-        
+
         @staticmethod
         def get_measures(ft):
             return cubiculo.Meta.get_measures(ft)

@@ -86,7 +86,11 @@ def header_list_left(header):
     return rows, len(re)
 
 def index(request):
+    print "INDEX"
     return render_to_response('index.html',locals())
+
+def index2(request):
+    return render_to_response('index2.html',locals())
 
 def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     report = models.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
@@ -122,7 +126,8 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         dim_y = y
 
         from django.conf import settings
-        server_ip = settings.IP
+
+        pprint(body)
 
         main_axis = report.get_main_axis_list()
 
@@ -130,9 +135,9 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         other_axis.extend(report.get_other_axis_list())
 
         ofc_params = graph_data(header, body, body_order, x, xl)
-        
+
         categorias = models.Categoria.objects.all()
-        
+
         return render_to_response('reportes2.html',locals())
 
     except models.CubeTooBig:
@@ -179,14 +184,25 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
 
         return render_to_response('tooBig.html',locals())
 
+def redirect(request):
+
+    url = "/report/test/tiempo/tipo_pieza/anio/tipo_pieza/xr%3D{'anio'%3A ['2002']}/yr%3D{}/ore%3D[['pieza'%2C 'modificacion'%2C {'grupo_constructivo'%3A ['184']}]]/same/params%3D[['ft_test'%2C 'cantidad'%2C 'sum']]/same_cube/params%3D[]/"
+    
+    return HttpResponseRedirect(url)
+
+
 def pivot(request):
     report = get_report(request)
     url = report.pivot(request)
     return HttpResponseRedirect(url)
 
 def roll(request, axis):
+    print "AAAAAAAAAAAAAXXXXXXXXXXXXXXXXXXIIIIIIIIIIIISSSSSSSSSSSSSS", axis ,"AAAAAAAAAAAAAXXXXXXXXXXXXXXXXXXIIIIIIIIIIIISSSSSSSSSSSSSS"
+    print "REFERER", request.META['HTTP_REFERER'], "REFERER"
     report = get_report(request)
     url = report.roll(request, axis)
+    
+    print "UUUUUUUUUURL", url, "UUUUUUUUUURL"
     return HttpResponseRedirect(url)
 
 def drill(request, axis):
@@ -234,34 +250,32 @@ def get_report(request):
     from django.conf import settings
     
     http_referer = request.META['HTTP_REFERER']
-    server_ip  = settings.IP
-    server_port  = request.META['SERVER_PORT']
     
-    if referer_type(http_referer, server_ip, server_port) == "Report1":
-        parsed_url = parse_url(http_referer, server_ip, server_port)
+    if referer_type(http_referer) == "Report1":
+        parsed_url = parse_url(http_referer)
         (report, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params) = parsed_url
         
         report = models.Report1(report, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
     else:
-        parsed_url = parse_url2(http_referer, server_ip, server_port)
+        parsed_url = parse_url2(http_referer)
         (ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params) = parsed_url
         report = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params)
         
     return report
 
     
-def referer_type(http_referer, server_ip, server_port):
-    if parse_url(http_referer, server_ip, server_port):
+def referer_type(http_referer):
+    if parse_url(http_referer):
         return "Report1"
     else:
         return "Report2"
 
-def parse_url(http_referer, server_ip, server_port):
+def parse_url(http_referer):
     import re
     import urllib
     
     referer = urllib.unquote_plus(http_referer)
-    url_patter = '^http://%s:%s/report/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$' % (server_ip, server_port)
+    url_patter = '^.*report/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$'
     p = re.compile(url_patter)
     result = p.findall(referer)
     
@@ -270,13 +284,13 @@ def parse_url(http_referer, server_ip, server_port):
     
     return result[0]
 
-def parse_url2(http_referer, server_ip, server_port):
+def parse_url2(http_referer):
     import re
     import urllib
     
     referer = urllib.unquote_plus(http_referer)
     
-    url_patter = '^http://%s:%s/report2/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$' % (server_ip, server_port)
+    url_patter = '^.*/report2/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$'
     p = re.compile(url_patter)
     result = p.findall(referer)
     
@@ -345,15 +359,9 @@ def graph_data(header, body, body_order, x_label_dim, x_label_level):
         
         
 def formulario(request):
-    from django.conf import settings
-    server_ip = settings.IP
-    
     return render_to_response('formulario.html',locals())
-            
+
 def formulario2(request):
-    from django.conf import settings
-    server_ip = settings.IP
-        
     return render_to_response('formulario2.html',locals())
 
 
