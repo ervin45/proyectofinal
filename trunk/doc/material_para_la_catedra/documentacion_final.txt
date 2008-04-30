@@ -162,7 +162,7 @@ Organización del documento
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
-Porque elegimos Sofware Libre
+Sofware Libre
 ------------------------------------------------------------------------
 
 Definición de Sofware Libre
@@ -289,6 +289,22 @@ consolidación bien merecida.
 
 Ventajas para nuestro proyecto
 --------------------------------
+
+En lo que respecta al licenciamiento del sistema resultante, el concenso
+por el uso de la Licencia GPL, otorga ventajas a ambas partes, a saber:
+
+:Independencia de cliente/proovedor: Cualquiera de las partes tiene
+  la posibilidad de continuar el desarrollo del software, sin la
+  necesidad de la otra parte.
+
+:Inclusión de código de otros proyectos GPL: Si llegase a existir
+  código GPL que pudiese potenciar el sistema actual, sería
+  perfectamente legal incluir parte del mismo en el sistema, sin
+  necesidad de pedir autorización ni costos extras. Esto permite una
+  expansión del sistema rápida y barata, con aplicaciones existentes o
+  aplicaciones que todavía no se han creado.
+
+
 
 
 ------------------------------------------------------------------------
@@ -1041,23 +1057,20 @@ de desarrollo:
 
 * A ambos lados de un operador aritmético/lógico hay espacios en blanco.
 
-* 
-
-
 
 ------------------------------------------------------------------------
-Estructura de numeracion de repuestos
+Estructura de numeración de repuestos
 ------------------------------------------------------------------------
 
-Mercedez Benz posee un sistema de identificacion de partes muy particular.
+Mercedez Benz posee un sistema de identificación de partes muy particular.
 
-Detallamos parte los componentes en el numero identificacatorio:
+Detallamos parte los componentes en el número identificacatorio:
 
 .. image :: numeracion_mercedes_benz.eps
 
 Fue muy importante conocer la nomenclatura de los elementos de
 Mercedes Benz, porque la jerarquía de elementos no es intuitiva, al
-menos no inicialmente. Se detalla a continuación la jerarquia de los
+menos no inicialmente. Se detalla a continuación la jerarquía de los
 elementos de tipo A (Elementos Constructivos):
 
 * Grupo Constructivo
@@ -1066,7 +1079,7 @@ elementos de tipo A (Elementos Constructivos):
 * Numero de modificación
 
 El sistema legacy (Octosis) incorporó campos finales que identifican,
-por ejemplo, el proveedor. Logrando en algunos casos hasta 27 numeros
+por ejemplo, el proveedor. Logrando en algunos casos hasta 27 números
 para caracterizar una pieza en particular. Estos datos eran usados
 para completar las dimensiones de los cubos.
 
@@ -1381,15 +1394,77 @@ informe a obtener. Los parámetros necesiarios son:
 ETL
 ------------------------------------------------------------------------
 
+Una de las tareas más complejas en la implementación de un Data
+Warehouse es la creación del ETL. Nuestro proyecto demandaba un ETL lo
+suficientemente flexible para la interacción de con las bases de datos
+operacionales, que inicialmente estaban en formato xBase con una
+normalización bastante pobre.
+
+Decidimos implementar los ETLs con applicaciones hechas a medida en
+python, para facilitar el acceso a los datos migramos las bases de
+datos iniciales a MySQL con dbf2mysql.
+
+[Diagrama dbf->mysql->psql]
+
+Uno de los mayores desafíos en esta etapa fue la obtención de
+identificadores del Data Warehouse de elementos existentes en las
+tablas dimensionales. Implementamos una biblioteca de ayuda a la
+consulta o creación de los mismos donde su componenete clave era la
+función get_id(), descripta a continuación:
+
+::
+
+  def get_id(cursor, tabla, campoid, campos, filtro=None):
+
+        if filtro:
+                rtn = {}
+                for x in campos:
+                        if x in filtro:
+                                rtn[x] = campos[x]
+                campos = rtn
+
+
+        sql = "select  %s from  %s where "% (campoid, tabla)
+        arr = []
+        for k in campos.keys():
+                arr.append("%s = %%s"% k)
+
+        sql += ' and '.join(arr)
+
+        sql_select = sql
+        cursor.execute (sql, campos.values())
+
+        try:
+		rtn = cursor.fetchone ()[0]
+        except:		
+                sql = "insert into %s (%s) values (%s)"% 
+		     (tabla,
+		      ', '.join(campos.keys()),
+		      ', '.join(['%s' for x in campos.values()])
+		     )
+		print sql, campos.values()
+		try:
+			cursor.execute ('commit')
+		except:
+			pass
+
+                cursor.execute (sql, campos.values())
+		cursor.execute (sql_select, campos.values())
+                rtn = cursor.fetchone ()[0]
+        return rtn
+
+Fin de codigo
+
+
+========================================================================
+Juego de la planificacion
+========================================================================
+
+.. include:: versiones-iteraciones-historias.txt
+
 ========================================================================
                             Documentación
 ========================================================================
-
-------------------------------------------------------------------------
-Juego de la planificacion
-------------------------------------------------------------------------
-
-.. include:: versiones-iteraciones-historias.txt
 
 ------------------------------------------------------------------------
 Tests
