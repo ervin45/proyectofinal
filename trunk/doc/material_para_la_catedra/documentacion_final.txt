@@ -1453,7 +1453,8 @@ función get_id(), descripta a continuación:
                 rtn = cursor.fetchone ()[0]
         return rtn
 
-Fin de codigo
+(Fin de código)
+
 
 
 ========================================================================
