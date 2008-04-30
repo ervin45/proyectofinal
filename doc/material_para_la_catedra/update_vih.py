@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: iso-8859-15 -*-
 
 import MySQLdb
 
@@ -9,61 +10,124 @@ cursor2 = con.cursor()
 
 project_id='1'
 
-sql = '''
+d = { '1.0': [4, 1],
+     
+      }
+
+a = [('Versión 1.0', [4, 1]),
+     ('Versión 2.0', [5, 6, 2]),
+     ('Versión 3.0', [7, 8, 3]),
+     ('Versión 4.0', [9,10,11]),
+     ('Versión 5.0', [12])]
+
+
+for (version_id, iterations)  in a:
+
+    print "-" * len(version_id)
+    print version_id
+    print "-" * len(version_id)
+    print
+
+
+    for iteration in iterations:
+
+        sql = '''
+        select
+         id,
+         name,
+         description,
+         load_factor
+        from
+         iterations
+        where
+         project_id='%s' and
+         id='%d'
+
+         ''' % (project_id, iteration)
+        #print sql
+        cursor.execute(sql)
+
+        results = cursor.fetchall()
+
+
+        for iteracion in results:
+            (iteracion_id,
+             iteracion_name,
+             iteracion_desc,
+             load_factor) = iteracion
+
+            t = """Iteración: %s""" % (iteracion_name,)
+            print t
+            print "-" * len(t)
+
+            print iteracion_desc
+            #print "\nHistorias involucradas:\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+            print "\nHistorias involucradas:\n\n"
+
+
+            sql2 = '''
+            select
+             id,
+             name,
+             description,
+             priority,
+             risk,
+             weight
+            from
+             stories
+            where
+             iteration_id = '%s'
+             ''' % iteracion_id 
+
+            cursor2.execute(sql2)
+            for iteration in cursor2.fetchall():
+                (iter_id,
+                 iter_name,
+                 iter_description,
+                 iter_prio,
+                 iter_risk,
+                 iter_weight) = iteration
+
+                print ":%s: %s" %( iter_name, iter_description)
+                print
+                
+            print "\n\n"
+
+
+
+h = "Historias fuera de iteraciones:"
+print "-" * len(h)
+print h
+print "-" * len(h)
+print
+
+
+sql2 = '''
 select
  id,
  name,
  description,
- load_factor
+ priority,
+ risk,
+ weight
 from
- iterations
+ stories
 where
- project_id='%s'
-order by
-id
- ''' % project_id
-#print sql
-cursor.execute(sql)
+ iteration_id = '0'
+ '''
 
-results = cursor.fetchall()
-for iteracion in results:
-    (iteracion_id,
-     iteracion_name,
-     iteracion_desc,
-     load_factor) = iteracion
+cursor2.execute(sql2)
+for iteration in cursor2.fetchall():
+    (iter_id,
+     iter_name,
+     iter_description,
+     iter_prio,
+     iter_risk,
+     iter_weight) = iteration
 
-    t = """Iteracion: %s""" % (iteracion_name,)
-    print t
-    print "-" * len(t)
+    print ":%s: %s" %( iter_name, iter_description)
+    print
 
-    print iteracion_desc
-    print "\nHistorias involucradas:\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-    
+print "\n\n"
 
-    sql2 = '''
-    select
-     id,
-     name,
-     description,
-     priority,
-     risk,
-     weight
-    from
-     stories
-    where
-     iteration_id = '%s'
-     ''' % iteracion_id 
 
-    cursor2.execute(sql2)
-    for iteration in cursor2.fetchall():
-        (iter_id,
-         iter_name,
-         iter_description,
-         iter_prio,
-         iter_risk,
-         iter_weight) = iteration
-
-        print " * ", iter_name
-    print "\n\n"
-        
-     
