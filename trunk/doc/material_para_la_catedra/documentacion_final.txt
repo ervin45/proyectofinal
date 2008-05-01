@@ -1520,11 +1520,78 @@ Código de cubículo
 Guias de instalación de componentes
 ------------------------------------------------------------------------
 
+La instalación de los componentes necesarios para la ejecución del
+proyecto se realizará sobre GNU/Linux. Especificamente se utilizara la
+distribución Debian GNU/Linux. La mayoria de las instalaciones y
+configuraciones se harán con el sistema de paquetes on-line de Debian
+mediante la herramienta apt-get.
+
+Lo primero de todo es copiar el directorio raiz del proyecto a
+/local/usr, para esta se necesitaran privilegios de super usuario.
+
+Python
+------- 
+
+apt-get install python25
+
+PostgreSQL
+-----------
+
+apt-get install postgresql-8.2
+
+Luego se realizará la migración de los datos o se comenzará con una
+instancia nueva del sistema.
+
+Es necesario crear un usuario que tenga permisos sobre la base de
+datos que contendra los datos. También se debe tener en cuenta que
+postgreSQL debe estar configurado para aceptar conexiones mediante
+IP's.
+
 Django
 ------
 
-Postgre
--------
+Para la instalación de Django tenemos dos opciones. La primera es por
+medio de apt-get.
+
+apt-get install python-django
+
+La segunda es mediante el repositorio svn de django.
+
+primero hay hacer un CheckOut del repositorio.
+svn co http://code.djangoproject.com/svn/django/trunk/ django-trunk
+
+Luego instalamos django en el sistema.
+cd django-trunk/django
+python setup.py install
+
+Apache
+---------
+
+apt-get install apache2
+
+Ahora hay que configurar el Apache para que sirva documentos de
+django. En el archivo /etc/apache2/http.conf agregamos las siguientes
+lineas:
+
+<Location "/bieler/">
+    SetHandler python-program
+    PythonHandler django.core.handlers.modpython
+    SetEnv DJANGO_SETTINGS_MODULE bielerDjango.settings
+    PythonDebug On
+    PythonPath "['/local/usr/'] + sys.path"
+</Location>
+
+Hay que reiniciar el servidor para que pueda tomar los cambios.
+/etc/init.d/apache2 restart
+
+
+
+Una vez que esta todo instalado y configurado hay ir al navegador e
+ingresamos la siguiente url:
+
+http://localhost/bieler/
+
+y ya podremos acceder a la aplicación.
 
 Tareas periódicas (cron)
 ------------------------
