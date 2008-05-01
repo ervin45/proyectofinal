@@ -428,7 +428,7 @@ Por otro lado una base de datos relacional posee las siguientes diferencias:
        modificados en cualquier momento que la aplicación lo requiera.
 
 
-DataMarks
+DataMarts
 ------------
 
 Manaja conceptos similares a los de un datawarehouse, pero con la
@@ -437,10 +437,10 @@ nivel departamental en lugar de hacerlo para toda la
 organización. 
 
 Segun sigamos a Bill Inmon o a Raph Kimball la relación
-entre un datawarehouse y un datamark será conciderablemente
-distinta. Para Inmon el datamark es cargado desde el datawarehouse
-mediante programas de carga, visión TOP-DOWN. Para Kimball el datamark
-es una porcion del datawarehouse y es cargado directamente desde las
+entre un datawarehouse y un datamart será considerablemente
+distinta. Para Inmon el datamart es cargado desde el datawarehouse
+mediante programas de carga, visión TOP-DOWN. Para Kimball el datamart
+es una porción del datawarehouse y es cargado directamente desde las
 bases de datos operacionales, visión BOTTOM-UP.
 
 Elementos que integran un Data Warehouse
@@ -746,6 +746,7 @@ En el patrón de diseño MTV:
     Python por lo que es posible utilizar cualquiera de las
     construcciones y modulos externos propios del lenguaje.
 
+.. image:: mtv.eps
 
 Si estás familiarizados con otros frameworks de desarrollo web MVC,
 quizás se pueda considerar que las vistas de Django pueden ser el
@@ -1390,6 +1391,15 @@ informe a obtener. Los parámetros necesiarios son:
 
 :Funcion: es para el postprocesamiento del cubo
 
+
+Cubiculo se basaba en una base de datos relacional, en este proyecto
+la elección fue Postgre, y las tablas de hechos se caracterizan por
+tener únicamente Claves Foráneas a las claves de las tablas
+dimensionales. El siguiente diagrama entidad relación muestra el
+diseño final implementado en la base de datos:
+
+.. image :: DER.eps
+
 ------------------------------------------------------------------------
 ETL
 ------------------------------------------------------------------------
@@ -1404,7 +1414,7 @@ Decidimos implementar los ETLs con applicaciones hechas a medida en
 python, para facilitar el acceso a los datos migramos las bases de
 datos iniciales a MySQL con dbf2mysql.
 
-[Diagrama dbf->mysql->psql]
+.. image :: etl.eps
 
 Uno de los mayores desafíos en esta etapa fue la obtención de
 identificadores del Data Warehouse de elementos existentes en las
@@ -1458,14 +1468,110 @@ operacional y llevarlos al Data Warehouse. En nuestro proyecto los
 datos estaban vinculados con un catálogo de quinientos mil productos y
 ejecución del ETL insumía entre seis y dieciocho horas.
 
-.. hacer una descripcion del script de etl en si
-.. hacer una lista de las complicaciones particulares
-.. hablar de las corridas (horas y horas, )
+La aplicación de ETL se dividía en tres partes lógicas bien diferenciadas: 
+
+:La obtención de los datos: Se debían generar tablas levemente
+  desnormalizadas a partir de las bases de datos operacionales
+  exportadas a MySQL. Estas tablas solían poseer varios cientos de
+  miles de registros que cubrian las posibilidades de cada
+  dimension. Para lograr mayor performance, se intentaba utilizar
+  operaciones dentro del mismo motor de bases de datos relacional
+
+:La transformación de los datos: Estas tablas debían ser descompuestas
+  para anexar datos a las tablas de hecho (fact tables) utilizando los
+  registros de las tablas de dimensionales o bien creando nuevos
+  registros en las mismas
+
+:La carga del dato (measure): Una vez determinado las claves foráneas
+  a utilizar se generaba el comando INSERT para la inclusión del dato
+  en la tabla de hecho correspondiente.
+
+Si bien el poceso se puede esquematizar como simple y ordenado, en la
+practica, durante este proyecto se encontraron muchas complicaciones
+para validar los datos finales. El cliente poseía algunos informes y
+mucha intuición para corroborar los datos almacenados en el data
+warehouse. Cada prueba llevaba cerca de un día para generar los cubos
+completos y era necesario realizar varias para detectar y corregir posibles
+errores de procesamiento.
+
+Se decidió en las primeras etapas del proyecto que la creación del ETL
+se realizaría en paralelo al desarrollo de la aplicación
+OLAP; logrando así maximizar el uso del tiempo de los desarrolladores.
 
 
+------------------------------------------------------------------------
+Herramienta OLAP
+------------------------------------------------------------------------
+
+La finalidad de crear una fuente de datos multidimensional, es para
+dar al usuario la posibilidad de inspeccionarla y generar informes sin
+la necesidad de crear consultas SQL ad-hoc. Para esta tarea se desarrolló 
+una aplicación OLAP en Django.
+
+La principal función de esta aplicación es la visualización de
+informes. Sobre estos informes se pueden realizar operaciones de:
+
+:drilldown: Es la operación para obtener mayor grado de detalle sobre
+  una dimensión. Ejemplo pasar de año a mes o de rubro a subrubro en
+  un infrome.
+
+:rollup: Es la operación contraria a drilldown, el usuario puede
+  obtener una visión parnorámica del informe. Ejemplo: el informe
+  visualiza las ventas separadas por vendedor y luego del rollup se
+  obtine el informe separado por sucursal.
+
+:dice: Es la operación de intercambio de dimensiones. Ejemplo: el
+  informe muestra los datos en los siguientes ejes: pieza y tiempo, y
+  luego del dice se visualiza sucursal y tiempo.
+
+:pivot: Realiza un intercambios de los ejes de la tabla, el permite al
+  usuario una visualización diferente de los mismos datos que posee.
+
+:drill_replacing: Realiza un drilldown agregando restricciones. De
+  esta forma si el usuario esta visualizando todos los años y desea
+  aumentar la granularidad a mes, pero no quiere que se convierta en
+  una explosión de información, puede realizar un drill_replacing de
+  un año en particuilar.
+
+:slice: Agrega restricciones al informe actual, por ejemplo,
+  visualizar solo los datos que pertenezcan a una sucursal o a un area
+  geográfica.
+
+
+En el siguiente gráfico se puede ver la descomposición de las operaciones y
+las funciones que debe realizar la instancia de Reporte para lograr retornarle
+al usuario la información solicitada:
+
+.. image:: ciclo_de_vida.eps
+
+Cada función cumple una tarea específica:
+
+:get_sql(): Utiliza cubículo para obtener el SQL que contiene todos
+  los datos. Cubiculo es el único que conoce la estructura relacional
+  subyacente.
+
+:exec_sql(): El SQL se debe ejecutar, y realizar comprobaciones de
+  sanidad previas y posteriores a la ejecución. El resultado de la
+  ejecución suele devolver una gran consulta con unas pocas columnas,
+  que luego deberán se reorganizadas para enviarlas al usuario.
+
+:fill_dimensions(): Los datos que existen en el data warehouse puede
+  tener dimensaiones incompletas o con huecos. La tarea de
+  fill_dimensions() es completar los datos con valores coherentes con
+  el informe presentado.
+
+:complete_dimension(): En las operaciones de cubos, siempre es
+  necesario tener ambos de las mismas dimensiones para
+  operar. complete_dimension() se encarga de homogeinizar las
+  dimensiones de los cubos involucrados.
+
+:exec_function(): El ultimo paso antes de mostrar el informe es
+  aplicar la función de visualización a cada una de las measures
+  obtenidas. Esto permite una flexibilidad total al momento de
+  confeccionar informes.
 
 ========================================================================
-Juego de la planificacion
+Juego de la planificación
 ========================================================================
 
 .. include:: versiones-iteraciones-historias.txt
@@ -1501,6 +1607,11 @@ central y con metadatos relacionados al proceso de desarrollo.
 Se pueden restituir versiones anteriores del proyecto como también
 generar nuevas ramas de desarrollo, por ejemplo para experimentación
 de una funcionalidad en concreto.
+
+.. image:: svn-normal.eps
+.. image:: svn-merge.eps
+.. image:: svn-conflict.eps
+
 
 ------------------------------------------------------------------------
 Herramientas: Wiki
@@ -1571,10 +1682,12 @@ medio de apt-get.
 
 La segunda es mediante el repositorio svn de django.
 
-primero hay hacer un CheckOut del repositorio.
-svn co http://code.djangoproject.com/svn/django/trunk/ django-trunk
+Primero hay hacer un checkout del repositorio:
+::
 
-Luego instalamos django en el sistema.
+   svn co http://code.djangoproject.com/svn/django/trunk/ django-trunk
+
+Luego hay que instalar django en el sistema:
 ::
 
   cd django-trunk/django
