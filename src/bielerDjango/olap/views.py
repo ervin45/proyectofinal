@@ -1,4 +1,5 @@
 import models
+import reports
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
@@ -93,7 +94,7 @@ def index2(request):
     return render_to_response('index2.html',locals())
 
 def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
-    report = models.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
+    report = reports.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
 
     try:
         cube = report.build_cube()
@@ -140,12 +141,12 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
         return render_to_response('reportes2.html',locals())
 
-    except models.CubeTooBig:
+    except reports.CubeTooBig:
         return render_to_response('tooBig.html',locals())
 
 def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params):
-    report2 = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
+    report2 = reports.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params)
 
     try:
@@ -178,7 +179,7 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
 
         return render_to_response('reportes2.html',locals())
 
-    except models.CubeTooBig, e:
+    except reports.CubeTooBig, e:
         cells = e.cells
         rows  = e.rows
 
@@ -255,11 +256,11 @@ def get_report(request):
         parsed_url = parse_url(http_referer)
         (report, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params) = parsed_url
         
-        report = models.Report1(report, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
+        report = reports.Report1(report, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
     else:
         parsed_url = parse_url2(http_referer)
         (ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params) = parsed_url
-        report = models.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params)
+        report = reports.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params)
         
     return report
 
@@ -384,34 +385,34 @@ def adm_report(request):
 ####AJAX####
 
 def get_dimensions(request, ft):
-    response = models.Ajax_responser.get_dimensions(ft)
+    response = reports.Ajax_responser.get_dimensions(ft)
     return HttpResponse("|".join(response))
 
 def get_measures(request, ft):
-    response = models.Ajax_responser.get_measures(ft)
+    response = reports.Ajax_responser.get_measures(ft)
     response = ["ft_%s.%s" % (ft, x) for x in response]
     return HttpResponse("|".join(response))
 
 def get_levels(request, dimension):
-    response = models.Ajax_responser.get_levels(dimension)
+    response = reports.Ajax_responser.get_levels(dimension)
     response.reverse()
     return HttpResponse("|".join(response))
 
 def get_levels_without_todo(request, dimension):
-    response = models.Ajax_responser.get_levels(dimension)
+    response = reports.Ajax_responser.get_levels(dimension)
     response.reverse()
     response.remove('TODO')
     return HttpResponse("|".join(response))
 
 def get_values(request, dimension, level):
-    response = models.Ajax_responser.get_values(dimension, level)
+    response = reports.Ajax_responser.get_values(dimension, level)
     return HttpResponse("|".join(response))
 
 def get_mf(request):
     return HttpResponse('')
 
 def get_cf(request):
-    response = models.Ajax_responser.get_cf()
+    response = reports.Ajax_responser.get_cf()
     return HttpResponse(str(response))
 
 
