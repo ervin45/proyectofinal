@@ -546,7 +546,7 @@ class Report1:
         '''
         >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.pivot(FakedRequest())
-        'http://192.168.61.100:8000/report/ventas/pieza/tiempo/pieza/anio/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
+        '/report/ventas/pieza/tiempo/pieza/anio/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
         >>>
         '''
         self.cubiculo.pivot()
@@ -558,7 +558,7 @@ class Report1:
         '''
         >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.drill(FakedRequest(), 0)
-        'http://192.168.61.100:8000/report/ventas/tiempo/pieza/mes/pieza/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
+        '/report/ventas/tiempo/pieza/mes/pieza/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
         >>>
         '''
         self.cubiculo.drill(axis)
@@ -570,7 +570,7 @@ class Report1:
         '''
         >>> r = Report1("ventas", "tiempo", "pieza", "mes", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.roll(FakedRequest(), 0)
-        'http://192.168.61.100:8000/report/ventas/tiempo/pieza/anio/pieza/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
+        '/report/ventas/tiempo/pieza/anio/pieza/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
         >>>
         '''
         self.cubiculo.roll(axis)
@@ -583,11 +583,11 @@ class Report1:
         '''
         >>> r = Report1("test", "tiempo", "pieza", "TODO", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.replace_to(FakedRequest(), 0, 'TODO')
-        "http://192.168.61.100:8000/report/test/tiempo/pieza/anio/pieza/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]"
+        '/report/test/tiempo/pieza/anio/pieza/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
         >>> r.replace_to(FakedRequest(), 0, '2006-12')
-        "http://192.168.61.100:8000/report/test/tiempo/pieza/mes/pieza/xr={'anio': ['2006'], 'mes': ['12']}/yr={}/ore=[]/same/params=[]/same_cube/params=[]"
+        "/report/test/tiempo/pieza/mes/pieza/xr={'anio': ['2006'], 'mes': ['12']}/yr={}/ore=[]/same/params=[]/same_cube/params=[]"
         >>> r.replace_to(FakedRequest(), 0, '2006')
-        "http://192.168.61.100:8000/report/test/tiempo/pieza/mes/pieza/xr={'anio': ['2006']}/yr={}/ore=[]/same/params=[]/same_cube/params=[]"
+        "/report/test/tiempo/pieza/mes/pieza/xr={'anio': ['2006']}/yr={}/ore=[]/same/params=[]/same_cube/params=[]"
         >>>
         '''
         self.cubiculo.replace_to(axis, values)
@@ -600,9 +600,9 @@ class Report1:
         '''
         >>> r = Report1("test", "tiempo", "pieza", "TODO", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.replace_to_both_axis(FakedRequest(), 'TODO', '184')
-        "http://192.168.61.100:8000/report/test/tiempo/pieza/anio/modelo/xr={}/yr={'grupo_constructivo': ['184']}/ore=[]/same/params=[]/same_cube/params=[]"
+        "/report/test/tiempo/pieza/anio/modelo/xr={}/yr={'grupo_constructivo': ['184']}/ore=[]/same/params=[]/same_cube/params=[]"
         >>> r.replace_to_both_axis(FakedRequest(), '2006', '184')
-        "http://192.168.61.100:8000/report/test/tiempo/pieza/mes/modelo/xr={'anio': ['2006']}/yr={'grupo_constructivo': ['184']}/ore=[]/same/params=[]/same_cube/params=[]"
+        "/report/test/tiempo/pieza/mes/modelo/xr={'anio': ['2006']}/yr={'grupo_constructivo': ['184']}/ore=[]/same/params=[]/same_cube/params=[]"
         >>>
         '''
         self.cubiculo.replace_to_both_axis(value0, value1)
@@ -614,7 +614,7 @@ class Report1:
         '''
         >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.dice(FakedRequest(), 'pieza', 'tipo_venta')
-        "http://192.168.61.100:8000/report/ventas/tiempo/tipo_venta/anio/TODO/xr={'anio': ['2006']}/yr={}/ore=[['pieza', 'pieza', {'grupo_constructivo': ['184']}]]/same/params=[]/same_cube/params=[]"
+        "/report/ventas/tiempo/tipo_venta/anio/TODO/xr={'anio': ['2006']}/yr={}/ore=[['pieza', 'pieza', {'grupo_constructivo': ['184']}]]/same/params=[]/same_cube/params=[]"
         >>>
         '''
         self.cubiculo.dice(main_axis, other_axis)
@@ -626,7 +626,7 @@ class Report1:
         '''
         >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.dimension_values(1)
-        [u'184 - 0 - 14 - 71', ..., u'184 - 616 - 16 - 80']
+        [u'184-0-14-71', ..., u'184-616-16-80']
         >>> r.dimension_values(0)
         [2006]
         >>>
