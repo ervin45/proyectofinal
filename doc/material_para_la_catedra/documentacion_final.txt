@@ -1453,7 +1453,14 @@ función get_id(), descripta a continuación:
                 rtn = cursor.fetchone ()[0]
         return rtn
 
-(Fin de código)
+Los procesos de ETL deben extraer los datos de la base de datos
+operacional y llevarlos al Data Warehouse. En nuestro proyecto los
+datos estaban vinculados con un catálogo de quinientos mil productos y
+ejecución del ETL insumía entre seis y dieciocho horas.
+
+.. hacer una descripcion del script de etl en si
+.. hacer una lista de las complicaciones particulares
+.. hablar de las corridas (horas y horas, )
 
 
 
@@ -1517,7 +1524,7 @@ Código de cubículo
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
-Guias de instalación de componentes
+Guías de instalación de componentes
 ------------------------------------------------------------------------
 
 La instalación de los componentes necesarios para la ejecución del
@@ -1530,14 +1537,19 @@ Lo primero de todo es copiar el directorio raiz del proyecto a
 /local/usr, para esta se necesitaran privilegios de super usuario.
 
 Python
-------- 
+------
 
-apt-get install python25
+::
+
+  apt-get install python25
 
 PostgreSQL
------------
+----------
 
-apt-get install postgresql-8.2
+
+::
+
+  apt-get install postgresql-8.2
 
 Luego se realizará la migración de los datos o se comenzará con una
 instancia nueva del sistema.
@@ -1553,7 +1565,9 @@ Django
 Para la instalación de Django tenemos dos opciones. La primera es por
 medio de apt-get.
 
-apt-get install python-django
+::
+
+  apt-get install python-django
 
 La segunda es mediante el repositorio svn de django.
 
@@ -1561,28 +1575,38 @@ primero hay hacer un CheckOut del repositorio.
 svn co http://code.djangoproject.com/svn/django/trunk/ django-trunk
 
 Luego instalamos django en el sistema.
-cd django-trunk/django
-python setup.py install
+::
+
+  cd django-trunk/django
+  python setup.py install
 
 Apache
----------
+------
 
-apt-get install apache2
+::
+
+  apt-get install apache2
 
 Ahora hay que configurar el Apache para que sirva documentos de
 django. En el archivo /etc/apache2/http.conf agregamos las siguientes
 lineas:
 
-<Location "/bieler/">
+::
+
+ <Location ``/bieler/''>
     SetHandler python-program
     PythonHandler django.core.handlers.modpython
     SetEnv DJANGO_SETTINGS_MODULE bielerDjango.settings
     PythonDebug On
-    PythonPath "['/local/usr/'] + sys.path"
-</Location>
+    PythonPath ``[`/local/usr'] + sys.path''
+ </Location> 
+ -------------
 
-Hay que reiniciar el servidor para que pueda tomar los cambios.
-/etc/init.d/apache2 restart
+Hay que reiniciar el servidor para que pueda tomar los cambios:
+
+::
+
+  /etc/init.d/apache2 restart
 
 
 
@@ -1591,7 +1615,7 @@ ingresamos la siguiente url:
 
 http://localhost/bieler/
 
-y ya podremos acceder a la aplicación.
+y ya se puede acceder a la aplicación.
 
 Tareas periódicas (cron)
 ------------------------
