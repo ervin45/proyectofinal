@@ -11,6 +11,44 @@
 ========================================================================
 
 ------------------------------------------------------------------------
+Organización del documento
+------------------------------------------------------------------------
+
+El entendimiento del presente documento, el lector deberá estar
+familiarizado con alguna de las herramientas y tecnologías de bases de
+datos multidimensionales, conceptos de Data Warehouse como cubos OLAP,
+ETL y frameworks para el desarrollo web. El Capítulo 1, Introducción,
+intenta resumir y organizar estas tecnologías y conceptos.
+
+Para la realización de este proyecto se investigaron diversas
+tecnologías, algunas de ellas descartadas en las primeras instancias y
+otras forman parte del núclo del sistema final. El Capítulo 2,
+Tecnología Investigada, enumera y describe a las más importantes.
+
+El capítulo 3 se centra en el desarrollo mismo del sistema, las partes
+claves que se necesitaron implementar para conseguir un sistema final
+que se ajuste a la necesidad del cliente. Los 3 componentes de mayor
+importancia del sistema son descriptos en este capítulo, en conjunto
+con los desafíos de implementación que el equipo de desarrollo se fue
+enfrentando.
+
+La metodología utilizada para el desarrollo fue eXtreme Programing. El
+capítulo 4 es la sumarización del Juego de la Planificación de la
+metodología. Es un resume de las versiones, iteraciones e historias
+que se fueron cumpliendo durante la implementación.
+
+La metodología elegida impone la realización de numerosos Tests, los
+mismos son descriptos en el Capítulo 5 como parte de la Documentación.
+
+Al final de cada proyecto, el equipo de desarrollo elabora una breve
+conclusión, la cual es parte del presente informe. La misma se
+encuentra en el Capítulo 6.
+
+Por último el Capítulo 7 posee Anexos que incluyen las herramientas de
+apoyo, fragmentos de código, guías de instalación y licencias
+utilizadas en este proyecto.
+
+------------------------------------------------------------------------
 Temática
 ------------------------------------------------------------------------
 
@@ -49,13 +87,13 @@ MySQL, entre otros.
 Problemática
 ------------------------------------------------------------------------
 
-En el transcursos de los años en lo que funciona la empresa, esta ha
-ido acumulando datos acerca de las operaciones que realiza para para
-poder devenvolverse en su ambito de negocio. Todos estos datos solo
-fueron acumulados en los sistemas internos que utiliza la empresa sin
-la posibilidad de realizar un analisis mas completo que permita la
-toma de decisiones en un nivel estrategico basado no solo en intuición
-del empresario sino tambien en datos cuantitativos y objetivos.
+En el transcurso de los años en los que funciona la empresa, esta ha
+ido acumulando datos acerca de las operaciones que realiza para poder
+devenvolverse en su ambito de negocio. Todos estos datos tan sólo fueron
+acumulados en los sistemas internos que utiliza la empresa sin la
+posibilidad de realizar un analisis mas completo que permita la toma
+de decisiones en un nivel estrategico basado no solo en intuición del
+empresario sino tambien en datos cuantitativos y objetivos.
 
 La empresa no tenia una manera sencilla y eficaz de analizar sus datos
 operacionales. No era posible realizar una comparacion de los datos en
@@ -85,18 +123,54 @@ necesario un volumen significativo de datos sensibles (como la
 facturación).
 
 En nuestro caso, Ricardo C. Bieler S.A. nos facilitó las bases de
-datos de facturación de los últimos siete años, evitando la necesidad
-de comenzar la tediosa tarea de recolección de los mismos en otra
-empresa. Por otro lado el cliente tiene la imperiosa necesidad de
-herramientas de diagnóstico y ayuda en la toma de decisiones para
-mejorar el funcionamiento de su empresa, ya que en la actualidad no
-existe ningún sistema que le brinde esta funcionalidad en tiempo real.
+datos de facturación de los últimos siete años, sin esa información
+nos hubiese sido imposible concretar este proyecto. Por otro lado el
+cliente tiene la imperiosa necesidad de herramientas de diagnóstico y
+ayuda en la toma de decisiones para mejorar el funcionamiento de su
+empresa, ya que en la actualidad no existe ningún sistema que le
+brinde esta funcionalidad en tiempo real.
 
 Debido a las características particulares de la estructura de sistemas
 de información de la empresa, es necesario realizar adaptaciones a
 medida para la generación de informes personalizados que sean de facil
 generación y consulta. Las herramientas comerciales del mercado no
 ofrecen la flexibilidad suficiente para esta tarea.
+
+------------------------------------------------------------------------
+Estructura de numeración de repuestos
+------------------------------------------------------------------------
+
+Mercedez Benz posee un sistema de identificación de partes muy particular.
+
+Se detalla parte los componentes en el número identificacatorio:
+
+.. image :: numeracion_mercedes_benz.eps
+
+Fue muy importante conocer la nomenclatura de los elementos de
+Mercedes Benz, porque la jerarquía de elementos no es intuitiva, al
+menos no inicialmente. Se detalla a continuación la jerarquía de los
+elementos de tipo A (Elementos Constructivos):
+
+* Grupo Constructivo
+* Modelo o Baumuster
+* Identificación de pieza
+* Numero de modificación
+
+El sistema legacy (Octosis) incorporó campos finales que identifican,
+por ejemplo, el proveedor. Logrando en algunos casos hasta 27 números
+para caracterizar una pieza en particular. Estos datos fueron usados
+para completar las dimensiones de los cubos.
+
+Los grupos constructivos se dividen en 2 partes, la primera de ellas son
+números del 00 al 99 que clasifican al elemento de la siguiente manera:
+
+* Piezas de motor: Grupos del 01 al 23, 25 y 54
+* Piezas de chasis: Grupos del 24 al 59
+* Piezas de cabina/carrocería: Grupos del 60 a 97
+* Piezas en general: Grupos 98 y 99
+
+Esta división se expande a un total de 1000 subgrupos, que no viene al
+caso mencionarlos en este documento.
 
 ------------------------------------------------------------------------
 Objetivos y alcances
@@ -159,43 +233,6 @@ y vendidos en los últimos siete años.
   diferentes roles con determinados permisos.
 
 
-------------------------------------------------------------------------
-Organización del documento
-------------------------------------------------------------------------
-
-El entendimiento del presente documento, el lector deberá estar
-familiarizado con alguna de las herramientas y tecnologías de bases de
-datos multidimensionales, conceptos de Data Warehouse como cubos OLAP,
-ETL y frameworks para el desarrollo web. El Capítulo 1, Introducción,
-intenta resumir y organizar estas tecnologías y conceptos.
-
-Para la realización de este proyecto se investigaron diversas
-tecnologías, algunas de ellas descartadas en las primeras instancias y
-otras forman parte del núclo del sistema final. El Capítulo 2,
-Tecnología Investigada, enumera y describe a las más importantes.
-
-El capítulo 3 se centra en el desarrollo mismo del sistema, las partes
-claves que se necesitaron implementar para conseguir un sistema final
-que se ajuste a la necesidad del cliente. Los 3 componentes de mayor
-importancia del sistema son descriptos en este capítulo, en conjunto
-con los desafíos de implementación que el equipo de desarrollo se fue
-enfrentando.
-
-La metodología utilizada para el desarrollo fue eXtreme Programing. El
-capítulo 4 es la sumarización del Juego de la Planificación de la
-metodología. Es un resume de las versiones, iteraciones e historias
-que se fueron cumpliendo durante la implementación.
-
-La metodología elegida impone la realización de numerosos Tests, los
-mismos son descriptos en el Capítulo 5 como parte de la Documentación.
-
-Al final de cada proyecto, el equipo de desarrollo elabora una breve
-conclusión, la cual es parte del presente informe. La misma se
-encuentra en el Capítulo 6.
-
-Por último el Capítulo 7 posee Anexos que incluyen las herramientas de
-apoyo, fragmentos de código, guías de instalación y licencias
-utilizadas en este proyecto.
 
 ------------------------------------------------------------------------
 Software Libre
@@ -269,14 +306,6 @@ omite el hecho que estos exigen el pago de royalties a terceros y por
 razones de mercado expuestas en el anterior punto no interesa que se
 perpetúen mucho tiempo.
 
-Los formatos estándares afectan a todos los niveles. Un ejemplo lo
-estamos viendo en los documentos emitidos por las administraciones
-publicas en distintos formatos y versiones, que producen retrasos y
-dificultades en el acceso adecuado a la información para las mismas
-administraciones y para sus usuarios. Algunas administraciones de la
-unión europea ya están dando el paso a formatos abiertos como ODF
-(Open Document Format).
-
 6. Sistemas sin puertas traseras y más seguros
 
 El acceso al código fuente permite que tanto hackers como empresas de
@@ -288,7 +317,7 @@ genera.
 7. Corrección mas rápida y eficiente de fallos
 
 El funcionamiento e interés conjunto de la comunidad ha demostrado
-solucionar mas rápidamente los fallos de seguridad en elsoftware
+solucionar mas rápidamente los fallos de seguridad en el software
 libre, algo que desgraciadamente en el software propietario es mas
 difícil y costoso. Cuando se notifica a las empresas propietarias del
 software, éstas niegan inicialmente la existencia de dichos fallos por
@@ -299,12 +328,7 @@ bugs tardan meses hasta proporcionar los parches de seguridad.
 
 Actualmente la mayoría de distribuciones de Linux incorporan alguno de
 los sistemas que unifican el método de instalación de programas,
-librerías, etc. por parte de los usuarios. Esto llega a simplificar
-hasta el grado de marcar o desmarcar una casilla para la gestión del
-software, y permiten el acceso a las miles de aplicaciones existentes
-de forma segura y gratuita a la par que evitan tener que recurrir a
-páginas web de dudosa ética desde las que los usuarios instalan sin
-saberlo spyware o virus informáticos en sus sistemas. Este sistema de
+librerías, etc. por parte de los usuarios. Este sistema de
 acceso y gestión del software se hace prácticamente utópico si se
 extrapola al mercado propietario.
 
@@ -442,7 +466,7 @@ Propiedades
 
 :Variante en el tiempo: Los cambios producidos en los datos a lo largo
 	  del tiempo quedan registrados para que los informes que
-	  puedan generar reflejen esas variaciones.
+	  puedan generarse reflejen esas variaciones.
 
 :No volátil: La información no se modifica ni se elimina, una vez
     almacenado un dato, éste se convierte en información de sólo
@@ -462,7 +486,7 @@ Por otro lado una base de datos relacional posee las siguientes diferencias:
 :Tiempo: Los datos almacenados no deben tener necesariamente un
 	 relación temporal o clave temporal.
 
-:Datos volátiles: Los datos ademas de ser leidos pueden ser
+:Datos volátiles: Los datos además de ser leídos pueden ser
        modificados en cualquier momento que la aplicación lo requiera.
 
 
@@ -488,7 +512,7 @@ Elementos que integran un Data Warehouse
 	    función es ayudar a los analistas a localizar los
 	    contenidos, guiar a los algoritmos utilizados para la
 	    sumarización/agregación y describir el método por el cual
-	    es dato fue transformado desde su estado original hasta el
+	    el dato fue transformado desde su estado original hasta el
 	    que es mantenido en el Data Warehouse.
 
 :ETL: sabemos que los datos que se encuentran en el Data Warehouse
@@ -631,14 +655,14 @@ para un determinado valor de Z también resulte de interés.
 La motivación que hay tras OLAP vuelve a mostrar de nuevo el paradigma
 de los informes de tablas cruzadas de los sistema de gestión de base
 de datos de los 80. Se puede desear una visualización al estilo de una
-hoja de cálculo, donde los valores de X se encuentran en la fila $1,
-los valores de Y aparecen en la columna $A, y los valores de 
+hoja de cálculo, donde los valores de X se encuentran en la fila 1,
+los valores de Y aparecen en la columna A, y los valores de 
 
 .. raw:: latex
 
   $ W: (X,Y) \rightarrow W $
 
-se encuentran en las celdas individuales a partir de la celda $B2
+se encuentran en las celdas individuales a partir de la celda B2
 y desde ahí, hacia abajo y hacia la derecha. Si bien se puede utilizar
 el Lenguaje de Manipulación de Datos (o DML) de SQL para mostrar las
 tuplas (X,Y,W), este formato de salida no es tan deseable como la
@@ -665,9 +689,9 @@ Porque Python y no Java
 
 En el mercado de los lenguajes de programación Java se ha impuesto
 gracias al concepto de la maquina virtual multiplataforma, una
-plataforma que ofrece muchos servicios y a fuerza de mucho
-marketing. Esto no quiere decir que Java deba se utilizado para
-cualquier desarrollo como opción por defecto. 
+plataforma que ofrece muchos servicios y a fuerza de marketing. Esto
+no quiere decir que Java deba se utilizado para cualquier desarrollo
+como opción por defecto.
 
 En nuestro proyecto hemos elegido Python por ser un lenguaje que nos
 hace posible maximizar nuestra velocidad de desarrollo y nos permite
@@ -703,28 +727,28 @@ Se puede destacar de Python:
 :Es un lenguaje de programación multiparadigma: esto significa que más
     que forzar a los programadores a adoptar un estilo particular de
     programación, permite varios estilos: programación orientada a
-    objetos, programación estructurada y programación funcional.Posee
+    objetos, programación estructurada y programación funcional. Posee
     un rico juego de estructuras de datos que se pueden manipular de
-    modo sencillo.Python usa tipo de dato dinámico y fuerte
+    modo sencillo. Python usa tipado de datos dinámico y fuerte.
 
 :Facil de extender: nuevos módulos se pueden escribir fácilmente en C
        o C++. Python puede utilizarse como un lenguaje de extensión
        para módulos y aplicaciones que necesitan de una interfaz
        programable.
 
-Resumiendo, Python es un lenguaje ideal para realizar desarrollos en un fracción
-de tiempo respecto a la mayoria de los lenguajes del mercado
-reduciendo considerablemente los costos de desarrollo y lenguajes como
-Java y C son mas apropiados cuando es muy alto el requerimiento de
-performance. Como conclusión, nosotros pensamos que el tiempo de
-desarrollo es un requisito mucho mas critico que la performance para
-nuestro proyecto, hemos elegido Python.
+Resumiendo, Python es un lenguaje ideal para realizar desarrollos en
+un fracción de tiempo respecto a la mayoria de los lenguajes del
+mercado reduciendo considerablemente los costos de desarrollo y
+lenguajes como Java y C son mas apropiados cuando es muy alto el
+requerimiento de performance. En conclusión, pensamos que el tiempo de
+desarrollo es un requisito mucho mas crítico que la performance para
+nuestro proyecto, por lo tanto hemos elegido Python.
 
 -----------------------------------------------------------------------
 Framework Utilizado
 -----------------------------------------------------------------------
 
-Para el proyecto se eligio el framework web python. A continuación se
+Para el proyecto se eligio el framework web Django. A continuación se
 explicará en que consiste el flujo de información del framework.
 
 Django fue diseñado para promover la alta cohesión y el bajo
@@ -732,10 +756,10 @@ acoplamiento entre las piezas de una aplicación. Siguiendo esta
 filosofía es fácil hacer cambios en un lugar particular de la
 aplicación sin afectar otras piezas.
 
-Nucleo del Framework
+Núcleo del Framework
 ---------------------------
 
-Consta basicamente de tres piezas -- la lógica de acceso a la base de
+Consta básicamente de tres piezas -- la lógica de acceso a la base de
 datos, la lógica de negocios, y la lógica de presentación --
 comprenden un concepto que a veces es llamado el patrón de arquitectura
 de software Modelo-Vista-Controlador (MVC). En este patrón, el
@@ -784,17 +808,16 @@ En el patrón de diseño MTV:
 
 .. image:: mtv.eps
 
-Si estás familiarizados con otros frameworks de desarrollo web MVC,
-quizás se pueda considerar que las vistas de Django pueden ser el
-"controlador" y las plantillas de Django pueden ser la "vista". Esto
-es una confusión desafortuna a raízñ de las diferentes
-interpretaciones de MVC. En la interpretación de Django de MVC, la
-"vista" describe los datos que son presentados al usuario; no
-necesariamente el cómo se mostrarán, pero si cuales datos son
-presentados. En contraste otros frameworks sugieren que el trabajo del
-controlador incluya la decisión de cuales datos son presentados al
-usuario, mientras que la vista sea estrictamente el como serán
-presentados y no cuales.
+Si se compara con otros frameworks de desarrollo web MVC, quizás se
+pueda considerar que las vistas de Django pueden ser el "controlador"
+y las plantillas de Django pueden ser la "vista". Esto es una
+confusión desafortuna a raíz de las diferentes interpretaciones de
+MVC. En la interpretación de Django de MVC, la "vista" describe los
+datos que son presentados al usuario; no necesariamente el cómo se
+mostrarán, pero si cuales datos son presentados. En contraste otros
+frameworks sugieren que el trabajo del controlador incluya la decisión
+de cuales datos son presentados al usuario, mientras que la vista sea
+estrictamente el como serán presentados y no cuales.
 
 Ninguna de las interpretaciones es más "correcta" que otras. Lo
 importante es entender el concepto subyacente.
@@ -898,12 +921,16 @@ Las prácticas fundamentales de la metodología son:
 	      escribe- es más importante que la posible pérdida de
 	      productividad inmediata.
 
-:Frecuente interacción: del equipo de programación con el cliente o
+:Cliente in-situ: del equipo de programación con el cliente o
 	   usuario Se recomienda que un representante del cliente
 	   trabaje junto al equipo de desarrollo.
 
-:Corrección de todos los errores antes de añadir nueva funcionalidad:
-	    realizar entregas frecuentes.
+:Realizar entregas frecuentes: para mejorar la retroalimentación con
+	  el cliente, ya que el mismo puede usar el sistema y
+	  encontrar requisitos no contemplados originalmente. Al mismo
+	  tiempo se prueba y se tiene la posibilidad de encontrar
+	  errores prematuramente.
+
 
 :Refactorizacion del código: es decir, reescribir ciertas partes del
 		 código para aumentar su legibilidad y mantenibilidad
@@ -913,13 +940,13 @@ Las prácticas fundamentales de la metodología son:
 
 :Propiedad del código compartida: en vez de dividir la responsabilidad
 	   en el desarrollo de cada módulo en grupos de trabajo
-	   distintos, este método promueve el que todo el personal
+	   distintos, este método promueve que todo el personal
 	   pueda corregir y extender cualquier parte del proyecto. Las
 	   frecuentes pruebas de regresión garantizan que los posibles
 	   errores serán detectados.
 
 
-:Simplicidad en el código: es la mejor manera de que las cosas
+:Simplicidad en el diseño: es la mejor manera de que las cosas
 	     funcionen. Cuando todo funcione se podrá añadir
 	     funcionalidad si es necesario. La programación extrema
 	     apuesta que en más sencillo hacer algo simple y tener un
@@ -938,16 +965,15 @@ Planificación
 ------------------
 
 Se escriben historias, cuya idea principal es describir un caso de uso
-en dos o tres líneas con terminología del cliente, de hecho, se supone
-que deben ser escritos por él mismo. Las historias sirven para la
-creación test de aceptación y permiten hacer una estimación de tiempo
-de desarrollo.  Se crea un plan de lanzamiento que debe servir para
-crear un calendario que todos puedan cumplir y en cuyo desarrollo
-hayan participado todas las personas involucradas en el proyecto. Para
-la creación de iteraciones del proyecto se usará como base las
-historias, que deberán ser priorizadas por el cliente y estimados los
-tiempos de desarrollo por los participantes. A esto se lo denomina plan
-de la iteración.
+en dos o tres líneas con terminología del cliente. Las historias
+sirven para la creación test de aceptación y permiten hacer una
+estimación de tiempo de desarrollo.  Se crea un plan de lanzamiento
+que debe servir para crear un calendario que todos puedan cumplir y en
+cuyo desarrollo hayan participado todas las personas involucradas en
+el proyecto. Para la creación de iteraciones del proyecto se usará
+como base las historias, que deberán ser priorizadas por el cliente y
+estimados los tiempos de desarrollo por los participantes. A esto se
+lo denomina plan de la iteración.
 
 
 Diseño
@@ -967,12 +993,12 @@ que ya no es claramente la mejor solución.
 Codificación
 ------------
 
-El cliente está siempre disponible, a ser posible cara a cara. La idea
-es que forme parte del equipo de desarrollo, y esté presente en todas
-las fases de XP. La idea es usar el tiempo del cliente para estas
-tareas en vez de para que cree una detalladísima especificación de
-requisitos, y evitar la entrega de un producto peor que le hará perder
-tiempo.
+El cliente está siempre disponible, a ser posible cara a cara. Éste
+debería formar parte del equipo de desarrollo, y esté presente en
+todas las fases de XP. La idea es usar el tiempo del cliente para
+estas tareas en vez de para que cree una detalladísima especificación
+de requisitos, y evitar la entrega de un producto peor que le hará
+perder tiempo.
 
 El código se ajustará a unos estándares de codificación, asegurando la
 consistencia y facilitando la comprensión y refactorización del
@@ -984,12 +1010,11 @@ cumplir lo que se va a codificar.
 La programación del código se realizará en parejas, para aumentar la
 calidad del mismo.
 
-Se integra código y se lanza dicha integración de manera frecuente,
-evitando divergencias en el desarrollo y permitiendo que todo el mundo
-trabaje con la última versión del desarrollo. De esta manera, se
-evitará pasar grandes periodos de tiempo integrando el código al final
-del desarrollo, ya que las incompatibilidades habrán sido detectadas
-enseguida.
+El código se integra de manera frecuente, evitando divergencias en el
+desarrollo y permitiendo que todo el mundo trabaje con la última
+versión. De esta manera, se evitará pasar grandes periodos de tiempo
+integrando el código al final del desarrollo, ya que las
+incompatibilidades habrán sido detectadas enseguida.
 
 Se usa la propiedad colectiva del código, lo que se traduce en que
 cualquier programador puede cambiar cualquier parte del código. El
@@ -1045,7 +1070,7 @@ híbrida. Para este propósito se utilizó SVN.
 
 SVN es un herramienta para el control de versiones de
 archivos. Permite sacar fotografias del proyecto en cualquier momento
-del desarrollo, volver a cualquiera de esos puntos, mesclar los
+del desarrollo, volver a cualquiera de esos puntos, mezclar los
 cambios realizados por mas de un desarrollador sobre un archivo y
 resolver conflictos. Su arquitectura es cliente/servidor. En el
 servidor se encuentra el repositorio de datos que es donde se
@@ -1059,13 +1084,20 @@ actualización se realiza con la operación UPDATE para obtener los
 cambios nuevos en el repositorio. Luego se realizan cambios en la
 copia local, entre los mas importantes que se pueden hacer sobre un
 archivo estan: modificar su contenido, marcarlo para agregar o
-marcarlo para borrar. Por ultimo todos estos cambios que se hicieron
+marcarlo para borrar. 
+
+.. image:: svn-normal.eps
+
+Por ultimo todos estos cambios que se hicieron
 sobre uno o mas archivos deben ser sincronizados mediante la operación
 COMMIT. Tanto en el uso de UPDATE como de COMMIT puede surgir lo que
 se conoce como un conflicto. Estos conflictos se deben a que mas de un
 desarrollador modifico la misma para de un archivo sin haber notado
 los cambios que realizo el otro, pero gracias a SVN es bastante
 sencillo de resolver y continuar asi un desarrollo consistente.
+
+.. image:: svn-merge.eps
+.. image:: svn-conflict.eps
 
 ------------------------------------------------------------------------
 Estandares de codificación adoptados
@@ -1074,16 +1106,16 @@ Estandares de codificación adoptados
 Los siguientes estandares de codificación fueron adoptados por el equipo
 de desarrollo:
 
-* Identación con 4 espacios.
+* Indentación con 4 espacios.
 
 * Nombres de variables en minúsculas.
 
 * Nombres de funciones en minúsculas y con guiones bajos (ejemplo:
   obtener_peticion(), realizar_informe()).
 
-* Nombre de clases con notación camello o CapWord (ejemplo: NombreClase).
+* Nombres de clases con notación camello o CapWord (ejemplo: NombreClase).
 
-* Separa las funciones y las definiciones de clases con
+* Separar las funciones y las definiciones de clases con
   dos líneas en blanco.
 
 * Las definiciones de métodos dentro de una misma clase se separan con
@@ -1094,41 +1126,6 @@ de desarrollo:
 * A ambos lados de un operador aritmético/lógico hay espacios en blanco.
 
 
-------------------------------------------------------------------------
-Estructura de numeración de repuestos
-------------------------------------------------------------------------
-
-Mercedez Benz posee un sistema de identificación de partes muy particular.
-
-Detallamos parte los componentes en el número identificacatorio:
-
-.. image :: numeracion_mercedes_benz.eps
-
-Fue muy importante conocer la nomenclatura de los elementos de
-Mercedes Benz, porque la jerarquía de elementos no es intuitiva, al
-menos no inicialmente. Se detalla a continuación la jerarquía de los
-elementos de tipo A (Elementos Constructivos):
-
-* Grupo Constructivo
-* Modelo o Baumuster
-* Identificación de pieza
-* Numero de modificación
-
-El sistema legacy (Octosis) incorporó campos finales que identifican,
-por ejemplo, el proveedor. Logrando en algunos casos hasta 27 números
-para caracterizar una pieza en particular. Estos datos eran usados
-para completar las dimensiones de los cubos.
-
-Los grupos constructivos se dividen en 2 partes, la primera de ellas son
-números del 00 al 99 que clasifican al elemento de la siguiente manera:
-
-* Piezas de motor: Grupos del 01 al 23, 25 y 54
-* Piezas de chasis: Grupos del 24 al 59
-* Piezas de cabina/carrocería: Grupos del 60 a 97
-* Piezas en general: Grupos 98 y 99
-
-Esta división se expande a un total de 1000 subgrupos, que no viene al
-caso mencionarlos en este proyecto.
 
 
 ========================================================================
@@ -1156,21 +1153,22 @@ para realizar ETL, Data Mining, etc. todas implementadas sobre Tomcat[2].
 .. [1] http://www.pentaho.com
 .. [2] http://tomcat.apache.org
 
-En el comienzo del proyecto, investigamos la suite Pentaho, en particular el
-producto Mondrian descripto en la sección ..., y nos resultó muy complicada la
+En el comienzo del proyecto, investigamos la suite Pentaho, en
+particular el producto Mondrian[3], y nos resultó muy complicada la
 instalación y configuración.
 
 Una vez configurado, la performance de la aplicación Java era muy
 pobre. Entonces decidimos ver alternativas.
 
+.. [3] ver Capítulo 3 para más detalles
 ------------------------------------------------------------------------
 Python
 ------------------------------------------------------------------------
 
 Python es un lenguaje de programación creado por Guido van Rossum en
-el año 1990[3].
+el año 1990[4].
 
-.. [3] http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
+.. [4] http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
 
 Es comparado habitualmente con TCL, Perl, Scheme, Java y Ruby. En la6500
 actualidad Python se desarrolla como un proyecto de código abierto,
@@ -1334,7 +1332,7 @@ necesidad de recargarla. Esto significa aumentar la interactividad,
 velocidad y usabilidad en la misma.
 
 ------------------------------------------------------------------------
-Postgre
+PostgreSQL
 ------------------------------------------------------------------------
 
 PostgreSQL es un Sistema de Gestión de Bases de Datos
@@ -1376,7 +1374,7 @@ instalación, parametrización y utilización del mismo.
 
 A continuación una resumida lista de problemas encontrados:
 
-* No poseiamos experiencia en la administración del servidor de
+* No teníamos experiencia en la administración del servidor de
   aplicaciones Tomcat.
 
 * Existían diferencias substanciales entre las distintas
@@ -1387,7 +1385,7 @@ A continuación una resumida lista de problemas encontrados:
   en un complejísimo archivo XML donde habitualmente teníamos
   inconsistencias.
 
-* No poseíamos experiencia en el lenguaje de consulta MDX y a medida
+* No teníamos experiencia en el lenguaje de consulta MDX y a medida
   que lo utilizábamos nos dábamos cuenta que la implementación en
   Modrian es escasa y errónea en algunas características.
 
@@ -1401,37 +1399,34 @@ Estos inconvenientes nos llevaron a evaluar la posibilidad de realizar
 nuestro propio servidor de cubos utilizando un soporte de base de
 datos relacional. Evaluamos el subconjunto de funcionalidades
 necesarias y posibles optimizaciones basadas en nuestra necesidad, y
-desarrollamos cubículo.
+desarrollamos Cubículo.
 
 Cubículo
 ------------------------------------------------------------------------
 
-La piedra fundamental de cubículo es la descripción de un determinado
+La piedra fundamental de Cubículo es la descripción de un determinado
 informe a obtener. Los parámetros necesiarios son:
 
 :Hecho: es el conjunto de datos individuales y las columnas a
 	relacionarlas con las dimensiones.
 
 :Ejes: son dos dimensiones que serán los ejes de la
-       tabla del informe
+       tabla del informe.
 
 :Restricciones: son ecuaciones a realizar sobre los niveles de las
 		dimensiones, tanto las elegidas como ejes como otras
-		que posee el hecho
+		que posee el hecho.
 
 :Medidas: son los elementos individuales que podrán ser sumarizados (u
-	  otros tipos de agregación),
+	  otros tipos de agregación).
 
-:Funcion: es para el postprocesamiento del cubo
+:Función: es para el postprocesamiento del cubo.
 
 
-Cubiculo se basaba en una base de datos relacional, en este proyecto
+Cubículo se basa en una base de datos relacional, en este proyecto
 la elección fue Postgre, y las tablas de hechos se caracterizan por
 tener únicamente Claves Foráneas a las claves de las tablas
-dimensionales. El siguiente diagrama entidad relación muestra el
-diseño final implementado en la base de datos:
-
-.. image :: DER.eps
+dimensionales.
 
 ------------------------------------------------------------------------
 ETL
@@ -1501,12 +1496,12 @@ operacional y llevarlos al Data Warehouse. En nuestro proyecto los
 datos estaban vinculados con un catálogo de quinientos mil productos y
 ejecución del ETL insumía entre seis y dieciocho horas.
 
-La aplicación de ETL se dividía en tres partes lógicas bien diferenciadas: 
+La aplicación de ETL se divide en tres partes lógicas bien diferenciadas: 
 
-:La obtención de los datos: Se debían generar tablas levemente
+:La obtención de los datos: Se debe generar tablas levemente
   desnormalizadas a partir de las bases de datos operacionales
-  exportadas a MySQL. Estas tablas solían poseer varios cientos de
-  miles de registros que cubrian las posibilidades de cada
+  exportadas a MySQL. Estas tablas poseen varios cientos de
+  miles de registros que cubre las posibilidades de cada
   dimension. Para lograr mayor performance, se intentaba utilizar
   operaciones dentro del mismo motor de bases de datos relacional
 
@@ -1560,10 +1555,10 @@ informes. Sobre estos informes se pueden realizar operaciones de:
 :pivot: Realiza un intercambios de los ejes de la tabla, el permite al
   usuario una visualización diferente de los mismos datos que posee.
 
-:drill_replacing: Realiza un drilldown agregando restricciones. De
+:drill replacing: Realiza un drilldown agregando restricciones. De
   esta forma si el usuario esta visualizando todos los años y desea
   aumentar la granularidad a mes, pero no quiere que se convierta en
-  una explosión de información, puede realizar un drill_replacing de
+  una explosión de información, puede realizar un drill replacing de
   un año en particuilar.
 
 :slice: Agrega restricciones al informe actual, por ejemplo,
@@ -1577,9 +1572,12 @@ al usuario la información solicitada:
 
 .. image:: ciclo_de_vida.eps
 
-Cada función cumple una tarea específica:
+Para el diseño de estos componentes se utilizó en estilo
+arquitectónico denominado Pipe and Filters concatenando las entradas y
+las salidas de cada función de manera secuencial. Entonces logramos
+dividir el problema en funciones específicas:
 
-:get_sql(): Utiliza cubículo para obtener el SQL que contiene todos
+:get_sql(): Utiliza Cubículo para obtener el SQL que contiene todos
   los datos. Cubiculo es el único que conoce la estructura relacional
   subyacente.
 
@@ -1594,8 +1592,8 @@ Cada función cumple una tarea específica:
   el informe presentado.
 
 :complete_dimension(): En las operaciones de cubos, siempre es
-  necesario tener ambos de las mismas dimensiones para
-  operar. complete_dimension() se encarga de homogeinizar las
+  necesario tener ambos de las mismas dimensiones para operar. La
+  función complete_dimension() se encarga de homogeinizar las
   dimensiones de los cubos involucrados.
 
 :exec_function(): El ultimo paso antes de mostrar el informe es
@@ -1612,6 +1610,18 @@ Juego de la planificación
 ========================================================================
                             Documentación
 ========================================================================
+
+------------------------------------------------------------------------
+Diagrama de Entidad-Relacion
+------------------------------------------------------------------------
+
+.. image :: DER.eps
+
+------------------------------------------------------------------------
+Diagrama de clases
+------------------------------------------------------------------------
+
+.. image:: diag_de_clases.eps
 
 ------------------------------------------------------------------------
 Tests
@@ -1643,21 +1653,17 @@ Se pueden restituir versiones anteriores del proyecto como también
 generar nuevas ramas de desarrollo, por ejemplo para experimentación
 de una funcionalidad en concreto.
 
-.. image:: svn-normal.eps
-.. image:: svn-merge.eps
-.. image:: svn-conflict.eps
-
 
 ------------------------------------------------------------------------
 Herramientas: Wiki
 ------------------------------------------------------------------------
 
 Las anotaciones del proyecto las realizamos con una herramientas web
-de filosofía Wiki, provista por Google Code[4]. Esto nos permitió
+de filosofía Wiki, provista por Google Code[5]. Esto nos permitió
 realizar una base de conocimientos en hipertexto de manera sencilla y
 rápida.
 
-.. [4] http://code.google.com/p/proyectofinal
+.. [5] http://code.google.com/p/proyectofinal
 
 
 
@@ -1666,7 +1672,7 @@ Herramientas: ReStructured Text (RST)
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
-Código de cubículo
+Código de Cubículo
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
@@ -1674,7 +1680,7 @@ Guías de instalación de componentes
 ------------------------------------------------------------------------
 
 La instalación de los componentes necesarios para la ejecución del
-proyecto se realizará sobre GNU/Linux. Especificamente se utilizara la
+proyecto se realizará sobre GNU/Linux. Especificamente se utilizará la
 distribución Debian GNU/Linux. La mayoria de las instalaciones y
 configuraciones se harán con el sistema de paquetes on-line de Debian
 mediante la herramienta apt-get.
@@ -1701,7 +1707,7 @@ Luego se realizará la migración de los datos o se comenzará con una
 instancia nueva del sistema.
 
 Es necesario crear un usuario que tenga permisos sobre la base de
-datos que contendra los datos. También se debe tener en cuenta que
+datos que contendrá los datos. También se debe tener en cuenta que
 postgreSQL debe estar configurado para aceptar conexiones mediante
 IP's.
 
@@ -1736,8 +1742,8 @@ Apache
   apt-get install apache2
 
 Ahora hay que configurar el Apache para que sirva documentos de
-django. En el archivo /etc/apache2/http.conf agregamos las siguientes
-lineas:
+django. En el archivo /etc/apache2/http.conf se deben agregar las
+siguientes líneas:
 
 ::
 
@@ -1773,15 +1779,12 @@ Licencia GPL
 ------------------------------------------------------------------------
 
 La licencia pública general de GNU o mas conocida por su nombre en
-inglés GNU General Public License o simplemente su acrónimo del inglés
-GNU GPL. 
-
-Es una licencia creada por la Free Software Foundation a mediados de
-los 80, y está orientada principalmente a proteger la libre
-distribución, modificación y uso de software. Su propósito es declarar
-que el software cubierto por esta licencia es software libre y
-protegerlo de intentos de apropiación que restrinjan esas libertadesa
-los usuarios.
+inglés GNU General Public License es una licencia creada por la Free
+Software Foundation a mediados de los 80, y está orientada
+principalmente a proteger la libre distribución, modificación y uso de
+software. Su propósito es declarar que el software cubierto por esta
+licencia es software libre y protegerlo de intentos de apropiación que
+restrinjan esas libertadesa los usuarios.
 
 .. raw:: latex
 
