@@ -12,7 +12,7 @@
 	\vspace{0.5cm}
       \textsf{\LARGE Mariano Nicol\'{a}s GAL\'{A}N} \\
 	\vspace{4.0cm}
-      \textsf{\Large Abril 2008} \\      
+      \textsf{\Large Mayo 2008} \\      
       \end{center}
     \end{titlepage}
   }
@@ -24,10 +24,10 @@
 %%   márgenes deben ser los siguientes: superior 3,5cm; inferior, izquierdo
 %%   y derecho: 2,5 cm. Las páginas deben estar numeradas.
 
-%%\setlength\topmargin{0in}
-%%\setlength\headheight{0in}
-%%\setlength\headsep{0in}
-%%\setlength\textheight{7.7in}
+%%\setlength\topmargin{3.5cm}
+\setlength\headheight{2cm}
+\setlength\headsep{1.5cm}
+\setlength\textheight{24cm}
 %%\setlength\textwidth{6.5in}
 %%\setlength\oddsidemargin{0in}
 %%\setlength\evensidemargin{0in}

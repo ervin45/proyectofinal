@@ -19,7 +19,8 @@ vehículos (autos, camionetas y camiones), repuestos y servicios
 relacionados con el rubro automotor. Tiene la concesión de venta
 exclusiva de Mercedes-Benz, Chrysler, Jeep y Dodge. La empresa cuenta
 con 60 empleados en diversas áreas, desde el salón comercial hasta un
-importante taller. Posee dos sucursales en Reconquista y Rafaela.
+importante taller. Posee dos sucursales, una en Reconquista y otra en
+Rafaela.
 
 La empresa Ricardo C. Bieler S.A. no posee, en la actualidad, un
 sistema de soporte de decisiones en lo que se refiere a la compra y
@@ -162,11 +163,45 @@ y vendidos en los últimos siete años.
 Organización del documento
 ------------------------------------------------------------------------
 
+El entendimiento del presente documento, el lector deberá estar
+familiarizado con alguna de las herramientas y tecnologías de bases de
+datos multidimensionales, conceptos de Data Warehouse como cubos OLAP,
+ETL y frameworks para el desarrollo web. El Capítulo 1, Introducción,
+intenta resumir y organizar estas tecnologías y conceptos.
+
+Para la realización de este proyecto se investigaron diversas
+tecnologías, algunas de ellas descartadas en las primeras instancias y
+otras forman parte del núclo del sistema final. El Capítulo 2,
+Tecnología Investigada, enumera y describe a las más importantes.
+
+El capítulo 3 se centra en el desarrollo mismo del sistema, las partes
+claves que se necesitaron implementar para conseguir un sistema final
+que se ajuste a la necesidad del cliente. Los 3 componentes de mayor
+importancia del sistema son descriptos en este capítulo, en conjunto
+con los desafíos de implementación que el equipo de desarrollo se fue
+enfrentando.
+
+La metodología utilizada para el desarrollo fue eXtreme Programing. El
+capítulo 4 es la sumarización del Juego de la Planificación de la
+metodología. Es un resume de las versiones, iteraciones e historias
+que se fueron cumpliendo durante la implementación.
+
+La metodología elegida impone la realización de numerosos Tests, los
+mismos son descriptos en el Capítulo 5 como parte de la Documentación.
+
+Al final de cada proyecto, el equipo de desarrollo elabora una breve
+conclusión, la cual es parte del presente informe. La misma se
+encuentra en el Capítulo 6.
+
+Por último el Capítulo 7 posee Anexos que incluyen las herramientas de
+apoyo, fragmentos de código, guías de instalación y licencias
+utilizadas en este proyecto.
+
 ------------------------------------------------------------------------
-Sofware Libre
+Software Libre
 ------------------------------------------------------------------------
 
-Definición de Sofware Libre
+Definición de Software Libre
 ----------------------------
 
 Software libre es la denominación del software que brinda libertad a
@@ -270,7 +305,7 @@ software, y permiten el acceso a las miles de aplicaciones existentes
 de forma segura y gratuita a la par que evitan tener que recurrir a
 páginas web de dudosa ética desde las que los usuarios instalan sin
 saberlo spyware o virus informáticos en sus sistemas. Este sistema de
-acceso y gestión del software se hace practicamente utópico si se
+acceso y gestión del software se hace prácticamente utópico si se
 extrapola al mercado propietario.
 
 9. Sistema en expansión
@@ -302,7 +337,7 @@ por el uso de la Licencia GPL, otorga ventajas a ambas partes, a saber:
   código GPL que pudiese potenciar el sistema actual, sería
   perfectamente legal incluir parte del mismo en el sistema, sin
   necesidad de pedir autorización ni costos extras. Esto permite una
-  expansión del sistema rápida y barata, con aplicaciones existentes o
+  expansión rápida y barata del sistema, con aplicaciones existentes o
   aplicaciones que todavía no se han creado.
 
 
@@ -317,8 +352,8 @@ Terminología utilizada
       representan dimensiones sobre esos hechos (ejemplo: tiempo,
       sucursal, cliente).
 
-:Data Warehouse: Coleccion de datos almacenados orientados a un
-      determinado ambito cuyo. Es una copia de las transacciones de
+:Data Warehouse: Colección de datos almacenados orientados a un
+      determinado ámbito. Es una copia de las transacciones de
       datos específicamente estructurada para la consulta y el
       análisis.
 
@@ -331,15 +366,17 @@ Terminología utilizada
 
 :ETL: Extracción, Transformación y Carga de datos. Referido
       normalmente al proceso de extraer datos de los almacenamientos
-      necesarios, realizar un procesamientos o transformacion de estos
+      necesarios, realizar un procesamientos o transformación de estos
       y almacenarlos o cargarlos en la estructura del Data Warehouse
 
 :Data Mining: proceso que consiste en la extracción de conocimiento
       procesable, implícito en las bases de datos. Es decir lograr
-      sacar conclusiones utiles a partir de un conjunto de datos no
-      orientado a estas.
+      sacar conclusiones útiles a partir de un conjunto de datos no
+      orientado a éstas.
 
-:XMLA: XML ..for analysis
+:XMLA: XML for Analysis. Es un estandar basado en XML utilizado para
+       la descripcón de resultados de consultas a bases de datos
+       multidimensionales.
 
 
 -----------------------------------------------------------------------
@@ -355,45 +392,45 @@ que ayuda a la toma de decisiones en la entidad en la que se
 utiliza. Se trata, sobre todo, de un expediente completo de una
 organización, más allá de la información transaccional y operacional.
 
-La definición no quedaria completa sin mensionar que la organización
-de los datos no es lo unico que implica un datawarehouse. Ademas incluye
+La definición no quedaría completa sin mencionar que la organización
+de los datos no es lo unico que implica un Data Warehouse. Ademas incluye
 herramientas de análisis y consulta, y utilidades para la extracción,
-transformación y carga de datos de diversos origenes de datos como
+transformación y carga de datos de diversos orígenes de datos como
 pueden ser sistemas empresariales, webs o planillas de cálculo.
 
-Benficios
+Beneficios
 ------------------
 
 :Información accesible: los contenidos del Data WareHouse son
 	     entendibles y navegables, y el acceso a ellos es
 	     caracterizado por el rápido desempeño. Estos
-	     requerimientos no tienen fronteras y tampoco limites
+	     requerimientos no tienen fronteras y tampoco límites
 	     fijos. Cuando hablamos de entendible significa, que los
 	     niveles de la información sean correctos y obvios. Y
-	     Navegables significa el reconocer el destino en la
+	     Navegables significa reconocer el destino en la
 	     pantalla y llegar a donde queramos con solo un
-	     clic. Rápido desempeño significa, bajo tiempo de espera.
+	     clic. Rápido desempeño significa bajo tiempo de espera.
 
 :Información consistente: la información de una parte de la
-	     organización puede hacerse coincidir con la información
-	     de la otra parte de la organización. Si dos medidas de la
-	     organización tienen el mismo nombre, entonces deben
-	     significar la misma cosa. Y a la inversa, si dos medidas
-	     no significan la misma cosa, entonces son etiquetados
+	     organización puede hacerse coincidir con la de otra parte
+	     de la organización. Si dos medidas de la organización
+	     tienen el mismo nombre, entonces deben significar la
+	     misma cosa. Y a la inversa, si dos medidas no significan
+	     la misma cosa, entonces son etiquetados
 	     diferentes. Información consistente significa,
 	     información de alta calidad.
 
 :Información adaptable y elástica: el Data WareHouse esta diseñado
 	     para cambios continuos. Cuando se le hacen nuevas
 	     preguntas al Data WareHouse, los datos existentes y las
-	     tecnologías no cambian ni se corrompen. Cuando se agregan
+	     tecnologías no cambian ni se corrompen. Si se agregan
 	     datos nuevos al Data WareHouse, los datos existentes y
 	     las tecnologías tampoco cambian ni se corrompen.
 
 :Toma de decisiones: este es el objetivo fundamental y que justifica
       su existencia. El datawarehose presenta la materia prima para el
-      proceso de toma de decisiciones, la información. Por esto el
-      datawarehouse muchas veces se puede considerar el eje de los
+      proceso de toma de decisiciones: la información. Por esto el
+      Data Warehouse muchas veces se puede considerar el eje de los
       sistemas de soporte de decisiones.
 
 Propiedades
@@ -404,7 +441,7 @@ Propiedades
 	   evento u objeto del mundo real están unidos entre sí.
 
 :Variante en el tiempo: Los cambios producidos en los datos a lo largo
-	  del tiempo quedan registrados para que los informes que se
+	  del tiempo quedan registrados para que los informes que
 	  puedan generar reflejen esas variaciones.
 
 :No volátil: La información no se modifica ni se elimina, una vez
@@ -415,7 +452,7 @@ Propiedades
 	    de la organización, sistemas externos y de cualquier dato
 	    que se pueda conseguir en medios digitales. Esta
 	    diversidad de datos debe ser consistentes para poder
-	    obtener informes confiables y utiles.
+	    obtener informes confiables y útiles.
 
 Por otro lado una base de datos relacional posee las siguientes diferencias:
 
@@ -429,45 +466,45 @@ Por otro lado una base de datos relacional posee las siguientes diferencias:
        modificados en cualquier momento que la aplicación lo requiera.
 
 
-DataMarts
+Data Marts
 ------------
 
-Manaja conceptos similares a los de un datawarehouse, pero con la
-diferencia de que estos estan orientados a la toma de decisiones a
-nivel departamental en lugar de hacerlo para toda la
-organización. 
+Los Data Marts manejan conceptos similares a los de un Data Warehouse,
+pero con la diferencia de que estos éstan orientados a la toma de
+decisiones a nivel departamental en lugar de hacerlo para toda la
+organización.
 
-Segun sigamos a Bill Inmon o a Raph Kimball la relación
-entre un datawarehouse y un datamart será considerablemente
-distinta. Para Inmon el datamart es cargado desde el datawarehouse
-mediante programas de carga, visión TOP-DOWN. Para Kimball el datamart
-es una porción del datawarehouse y es cargado directamente desde las
-bases de datos operacionales, visión BOTTOM-UP.
+La bibliografía posee dos corrientes respecto a este concepto. Los
+autores Bill Inmon y Raph Kimball poseen visiones considerablementes distintas sobre la relación entre Data Warehouse y un Data Mart. Para
+Inmon el Data Mart es cargado desde el Data Warehouse mediante
+programas de carga, visión TOP-DOWN. Para Kimball el Data Mart es una
+porción del Data Warehouse y es cargado directamente desde las bases
+de datos operacionales, visión BOTTOM-UP.
 
 Elementos que integran un Data Warehouse
 -----------------------------------------
 
-:Metadatos: son datos que que se refieren a los del datawarehouse. Su
+:Metadatos: son datos que que se refieren a los del Data Warehouse. Su
 	    función es ayudar a los analistas a localizar los
 	    contenidos, guiar a los algoritmos utilizados para la
 	    sumarización/agregación y describir el método por el cual
 	    es dato fue transformado desde su estado original hasta el
-	    que es mantenido en el datawarehouse.
+	    que es mantenido en el Data Warehouse.
 
-:ETL: sabemos que los datos que se encuentran en el datawarehouse
-      provienen de muchos origentes, el encargado de realizar la
+:ETL: sabemos que los datos que se encuentran en el Data Warehouse
+      provienen de muchos orígenes, el encargado de realizar la
       conciliación se llama ETL. Este componente es el encargado de
       realizar la extracción, transformación y carga de los datos
-      hacia el datawarehouse. La extracción consite en obtener los
-      datos nuevos de los origenes. La transformación se encarga de
+      hacia el Data Warehouse. La extracción consite en obtener los
+      datos nuevos de los orígenes. La transformación se encarga de
       cambiar la forma de los datos y adaptarla a la que es necesaria
-      en el datawarehouse, este el punto en todo el proceso que mas
+      en el Data Warehouse, este el punto en todo el proceso que mas
       esfuerzo lleva. La carga es el proceso de escritura de los datos
-      transformados en el datawarehouse, es el único proceso que
-      escribe en el almacenamiento del datawarehouse.
+      transformados en el Data Warehouse, es el único proceso que
+      escribe en el almacenamiento del Data Warehouse.
 
 :Monitorización: monitorea los datos en las fuentes e informa al ETL
-		 los cambios de interes para el datawarehouse
+		 los cambios de interes para el Data Warehouse.
 
 ------------------------------------------------------------------------
 OLAP
@@ -537,7 +574,7 @@ estructura. Para ello sería necesario rediseñar el cubo.
 En un sistema OLAP puede haber más de tres dimensiones, por lo que a
 los cubos OLAP también reciben el nombre de hipercubos. Las
 herramientas comerciales OLAP tienen diferentes métodos de creación y
-vinculación de estos cubos o hipercubos
+vinculación de estos cubos o hipercubos.
 
 Dimensiones y jerarquías
 ------------------------
@@ -620,9 +657,7 @@ incluso para las sentencias más simples del MDX. Este lenguaje ha sido
 acogido por la gran mayoría de los proveedores de OLAP y se ha
 convertido en norma de hecho para estos sistemas.
 
------------------------------------------------------
-Porque Web y no Standalone
------------------------------------------------------
+... Porque Web y no Standalone
 
 ------------------------------------------------------------------------
 Porque Python y no Java
@@ -638,7 +673,7 @@ En nuestro proyecto hemos elegido Python por ser un lenguaje que nos
 hace posible maximizar nuestra velocidad de desarrollo y nos permite
 pensar el problema desde una perspectiva de mayor nivel. Lenguajes
 como Java o C suelen ser mas rapidos en la ejecución. A diferencia de
-Java Python esta diseñado para ser una verdadera ayuda para el
+Java, Python esta diseñado para ser una verdadera ayuda para el
 desarrollador.
 
 Python presenta una serie de ventajas que lo hacen muy atractivo,
@@ -767,8 +802,8 @@ importante es entender el concepto subyacente.
 Configuración
 -------------------
 
-Django aisla toda la configuración en un solo archivo. Aqui se
-espcifica la configuracion de la base de datos, los directorios de los
+Django aisla toda la configuración en un solo archivo. Aquí se
+específica la configuración de la base de datos, los directorios de los
 templates y demas archivos multimedia (imagenes, javascript, css,
 flash, etc) y demas metainformación del sistema.
 
@@ -786,7 +821,7 @@ Metodología elegida
 ------------------------------------------------------------------------
 
 La programación extrema o eXtreme Programming (XP) es un enfoque de la
-ingeniería del Sofware. Consiste en un conjunto de prácticas que a lo
+ingeniería del Software. Consiste en un conjunto de prácticas que a lo
 largo de los años han demostrado ser las mejores prácticas de
 desarrollo de software, llevadas al extremo, fundamentadas en un
 conjunto de valores.
@@ -812,8 +847,8 @@ Valores
 -------
 
 
-XP promueve una serie de valores que sientan los pilares los pilares
-de la metodología. Estos valores son:
+XP promueve una serie de valores que sientan los pilares de la
+metodología. Estos valores son:
 
 
 :Comunicación: los desarrolladores necesitan intercambiar información
@@ -840,9 +875,9 @@ de la metodología. Estos valores son:
 Prácticas
 ---------
 
-XP esta compuesta por un conjunto de practicas que están estrechamente
+XP esta compuesta por un conjunto de prácticas que están estrechamente
 relacionadas y que aplicadas todas juntas son capaces de dar soporte a
-las debilidades de cada practica. Estas practicas no son nuevas, sino
+las debilidades de cada práctica. Estas prácticas no son nuevas, sino
 que han venido usando a lo largo de la corta historia del desarrollo
 de software, la novedad radica en la utilización de estas prácticas de
 forma conjunta y llevadas al extremo.
@@ -856,7 +891,7 @@ Las prácticas fundamentales de la metodología son:
 	 automatizadas. Se aconseja escribir el código de la prueba
 	 antes de la codificación.
 
-:Programación en Parejas: se recomienda que las tareas de desarrollo
+:Programación en parejas: se recomienda que las tareas de desarrollo
 	      se lleven a cabo por dos personas en un mismo puesto. Se
 	      supone que la mayor calidad del código escrito de esta
 	      manera -el código es revisado y discutido mientras se
@@ -899,22 +934,21 @@ el orden de seguimiento de estas sino una aproximación. En XP se
 trabaja pasando en forma constante de una etapa a la otra en la
 medida de lo posible. Las etapas son las siguientes:
 
-Plantificación
+Planificación
 ------------------
 
 Se escriben historias, cuya idea principal es describir un caso de uso
-en dos o tres líneas con terminología del cliente (de hecho, se supone
-que deben ser escritos por el mismo), de tal manera que se creen test
-de aceptación para la y permita hacer una estimación de tiempo de
-desarrollo del mismo.  Se crea un plan de lanzamiento que debe servir
-para crear un calendario que todos puedan cumplir y en cuyo desarrollo
-hayan participado todas las personas involucradas en el proyecto. Se
-usará como base las historias, participando el cliente en la elección
-de los que se desarrollarán, y según las estimaciones de tiempo de los
-mismos se crearán las iteraciones del proyecto.  El desarrollo se
-divide en iteraciones, cada una de las cuales comienza con un plan de
-iteración para el que se eligen las historias a desarrollar y las
-tareas de desarrollo.
+en dos o tres líneas con terminología del cliente, de hecho, se supone
+que deben ser escritos por él mismo. Las historias sirven para la
+creación test de aceptación y permiten hacer una estimación de tiempo
+de desarrollo.  Se crea un plan de lanzamiento que debe servir para
+crear un calendario que todos puedan cumplir y en cuyo desarrollo
+hayan participado todas las personas involucradas en el proyecto. Para
+la creación de iteraciones del proyecto se usará como base las
+historias, que deberán ser priorizadas por el cliente y estimados los
+tiempos de desarrollo por los participantes. A esto se lo denomina plan
+de la iteración.
+
 
 Diseño
 ------
@@ -1040,14 +1074,14 @@ Estandares de codificación adoptados
 Los siguientes estandares de codificación fueron adoptados por el equipo
 de desarrollo:
 
-* Identación con 4 espacios
+* Identación con 4 espacios.
 
-* Nombres de variables en minusculas
+* Nombres de variables en minúsculas.
 
 * Nombres de funciones en minúsculas y con guiones bajos (ejemplo:
-  obtener_peticion(), realizar_informe())
+  obtener_peticion(), realizar_informe()).
 
-* Nombre de clases con notación camello o CapWord (ejemplo: NombreClase)
+* Nombre de clases con notación camello o CapWord (ejemplo: NombreClase).
 
 * Separa las funciones y las definiciones de clases con
   dos líneas en blanco.
@@ -1260,7 +1294,7 @@ la incompatibilidad de las herramientas libres disponibles y su
 implementación de XMLA. 
 
 ------------------------------------------------------------------------
-Exportacion XBase -> SQL
+Exportación de XBase a SQL
 ------------------------------------------------------------------------
 
 Los datos de la empresa estaban almacenados en datos XBase (conocidas
@@ -1273,7 +1307,7 @@ confiable y veloz, por lo que decidimos migrarlos utilizando
 dbf2mysql hacia un motor de base de datos relacional como es MySQL.
 
 Luego utilizamos SQL para extraer los datos y crear las bases de datos
-multidimensional
+multidimensional.
 
 ------------------------------------------------------------------------
 AJAX
@@ -1322,7 +1356,7 @@ desarrolladores y contribuidores de código abierto.
                              Desarrollo
 ========================================================================
 
-.. En este capitulo explicamos las elecciones de diseño, el transcurso
+.. En este capítulo explicamos las elecciones de diseño, el transcurso
    de la implementacion etc. etc
 
 
@@ -1336,12 +1370,10 @@ Introducción
 ------------------------------------------------------------------------
 
 En los primeros meses de este proyecto, la arquitectura inicial
-elegida, era la siguiente:
+elegida poseía a Mondrian como servidor de cubos. Desgraciadamente, en
+la implemenación de esta arquitectura tuvimos dificultades en la
+instalación, parametrización y utilización del mismo.
 
-[Grafico con mondrian como server de cubos]
-
-En la implemenación de esta arquitectura tuvimos dificultades en las
-instalación, parametrización y utilización del servidor OLAP (Mondrian).
 A continuación una resumida lista de problemas encontrados:
 
 * No poseiamos experiencia en la administración del servidor de
@@ -1488,7 +1520,7 @@ La aplicación de ETL se dividía en tres partes lógicas bien diferenciadas:
   en la tabla de hecho correspondiente.
 
 Si bien el poceso se puede esquematizar como simple y ordenado, en la
-practica, durante este proyecto se encontraron muchas complicaciones
+práctica, durante este proyecto se encontraron muchas complicaciones
 para validar los datos finales. El cliente poseía algunos informes y
 mucha intuición para corroborar los datos almacenados en el data
 warehouse. Cada prueba llevaba cerca de un día para generar los cubos
