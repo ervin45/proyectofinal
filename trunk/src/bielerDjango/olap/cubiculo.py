@@ -346,7 +346,8 @@ class Cubiculo:
     def _add_measure(self, m):
         '''
         Agrega un measure. 
-        
+
+
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c.measures
         [['cantidad', 'sum']]
