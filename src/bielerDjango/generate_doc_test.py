@@ -9,6 +9,10 @@ def wrap(text, width):
     A word-wrap function that preserves existing line breaks
     and most spaces in the text. Expects that existing line
     breaks are posix newlines (\n).
+
+    NO USAR ESTA FUNCION EN LINEAS LARGAS!!!
+    mejor leer:
+    http://docs.python.org/lib/module-textwrap.html
     """
     return reduce(lambda line, word, width=width: '%s%s%s' %
                   (line,
