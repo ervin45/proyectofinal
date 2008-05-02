@@ -60,6 +60,7 @@ class Cube:
 
         Lo usamos luego de borrar elementos para mantener consistente
         las dimensiones
+
         >>> c = Cube()
         >>> c.add('1','1',{"c":1})
         >>> c.add('1','2',{"c":3})
