@@ -1674,6 +1674,16 @@ rápida.
 Herramientas: ReStructured Text (RST)
 ------------------------------------------------------------------------
 
+Este documento fue generado con ReStructured Text. RST es un lenguaje
+de marcas para texto plano util para luego ser convertido a otros
+formatos estructurados. 
+
+RST permite inclusión de documentos externos, lo cual nos ayudo para
+modularizar la creación del documento. Para la impresión de éste
+documento se realizó la conversión al formato Tex, por ser este un
+formato que renderiza muy bien los caracteres.
+
+
 ------------------------------------------------------------------------
 Código de Cubículo
 ------------------------------------------------------------------------
