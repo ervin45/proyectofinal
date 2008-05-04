@@ -1335,20 +1335,22 @@ velocidad y usabilidad en la misma.
 PostgreSQL
 ------------------------------------------------------------------------
 
-PostgreSQL es un Sistema de Gestión de Bases de Datos
-Objeto-Relacionales (ORDBMS) que ha sido desarrollado de varias formas
-desde 1977. Comenzó como un proyecto denominado Ingres en la
-Universidad Berkeley de California. Ingres fue más tarde desarrollado
-comercialmente por la Relational Technologies/Ingres Corporation.
+PostgreSQL es un sistema de gestión de dases de datos
+objeto-relacionales (ORDBMS). En la actualidad es considerada la base
+de datos mas potente que tiene origen en el software
+libre. Desarrollado bajo licencia BSD (Berkeley Software Distribution)
+por una gran comunidad y empresas comerciales.
 
-En 1986 otro equipo dirigido por Michael Stonebraker de Berkeley
-continuó el desarrollo del código de Ingres para crear un sistema de
-bases de datos objeto-relacionales llamado Postgres. En 1996, debido a
-un nuevo esfuerzo de código abierto y a la incrementada funcionalidad
-del software, Postgres fue renombrado a PostgreSQL, tras un breve
-periplo como Postgres95. El proyecto PostgreSQL sigue actualmente un
-activo proceso de desarrollo a nivel mundial gracias a un equipo de
-desarrolladores y contribuidores de código abierto.
+Como los mas avanzandos motores de base de datos soporta concurrencia,
+transacionalidad, encriptación, clustering, triggers, procedimientos
+almacenados, funciones, secuencias, relaciones, reglas, tipos de datos
+definidos por usuarios, vistas.
+
+Posee un soporte nativo para varios lenguajes de programación como
+PHP, Python, C, Perl, Java, etc. También dispone de un buen sistema de
+extensiones por medio del cual existen varios proyectos que extienden
+la funcionalidad los Postgres para cumplir multiples objetivos.
+
 
 ========================================================================
                              Desarrollo
