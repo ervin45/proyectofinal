@@ -88,7 +88,7 @@ for (version_id, iterations)  in a:
                  iter_risk,
                  iter_weight) = iteration
 
-                print ":%s: %s" %( iter_name, iter_description)
+                print ":[#%d] %s: %s" %(iter_id, iter_name, iter_description)
                 print
                 
             print "\n\n"
@@ -125,7 +125,7 @@ for iteration in cursor2.fetchall():
      iter_risk,
      iter_weight) = iteration
 
-    print ":%s: %s" %( iter_name, iter_description)
+    print ":[#%d] %s: %s" %(iter_id, iter_name, iter_description)
     print
 
 print "\n\n"

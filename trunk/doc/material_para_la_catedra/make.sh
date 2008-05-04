@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## actualizacion de versiones-iteraciones... etc
-#./update.sh
+./update.sh
 ./generate_doc_test.sh
 
 rst2latex --language=es \
