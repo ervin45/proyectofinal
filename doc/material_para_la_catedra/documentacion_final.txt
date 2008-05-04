@@ -1161,6 +1161,7 @@ Una vez configurado, la performance de la aplicación Java era muy
 pobre. Entonces decidimos ver alternativas.
 
 .. [3] ver Capítulo 3 para más detalles
+
 ------------------------------------------------------------------------
 Python
 ------------------------------------------------------------------------
