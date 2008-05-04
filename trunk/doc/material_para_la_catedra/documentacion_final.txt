@@ -17,12 +17,12 @@ Organización del documento
 El entendimiento del presente documento, el lector deberá estar
 familiarizado con alguna de las herramientas y tecnologías de bases de
 datos multidimensionales, conceptos de Data Warehouse como cubos OLAP,
-ETL y frameworks para el desarrollo web. El Capítulo 1, Introducción,
+ETL y frameworks para el desarrollo web. El capítulo 1, Introducción,
 intenta resumir y organizar estas tecnologías y conceptos.
 
 Para la realización de este proyecto se investigaron diversas
 tecnologías, algunas de ellas descartadas en las primeras instancias y
-otras forman parte del núclo del sistema final. El Capítulo 2,
+otras forman parte del núclo del sistema final. El capítulo 2,
 Tecnología Investigada, enumera y describe a las más importantes.
 
 El capítulo 3 se centra en el desarrollo mismo del sistema, las partes
@@ -38,13 +38,13 @@ metodología. Es un resume de las versiones, iteraciones e historias
 que se fueron cumpliendo durante la implementación.
 
 La metodología elegida impone la realización de numerosos Tests, los
-mismos son descriptos en el Capítulo 5 como parte de la Documentación.
+mismos son descriptos en el capítulo 5 como parte de la Documentación.
 
 Al final de cada proyecto, el equipo de desarrollo elabora una breve
 conclusión, la cual es parte del presente informe. La misma se
-encuentra en el Capítulo 6.
+encuentra en el capítulo 6.
 
-Por último el Capítulo 7 posee Anexos que incluyen las herramientas de
+Por último el capítulo 7 posee Anexos que incluyen las herramientas de
 apoyo, fragmentos de código, guías de instalación y licencias
 utilizadas en este proyecto.
 
@@ -1160,7 +1160,7 @@ instalación y configuración.
 Una vez configurado, la performance de la aplicación Java era muy
 pobre. Entonces decidimos ver alternativas.
 
-.. [3] ver Capítulo 3 para más detalles
+.. [3] ver capítulo 3 para más detalles
 
 ------------------------------------------------------------------------
 Python
