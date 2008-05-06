@@ -22,7 +22,7 @@ intenta resumir y organizar estas tecnologías y conceptos.
 
 Para la realización de este proyecto se investigaron diversas
 tecnologías, algunas de ellas descartadas en las primeras instancias y
-otras forman parte del núclo del sistema final. El capítulo 2,
+otras forman parte del núcleo del sistema final. El capítulo 2,
 Tecnología Investigada, enumera y describe a las más importantes.
 
 El capítulo 3 se centra en el desarrollo mismo del sistema, las partes
@@ -398,7 +398,7 @@ Terminología utilizada
       sacar conclusiones útiles a partir de un conjunto de datos no
       orientado a éstas.
 
-:XMLA: XML for Analysis. Es un estandar basado en XML utilizado para
+:XMLA: XML for Analysis. Es un estándar basado en XML utilizado para
        la descripcón de resultados de consultas a bases de datos
        multidimensionales.
 
@@ -681,14 +681,39 @@ incluso para las sentencias más simples del MDX. Este lenguaje ha sido
 acogido por la gran mayoría de los proveedores de OLAP y se ha
 convertido en norma de hecho para estos sistemas.
 
-... Porque Web y no Standalone
+
+------------------------------------------------------------------------
+Porque Web y no Standalone
+------------------------------------------------------------------------
+
+Durante el transcurso de la carrera se dictan varias materias de
+programación, las cuales varias de ellas se orientan hacia el
+desarrollo de una aplicación 'Standalone'. Nos vimos obligados a
+revisar la motivación que existe para este tipo de desarrollos.
+
+Uno de los requisitos del cliente era el acceso remoto del sistema. En
+el caso de ser standalone se debía diseñar un protocolo de
+comunicaciones entre el repositorio central de datos y los clientes
+visualizadores y/o modificadores. La ventaja más importante este caso es
+la performance.
+
+En contraposición, el desarrollo web poseé el protocolo ya definido
+(HTTP) y los visualizadores remotos son navegadores desarrollados por
+terceras partes. La performance del sistema y su consecuente
+experiencia negativa para el usuario, debía ser resuelta utilizando
+cierto procesamiento en el cliente.
+
+Preferimos elegir una tecnología web y el lenguaje JavaScript para el
+procesamiento del lado del cliente, de esta manera mejorar la
+experiencia del usuario y ganar escalabilidad.
+
 
 ------------------------------------------------------------------------
 Porque Python y no Java
 ------------------------------------------------------------------------
 
 En el mercado de los lenguajes de programación Java se ha impuesto
-gracias al concepto de la maquina virtual multiplataforma, una
+gracias al concepto de la máquina virtual multiplataforma, una
 plataforma que ofrece muchos servicios y a fuerza de marketing. Esto
 no quiere decir que Java deba se utilizado para cualquier desarrollo
 como opción por defecto.
@@ -865,6 +890,7 @@ programación extrema como la adopción de las mejores metodologías de
 desarrollo de acuerdo a lo que se pretende llevar a cabo con el
 proyecto, y aplicarlo de manera dinámica durante el ciclo de vida del
 software.
+
 
 Valores
 -------
@@ -1054,56 +1080,88 @@ procedimientos es mínima en comparación con las metodologías
 tradicionales. Realizaremos documentación de mantenimiento del sistema
 para futuras mejoras y expansiones.
 
+
+-----------------------------------------------------------------------
+Porque eXtreme Programming
+-----------------------------------------------------------------------
+
+En las primeras instancias del proyecto, se debía tomar una decisión
+por una metodología de diseño de sistemas. Una elección popular
+hubiera sido utilizar una metodología estructurada o semi
+estructurada. Intentando definir la mayor cantidad de elementos desde
+el momento de la obtención de requerimientos de usuario e intentar que
+esos requerimientos se ajusten lo más posible a las necesidades del
+cliente.
+
+En las primeras interacciones con el cliente se notó que ese enfoque
+terminaría en un fracaso. En gran parte porque el cliente no había
+experimentado un Data Warehouse, ni estaba familiarizado con el
+concepto, resultando muy dificultoso cristalizar los requerimientos
+del mismo en el momento del arranque del diseño.
+
+Por ser un proyecto de final de carrera, el equipo de desarrollo
+buscaba el aprendizaje de tecnologías que tengan futuro
+prometedor. Logrando así aprovechar el tiempo invertido en desarrollar
+habilidades personales que los ayudaran en proyectos futuros.
+
+Por lo tanto, transitar un camino de tecnologías no conocidas para
+resolver problemas poco definidos requiere una metodología que
+maximice la adaptabilidad del equipo de desarrollo.
+
+XP representó la mejor oferta dentro de las metodologías conocidas.
+
 -----------------------------------------------------------------------
 Integración con Subversion (SVN)
 -----------------------------------------------------------------------
 
 A continuación se explicará brevemente la forma en la que se han ido
-integrando los cambio a lo largo del proyecto con la utilización de la
+integrando los cambios a lo largo del proyecto con la utilización de la
 herramienta SVN.
 
-Ya sabemos que la metodologia XP tiene como una de sus prácticas la
-integración del codigo fuente u otro tipo de archivos que sean
-modificados por uno o mas desarrolladores, pero no es exclusivo de XP
-sino que puede ser aprovechada por cualquier metodologia estandar o
-híbrida. Para este propósito se utilizó SVN.
+Ya sabemos que la metodología XP tiene como una de sus prácticas la
+integración del código fuente u otro tipo de archivos que sean
+modificados por uno o mas desarrolladores. Para este propósito se
+utilizó SVN[6].
+
+.. [6] No es exclusivo de XP sino que puede ser aprovechada por
+       cualquier metodología, sea estándar o híbrida.
 
 SVN es un herramienta para el control de versiones de
-archivos. Permite sacar fotografias del proyecto en cualquier momento
+archivos. Permite sacar fotografías del proyecto en cualquier momento
 del desarrollo, volver a cualquiera de esos puntos, mezclar los
 cambios realizados por mas de un desarrollador sobre un archivo y
 resolver conflictos. Su arquitectura es cliente/servidor. En el
-servidor se encuentra el repositorio de datos que es donde se
+servidor se encuentra el repositorio de datos donde se
 almacenarán todas las versiones y en cada uno de los clientes habrá
 una copia de trabajo que estará sincronizada con la del servidor.
 
 Lo primero que hay que hacer es crear una copia de trabajo en la
-maquina clientemediante una operación de CHECK OUT. El ciclo de
-trabajo consiste en actualizar, realizar cambios, enviar cambios. La
-actualización se realiza con la operación UPDATE para obtener los
+máquina cliente mediante una operación de 'check out'. El ciclo de
+trabajo consiste en actualizar, realizar cambios y enviar cambios. La
+actualización se realiza con la operación 'update' para obtener los
 cambios nuevos en el repositorio. Luego se realizan cambios en la
-copia local, entre los mas importantes que se pueden hacer sobre un
-archivo estan: modificar su contenido, marcarlo para agregar o
+copia local, entre los más importantes que se pueden hacer sobre un
+archivo están: modificar su contenido, marcarlo para agregar o
 marcarlo para borrar. 
 
 .. image:: svn-normal.eps
 
-Por ultimo todos estos cambios que se hicieron
-sobre uno o mas archivos deben ser sincronizados mediante la operación
-COMMIT. Tanto en el uso de UPDATE como de COMMIT puede surgir lo que
-se conoce como un conflicto. Estos conflictos se deben a que mas de un
-desarrollador modifico la misma para de un archivo sin haber notado
-los cambios que realizo el otro, pero gracias a SVN es bastante
-sencillo de resolver y continuar asi un desarrollo consistente.
+Por último todos estos cambios que se hicieron sobre uno o más
+archivos deben ser sincronizados mediante la operación 'commit'. Tanto
+en el uso de 'update' como de 'commit' puede surgir lo que se conoce
+como un conflicto. Estos conflictos se deben a que más de un
+desarrollador modificó la misma parte de un archivo sin haber notado
+los cambios que realizó otro. Gracias a SVN es bastante sencillo de
+resolver y continuar el desarrollo.
 
 .. image:: svn-merge.eps
 .. image:: svn-conflict.eps
 
 ------------------------------------------------------------------------
-Estandares de codificación adoptados
+Estándares de codificación adoptados
 ------------------------------------------------------------------------
 
-Los siguientes estandares de codificación fueron adoptados por el equipo
+Los siguientes estándares de codificación fueron adoptados por el equipo
 de desarrollo:
 
 * Indentación con 4 espacios.
@@ -1182,7 +1240,7 @@ XPWeb
 ------------------------------------------------------------------------
 
 Es una herramienta web para administrar proyectos que siguen la
-metodologia XP. Con esta herramienta es posible realizar la
+metodología XP. Con esta herramienta es posible realizar la
 planificación, gestionar las metaforas, utilizar un calendario,
 imprimir reportes con estadisticas y exportar proyectos. Desarrollada
 en el lenguaje PHP y de libre uso y distribucion.
@@ -1599,7 +1657,7 @@ dividir el problema en funciones específicas:
   función complete_dimension() se encarga de homogeinizar las
   dimensiones de los cubos involucrados.
 
-:exec_function(): El ultimo paso antes de mostrar el informe es
+:exec_function(): El último paso antes de mostrar el informe es
   aplicar la función de visualización a cada una de las measures
   obtenidas. Esto permite una flexibilidad total al momento de
   confeccionar informes.
@@ -1633,10 +1691,38 @@ Tests
 .. include:: doc_test.txt
 
 ========================================================================
-                             Conclusiones
+                             Conclusión
 ========================================================================
 
+El presente trabajo fue el resultado de diez meses de esfuerzo e
+interacción con el cliente, siendo nuestro primer trabajo en conjunto,
+fue sin dudas uno de los procesos de aprendizaje más intensos que
+tuvimos.
 
+Somos concientes de los costos e implicaciones que sufre una empresa
+por el recambio tecnológico. Respetamos la decisión del cliente en
+mantener la tecnología con mejor relación costo/beneficio para su
+negocio. De todas formas, fue una sorpresa y un desafío interactuar con
+las bases de datos operativas (XBase) de tamaño considerable.  Este
+elemento nos demostró que la práctica de campo es necesaria para la
+transferencia tecnológica entre las unidades académicas y el mercado.
+
+Uno de los aspectos más positivos del proceso fue la utilización de
+una metodología en crecimiento como es XP. Nos resultó muy natural la
+organización y principios que la metodología propone. También
+visualizamos las ventajas de la misma: durante el proceso tuvimos
+cambios de rumbo significativos, algunos disparados por el cliente y
+otros por nosotros mismos, sin embargo, la replanificación se pudo
+realizar en cuestion de minutos.
+
+Durante el diseño y desarrollo del sistema teníamos que
+terminar nuestro último año de cursada. En una unidad académica tan
+demandante como es nuestra Regional, no fue tarea trivial la
+coordinación de los tiempos necesarios para avanzar con el presente
+proyecto en paralelo a otras actividades académicas y laborales.  Este
+sacrificio fue uno de los mayores aspectos negativos del proyecto,
+aunque admitimos que fue grande la satisfacción al ver el resultado
+final.
 
 ========================================================================
                                 Anexos
@@ -1707,6 +1793,7 @@ Python
 ::
 
   apt-get install python25
+
 
 PostgreSQL
 ----------
