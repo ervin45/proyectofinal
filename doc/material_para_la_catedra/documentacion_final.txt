@@ -618,8 +618,10 @@ observar con un mayor nivel de detalle que le permita descubrir en el
 cubo los lugares en los que se ha producido esta diferencia, según los
 productos y períodos.
 
-Definición técnica
-------------------
+Definición técnica[1]
+---------------------
+
+.. [1] Extraído de http://es.wikipedia.org/wiki/Cubo_OLAP
 
 En teoría de bases de datos, un cubo OLAP es una representación
 abstracta de la proyección de una relación de un RDBMS (Sistema
