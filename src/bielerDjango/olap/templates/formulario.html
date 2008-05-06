@@ -122,7 +122,8 @@
 			var y   = $('#y').val()
 			var xl  = $('#xl').val()
 			var yl  = $('#yl').val()
-			var url = "http://" 
+// 			var url = "http://"
+			var url = ""
 
 			var xr = _get_x_restriction()
 			var yr = _get_y_restriction()
@@ -137,7 +138,7 @@
 
 			var cf_params = _get_cf_params()
 
-			url += server_and_port
+// 			url += server_and_port
 			url += "/" + "report"
 			url += "/" + ft	
 			url += "/" + x
@@ -276,7 +277,7 @@
 		</table>
 		<input id="aceptar" type="button" value="Aceptar" />
 
-		<input id="server_and_port" type="hidden" value="{{server_ip}}:8000" />
+		<input id="server_and_port" type="hidden" value="" />
 	</form>
 
 	URL: <span id="url">&nbsp;</span>

@@ -435,6 +435,7 @@ def delete_report(request):
     return HttpResponse("")
 
 def save_categoria(request):
+    
     nombre         = request.POST.get('nombre', False)
 
     categoria  = models.Categoria(nombre=nombre)

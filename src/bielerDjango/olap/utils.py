@@ -25,8 +25,8 @@ def compare(a,b):
 def sumar(a,b):
     if a == None:
         a = 0
-        
+
     if b == None:
         b = 0
-        
+
     return a + b 

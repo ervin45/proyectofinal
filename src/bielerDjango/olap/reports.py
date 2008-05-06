@@ -914,11 +914,11 @@ class Report2:
 
     def _member_function_params(self, x1, y1, x2, y2, cube1, cube2):
         params = []
-        
+
         measures_values = {}
         measures_values.update(cube1.get(x1, y1))
         measures_values.update(cube2.get(x2, y2))
-            
+
         for ft, measure, agregation in self.measures:
             params.append(measures_values["%s__%s" % (ft, measure)])
 
@@ -941,11 +941,11 @@ class Report2:
                 temp_cube.add(x1, y1, {'result': temp})
 
         return temp_cube
-            
+
     def apply_cube_function(self, cube):
         params = [cube]
         params.extend(self.cube_function_params)
-        
+
         self.cube_function(*params)
 
     def set_can_flags(self, cube):
@@ -977,19 +977,19 @@ class Report2:
 
         self.fit(complete_cubes)
         final_cube = self.merge(complete_cubes)
-        
+
         self.apply_cube_function(final_cube)
         self.set_can_flags(final_cube)
         self.set_meta_info(final_cube)
 
         return final_cube
-        
+
     def absolute_url(self, request, parcial_url):
         mf = self.member_function.__name__
         params = str(self.measures)
         cf = self.cube_function.__name__
         cf_params = str(self.cube_function_params)
-        
+
         url = "/report2/%s%s/params=%s/%s/params=%s" % (parcial_url, mf, params, cf, cf_params)
         return url
 
