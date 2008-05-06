@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+
 import dw_connect
 
 import copy
@@ -609,7 +612,7 @@ class Report1:
         '''
         >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.dimension_values(1)
-        [u'184-0-14-71', ..., u'184-616-16-80']
+        ['184-0-14-71', ...,'184-616-16-80']
         >>> r.dimension_values(0)
         [2006]
         >>>
@@ -654,10 +657,10 @@ class Report1:
         '''
         ---
         '''
-        
+
         cursor_dwh = dw_connect.cursor()
         cursor_dwh.execute(sql)
-        
+
         if cursor_dwh.rowcount > too_many_rows:
             rows = cursor_dwh.rowcount
             raise CubeTooBig(0, rows)
@@ -673,7 +676,7 @@ class Report1:
     def complete_dimensions(self, cube, cubiculo):
         x_axis = self.dimension_values(1)
         y_axis = self.dimension_values(0)
-        
+
         if len(x_axis) * len(y_axis) > too_many_cells:
             cells = len(x_axis) * len(y_axis)
             raise CubeTooBig(cells, 0)
@@ -683,22 +686,22 @@ class Report1:
 
         for y in y_axis:
             cube.add_y_value(str(y))
-            
+
     def _member_function_params(self, x1, y1, cube):
         params = []
-        
+
         measures_values = cube.get(x1, y1)
         for ft, measure, agregation in self.measures:
             params.append(measures_values["%s__%s" % (ft, measure)])
-            
+
         return params
-            
+
     def exec_member_function(self, cube):
         temp_cube = Cube()
-        
+
         for x1 in cube.dim_x:
             for y1 in cube.dim_y:
-                
+
                 params = self._member_function_params(x1, y1, cube)
                 #cube_values = cube.get(x1, y1)
 
@@ -707,19 +710,19 @@ class Report1:
                 temp_cube.add(x1, y1, {'result': temp})
 
         return temp_cube
-            
+
     def apply_cube_function(self, cube):
         params = [cube]
         params.extend(self.cube_function_params)
-        
+
         self.cube_function(*params)
-            
+
     def set_can_flags(self, cube):
         cube._can_roll_x = self.cubiculo.can_roll_x()
         cube._can_roll_y = self.cubiculo.can_roll_y()
         cube._can_drill_x = self.cubiculo.can_drill_x()
         cube._can_drill_y = self.cubiculo.can_drill_y()
-        
+
     def set_meta_info(self, cube):
         ft = self.cubiculo.ft
         dimensions = self.cubiculo.dimensions
@@ -731,18 +734,20 @@ class Report1:
         cube = Cube()
 
         sql = self.get_sql(self.ft)
+        
+        print "SSSSSSSSSSQL", sql
         incomplete_table = self.exec_sql(sql)
-        
+
         self.fill_cube(cube, incomplete_table)
-        
+
         self.complete_dimensions(cube, self.cubiculo)
-        
+
         final_cube = self.exec_member_function(cube)
-        
-        
+
         self.apply_cube_function(final_cube)
         self.set_can_flags(final_cube)
         self.set_meta_info(final_cube)
+
         return final_cube
 
     def absolute_url(self, request, parcial_url):
@@ -752,6 +757,7 @@ class Report1:
         cf_params = str(self.cube_function_params)
 
         url = "/report/%s%s/params=%s/%s/params=%s" % (parcial_url, mf, params, cf, cf_params)
+
         return url
 
 
@@ -783,7 +789,7 @@ class Report2:
         self.cubiculos = odict()
         self.cubiculos[ft1] = cubiculo1
         self.cubiculos[ft2] = cubiculo2
-        
+
     def _split_measures(self, ft):
         '''
         >>> r = Report2("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "movimiento", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "sumar", '[["ft_movimientos", "stock", "avg"], ["ft_ventas", "cantidad", "sum"], ["ft_ventas", "margen_dolares", "sum"]]', 'order_and_slice_the_cube', '["3", "desc"]')
@@ -800,29 +806,29 @@ class Report2:
 
     def pivot(self, request):
         parcial_url = ""
-        
+
         for cubiculo in self.cubiculos.values():       
             cubiculo.pivot()
             parcial_url += cubiculo.parcial_url()
-            
+
         return self.absolute_url(request, parcial_url)
 
     def drill(self,request, axis):
         parcial_url = ""
-        
+
         for cubiculo in self.cubiculos.values():       
             cubiculo.drill(axis)
             parcial_url += cubiculo.parcial_url()
-            
+
         return self.absolute_url(request, parcial_url)
 
     def roll(self, request, axis):
         parcial_url = ""
-        
+
         for cubiculo in self.cubiculos.values():       
             cubiculo.roll(axis)
             parcial_url += cubiculo.parcial_url()
-            
+
         return self.absolute_url(request, parcial_url)
 
     def replace_to(self, request, axis, values):
@@ -1028,3 +1034,12 @@ class Ajax_responser:
                 result[cf] = function.meta
 
             return result
+
+
+def _test():
+    import doctest
+    doctest.testmod()
+
+if __name__ == "__main__":
+    _test()
+

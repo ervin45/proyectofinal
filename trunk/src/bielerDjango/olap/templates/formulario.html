@@ -115,11 +115,42 @@
 			}
 		}
 
+		function _verificar(){
+
+			error = false
+			msg = ""
+
+			var x   = $('#x').val()
+			var y   = $('#y').val()
+
+			if (x == y){
+				error = true
+				msg += "X e Y no pueden ser iguales\n"
+			}
+
+			
+			if (error){
+				alert(msg)
+				return false
+			}
+
+			return true
+		}
+
 		function aceptar(){
-			var server_and_port = $('#server_and_port').val()
+			if (!_verificar()){
+				return
+			}
+
 			var ft  = $('#ft').val()
 			var x   = $('#x').val()
 			var y   = $('#y').val()
+
+			if (x == y){
+				alert("X e Y no pueden ser iguales")
+				return
+			}
+
 			var xl  = $('#xl').val()
 			var yl  = $('#yl').val()
 // 			var url = "http://"

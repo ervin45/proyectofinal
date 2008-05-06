@@ -268,8 +268,39 @@
 			_agregar("ft2_")
 		}
 
+		function _verificar(){
+
+			error = false
+			msg = ""
+
+			var x   = $('#x').val()
+			var y   = $('#y').val()
+
+			if (x == y){
+				error = true
+				msg += "X e Y no pueden ser iguales\n"
+			}
+
+			var ft1   = $('#ft1').val()
+			var ft2   = $('#ft2').val()
+			if (ft1 == ft2){
+				error = true
+				msg += "Debe elegir dos hechos diferentes"
+			}
+			
+			if (error){
+				alert(msg)
+				return false
+			}
+
+			return true
+		}
+
 		function aceptar(){
-			var server_and_port = $('#server_and_port').val()
+			if (!_verificar()){
+				return
+			}
+
 
 			var ft1_url = _ft_url('ft1')
 			var ft2_url = _ft_url('ft2')			
