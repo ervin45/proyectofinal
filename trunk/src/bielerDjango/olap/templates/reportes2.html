@@ -414,7 +414,7 @@ so.write("flashcontent");
 
 	<!-- Total FILA -->
 	<th>
-		{{total_x|hash:forloop.counter0}}
+		{{total_x|hash:forloop.counter0|floatformat:2}}
 	</th>
 	<!-- FIN Total FILA -->
 
@@ -428,7 +428,7 @@ so.write("flashcontent");
         <th align="right" colspan="{{header_left_size}}">TOTAL</th>
     {% for ty in total_y %}
 	<th>
-		{{ty}}
+		{{ty|floatformat:2}}
         </th>
     {% endfor %}
     
