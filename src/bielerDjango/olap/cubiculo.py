@@ -1004,4 +1004,5 @@ def _test():
     doctest.testmod()
 
 if __name__ == "__main__":
+    print "CUBICULO"
     _test()
