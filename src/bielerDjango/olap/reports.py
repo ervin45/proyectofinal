@@ -500,6 +500,9 @@ class CubeTooBig:
         self.cells = cells
         self.rows  = rows
 
+class CubeEmpty(Exception):
+    pass
+
 class FakedRequest:
     def __init__(self):
         self.META = {'SERVER_IP':"", 'SERVER_PORT':'8000'}
@@ -660,6 +663,9 @@ class Report1:
 
         cursor_dwh = dw_connect.cursor()
         cursor_dwh.execute(sql)
+
+        if cursor_dwh.rowcount == 0:
+            raise CubeEmpty()
 
         if cursor_dwh.rowcount > too_many_rows:
             rows = cursor_dwh.rowcount

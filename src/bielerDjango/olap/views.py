@@ -144,6 +144,11 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     except reports.CubeTooBig:
         return render_to_response('tooBig.html',locals())
 
+    except reports.CubeEmpty, e:
+        cell = -50
+        rows = -50
+        return render_to_response('empty.html', locals())
+
 def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params):
     report2 = reports.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
@@ -182,8 +187,12 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     except reports.CubeTooBig, e:
         cells = e.cells
         rows  = e.rows
-
         return render_to_response('tooBig.html',locals())
+
+    except reports.CubeEmpty, e:
+        cell = -50
+        rows = -50
+        return render_to_response('tooBig.html', locals())
 
 def redirect(request):
 
