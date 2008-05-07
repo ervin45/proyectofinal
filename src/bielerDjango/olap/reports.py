@@ -42,7 +42,7 @@ class Cube:
     42
     78
     None
-    >>>  
+    >>>
     '''
 
     def __init__(self):
@@ -84,9 +84,9 @@ class Cube:
 
         self.measures = list(set([i[2] for i in self.data.keys()]))
         self.measures.sort(compare)
-    
+
     def set_default(self, value):
-        ''' 
+        '''
         >>> c = Cube()
         >>> c.add('1','1',{"c":1})
         >>> c.add('1','2',{"c":3})
@@ -116,9 +116,9 @@ class Cube:
         >>>
         '''
         self.default = value
-    
+
     def add(self, x, y, measures_values):
-        ''' 
+        '''
         >>> c = Cube()
         >>> c.add('uno','1',{"c":1})
         >>> c.add('uno','2',{"c":3})
@@ -146,16 +146,16 @@ class Cube:
         ['dos', 'uno']
         >>> c.dim_y
         ['1', '2']
-        >>> 
+        >>>
         '''
         self.add_x_value(x)
         self.add_y_value(y)
         for k, v in measures_values.items():
             self.data[(x,y,k)] =  v
             self.add_measure_value(k)
-            
+
     def get(self, x, y):
-        ''' 
+        '''
         >>> c = Cube()
         >>> from pprint import pprint
         >>> c.add('1','1',{"c":1})
@@ -168,7 +168,7 @@ class Cube:
         >>> c.add('2','2',{"a":42})
         >>> pprint(c.get('2', '1'))
         {'a': 40, 'c': 2}
-        >>> 
+        >>>
         >>> c = Cube()
         >>> c.add('1','1',{"c":1})
         >>> c.add('1','2',{"c":3})
@@ -178,15 +178,15 @@ class Cube:
         >>> c.get('1','5')
         {'c': None}
         '''
-        
+
         t = {}
         for m in self.measures:
             t[m] = self.data.get((x, y, m), self.default)
-            
+
         return t
-        
-            
-    def columns(self, y, measure):   
+
+
+    def columns(self, y, measure):
         '''
         >>> c = Cube()
         >>> i = c.columns(y='2', measure="c")
@@ -202,10 +202,10 @@ class Cube:
         7
         >>>
         '''
-        
+
         for x in self.dim_x:
             yield self.data.get((x,y,measure), self.default)
-                
+
     def rows(self, x, measure):
         '''
         >>> c = Cube()
@@ -222,10 +222,10 @@ class Cube:
         7
         >>>
         '''
-        
+
         for y in self.dim_y:
-            yield self.data.get((x,y,measure), self.default)        
-            
+            yield self.data.get((x,y,measure), self.default)
+
     def get_measures(self, x, y):
         '''
         >>> c = Cube()
@@ -308,7 +308,7 @@ class Cube:
         '''
 
         return (len(self.dim_x), len(self.dim_y))
-        
+
     def fit(self, x, y):
         '''
         >>> from pprint import pprint
@@ -348,39 +348,39 @@ class Cube:
         ['dos', 'dos', 'uno', 'uno']
         >>> c.dim_y
         ['1', '1', '2', '2']
-        >>> 
-        '''     
-        
-        
+        >>>
+        '''
+
+
         if x % len(self.dim_x) == 0:
             factor_x = x / len(self.dim_x)
             temp = []
             for i in self.dim_x:
                 temp.extend([i] * factor_x)
             self.dim_x = temp
-        
+
         if y % len(self.dim_y) == 0:
             factor_y = y / len(self.dim_y)
             temp = []
             for j in self.dim_y:
                 temp.extend([j] * factor_y)
             self.dim_y = temp
-            
+
     def can_roll_x(self):
         return self._can_roll_x
-    
+
     def can_roll_y(self):
         return self._can_roll_y
-    
+
     def can_drill_x(self):
         return self._can_drill_x
-    
+
     def can_drill_y(self):
         return self._can_drill_y
-    
+
     def add_info(self, ft, dimensions, measures, ore):
         self.info.append([ft, dimensions, measures, ore])
-        
+
     def get_info(self):
         return self.info
 
@@ -411,7 +411,7 @@ class Cube:
         ['9.0', '4.0']
         >>>
         """
-        
+
         return self.reduce_x(sumar, measure)
 
     def reduce_y(self, func, measure):
@@ -443,7 +443,7 @@ class Cube:
         ['3.0', '10.0']
         >>>
         """
-        
+
         return self.reduce_y(sumar, measure)
 
     def forecast_x_dummy(self,measure):
@@ -527,10 +527,10 @@ class Report1:
         self.measures = eval(params)
         self.cube_function = globals()[cf]
         self.cube_function_params = eval(cf_params)
-         
+
         dimensions = [[self.x,self.xl,eval(self.xr)],[self.y,self.yl,eval(self.yr)]]
         self.cubiculo = cubiculo.Cubiculo(self.ft,dimensions,self.measures, eval(self.ore))
-        
+
     def pivot(self, request):
         '''
         >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
@@ -646,7 +646,7 @@ class Report1:
         >>>
         '''
         return self.cubiculo.get_other_axis_list()
- 
+
     def get_sql(self, ft):
         '''
         >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
@@ -676,7 +676,7 @@ class Report1:
     def fill_cube(self, cube, incomplete_table):
         for row in incomplete_table:
             dict_row = dict(row)
-            cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row) 
+            cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row)
 
 
     def complete_dimensions(self, cube, cubiculo):
@@ -740,7 +740,7 @@ class Report1:
         cube = Cube()
 
         sql = self.get_sql(self.ft)
-        
+
         print "SSSSSSSSSSQL", sql
         incomplete_table = self.exec_sql(sql)
 
@@ -813,7 +813,7 @@ class Report2:
     def pivot(self, request):
         parcial_url = ""
 
-        for cubiculo in self.cubiculos.values():       
+        for cubiculo in self.cubiculos.values():
             cubiculo.pivot()
             parcial_url += cubiculo.parcial_url()
 
@@ -822,7 +822,7 @@ class Report2:
     def drill(self,request, axis):
         parcial_url = ""
 
-        for cubiculo in self.cubiculos.values():       
+        for cubiculo in self.cubiculos.values():
             cubiculo.drill(axis)
             parcial_url += cubiculo.parcial_url()
 
@@ -831,7 +831,7 @@ class Report2:
     def roll(self, request, axis):
         parcial_url = ""
 
-        for cubiculo in self.cubiculos.values():       
+        for cubiculo in self.cubiculos.values():
             cubiculo.roll(axis)
             parcial_url += cubiculo.parcial_url()
 
@@ -840,7 +840,7 @@ class Report2:
     def replace_to(self, request, axis, values):
         parcial_url = ""
 
-        for cubiculo in self.cubiculos.values():       
+        for cubiculo in self.cubiculos.values():
             cubiculo.replace_to(axis, values)
             parcial_url += cubiculo.parcial_url()
 
@@ -849,7 +849,7 @@ class Report2:
     def replace_to_both_axis(self, request, value0, value1):
         parcial_url = ""
 
-        for cubiculo in self.cubiculos.values():       
+        for cubiculo in self.cubiculos.values():
             cubiculo.replace_to_both_axis(axis, value0, value1)
             parcial_url += cubiculo.parcial_url()
 
@@ -858,7 +858,7 @@ class Report2:
     def dice(self, request, main_axis, other_axis):
         parcial_url = ""
 
-        for cubiculo in self.cubiculos.values():       
+        for cubiculo in self.cubiculos.values():
             cubiculo.dice(main_axis, other_axis)
             parcial_url += cubiculo.parcial_url()
 
@@ -869,7 +869,7 @@ class Report2:
 
         sql_dimension_values = cubiculo.dimension_values(int(axis))
         cursor_dwh.execute(sql_dimension_values)
-        axis_values = cursor_dwh.fetchall()        
+        axis_values = cursor_dwh.fetchall()
         axis_values = [x[0]  for x in axis_values]
 
         return axis_values
@@ -899,7 +899,7 @@ class Report2:
     def fill_cube(self, cube, incomplete_table):
         for row in incomplete_table:
             dict_row = dict(row)
-            cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row) 
+            cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row)
 
 
     def complete_dimensions(self, cube, cubiculo):
@@ -972,7 +972,7 @@ class Report2:
             dimensions = self.cubiculos[ft].dimensions
             measures   = self.cubiculos[ft].measures
             ore        = self.cubiculos[ft].ore
-            cube.add_info(ft=ft, dimensions=dimensions, measures=measures, ore=ore)        
+            cube.add_info(ft=ft, dimensions=dimensions, measures=measures, ore=ore)
 
 
 
