@@ -109,11 +109,14 @@
 <a id="">Modificar</a>
 
 <script type="text/javascript" src="/media/js/swfobject.js"></script>
-<div id="flashcontent"></div><script type="text/javascript">
+<div id="flashcontent"></div>
+
+<script type="text/javascript">
+
 var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "600", "300", "9", "#FFFFFF");
 so.addVariable("variables","true");
 
-{{ofc_params}}
+{{ofc_params|safe}}
 
 so.write("flashcontent");
 </script>
