@@ -182,9 +182,9 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
         main_axis = report2.get_main_axis_list()
         other_axis = report2.get_other_axis_list()
 
-        #ofc_params = graph_data(header, body, body_order)
+        ofc_par = graph_data(header, body, body_order)
 
-        return render_to_response('reportes2.html',locals())
+        #return render_to_response('reportes2.html',locals())
 
     except reports.CubeTooBig, e:
         cells = e.cells

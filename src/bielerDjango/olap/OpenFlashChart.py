@@ -637,7 +637,7 @@ class graph:
         for ov in output_variables:
             attr = self.sanitize(getattr(self, ov))
             if( attr != "" and attr != 0):
-                tmp += 'so.addVariable("%s", "%s");' % (ov, self.sanitize(getattr(self, ov)))
+                tmp += "so.addVariable('%s', '%s');" % (ov, self.sanitize(getattr(self, ov)))
                 tmp += "\n"
 
         for d in data:
