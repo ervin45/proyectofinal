@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from pprint import pprint
 import math
 
+# patron espacios de mas \s{1,}$
+
 def header_list_top(header):
     if header == ['TODO']:
         return [[['TODO', 1,'TODO']]], 1
@@ -83,7 +85,7 @@ def header_list_left(header):
                 col = []
         except:
             pass
-            
+
     return rows, len(re)
 
 def index(request):
@@ -104,7 +106,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
         header     = cube.dim_y
         header_top, header_top_size = header_list_top(cube.dim_y)
-        
+
         pprint(cube.dim_y)
 
         header_left, header_left_size = header_list_left(cube.dim_x)
@@ -121,7 +123,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         ft           = cube_info[0][0]
         dimensions   = cube_info[0][1]
         measures     = cube_info[0][2]
-        ore          = cube_info[0][3] 
+        ore          = cube_info[0][3]
 
         dim_x = x
         dim_y = y
@@ -197,7 +199,7 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
 def redirect(request):
 
     url = "/report/test/tiempo/tipo_pieza/anio/tipo_pieza/xr%3D{'anio'%3A ['2002']}/yr%3D{}/ore%3D[['pieza'%2C 'modificacion'%2C {'grupo_constructivo'%3A ['184']}]]/same/params%3D[['ft_test'%2C 'cantidad'%2C 'sum']]/same_cube/params%3D[]/"
-    
+
     return HttpResponseRedirect(url)
 
 
@@ -211,7 +213,7 @@ def roll(request, axis):
     print "REFERER", request.META['HTTP_REFERER'], "REFERER"
     report = get_report(request)
     url = report.roll(request, axis)
-    
+
     print "UUUUUUUUUURL", url, "UUUUUUUUUURL"
     return HttpResponseRedirect(url)
 
@@ -258,22 +260,22 @@ def get_body(cube):
 
 def get_report(request):
     from django.conf import settings
-    
+
     http_referer = request.META['HTTP_REFERER']
-    
+
     if referer_type(http_referer) == "Report1":
         parsed_url = parse_url(http_referer)
         (report, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params) = parsed_url
-        
+
         report = reports.Report1(report, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
     else:
         parsed_url = parse_url2(http_referer)
         (ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params) = parsed_url
         report = reports.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1, ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params)
-        
+
     return report
 
-    
+
 def referer_type(http_referer):
     if parse_url(http_referer):
         return "Report1"
@@ -283,30 +285,30 @@ def referer_type(http_referer):
 def parse_url(http_referer):
     import re
     import urllib
-    
+
     referer = urllib.unquote_plus(http_referer)
     url_patter = '^.*report/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$'
     p = re.compile(url_patter)
     result = p.findall(referer)
-    
+
     if result == []:
         return False
-    
+
     return result[0]
 
 def parse_url2(http_referer):
     import re
     import urllib
-    
+
     referer = urllib.unquote_plus(http_referer)
-    
+
     url_patter = '^.*/report2/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$'
     p = re.compile(url_patter)
     result = p.findall(referer)
-    
+
     if result == []:
         return False
-    
+
     return result[0]
 
 
@@ -318,24 +320,24 @@ def get_tope(max_y):
     big_max_y = max_y * 1.05
     if max_y <= 1:
         digitos = 1
-    else:    
+    else:
         digitos = math.ceil(math.log10(big_max_y))
     pos = [(x+1)*(10**(digitos-1)) for x in range(10)]
     tope = [x for x in pos if x > big_max_y][0]
-    
+
     return tope
 
 
 def graph_data(header, body, body_order, x_label_dim, x_label_level):
     import OpenFlashChart as ofc
     import itertools as it
-    
+
     graph = ofc.graph()
     graph.x_label_style = "11,#9933CC,2"
     graph.y_label_style= "11,#9933CC,2"
-    
+
     graph.set_tool_tip('#key# <br> #val#')
-    
+
     palette = ['#0066BB', '#BB0066', '#BB6600',
                '#66BB00', '#6600BB', '#6666BB', '#00ff55',
                '#0055ff', '#ff0055', '#ff5500', '#55ff00',
@@ -344,30 +346,29 @@ def graph_data(header, body, body_order, x_label_dim, x_label_level):
                '#3333AA', '#00EE88', '#0088EE', '#EE0088',
                '#EE8800', '#88EE00', '#8800EE', '#8888AA']
     bar_colours = palette[0:len(body_order)]
-    
+
     colour_iter = it.cycle(bar_colours)
     max_y = 0
     for i, valor in enumerate(body_order):
         row_values_str = body[valor]
         row_values     = [float(x) for x in row_values_str if x]
-        
+
         graph.bar(alpha=50, colour=colour_iter.next(), text=valor, size=8)
         graph.set_data(row_values_str)
-        
+
         max_y = max([max_y] + row_values)
-        
-    
+
     graph.set_x_labels([str(x) for x in header])
     graph.x_legend= '%s[%s],20,#736AFF' % (x_label_dim, x_label_level)
     #graph.y_legend= 'ves in Feburary,20,#736AFF'
 
     graph.set_y_max(get_tope(max_y))
-    
+
     return graph.render_js()
-    
-    
-        
-        
+
+
+
+
 def formulario(request):
     return render_to_response('formulario.html',locals())
 
@@ -429,7 +430,7 @@ def save_report(request):
     nombre         = request.POST.get('nombre')
     dwp  = request.POST.get('dwp')
     categoria_id = request.POST.get('categoria_id')
-    
+
     categoria = models.Categoria.objects.get(id=categoria_id)
 
     reporte  = models.Reporte(nombre=nombre, dwp=dwp, categoria=categoria, user_id='2')
@@ -444,7 +445,7 @@ def delete_report(request):
     return HttpResponse("")
 
 def save_categoria(request):
-    
+
     nombre         = request.POST.get('nombre', False)
 
     categoria  = models.Categoria(nombre=nombre)
