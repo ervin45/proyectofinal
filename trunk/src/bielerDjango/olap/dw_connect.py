@@ -1,4 +1,5 @@
-DATABASE_HOST = '192.168.61.102'
+#DATABASE_HOST = '192.168.61.102'
+DATABASE_HOST = 'localhost'
 
 def cursor():
     import psycopg2

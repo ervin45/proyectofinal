@@ -5,7 +5,6 @@
     <script type="text/javascript" src="/media/js/jquery/jquery.flydom.js"></script>
 
     <script type="text/javascript" src="/media/js/formulario.js"></script>
-    
 
     <script type="text/javascript">
 	jQuery.noConflict();
@@ -115,7 +114,7 @@
 			}
 		}
 
-		function _verificar(){
+		function _verificar(e){
 
 			error = false
 			msg = ""
@@ -137,8 +136,8 @@
 			return true
 		}
 
-		function aceptar(){
-			if (!_verificar()){
+		function aceptar(e){
+			if (!_verificar(e)){
 				return
 			}
 
@@ -203,7 +202,7 @@
 
   </head>
   <body>
-	<img id="ajax_loading" src="/media/img/loading.gif" width="70" style="display:none" />
+	<img id="ajax_loading" src="/media/img/loading2.gif" width="70" style="display:none" />
 	<form>
 		<label>Hecho</label>
 		<select id="ft">
