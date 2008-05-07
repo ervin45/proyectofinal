@@ -664,7 +664,7 @@ class Report1:
         cursor_dwh = dw_connect.cursor()
         cursor_dwh.execute(sql)
 
-        if cursor_dwh.rowcount == 0:
+        if cursor_dwh.rowcount < 2:
             raise CubeEmpty()
 
         if cursor_dwh.rowcount > too_many_rows:

@@ -13,7 +13,8 @@ DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'post
 DATABASE_NAME = 'bieler_dw'             # Or path to database file if using sqlite3.
 DATABASE_USER = 'ncesar'             # Not used with sqlite3.
 DATABASE_PASSWORD = 'jjjj'         # Not used with sqlite3.
-DATABASE_HOST = '192.168.61.102'             # Set to empty string for localhost. Not used with sqlite3.
+#DATABASE_HOST = '192.168.61.102'             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_HOST = 'localhost'             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = '5432'             # Set to empty string for default. Not used with sqlite3.
 
 
