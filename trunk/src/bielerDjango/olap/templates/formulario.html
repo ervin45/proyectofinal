@@ -152,7 +152,7 @@
 
 			var xl  = $('#xl').val()
 			var yl  = $('#yl').val()
-// 			var url = "http://"
+
 			var url = ""
 
 			var xr = _get_x_restriction()
@@ -168,7 +168,6 @@
 
 			var cf_params = _get_cf_params()
 
-// 			url += server_and_port
 			url += "/" + "report"
 			url += "/" + ft	
 			url += "/" + x
@@ -183,8 +182,6 @@
 			url += "/" + cf
 			url += "/" + cf_params
 			url += "/"
-
-			$('#url').html(url)
 
 			parent.location.href = url
 		}
@@ -309,8 +306,6 @@
 
 		<input id="server_and_port" type="hidden" value="" />
 	</form>
-
-	URL: <span id="url">&nbsp;</span>
 
   <script type="text/javascript">
 	

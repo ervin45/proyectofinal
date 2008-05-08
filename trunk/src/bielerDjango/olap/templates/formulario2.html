@@ -313,9 +313,7 @@
 
 			var cf_params = _get_cf_params()
 
-// 			var url = "http://"
 			var url = ""  
-// 			url += server_and_port
 			url += "/" + "report2"
 			url += "/" + ft1_url
 			url += "/" + ft2_url
@@ -325,9 +323,7 @@
 			url += "/" + cf_params
 			url += "/"
 
-			$('#url').html(url)
-
-			//window.location.href = url
+			parent.location.href = url
 		}
 		
 
@@ -547,8 +543,6 @@
 		<input id="server_and_port" type="hidden" value="" />
 
 	</form>
-
-	URL: <span id="url">&nbsp;</span><script type="text/javascript">
 	
   </script>
 
