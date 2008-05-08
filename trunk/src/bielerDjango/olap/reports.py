@@ -12,8 +12,8 @@ from utils import *
 from member_functions import *
 from cube_functions import *
 
-too_many_rows = 2000
-too_many_cells = 20000
+too_many_rows = 50000
+too_many_cells = 500000
 
 class Cube:
     '''

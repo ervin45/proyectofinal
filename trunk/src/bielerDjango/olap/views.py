@@ -110,11 +110,13 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
     total_x = cube.total_x()
     total_y = cube.total_y()
+    
+    print "CCCANTIDAD", len(cube.dim_x) * len(cube.dim_y)
 
     header     = cube.dim_y
     header_top, header_top_size = header_list_top(cube.dim_y)
 
-    pprint(cube.dim_y)
+    #pprint(cube.dim_y)
 
     header_left, header_left_size = header_list_left(cube.dim_x)
 
@@ -135,16 +137,19 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     dim_x = x
     dim_y = y
 
-    from django.conf import settings
-
-    pprint(body)
+    #pprint(body)
 
     main_axis = report.get_main_axis_list()
 
     other_axis = ['Seleccionar..']
     other_axis.extend(report.get_other_axis_list())
 
-    ofc_params = graph_data(header, body, body_order, x, xl)
+    if len(cube.dim_x) > 20 or len(cube.dim_y) > 20:
+        ofc_params = ""
+        mostrar_grafico = False
+    else:
+        ofc_params = graph_data(header, body, body_order, x, xl)
+        mostrar_grafico = True
 
     categorias = models.Categoria.objects.all()
 
@@ -167,6 +172,8 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
         cell = -50
         rows = -50
         return render_to_response('tooBig.html', locals())
+
+
 
     total_x = cube.total_x()
     total_y = cube.total_y()
@@ -207,7 +214,12 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     main_axis = report2.get_main_axis_list()
     other_axis = report2.get_other_axis_list()
 
-    ofc_params = graph_data(header, body, body_order, x1, xl1)
+    if len(cube.dim_x) > 20 or len(cube.dim_y) > 20:
+        ofc_params = ""
+        mostrar_grafico = False
+    else:
+        ofc_params = graph_data(header, body, body_order, x, xl)
+        mostrar_grafico = True
 
     return render_to_response('reportes2.html',locals())
 
