@@ -92,6 +92,7 @@ def index(request):
     print "INDEX"
     return render_to_response('index.html',locals())
 
+
 def index2(request):
     return render_to_response('index2.html',locals())
 
@@ -100,56 +101,56 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
     try:
         cube = report.build_cube()
-
-        total_x = cube.total_x()
-        total_y = cube.total_y()
-
-        header     = cube.dim_y
-        header_top, header_top_size = header_list_top(cube.dim_y)
-
-        pprint(cube.dim_y)
-
-        header_left, header_left_size = header_list_left(cube.dim_x)
-
-        body       = get_body(cube)
-        body_order = cube.dim_x
-
-        can_roll_x   = cube.can_roll_x()
-        can_roll_y   = cube.can_roll_y()
-        can_drill_x  = cube.can_drill_x()
-        can_drill_y  = cube.can_drill_y()
-
-        cube_info    = cube.get_info()
-        ft           = cube_info[0][0]
-        dimensions   = cube_info[0][1]
-        measures     = cube_info[0][2]
-        ore          = cube_info[0][3]
-
-        dim_x = x
-        dim_y = y
-
-        from django.conf import settings
-
-        pprint(body)
-
-        main_axis = report.get_main_axis_list()
-
-        other_axis = ['Seleccionar..']
-        other_axis.extend(report.get_other_axis_list())
-
-        ofc_params = graph_data(header, body, body_order, x, xl)
-
-        categorias = models.Categoria.objects.all()
-
-        return render_to_response('reportes2.html',locals())
-
     except reports.CubeTooBig:
         return render_to_response('tooBig.html',locals())
-
     except reports.CubeEmpty, e:
         cell = -50
         rows = -50
         return render_to_response('empty.html', locals())
+
+    total_x = cube.total_x()
+    total_y = cube.total_y()
+
+    header     = cube.dim_y
+    header_top, header_top_size = header_list_top(cube.dim_y)
+
+    pprint(cube.dim_y)
+
+    header_left, header_left_size = header_list_left(cube.dim_x)
+
+    body       = get_body(cube)
+    body_order = cube.dim_x
+
+    can_roll_x   = cube.can_roll_x()
+    can_roll_y   = cube.can_roll_y()
+    can_drill_x  = cube.can_drill_x()
+    can_drill_y  = cube.can_drill_y()
+
+    cube_info    = cube.get_info()
+    ft           = cube_info[0][0]
+    dimensions   = cube_info[0][1]
+    measures     = cube_info[0][2]
+    ore          = cube_info[0][3]
+
+    dim_x = x
+    dim_y = y
+
+    from django.conf import settings
+
+    pprint(body)
+
+    main_axis = report.get_main_axis_list()
+
+    other_axis = ['Seleccionar..']
+    other_axis.extend(report.get_other_axis_list())
+
+    ofc_params = graph_data(header, body, body_order, x, xl)
+
+    categorias = models.Categoria.objects.all()
+
+    return render_to_response('reportes2.html',locals())
+
+
 
 def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params):
@@ -158,43 +159,58 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
 
     try:
         cube = report2.build_cube()
-
-        header     = cube.dim_y
-        body       = get_body(cube)
-        body_order = cube.dim_x
-
-        can_roll_x   = cube.can_roll_x()
-        can_roll_y   = cube.can_roll_y()
-        can_drill_x  = cube.can_drill_x()
-        can_drill_y  = cube.can_drill_y()
-
-        cube_info    = cube.get_info()
-        ft           = cube_info[0][0]
-        dimensions   = cube_info[0][1]
-        measures     = cube_info[0][2]
-        ore          = cube_info[0][3]
-
-        ft2           = cube_info[1][0]
-        dimensions2   = cube_info[1][1]
-        measures2     = cube_info[1][2]
-        ore2          = cube_info[1][3]
-
-        main_axis = report2.get_main_axis_list()
-        other_axis = report2.get_other_axis_list()
-
-        ofc_par = graph_data(header, body, body_order)
-
-        #return render_to_response('reportes2.html',locals())
-
     except reports.CubeTooBig, e:
         cells = e.cells
         rows  = e.rows
         return render_to_response('tooBig.html',locals())
-
     except reports.CubeEmpty, e:
         cell = -50
         rows = -50
         return render_to_response('tooBig.html', locals())
+
+    total_x = cube.total_x()
+    total_y = cube.total_y()
+
+    header     = cube.dim_y
+    pprint(header)
+
+    header_top, header_top_size = header_list_top(cube.dim_y)
+    header_left, header_left_size = header_list_left(cube.dim_x)
+
+    body       = get_body(cube)
+    pprint(body)
+    body_order = cube.dim_x
+    pprint(body_order)
+    
+    pprint(header_top)
+    pprint(header_left)
+
+    can_roll_x   = cube.can_roll_x()
+    can_roll_y   = cube.can_roll_y()
+    can_drill_x  = cube.can_drill_x()
+    can_drill_y  = cube.can_drill_y()
+
+    cube_info    = cube.get_info()
+    ft           = cube_info[0][0]
+    dimensions   = cube_info[0][1]
+    measures     = cube_info[0][2]
+    ore          = cube_info[0][3]
+
+    ft2           = cube_info[1][0]
+    dimensions2   = cube_info[1][1]
+    measures2     = cube_info[1][2]
+    ore2          = cube_info[1][3]
+
+    dim_x = x1
+    dim_y = y1
+
+    main_axis = report2.get_main_axis_list()
+    other_axis = report2.get_other_axis_list()
+
+    ofc_params = graph_data(header, body, body_order, x1, xl1)
+
+    return render_to_response('reportes2.html',locals())
+
 
 def redirect(request):
 
