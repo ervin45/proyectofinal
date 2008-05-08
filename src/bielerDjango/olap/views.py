@@ -218,8 +218,10 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
         ofc_params = ""
         mostrar_grafico = False
     else:
-        ofc_params = graph_data(header, body, body_order, x, xl)
+        ofc_params = graph_data(header, body, body_order, x1, xl1)
         mostrar_grafico = True
+        
+    categorias = models.Categoria.objects.all()
 
     return render_to_response('reportes2.html',locals())
 
