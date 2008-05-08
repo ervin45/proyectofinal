@@ -151,6 +151,9 @@ class Cube:
         self.add_x_value(x)
         self.add_y_value(y)
         for k, v in measures_values.items():
+            if v == None:
+                v = self.default
+
             self.data[(x,y,k)] =  v
             self.add_measure_value(k)
 
@@ -664,7 +667,7 @@ class Report1:
         cursor_dwh = dw_connect.cursor()
         cursor_dwh.execute(sql)
 
-        if cursor_dwh.rowcount < 2:
+        if cursor_dwh.rowcount == 0:
             raise CubeEmpty()
 
         if cursor_dwh.rowcount > too_many_rows:
@@ -704,6 +707,7 @@ class Report1:
 
     def exec_member_function(self, cube):
         temp_cube = Cube()
+        temp_cube.set_default(0)
 
         for x1 in cube.dim_x:
             for y1 in cube.dim_y:
@@ -738,10 +742,10 @@ class Report1:
 
     def build_cube(self):
         cube = Cube()
+        cube.set_default(0)
 
         sql = self.get_sql(self.ft)
 
-        print "SSSSSSSSSSQL", sql
         incomplete_table = self.exec_sql(sql)
 
         self.fill_cube(cube, incomplete_table)

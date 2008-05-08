@@ -209,12 +209,9 @@ def pivot(request):
     return HttpResponseRedirect(url)
 
 def roll(request, axis):
-    print "AAAAAAAAAAAAAXXXXXXXXXXXXXXXXXXIIIIIIIIIIIISSSSSSSSSSSSSS", axis ,"AAAAAAAAAAAAAXXXXXXXXXXXXXXXXXXIIIIIIIIIIIISSSSSSSSSSSSSS"
-    print "REFERER", request.META['HTTP_REFERER'], "REFERER"
     report = get_report(request)
     url = report.roll(request, axis)
 
-    print "UUUUUUUUUURL", url, "UUUUUUUUUURL"
     return HttpResponseRedirect(url)
 
 def drill(request, axis):
