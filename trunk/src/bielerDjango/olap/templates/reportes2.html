@@ -59,6 +59,12 @@
 
 		var dwp = str_arre[1]
 		var nombre = $('#nombre').val()
+
+		if(nombre == ""){
+			alert("Debe introducir un Nombre para guardar el informe")
+			return
+		}
+
 		var categoria_id = $('#categoria_id').val()
 
 		jQuery.post("/save_report/" , {dwp: dwp, nombre: nombre, categoria_id: categoria_id}, function(data){
