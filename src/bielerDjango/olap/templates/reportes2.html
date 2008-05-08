@@ -388,13 +388,13 @@ so.write("flashcontent");
     <tr class="data_row">
 
 	<!-- AGREGAR COLUMNAS TITULOS IZQUIERDA -->
-	{% for col in header_left|hash:forloop.counter0 %}
+	{% for col in header_left|hash2:forloop.counter0 %}
 		{% if not can_drill_y and forloop.last %}
-			<th border="1" rowspan="{{col|hash:1}}">{{col|hash:0}}</th>
+			<th border="1" rowspan="{{col|hash2:1}}">{{col|hash2:0}}</th>
 		{% else %}
-			<th border="1" rowspan="{{col|hash:1}}">
-				<a href="/replace_to/1/{{col|hash:2}}/">
-					{{col|hash:0}}
+			<th border="1" rowspan="{{col|hash2:1}}">
+				<a href="/replace_to/1/{{col|hash2:2}}/">
+					{{col|hash2:0}}
 				</a>
 			</th>
 		{% endif %}		
@@ -409,7 +409,7 @@ so.write("flashcontent");
 		{% else %}
 
 		{% if can_drill_x or can_drill_y %}
-            		<a href="/replace_to_both_axis/{{ header|hash:forloop.counter0 }}/{{valor}}/">{{v|floatformat:2}}</a>
+            		<a href="/replace_to_both_axis/{{ header|hash4:forloop.counter0 }}/{{valor}}/">{{v|floatformat:2}}</a>
 		{% else %}
 				{{v|floatformat:2}}
 			{% endif %}
@@ -425,7 +425,7 @@ so.write("flashcontent");
 
 	<!-- Total FILA -->
 	<th>
-		{{total_x|hash:forloop.counter0|floatformat:2}}
+		{{total_x|hash3:forloop.counter0|floatformat:2}}
 	</th>
 	<!-- FIN Total FILA -->
 
@@ -455,13 +455,13 @@ so.write("flashcontent");
 
 
        {% if can_drill_y %}
-		<th border="1" rowspan="{{col|hash:1}}">
-			<a href="/drill_replacing/1/{{col|hash:0}}/">
+		<th border="1" rowspan="{{col|hash4:1}}">
+			<a href="/drill_replacing/1/{{col|hash4:0}}/">
 				{{col|hash:0}}
 			</a>
 		</th>
         {% else %}
-                <th border="1" rowspan="{{col|hash:1}}">{{col|hash:0}}</th>
+                <th border="1" rowspan="{{col|hash4:1}}">{{col|hash4:0}}</th>
         {% endif %}
 
 

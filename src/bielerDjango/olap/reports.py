@@ -854,7 +854,7 @@ class Report2:
         parcial_url = ""
 
         for cubiculo in self.cubiculos.values():
-            cubiculo.replace_to_both_axis(axis, value0, value1)
+            cubiculo.replace_to_both_axis(value0, value1)
             parcial_url += cubiculo.parcial_url()
 
         return self.absolute_url(request, parcial_url)
