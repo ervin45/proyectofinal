@@ -38,3 +38,12 @@ frame{
 }
 
 a{cursor: pointer}
+
+.boton_guardar{
+	border: 1px #000 solid;
+	margin: 15px;
+	background-color: #c3c3c3; 
+	padding: 7px; 
+	width: 160px; 
+	text-align: center;
+}

@@ -679,7 +679,10 @@ class Report1:
     def fill_cube(self, cube, incomplete_table):
         for row in incomplete_table:
             dict_row = dict(row)
-            cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row)
+            #cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row)
+            r = str(dict_row.pop('rows'))
+            c = str(dict_row.pop('columns'))
+            cube.add(r,c,dict_row)
 
 
     def complete_dimensions(self, cube, cubiculo):
