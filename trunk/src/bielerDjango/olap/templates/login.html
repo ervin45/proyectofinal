@@ -1,0 +1,32 @@
+<body style="background-color: f2f2f2">
+
+<div align="center"><img src="/media/img/mercedes benz.gif" height="150px" /></div>
+<table width="100%" height="60%">
+    <tr>
+        <td align="center">
+            <div align="center" valign="middle" style="border: 1px solid #000; background-color: c2c2c2">
+                {% block content %}
+                
+                {% if form.has_errors %}
+                <p>El usuario y la clave no concuerdan. Por favor vuelva a intentar.</p>
+                {% endif %}
+                
+                <form method="post" action=".">
+                <table>
+                <tr><td><label for="id_username">Usuario:</label></td><td>{{ form.username }}</td></tr>
+                <tr><td><label for="id_password">Clave:</label></td><td>{{ form.password }}</td></tr>
+                </table>
+                
+                <input type="submit" value="Entrar" />
+                <input type="hidden" name="next" value="{{ next }}" />
+                </form>
+                
+                {% endblock %}
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div style="background-color:#c2c2c2; font-style:italic; margin:5px; border: 1px solid #000;">Sistema de soporte de decisión Bieler S.A.</div>
+
+</body>

@@ -1,8 +1,13 @@
-import models
-import reports
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+
+import models
+import reports
+
 from pprint import pprint
 import math
 
@@ -88,13 +93,25 @@ def header_list_left(header):
 
     return rows, len(re)
 
+def autenticate(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None and user.is_active:
+        login(request, user)
+    return HttpResponseRedirect("/index/")
+
+def logou(trequest):
+    print "LOGOUUUUT"
+    #logout(request)
+    return render_to_response('login.html',locals())
+
+def login(request, msg=""):
+    return render_to_response('login.html',locals())
+
+@login_required(redirect_field_name='/login/')
 def index(request):
-    print "INDEX"
     return render_to_response('index.html',locals())
-
-
-def index2(request):
-    return render_to_response('index2.html',locals())
 
 def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     report = reports.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
@@ -188,7 +205,7 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     pprint(body)
     body_order = cube.dim_x
     pprint(body_order)
-    
+
     pprint(header_top)
     pprint(header_left)
 
@@ -220,18 +237,10 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     else:
         ofc_params = graph_data(header, body, body_order, x1, xl1)
         mostrar_grafico = True
-        
+
     categorias = models.Categoria.objects.all()
 
     return render_to_response('reportes2.html',locals())
-
-
-def redirect(request):
-
-    url = "/report/test/tiempo/tipo_pieza/anio/tipo_pieza/xr%3D{'anio'%3A ['2002']}/yr%3D{}/ore%3D[['pieza'%2C 'modificacion'%2C {'grupo_constructivo'%3A ['184']}]]/same/params%3D[['ft_test'%2C 'cantidad'%2C 'sum']]/same_cube/params%3D[]/"
-
-    return HttpResponseRedirect(url)
-
 
 def pivot(request):
     report = get_report(request)
