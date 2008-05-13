@@ -265,38 +265,44 @@
 			<table class="restriction_table">
 				<tbody id="restriction_table_body">
 					<tr>
-						<td>Dimension</td>
-						<td>Nivel</td>
-						<td>Valor</td>
+						<td><label>Dimension</label></td>
+						<td><label>Nivel</label></td>
+						<td><label>Valor</label></td>
 						<td></td>
 					</tr>
 				</tbody>
 			</table>
 			
 		</fieldset>
-		<br><br>
-		<label>Funcion</label>
-		<select id="mf">
-			<option params_length="2">sumar</option>
-			<option params_length="2">dividir</option>
-			<option params_length="2">multiplicar</option>
-			<option params_length="2">restar</option>
-			<option params_length="1">mismo_valor</option>
-		</select>
-		<table>
-			<tbody id="param_table_body">
-				
-			</tbody>
-		</table>
-		<br><br>
-		<label>Funcion de Cubo</label>
-		<select id="cf">
-		</select>
-		<table>
-			<tbody id="cube_param_table_body">
-				
-			</tbody>
-		</table>
+
+		<fieldset>
+			<legend>Función</legend>	
+                        <select id="mf">
+                                <option params_length="2">sumar</option>
+                                <option params_length="2">dividir</option>
+                                <option params_length="2">multiplicar</option>
+                                <option params_length="2">restar</option>
+                                <option params_length="1">mismo_valor</option>>
+                        </select><br>
+                        <label>Parámetros</label>
+                        <table>
+                                <tbody id="param_table_body">
+
+                                </tbody>
+                        </table>
+                </fieldset>
+
+		<fieldset>
+			<legend>Función de Cubo</legend>
+                        <select id="cf">
+                        </select><br>
+                        <label>Parámetros</label>
+                        <table>
+                                <tbody id="cube_param_table_body">
+
+                                </tbody>
+                        </table>
+                </fieldset>
 		<input id="aceptar" type="button" value="Aceptar" />
 
 		<input id="server_and_port" type="hidden" value="" />
