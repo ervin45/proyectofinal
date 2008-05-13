@@ -28,7 +28,8 @@ class InvalidMeasure:
 
 
 class Meta:
-    dimension_meta = {'pieza':['codigo',
+    dimension_meta = {'pieza':[     'descripcion',
+                                    'codigo',
                                     'pieza',
                                     'modificacion',
                                     'modelo',

@@ -241,27 +241,39 @@
 
 		<fieldset>
 			<legend>Restricciones</legend>
-			<LABEL>Dimension</LABEL>
-			<select id="dimension">
-				<option>tiempo</option>
-				<option>pieza</option>
-				<option>proveedor</option>
-				<option>tipo_venta</option>
-			</select>
 
-			<LABEL>Nivel</LABEL>
-			<select id="level">
-				<option>anio</option>
-				<option>mes</option>
-			</select>
-			<LABEL>Valor</LABEL>
-			<select id="val">
-				<option>1999</option>
-				<option>2000</option>
-			</select>
-
-			<INPUT id="agregar" type="button" value="Agregar" />
-			<br><br>
+			<table>
+                                <tr>
+                                        <td><label>Dimension</label></td>
+                                        <td><label>Nivel</label></td>
+                                        <td><label>Valor</label></td>
+                                        <td></td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                            <select id="dimension">
+                                                    <option>tiempo</option>
+                                                    <option>pieza</option>
+                                                    <option>proveedor</option>
+                                                    <option>tipo_venta</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select id="level">
+                                                    <option>anio</option>
+                                                    <option>mes</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select id="val">
+                                                    <option>1999</option>
+                                                    <option>2000</option>
+                                            </select>
+                                        </td>
+                                        <td><input id="agregar" type="button" value="Agregar" /></td>
+                                </tr>
+			</table>
+			
 			<table class="restriction_table">
 				<tbody id="restriction_table_body">
 					<tr>

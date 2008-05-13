@@ -553,25 +553,37 @@
 
 		<fieldset>
 			<legend>Restricciones Comunes</legend>
-			<LABEL>Dimension</LABEL>
-			<select id="dimension">
-				<option>tiempo</option>
-				<option>pieza</option>
-				<option>proveedor</option>
-				<option>tipo_venta</option>
-			</select>
 
-			<LABEL>Nivel</LABEL>
-			<select id="level">
+			<table>
+                                <tr>
+                                        <td><label>Dimension</label></td>
+                                        <td><label>Nivel</label></td>
+                                        <td><label>Valor</label></td>
+                                        <td></td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                            <select id="dimension">
+                                                    <option>tiempo</option>
+                                                    <option>pieza</option>
+                                                    <option>proveedor</option>
+                                                    <option>tipo_venta</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select id="level">
 
-			</select>
-			<LABEL>Valor</LABEL>
-			<select id="val">
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select id="val">
 
-			</select>
+                                            </select>
+                                        </td>
+                                        <td><input id="agregar" type="button" value="Agregar" /></td>
+                                </tr>
+			</table>
 
-			<INPUT id="agregar" type="button" value="Agregar" />
-			<br><br>
 			<table class="restriction_table">
 				<tbody id="restriction_table_body">
 					<tr>
@@ -587,25 +599,37 @@
 
 		<fieldset>
 			<legend>Restricciones <span id="ft1_rest_legend">Hecho 1</span></legend>
-			<LABEL>Dimension</LABEL>
-			<select id="ft1_dimension">
-				<option>tiempo</option>
-				<option>pieza</option>
-				<option>proveedor</option>
-				<option>tipo_venta</option>
-			</select>
 
-			<LABEL>Nivel</LABEL>
-			<select id="ft1_level">
+			<table>
+                                <tr>
+                                        <td><label>Dimension</label></td>
+                                        <td><label>Nivel</label></td>
+                                        <td><label>Valor</label></td>
+                                        <td></td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                            <select id="ft1_dimension">
+                                                    <option>tiempo</option>
+                                                    <option>pieza</option>
+                                                    <option>proveedor</option>
+                                                    <option>tipo_venta</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select id="ft1_level">
 
-			</select>
-			<LABEL>Valor</LABEL>
-			<select id="ft1_val">
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select id="ft1_val">
 
-			</select>
+                                            </select>
+                                        </td>
+                                        <td><input id="ft1_agregar" type="button" value="Agregar" /></td>
+                                </tr>
+			</table>
 
-			<INPUT id="ft1_agregar" type="button" value="Agregar" />
-			<br><br>
 			<table class="ft1_restriction_table">
 				<tbody id="ft1_restriction_table_body">
 					<tr>
@@ -621,23 +645,35 @@
 
 		<fieldset>
 			<legend>Restricciones <span id="ft2_rest_legend">Hecho 2</span></legend>
-			<LABEL>Dimension</LABEL>
-			<select id="ft2_dimension">
-				<option>tiempo</option>
-				<option>pieza</option>
-				<option>proveedor</option>
-				<option>tipo_venta</option>
-			</select>
+			<table>
+                                <tr>
+                                        <td><label>Dimension</label></td>
+                                        <td><label>Nivel</label></td>
+                                        <td><label>Valor</label></td>
+                                        <td></td>
+                                </tr>
+                                <tr>
+                                        <td>
+                                            <select id="ft2_dimension">
+                                                    <option>tiempo</option>
+                                                    <option>pieza</option>
+                                                    <option>proveedor</option>
+                                                    <option>tipo_venta</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select id="ft2_level">
 
-			<LABEL>Nivel</LABEL>
-			<select id="ft2_level">
-			</select>
-			<LABEL>Valor</LABEL>
-			<select id="ft2_val">
-			</select>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select id="ft2_val">
 
-			<INPUT id="ft2_agregar" type="button" value="Agregar" />
-			<br><br>
+                                            </select>
+                                        </td>
+                                        <td><input id="ft2_agregar" type="button" value="Agregar" /></td>
+                                </tr>
+			</table>
 			<table class="ft2_restriction_table">
 				<tbody id="ft2_restriction_table_body">
 					<tr>
