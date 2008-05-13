@@ -1,0 +1,27 @@
+body{background-color:#E7FFE8}
+
+.even{ background-color:#FFF; }
+.odd{ background-color:#54F7FB; }
+
+
+select{
+    width: 170px;
+    background-color: #CBE0CC;
+}
+
+label {
+  font-weight:bold;
+  }
+
+fieldset { 
+    border:1px solid green;
+    margin: 10px;
+}
+
+legend {
+  padding: 0.2em 0.5em;
+  border:1px solid green;
+  color:green;
+  font-size:90%;
+  text-align:right;
+  }
