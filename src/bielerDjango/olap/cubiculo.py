@@ -767,10 +767,10 @@ class Cubiculo:
         ''
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._where()
-        "WHERE trim(td_tiempo.anio) in('2005', '1999') "
+        "WHERE trim(td_tiempo.anio) in(trim('2005'), trim('1999')) "
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[['proveedor', 'proveedor', {'proveedor': ['Mercedez Benz']}]])
         >>> c._where()
-        "WHERE trim(td_tiempo.anio) in('2005', '1999') AND trim(td_proveedor.proveedor) in('Mercedez Benz') "
+        "WHERE trim(td_tiempo.anio) in(trim('2005'), trim('1999')) AND trim(td_proveedor.proveedor) in(trim('Mercedez Benz')) "
         '''
 
         levels_with_parent = []
@@ -781,14 +781,14 @@ class Cubiculo:
             levels_with_parent.append(Meta.parent_list(name, level))
             if restriction:
                 for level, val in restriction.items():
-                    valores = ", ".join(["'%s'" % v for v in val])
+                    valores = ", ".join(["trim('%s')" % v for v in val])
                     where.append("trim(td_%s.%s) in(%s)" % ( name, level, valores))
 
         for other_dim in self.ore:
             (name, level, restriction) = other_dim
             if restriction:
                 for level, val in restriction.items():
-                    valores = ", ".join(["'%s'" % v for v in val])
+                    valores = ", ".join(["trim('%s')" % v for v in val])
                     where.append("trim(td_%s.%s) in(%s)" % ( name, level, valores))
 
         if where:
@@ -929,7 +929,7 @@ class Cubiculo:
         '''
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'mes', {}], ['pieza', 'pieza', {}]], measures=[['stock']], ore=[])
         >>> c.can_drill_x()
-        False
+        True
         >>> c = Cubiculo(ft='movimientos', dimensions=[['tiempo', 'anio', {}], ['pieza', 'pieza', {}]], measures=[['stock']], ore=[])
         >>> c.can_drill_x()
         True
@@ -941,8 +941,8 @@ class Cubiculo:
         lowest_level = x_levels[0]
         actual_level = self.dimensions[x_dimension][1]
 
-        if lowest_level == actual_level:
-            return False
+        #if lowest_level == actual_level:
+            #return False
 
         return True
 
@@ -975,7 +975,7 @@ class Cubiculo:
         True
         >>> c = Cubiculo(ft='movimientos', dimensions=[['pieza', 'pieza', {}], ['tiempo', 'mes', {}]], measures=[['stock']], ore=[])
         >>> c.can_drill_y()
-        False
+        True
         '''
 
         y_dimension = self.dimensions_order[1]
@@ -984,8 +984,8 @@ class Cubiculo:
         lowest_level = y_levels[0]
         actual_level = self.dimensions[y_dimension][1]
 
-        if lowest_level == actual_level:
-            return False
+        #if lowest_level == actual_level:
+            #return False
 
         return True
 
