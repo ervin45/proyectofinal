@@ -1,5 +1,6 @@
   <html>
   <head>
+    <link rel="stylesheet" href="/media/css/formulario.css" type="text/css" />
     <script type="text/javascript" src="/media/js/prototype.js"></script>
     <script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
     <script type="text/javascript" src="/media/js/jquery/jquery.flydom.js"></script>
@@ -325,30 +326,116 @@
 
 			parent.location.href = url
 		}
-		
+
+                function labels_preview(){
+                    $('#prev_x').html($('#x').val())
+                    $('#prev_y').html($('#y').val())
+
+                    $('#prev_xl').html($('#ft1_xl').val())
+                    $('#prev_xl2').html($('#ft2_xl').val())
+                    $('#prev_yl').html($('#ft1_yl').val())
+                    $('#prev_yl2').html($('#ft2_yl').val())
+
+                    $('#prev_ft1').html($('#ft1').val())
+                    $('#prev_ft2').html($('#ft2').val())
+                }
+
 
 		change_ft()
+                labels_preview()
 
 	 });
 
-    </script><style>
-		.even{ background-color:#FFF; }
-		.odd{ background-color:#54F7FB; }
-    </style>
+    </script>
 
   </head>
   <body>
 	<form>
+<span id="prev_x"></span>
+<span id="prev_y"></span>
+<span id="prev_xl"></span>
+<span id="prev_xl2"></span>
+<span id="prev_yl"></span>
+<span id="prev_yl2"></span>
+<span id="prev_ft1"></span>
+<span id="prev_ft2"></span>
+
+<table>
+  <tbody>
+    <tr>
+      <td></td>
+      <td>
+		<select id="x">
+			<option>tiempo</option>
+			<option>pieza</option>
+			<option>proveedor</option>
+			<option>tipo_venta</option>
+		</select>
+      </td>
+      <td>
+		<select id="y">
+			<option>tiempo</option>
+			<option>pieza</option>
+			<option>proveedor</option>
+			<option>tipo_venta</option>
+		</select>
+
+      </td>
+    </tr>
+    <tr>
+      <td>
 		<select id="ft1">
 			<option>ventas</option>
 			<option>movimientos</option>
 			<option>compras</option>
 		</select>
+      </td>
+      <td>
+		<select id="ft1_xl">
+			<option>anio</option>
+			<option>mes</option>
+		</select>		
+		<input id="ft1_x_fixed" type="checkbox" />
+
+      </td>
+      <td>
+		<select id="ft1_yl">
+			<option>grupo_constructivo</option>
+			<option>modelo</option>
+		</select>
+		<input id="ft1_y_fixed" type="checkbox" />
+
+      </td>
+    </tr>
+    <tr>
+      <td>
 		<select id="ft2">
 			<option>ventas</option>
 			<option>movimientos</option>
 			<option>compras</option>
 		</select>
+      </td>
+      <td>
+		<select id="ft2_xl">
+			<option>anio</option>
+			<option>mes</option>
+		</select>
+		<input id="ft2_x_fixed" type="checkbox" />
+
+      </td>
+      <td>
+		<select id="ft2_yl">
+			<option>grupo_constructivo</option>
+			<option>modelo</option>
+		</select>
+		<input id="ft2_y_fixed" type="checkbox" />
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
 
 		<select id="ft1_measures" style="display:none"></select>
 		<select id="ft2_measures" style="display:none"></select>
@@ -357,51 +444,6 @@
 			<option>sum</option>
 			<option>avg</option>
 		</select>
-
-		<br><br>
-		<label>x</label>
-		<select id="x">
-			<option>tiempo</option>
-			<option>pieza</option>
-			<option>proveedor</option>
-			<option>tipo_venta</option>
-		</select>
-		<label>Nivel x</label>
-		<select id="ft1_xl">
-			<option>anio</option>
-			<option>mes</option>
-		</select>		
-		<label>Fijo</label>
-		<input id="ft1_x_fixed" type="checkbox" />
-		<label>Nivel x2</label>
-		<select id="ft2_xl">
-			<option>anio</option>
-			<option>mes</option>
-		</select>
-		<label>Fijo</label>
-		<input id="ft2_x_fixed" type="checkbox" />
-		<br><br>
-		<label>y</label>
-		<select id="y">
-			<option>tiempo</option>
-			<option>pieza</option>
-			<option>proveedor</option>
-			<option>tipo_venta</option>
-		</select>
-		<label>Nivel y</label>
-		<select id="ft1_yl">
-			<option>grupo_constructivo</option>
-			<option>modelo</option>
-		</select>
-		<label>Fijo</label>
-		<input id="ft1_y_fixed" type="checkbox" />
-		<label>Nivel y2</label>
-		<select id="ft2_yl">
-			<option>grupo_constructivo</option>
-			<option>modelo</option>
-		</select>
-		<label>Fijo</label>
-		<input id="ft2_y_fixed" type="checkbox" />
 
 		<br><br>
 
@@ -509,38 +551,36 @@
 			
 		</fieldset>
 
+		<fieldset>
+			<legend>Función</legend>	
+                        <select id="mf">
+                                <option params_length="2">sumar</option>
+                                <option params_length="2">dividir</option>
+                                <option params_length="2">multiplicar</option>
+                                <option params_length="2">restar</option>
+                                <option params_length="1">mismo_valor</option>>
+                        </select><br>
+                        <label>Parámetros</label>
+                        <table>
+                                <tbody id="param_table_body">
 
+                                </tbody>
+                        </table>
+                </fieldset>
 
-		<br><br>
-		<label>Funcion</label>
-		<select id="mf">
-			<option params_length="2">sumar</option>
-			<option params_length="2">dividir</option>
-			<option params_length="2">multiplicar</option>
-			<option params_length="2">restar</option>
-			<option params_length="1">mismo_valor</option>>
-		</select>
-		<table>
-			<tbody id="param_table_body">
-				
-			</tbody>
-		</table>
-		<br><br>
-		<br><br>
-		<label>Funcion de Cubo</label>
-		<select id="cf">
-		</select>
-		<table>
-			<tbody id="cube_param_table_body">
-				
-			</tbody>
-		</table>
+		<fieldset>
+			<legend>Función de Cubo</legend>
+                        <select id="cf">
+                        </select>
+                        <table>
+                                <tbody id="cube_param_table_body">
 
+                                </tbody>
+                        </table>
+                </fieldset>
 
 		<br><br>
 		<input id="aceptar" type="button" value="Aceptar" />
-
-		<input id="server_and_port" type="hidden" value="" />
 
 	</form>
 	

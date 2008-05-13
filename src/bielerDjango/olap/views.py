@@ -113,6 +113,7 @@ def login(request, msg=""):
 def index(request):
     return render_to_response('index.html',locals())
 
+@login_required(redirect_field_name='/login/')
 def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     report = reports.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
 
@@ -172,8 +173,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
     return render_to_response('reportes2.html',locals())
 
-
-
+@login_required(redirect_field_name='/login/')
 def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params):
     report2 = reports.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
@@ -242,38 +242,42 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
 
     return render_to_response('reportes2.html',locals())
 
+@login_required(redirect_field_name='/login/')
 def pivot(request):
     report = get_report(request)
     url = report.pivot(request)
     return HttpResponseRedirect(url)
 
+@login_required(redirect_field_name='/login/')
 def roll(request, axis):
     report = get_report(request)
     url = report.roll(request, axis)
 
     return HttpResponseRedirect(url)
 
+@login_required(redirect_field_name='/login/')
 def drill(request, axis):
     report = get_report(request)
     url = report.drill(request, axis)
     return HttpResponseRedirect(url)
 
+@login_required(redirect_field_name='/login/')
 def replace_to(request, axis, values):
     report = get_report(request)
     url = report.replace_to(request, axis, values)
     return HttpResponseRedirect(url)
 
+@login_required(redirect_field_name='/login/')
 def replace_to_both_axis(request, value0, value1):
     report = get_report(request)
     url = report.replace_to_both_axis(request, value0, value1)
     return HttpResponseRedirect(url)
 
+@login_required(redirect_field_name='/login/')
 def dice(request, main_axis, other_axis):
     report = get_report(request)
     url = report.dice(request, main_axis, other_axis)
     return HttpResponseRedirect(url)
-
-
 
 def get_body(cube):
     '''
@@ -430,38 +434,45 @@ def adm_report(request):
 
 ####AJAX####
 
+@login_required(redirect_field_name='/login/')
 def get_dimensions(request, ft):
     response = reports.Ajax_responser.get_dimensions(ft)
     return HttpResponse("|".join(response))
 
+@login_required(redirect_field_name='/login/')
 def get_measures(request, ft):
     response = reports.Ajax_responser.get_measures(ft)
     response = ["ft_%s.%s" % (ft, x) for x in response]
     return HttpResponse("|".join(response))
 
+@login_required(redirect_field_name='/login/')
 def get_levels(request, dimension):
     response = reports.Ajax_responser.get_levels(dimension)
     response.reverse()
     return HttpResponse("|".join(response))
 
+@login_required(redirect_field_name='/login/')
 def get_levels_without_todo(request, dimension):
     response = reports.Ajax_responser.get_levels(dimension)
     response.reverse()
     response.remove('TODO')
     return HttpResponse("|".join(response))
 
+@login_required(redirect_field_name='/login/')
 def get_values(request, dimension, level):
     response = reports.Ajax_responser.get_values(dimension, level)
     return HttpResponse("|".join(response))
 
+@login_required(redirect_field_name='/login/')
 def get_mf(request):
     return HttpResponse('')
 
+@login_required(redirect_field_name='/login/')
 def get_cf(request):
     response = reports.Ajax_responser.get_cf()
     return HttpResponse(str(response))
 
-
+@login_required(redirect_field_name='/login/')
 def save_report(request):
     nombre         = request.POST.get('nombre')
     dwp  = request.POST.get('dwp')
@@ -474,12 +485,14 @@ def save_report(request):
 
     return HttpResponse("")
 
+@login_required(redirect_field_name='/login/')
 def delete_report(request):
     id        = request.POST.get('id')
     models.Reporte.objects.get(id=id).delete()
 
     return HttpResponse("")
 
+@login_required(redirect_field_name='/login/')
 def save_categoria(request):
 
     nombre         = request.POST.get('nombre', False)
@@ -489,6 +502,7 @@ def save_categoria(request):
 
     return HttpResponse('')
 
+@login_required(redirect_field_name='/login/')
 def delete_categoria(request):
     id = request.POST.get('id')
     models.Categoria.objects.get(id=id).delete()
