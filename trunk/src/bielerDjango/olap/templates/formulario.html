@@ -57,7 +57,7 @@
 				_add_options("dimension", data)
 			})	
 			jQuery.get("/report/get_measures/" + ft, {}, function(data){
-				_add_options("measures", data)
+				_add_options_measures("measures", data)
 			})
 			change_x()
 			change_y()

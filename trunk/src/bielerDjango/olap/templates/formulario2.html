@@ -118,11 +118,11 @@
 			_add_options("ft2_dimension", ft2_dimensions.join("|"))
 
 			jQuery.get("/report/get_measures/" + ft1, {}, function(data){
-				_add_options("ft1_measures", data)
+				_add_options_measures("ft1_measures", data)
 			})
 
 			jQuery.get("/report/get_measures/" + ft2, {}, function(data){
-				_add_options("ft2_measures", data)
+				_add_options_measures("ft2_measures", data)
 			})
 
 			$('#ft1_rest_legend').html(ft1)
@@ -365,70 +365,80 @@
     </script>
 
 <style>
+
+#prev_xl, #prev_yl, #prev_xl2, #prev_yl2, #prev_ft1, #prev_x, #prev_y, #prev_ft2, #prev_x2, #prev_y2{
+    width: 120px;
+    text-align: right;
+}
+
+#prev_ft1, #prev_x, #prev_y, #prev_ft2, #prev_x2, #prev_y2{
+    font-weight:bold;
+    font-size: 14px;
+}
+
+#prev_xl, #prev_yl, #prev_xl2, #prev_yl2{
+    font-size: 10px;
+}
+
 #prev_ft1 {
     position:absolute;
-    top:300px;
-    left:150px;
-    font-weight:bold;
+    top:160px;
+    left:80px;
 }
 
 #prev_x {
     position:absolute;
-    top:235px;
-    left:125px;
-    font-weight:bold;
+    top:95px;
+    left:35px;
 }
 
 #prev_xl {
     position:absolute;
-    top:250px;
-    left:125px;
+    top:110px;
+    left:35px;
 }
 
 #prev_y {
     position:absolute;
-    top:235px;
-    left:20px;
+    top:95px;
+    left:-50px;
     font-weight:bold;
 }
 
 #prev_yl {
     position:absolute;
-    top:250px;
-    left:20px;
+    top:110px;
+    left:-50px;
 }
 
 #prev_ft2 {
     position:absolute;
-    top:235px;
-    left:290px;
-    font-weight:bold;
+    top:95px;
+    left:220px;
 }
 
 #prev_x2 {
     position:absolute;
-    top:170px;
-    left:245px;
-    font-weight:bold;
+    top:30px;
+    left:145px;
 }
 
 #prev_xl2 {
     position:absolute;
-    top:185px;
-    left:245px;
+    top:45px;
+    left:145px;
 }
 
 #prev_y2 {
     position:absolute;
-    top:175px;
-    left:150px;
-    font-weight:bold;
+    top:35px;
+    left:80px;
 }
 
 #prev_yl2 {
     position:absolute;
-    top:190px;
-    left:150px;
+    top:50px;
+    left:80px;
 }
 
 </style>
@@ -437,93 +447,99 @@
   <body>
 <br>
 	<form>
-<span id="prev_x"></span>
-<span id="prev_x2"></span>
-<span id="prev_y"></span>
-<span id="prev_y2"></span>
-<span id="prev_xl"></span>
-<span id="prev_xl2"></span>
-<span id="prev_yl"></span>
-<span id="prev_yl2"></span>
-<span id="prev_ft1"></span>
-<span id="prev_ft2"></span>
 
-<table>
-  <tbody>
-    <tr>
-      <td></td>
-      <td>
-		<select id="x">
-			<option>tiempo</option>
-			<option>pieza</option>
-			<option>proveedor</option>
-			<option>tipo_venta</option>
-		</select>
-      </td>
-      <td>
-		<select id="y">
-			<option>tiempo</option>
-			<option>pieza</option>
-			<option>proveedor</option>
-			<option>tipo_venta</option>
-		</select>
-
-      </td>
-    </tr>
-    <tr>
-      <td>
-		<select id="ft1">
-			<option>ventas</option>
-			<option>movimientos</option>
-			<option>compras</option>
-		</select>
-      </td>
-      <td>
-		<select id="ft1_xl">
-			<option>anio</option>
-			<option>mes</option>
-		</select>		
-		<input id="ft1_x_fixed" type="checkbox" />
-
-      </td>
-      <td>
-		<select id="ft1_yl">
-			<option>grupo_constructivo</option>
-			<option>modelo</option>
-		</select>
-		<input id="ft1_y_fixed" type="checkbox" />
-
-      </td>
-    </tr>
-    <tr>
-      <td>
-		<select id="ft2">
-			<option>ventas</option>
-			<option>movimientos</option>
-			<option>compras</option>
-		</select>
-      </td>
-      <td>
-		<select id="ft2_xl">
-			<option>anio</option>
-			<option>mes</option>
-		</select>
-		<input id="ft2_x_fixed" type="checkbox" />
-
-      </td>
-      <td>
-		<select id="ft2_yl">
-			<option>grupo_constructivo</option>
-			<option>modelo</option>
-		</select>
-		<input id="ft2_y_fixed" type="checkbox" />
-
-      </td>
-    </tr>
-  </tbody>
-</table>
+		<fieldset>
+			<legend>Selecci&oacute;n de dimensiones <span id="ft1_rest_legend">Hecho 1</span></legend>
+                        <table>
+                        <tbody>
+                            <tr>
+                            <td></td>
+                            <td>
+                                        <select id="x">
+                                                <option>tiempo</option>
+                                                <option>pieza</option>
+                                                <option>proveedor</option>
+                                                <option>tipo_venta</option>
+                                        </select>
+                            </td>
+                            <td>
+                                        <select id="y">
+                                                <option>tiempo</option>
+                                                <option>pieza</option>
+                                                <option>proveedor</option>
+                                                <option>tipo_venta</option>
+                                        </select>
+                        
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>
+                                        <select id="ft1">
+                                                <option>ventas</option>
+                                                <option>movimientos</option>
+                                                <option>compras</option>
+                                        </select>
+                            </td>
+                            <td>
+                                        <select id="ft1_xl">
+                                                <option>anio</option>
+                                                <option>mes</option>
+                                        </select>		
+                                        <input id="ft1_x_fixed" type="checkbox" />
+                        
+                            </td>
+                            <td>
+                                        <select id="ft1_yl">
+                                                <option>grupo_constructivo</option>
+                                                <option>modelo</option>
+                                        </select>
+                                        <input id="ft1_y_fixed" type="checkbox" />
+                        
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>
+                                        <select id="ft2">
+                                                <option>ventas</option>
+                                                <option>movimientos</option>
+                                                <option>compras</option>
+                                        </select>
+                            </td>
+                            <td>
+                                        <select id="ft2_xl">
+                                                <option>anio</option>
+                                                <option>mes</option>
+                                        </select>
+                                        <input id="ft2_x_fixed" type="checkbox" />
+                        
+                            </td>
+                            <td>
+                                        <select id="ft2_yl">
+                                                <option>grupo_constructivo</option>
+                                                <option>modelo</option>
+                                        </select>
+                                        <input id="ft2_y_fixed" type="checkbox" />
+                        
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+        </fieldset>
 <br>
-<img src="/media/img/previsualizacion2.png"></img>
+
+<div style="position: relative;">
+    <span id="prev_x"></span>
+    <span id="prev_x2"></span>
+    <span id="prev_y"></span>
+    <span id="prev_y2"></span>
+    <span id="prev_xl"></span>
+    <span id="prev_xl2"></span>
+    <span id="prev_yl"></span>
+    <span id="prev_yl2"></span>
+    <span id="prev_ft1"></span>
+    <span id="prev_ft2"></span>
+    <img src="/media/img/previsualizacion2.png"></img>
+</div>
 
 		<select id="ft1_measures" style="display:none"></select>
 		<select id="ft2_measures" style="display:none"></select>
