@@ -33,6 +33,11 @@
 		$('#x').change(change_x)
 		$('#y').change(change_y)
 
+                $('#ft1_xl').change(labels_preview)
+                $('#ft1_yl').change(labels_preview)
+                $('#ft2_xl').change(labels_preview)
+                $('#ft2_yl').change(labels_preview)
+
 		$('#dimension').change(change_dimension)
 		$('#ft1_dimension').change(change_ft1_dimension)
 		$('#ft2_dimension').change(change_ft2_dimension)
@@ -140,6 +145,7 @@
 				_add_options("ft1_xl", data)
 				_add_options("ft2_xl", data)
 			})
+                        labels_preview()
 		}
 
 		function change_y(){
@@ -148,6 +154,7 @@
 				_add_options("ft1_yl", data)
 				_add_options("ft2_yl", data)
 			})
+                        labels_preview()
 		}
 		
 		function change_dimension(){
@@ -183,6 +190,7 @@
 			jQuery.get("/report/get_values/" + dimension + "/" + level, {}, function(data){
 				_add_options("val", data)
 			})
+
 		}
 
 		function change_ft1_level(){
@@ -327,14 +335,22 @@
 			parent.location.href = url
 		}
 
+                //Devuelve el string con parentesis
+                function _p(a){
+                    return "(" + a + ")";
+                }
+
                 function labels_preview(){
                     $('#prev_x').html($('#x').val())
                     $('#prev_y').html($('#y').val())
+                    $('#prev_x2').html($('#x').val())
+                    $('#prev_y2').html($('#y').val())
 
-                    $('#prev_xl').html($('#ft1_xl').val())
-                    $('#prev_xl2').html($('#ft2_xl').val())
-                    $('#prev_yl').html($('#ft1_yl').val())
-                    $('#prev_yl2').html($('#ft2_yl').val())
+
+                    $('#prev_xl').html(_p($('#ft1_xl').val()))
+                    $('#prev_xl2').html(_p($('#ft2_xl').val()))
+                    $('#prev_yl').html(_p($('#ft1_yl').val()))
+                    $('#prev_yl2').html(_p($('#ft2_yl').val()))
 
                     $('#prev_ft1').html($('#ft1').val())
                     $('#prev_ft2').html($('#ft2').val())
@@ -348,11 +364,83 @@
 
     </script>
 
+<style>
+#prev_ft1 {
+    position:absolute;
+    top:300px;
+    left:150px;
+    font-weight:bold;
+}
+
+#prev_x {
+    position:absolute;
+    top:235px;
+    left:125px;
+    font-weight:bold;
+}
+
+#prev_xl {
+    position:absolute;
+    top:250px;
+    left:125px;
+}
+
+#prev_y {
+    position:absolute;
+    top:235px;
+    left:20px;
+    font-weight:bold;
+}
+
+#prev_yl {
+    position:absolute;
+    top:250px;
+    left:20px;
+}
+
+#prev_ft2 {
+    position:absolute;
+    top:235px;
+    left:290px;
+    font-weight:bold;
+}
+
+#prev_x2 {
+    position:absolute;
+    top:170px;
+    left:245px;
+    font-weight:bold;
+}
+
+#prev_xl2 {
+    position:absolute;
+    top:185px;
+    left:245px;
+}
+
+#prev_y2 {
+    position:absolute;
+    top:175px;
+    left:150px;
+    font-weight:bold;
+}
+
+#prev_yl2 {
+    position:absolute;
+    top:190px;
+    left:150px;
+}
+
+</style>
+
   </head>
   <body>
+<br>
 	<form>
 <span id="prev_x"></span>
+<span id="prev_x2"></span>
 <span id="prev_y"></span>
+<span id="prev_y2"></span>
 <span id="prev_xl"></span>
 <span id="prev_xl2"></span>
 <span id="prev_yl"></span>
@@ -434,8 +522,8 @@
     </tr>
   </tbody>
 </table>
-
-
+<br>
+<img src="/media/img/previsualizacion2.png"></img>
 
 		<select id="ft1_measures" style="display:none"></select>
 		<select id="ft2_measures" style="display:none"></select>
@@ -471,9 +559,9 @@
 			<table class="restriction_table">
 				<tbody id="restriction_table_body">
 					<tr>
-						<td>Dimension</td>
-						<td>Nivel</td>
-						<td>Valor</td>
+						<td><label>Dimension</label></td>
+						<td><label>Nivel</label></td>
+						<td><label>Valor</label></td>
 						<td></td>
 					</tr>
 				</tbody>
@@ -505,9 +593,9 @@
 			<table class="ft1_restriction_table">
 				<tbody id="ft1_restriction_table_body">
 					<tr>
-						<td>Dimension</td>
-						<td>Nivel</td>
-						<td>Valor</td>
+						<td><label>Dimension</label></td>
+						<td><label>Nivel</label></td>
+						<td><label>Valor</label></td>
 						<td></td>
 					</tr>
 				</tbody>
@@ -541,9 +629,9 @@
 			<table class="ft2_restriction_table">
 				<tbody id="ft2_restriction_table_body">
 					<tr>
-						<td>Dimension</td>
-						<td>Nivel</td>
-						<td>Valor</td>
+						<td><label>Dimension</label></td>
+						<td><label>Nivel</label></td>
+						<td><label>Valor</label></td>
 						<td></td>
 					</tr>
 				</tbody>
@@ -571,7 +659,8 @@
 		<fieldset>
 			<legend>Función de Cubo</legend>
                         <select id="cf">
-                        </select>
+                        </select><br>
+                        <label>Parámetros</label>
                         <table>
                                 <tbody id="cube_param_table_body">
 
