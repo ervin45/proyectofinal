@@ -19,6 +19,7 @@ function _agregar(ft_prefix){
 	var val       = jQuery('#' + ft_prefix + 'val').val()
         if(dimension == ""){
             alert('Dimensión Vacia. No es posible agregar una restricción.')
+            return
         }
 
 	jQuery('#' + ft_prefix + 'restriction_table_body').createAppend(
@@ -170,8 +171,24 @@ function _add_options(select, data){
 		jQuery('#' + select).html('')
 		values.each(function(val){
 			jQuery('#' + select).createAppend(
-				'option', {}, val
+				'option', {value: val}, val
 			);
+		})
+}
+
+/*
+Apartir de una string con elementos separados por "|" agrega elementos OPTION a un determinado elemento SELECT
+*/
+function _add_options_measures(select, data){
+		var values = data.split("|");
+		jQuery('#' + select).html('')
+		values.each(function(val){
+                        var a = val.replace("ft_", "").replace(".", " -- ")
+                        option = '<option value="' + val + '">' + a + '</option>'
+                        jQuery('#' + select).append(option)
+// 			jQuery('#' + select).createAppend(
+// 				'option', {align: val}, val.replace("ft_", "").replace(".", " -- ")
+// 			);
 		})
 }
 
