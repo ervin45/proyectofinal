@@ -197,47 +197,62 @@
   <body>
 	<img id="ajax_loading" src="/media/img/loading2.gif" width="70" style="display:none" />
 	<form>
-		<label>Hecho</label>
-		<select id="ft">
-			<option>ventas</option>
-			<option>movimientos</option>
-			<option>compras</option>
-			<option>test</option>
-		</select>
+
+		<fieldset>
+			<legend>Selecci&oacute;n de dimensiones</legend>
+                        <table>
+                        <tbody>
+                            <tr>
+                            <td></td>
+                            <td>
+                                        <select id="x">
+                                                <option>tiempo</option>
+                                                <option>pieza</option>
+                                                <option>proveedor</option>
+                                                <option>tipo_venta</option>
+                                        </select>
+                            </td>
+                            <td>
+                                        <select id="y">
+                                                <option>tiempo</option>
+                                                <option>pieza</option>
+                                                <option>proveedor</option>
+                                                <option>tipo_venta</option>
+                                        </select>
+
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>
+                                        <select id="ft">
+                                                <option>ventas</option>
+                                                <option>movimientos</option>
+                                                <option>compras</option>
+                                                <option>test</option>
+                                        </select>
+                            </td>
+                            <td>
+                                        <select id="xl">
+                                                <option>anio</option>
+                                                <option>mes</option>
+                                        </select>
+                            </td>
+                            <td>
+                                        <select id="yl">
+                                                <option>grupo_constructivo</option>
+                                                <option>modelo</option>
+                                        </select>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                </fieldset>
+
 		<select id="measures" style="display:none"></select>
 		<select id="aggregations" style="display:none">
 			<option value="sum">Suma</option>
 			<option value="avg">Promedio</option>
 		</select>
-
-		<br><br>
-		<label>x</label>
-		<select id="x">
-			<option>tiempo</option>
-			<option>pieza</option>
-			<option>proveedor</option>
-			<option>tipo_venta</option>
-		</select>
-		<label>Nivel x</label>
-		<select id="xl">
-			<option>anio</option>
-			<option>mes</option>
-		</select>		
-		<br><br>
-		<label>y</label>
-		<select id="y">
-			<option>tiempo</option>
-			<option>pieza</option>
-			<option>proveedor</option>
-			<option>tipo_venta</option>
-		</select>
-		<label>Nivel y</label>
-		<select id="yl">
-			<option>grupo_constructivo</option>
-			<option>modelo</option>
-		</select>
-
-		<br><br>
 
 		<fieldset>
 			<legend>Restricciones</legend>
