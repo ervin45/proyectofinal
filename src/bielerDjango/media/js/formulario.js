@@ -17,6 +17,9 @@ function _agregar(ft_prefix){
 	var dimension = jQuery('#' + ft_prefix + 'dimension').val()
 	var level     = jQuery('#' + ft_prefix + 'level').val()
 	var val       = jQuery('#' + ft_prefix + 'val').val()
+        if(dimension == ""){
+            alert('Dimensión Vacia. No es posible agregar una restricción.')
+        }
 
 	jQuery('#' + ft_prefix + 'restriction_table_body').createAppend(
 		'tr', { class: ft_prefix + 'restriction'}, [
