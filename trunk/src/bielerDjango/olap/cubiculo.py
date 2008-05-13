@@ -864,6 +864,9 @@ class Cubiculo:
 
         sql = "%s\n" * 5 % (self._select(),self._from(), self._where(), self._group_by(), self._order_by() )
 
+        f = file("/tmp/cubiculo-debug","a")
+        f.write(sql+"\n")
+        f.close()
         return sql
 
 
