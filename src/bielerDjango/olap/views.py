@@ -158,7 +158,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     categorias = models.Categoria.objects.all()
 
 
-    explanation = "Ud. esta viendo", measures2
+    explanation = "Ud. esta viendo", measures
 
     return render_to_response('reportes2.html',locals())
 
