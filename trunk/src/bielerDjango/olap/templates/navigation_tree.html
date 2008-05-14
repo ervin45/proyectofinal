@@ -18,7 +18,8 @@
 	<script type="text/javascript">
 		jQuery(document).ready(function($){
 			$('.delete').click(function(){
-				if (confirm("Esta seguro que desea borrar el reporte?")) { 
+                                var report_name = $(this).prev().html()
+				if (confirm("Esta seguro que desea borrar el reporte '" + report_name + "'?")) { 
 					var id = $(this).attr("report_id")
 					jQuery.post("/delete_report/" , {id: id}, function(data){
 						window.location.reload()
