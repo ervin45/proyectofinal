@@ -4,12 +4,12 @@ import olap.views as olap
 import report_management.views as rm
 
 urlpatterns = patterns('',
-    (r'^$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
-    (r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
-    (r'^accounts/profile/$', olap.index),
+    (r'^$', olap.index),
+    (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+
     (r'^logout/$', 'django.contrib.auth.views.logout_then_login'),
     (r'^index/$', olap.index),
-
+    (r'^initial/$', olap.initial),
     (r'^report/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$', olap.report),
     (r'^report2/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_:]*)/([a-zA-Z0-9_]*)/([a-zA-Z0-9_]*)/xr=(.*)/yr=(.*)/ore=(.*)/([a-zA-Z0-9_]*)/params=(.*)/([a-zA-Z0-9_]*)/params=(.*)/$', olap.report2),
     (r'^pivot/$', olap.pivot),

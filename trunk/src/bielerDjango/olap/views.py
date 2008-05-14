@@ -93,25 +93,13 @@ def header_list_left(header):
 
     return rows, len(re)
 
-def autenticate(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None and user.is_active:
-        login(request, user)
-    return HttpResponseRedirect("/index/")
-
-def logou(trequest):
-    print "LOGOUUUUT"
-    #logout(request)
-    return render_to_response('login.html',locals())
-
-def login(request, msg=""):
-    return render_to_response('login.html',locals())
-
 @login_required(redirect_field_name='/login/')
 def index(request):
     return render_to_response('index.html',locals())
+
+@login_required(redirect_field_name='/login/')
+def initial(request):
+    return render_to_response('initial.html',locals())
 
 @login_required(redirect_field_name='/login/')
 def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
@@ -128,8 +116,6 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
     total_x = cube.total_x()
     total_y = cube.total_y()
-    
-    print "CCCANTIDAD", len(cube.dim_x) * len(cube.dim_y)
 
     header     = cube.dim_y
     header_top, header_top_size = header_list_top(cube.dim_y)
