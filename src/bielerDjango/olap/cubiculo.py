@@ -91,6 +91,46 @@ class Meta:
                                              }
 
     @staticmethod
+    def measure_as_string(t):
+        """
+        >>> Meta.measure_as_string([['ft_compras', 'costo_dolar', 'sum']])
+        'el costo de compra expresado en dolares'
+        >>> Meta.measure_as_string([['ft_compras', 'costo_dolar', 'avg']])
+        'el costo promedio de compra expresado en dolares'
+        >>> Meta.measure_as_string([['ft_compras', 'costo_pesos', 'sum']])
+        'el costo de compra expresado en pesos'
+        >>> Meta.measure_as_string([['ft_compras', 'costo_pesos', 'avg']])
+        'el costo promedio de compra expresado en pesos'
+        >>> Meta.measure_as_string([['ft_compras', 'cantidad', 'sum']])
+        'la cantidad de compras expresada en unidades'
+        >>> Meta.measure_as_string([['ft_compras', 'cantidad', 'avg']])
+        'la cantidad promedio de compras expresada en unidades'
+        >>> Meta.measure_as_string([['ft_ventas', 'cantidad', 'sum']])
+        'la cantidad de ventas expresada en unidades'
+        >>> Meta.measure_as_string([['ft_ventas', 'cantidad', 'avg']])
+        'la cantidad promedio de ventas expresada en unidades'
+        >>> Meta.measure_as_string([['ft_ventas', 'margen_pesos', 'sum']])
+        'el margen de ventas expresado en pesos'
+        >>> Meta.measure_as_string([['ft_ventas', 'margen_pesos', 'avg']])
+        'el margen promedio de ventas expresado en pesos'
+        >>> Meta.measure_as_string([['ft_ventas', 'margen_dolares', 'sum']])
+        'el margen de ventas expresado en dolares'
+        >>> Meta.measure_as_string([['ft_ventas', 'margen_dolares', 'avg']])
+        'el margen promedio de ventas expresado en dolares'
+        >>> Meta.measure_as_string([['ft_ventas', 'precio_venta_pesos', 'sum']])
+        'el precio de ventas expresado en pesos'
+        >>> Meta.measure_as_string([['ft_ventas', 'precio_venta_pesos', 'avg']])
+        'el precio promedio de ventas expresado en pesos'
+        >>> Meta.measure_as_string([['ft_ventas', 'precio_venta_dolares', 'sum']])
+        'el precio de ventas expresado en dolares'
+        >>> Meta.measure_as_string([['ft_ventas', 'precio_venta_dolares', 'avg']])
+        'el precio promedio de ventas expresado en dolares'
+        """        
+        rtn = ''
+        
+        return rtn
+
+    @staticmethod
     def previous(dimension, level):
         """
         >>> Meta.previous('tiempo', 'anio')
