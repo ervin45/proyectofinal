@@ -10,18 +10,20 @@ select{
 }
 
 label {
-  font-weight:bold;
+  
   }
 
 fieldset { 
-    border:1px solid green;
+    border:1px solid #555;
     margin: 10px;
+    width: 800px;
 }
 
 legend {
   padding: 0.2em 0.5em;
-  border:1px solid green;
-  color:green;
+  border:1px solid #555;
+  color:#555;
   font-size:90%;
+  font-weight:bold;
   text-align:right;
   }
