@@ -39,11 +39,11 @@ frame{
 
 a{cursor: pointer}
 
-.boton_guardar{
+.boton{
 	border: 1px #000 solid;
-	margin: 15px;
-	background-color: #c3c3c3; 
-	padding: 7px; 
+	margin: 5px;
+	background-color: #e3e3e3; 
+	padding: 2px; 
 	width: 160px; 
 	text-align: center;
 }
