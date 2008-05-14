@@ -160,7 +160,9 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
 
     exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures]
+    ##FIXME: " y " debería ser reemplzado por la operacion entre measures
     join_exp_t = " y ".join(exp_t)
+    
     explanation = "Ud. esta viendo " + join_exp_t
 
     return render_to_response('reportes2.html',locals())
@@ -231,6 +233,11 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
         mostrar_grafico = True
 
     categorias = models.Categoria.objects.all()
+
+    exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures]
+    join_exp_t = srt(cf).join(exp_t)
+    
+    explanation = "Ud. esta viendo " + join_exp_t
 
     return render_to_response('reportes2.html',locals())
 
