@@ -234,10 +234,10 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
 
     categorias = models.Categoria.objects.all()
 
-    exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures]
+    exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures.extend(measures2)]
     join_exp_t = str(cf).join(exp_t)
     
-    explanation = "Ud. esta viendo " + "(%d)" %len(measures) + join_exp_t
+    explanation = "Ud. esta viendo " + join_exp_t
 
     return render_to_response('reportes2.html',locals())
 
