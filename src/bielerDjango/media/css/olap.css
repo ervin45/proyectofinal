@@ -41,9 +41,9 @@ a{cursor: pointer}
 
 .boton{
 	border: 1px #000 solid;
-	margin: 10px;
+	margin: 7px;
 	background-color: #e3e3e3; 
-	padding: 5px; 
+	padding: 3px; 
 	width: 160px; 
 	text-align: center;
 }
