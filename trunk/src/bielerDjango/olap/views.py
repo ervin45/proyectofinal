@@ -160,7 +160,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
 
     exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures]
-    ##FIXME: " y " debería ser reemplzado por la operacion entre measures
+    ##FIXME: " y " deberia ser reemplzado por la operacion entre measures
     join_exp_t = " y ".join(exp_t)
     
     explanation = "Ud. esta viendo " + join_exp_t
