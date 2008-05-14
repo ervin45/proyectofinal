@@ -1,16 +1,20 @@
   <html>
   <head>
     <link rel="stylesheet" href="/media/css/formulario.css" type="text/css" />
+    <link rel="stylesheet" href="/media/css/jquery.tooltip.css" />
+
     <script type="text/javascript" src="/media/js/prototype.js"></script>
     <script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
     <script type="text/javascript" src="/media/js/jquery/jquery.flydom.js"></script>
 
+    <script src="/media/js/jquery/jquery.bgiframe.js" type="text/javascript"></script>
+    <script src="/media/js/jquery/jquery.dimensions.js" type="text/javascript"></script>
+    <script src="/media/js/jquery/jquery.tooltip.js" type="text/javascript"></script>
+
     <script type="text/javascript" src="/media/js/formulario.js"></script>
 
      <script type="text/javascript">
-	jQuery.noConflict();
-
-	
+	jQuery.noConflict();	
 
 	 jQuery(document).ready(function($){
 // 		$.ajaxSetup( {
@@ -364,6 +368,13 @@
 
     </script>
 
+    <script type="text/javascript">
+        jQuery.noConflict();
+        jQuery(document).ready(function($){
+            $('.tool').tooltip();
+        });
+    </script>
+
 <style>
 
 #prev_yl, #prev_yl2, #prev_ft1, #prev_y, #prev_ft2,  #prev_y2{
@@ -465,7 +476,7 @@
                                                 <option>pieza</option>
                                                 <option>proveedor</option>
                                                 <option>tipo_venta</option>
-                                        </select>
+                                        </select>&nbsp;<img width="20px" src="/media/img/lock.gif" />
                             </td>
                             <td>
                                         <select id="y">
@@ -473,7 +484,7 @@
                                                 <option>pieza</option>
                                                 <option>proveedor</option>
                                                 <option>tipo_venta</option>
-                                        </select>
+                                        </select>&nbsp;<img width="20px" src="/media/img/lock.gif" />
                         
                             </td>
                             </tr>
@@ -531,6 +542,7 @@
                         </table>
         </fieldset>
 <br>
+
 
 <div style="position: relative;">
     <span id="prev_x"></span>
@@ -693,14 +705,15 @@
 		</fieldset>
 
 		<fieldset>
-			<legend>Función</legend>	
+			<legend>Función de Medida</legend>	
                         <select id="mf">
+                                <option params_length="1">mismo_valor</option>>
                                 <option params_length="2">sumar</option>
                                 <option params_length="2">dividir</option>
                                 <option params_length="2">multiplicar</option>
                                 <option params_length="2">restar</option>
-                                <option params_length="1">mismo_valor</option>>
-                        </select><br>
+                                
+                        </select>&nbsp;&nbsp;&nbsp;&nbsp;<img class="tool" src="/media/img/help.png" title="Debe elegir de que manera se operar&aacute;n las medidas disponibles en la aplicaci&oacute;n.<br> Las medidas pueden ser cantidad en el hecho ventas o stock en el hecho movimientos por ejemplo. Cada funci&oacute;n tiene un numero de par&aacute;metros, cada uno de estos debe ser una medida. <br>La funci&oacute;n mas simple es <b>mismo_valor</b> que simplemente muestra la medida elegida."/><br>
                         <label>Parámetros</label>
                         <table>
                                 <tbody id="param_table_body">
