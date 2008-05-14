@@ -407,6 +407,7 @@ def formulario2(request):
 
 def navigation_tree(request):
     categorias = models.Categoria.objects.all()
+    logged_user_id = request.user.id
     return render_to_response('navigation_tree.html',locals())
 
 def adm_categoria(request):
@@ -468,7 +469,7 @@ def save_report(request):
 
     categoria = models.Categoria.objects.get(id=categoria_id)
 
-    reporte  = models.Reporte(nombre=nombre, dwp=dwp, categoria=categoria, user_id='2')
+    reporte  = models.Reporte(nombre=nombre, dwp=dwp, categoria=categoria, user_id=request.user.id)
     reporte.save()
 
     return HttpResponse("")

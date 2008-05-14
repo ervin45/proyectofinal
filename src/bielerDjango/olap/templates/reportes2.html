@@ -53,6 +53,8 @@
 
 
 	$('#save_aceptar').click(function(){
+                var error = false
+                var msg = ""
 		var href = window.location
 		var str = new String(href)
 		var str_arre = str.split("8000")
@@ -61,14 +63,25 @@
 		var nombre = $('#nombre').val()
 
 		if(nombre == ""){
-			alert("Debe introducir un Nombre para guardar el informe")
-			return
+                        msg += "Debe introducir un Nombre para guardar el informe\n"
+                        error = true
 		}
 
 		var categoria_id = $('#categoria_id').val()
 
+                if (categoria_id == "0"){
+                        msg += "Debe seleccionar una Categoria \n"
+                        error = true
+                }
+
+                if(error == true){
+                        alert(msg)
+                        return
+                }
+
 		jQuery.post("/save_report/" , {dwp: dwp, nombre: nombre, categoria_id: categoria_id}, function(data){
 			parent.frames.browser.location.reload()
+                        alert("El informe se guardo correctamente")
 		})
 
 		
