@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
 import models
+import cubiculo
 import reports
 
 from pprint import pprint
@@ -158,7 +159,9 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     categorias = models.Categoria.objects.all()
 
 
-    explanation = "Ud. esta viendo", measures
+    exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures]
+    join_exp_t = " y ".join(exp_t)
+    explanation = "Ud. esta viendo " + join_exp_t
 
     return render_to_response('reportes2.html',locals())
 
