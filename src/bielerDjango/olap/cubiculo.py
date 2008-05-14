@@ -91,53 +91,71 @@ class Meta:
                                              }
 
     @staticmethod
-    def measure_as_string(lista):
+    def measure_as_string(t):
         """
-        >>> Meta.measure_as_string([['ft_compras', 'costo_dolar', 'sum']])
+        >>> Meta.measure_as_string(['ft_compras', 'costo_dolar', 'sum'])
         'el costo de compras expresado en dolares'
-        >>> Meta.measure_as_string([['ft_compras', 'costo_dolar', 'avg']])
+        >>> Meta.measure_as_string(['ft_compras', 'costo_dolar', 'avg'])
         'el costo promedio de compras expresado en dolares'
-        >>> Meta.measure_as_string([['ft_compras', 'costo_pesos', 'sum']])
+        >>> Meta.measure_as_string(['ft_compras', 'costo_pesos', 'sum'])
         'el costo de compras expresado en pesos'
-        >>> Meta.measure_as_string([['ft_compras', 'costo_pesos', 'avg']])
+        >>> Meta.measure_as_string(['ft_compras', 'costo_pesos', 'avg'])
         'el costo promedio de compras expresado en pesos'
-        >>> Meta.measure_as_string([['ft_compras', 'cantidad', 'sum']])
+        >>> Meta.measure_as_string(['ft_compras', 'cantidad', 'sum'])
         'la cantidad de compras expresada en unidades'
-        >>> Meta.measure_as_string([['ft_compras', 'cantidad', 'avg']])
+        >>> Meta.measure_as_string(['ft_compras', 'cantidad', 'avg'])
         'la cantidad promedio de compras expresada en unidades'
-        >>> Meta.measure_as_string([['ft_ventas', 'cantidad', 'sum']])
+        >>> Meta.measure_as_string(['ft_ventas', 'cantidad', 'sum'])
         'la cantidad de ventas expresada en unidades'
-        >>> Meta.measure_as_string([['ft_ventas', 'cantidad', 'avg']])
+        >>> Meta.measure_as_string(['ft_ventas', 'cantidad', 'avg'])
         'la cantidad promedio de ventas expresada en unidades'
-        >>> Meta.measure_as_string([['ft_ventas', 'margen_pesos', 'sum']])
+        >>> Meta.measure_as_string(['ft_ventas', 'margen_pesos', 'sum'])
         'el margen de ventas expresado en pesos'
-        >>> Meta.measure_as_string([['ft_ventas', 'margen_pesos', 'avg']])
+        >>> Meta.measure_as_string(['ft_ventas', 'margen_pesos', 'avg'])
         'el margen promedio de ventas expresado en pesos'
-        >>> Meta.measure_as_string([['ft_ventas', 'margen_dolares', 'sum']])
+        >>> Meta.measure_as_string(['ft_ventas', 'margen_dolares', 'sum'])
         'el margen de ventas expresado en dolares'
-        >>> Meta.measure_as_string([['ft_ventas', 'margen_dolares', 'avg']])
+        >>> Meta.measure_as_string(['ft_ventas', 'margen_dolares', 'avg'])
         'el margen promedio de ventas expresado en dolares'
-        >>> Meta.measure_as_string([['ft_ventas', 'precio_venta_pesos', 'sum']])
+        >>> Meta.measure_as_string(['ft_ventas', 'precio_venta_pesos', 'sum'])
         'el precio de ventas expresado en pesos'
-        >>> Meta.measure_as_string([['ft_ventas', 'precio_venta_pesos', 'avg']])
+        >>> Meta.measure_as_string(['ft_ventas', 'precio_venta_pesos', 'avg'])
         'el precio promedio de ventas expresado en pesos'
-        >>> Meta.measure_as_string([['ft_ventas', 'precio_venta_dolares', 'sum']])
+        >>> Meta.measure_as_string(['ft_ventas', 'precio_venta_dolares', 'sum'])
         'el precio de ventas expresado en dolares'
-        >>> Meta.measure_as_string([['ft_ventas', 'precio_venta_dolares', 'avg']])
+        >>> Meta.measure_as_string(['ft_ventas', 'precio_venta_dolares', 'avg'])
         'el precio promedio de ventas expresado en dolares'
-        >>> Meta.measure_as_string([['ft_movimientos', 'devolucion_salida1', 'sum']])
+        >>> Meta.measure_as_string(['ft_movimientos', 'devolucion_salida1', 'sum'])
         'las devoluciones fuera de la garantia expresadas en piezas'
-        >>> Meta.measure_as_string([['ft_movimientos', 'devolucion_salida1', 'avg']])
+        >>> Meta.measure_as_string(['ft_movimientos', 'devolucion_salida1', 'avg'])
         'las devoluciones fuera de la garantia promedio expresadas en piezas'
-        >>> Meta.measure_as_string([['ft_movimientos', 'devolucion_salida2', 'sum']])
+        >>> Meta.measure_as_string(['ft_movimientos', 'devolucion_salida2', 'sum'])
         'las devoluciones en garantia expresadas en piezas'
-        >>> Meta.measure_as_string([['ft_movimientos', 'devolucion_salida2', 'avg']])
+        >>> Meta.measure_as_string(['ft_movimientos', 'devolucion_salida2', 'avg'])
         'las devoluciones en garantia promedio expresadas en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'stock', 'sum'])
+        'el stock expresado en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'stock', 'avg'])
+        'el stock promedio expresado en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'envios_a_rafaela', 'sum'])
+        'los envios a Rafaela expresados en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'envios_a_rafaela', 'avg'])
+        'los envios a Rafaela promedio expresados en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'entradas_de_rafaela', 'sum'])
+        'las entradas desde Rafaela expresadas en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'entradas_de_rafaela', 'avg'])
+        'las entradas desde Rafaela promedio expresadas en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'envios_a_reconquista', 'sum'])
+        'los envios a Reconquista expresados en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'envios_a_reconquista', 'avg'])
+        'los envios a Reconquista promedio expresados en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'entradas_de_reconquista', 'sum'])
+        'las entradas desde Reconquista expresadas en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'entradas_de_reconquista', 'avg'])
+        'las entradas desde Reconquista promedio expresadas en piezas'
         """
-
-        t = lista[0]
-
         expresa = 'expresado'
+
         if t[2] == 'avg':
             promedio = 'promedio '
         else:
@@ -145,36 +163,63 @@ class Meta:
 
         ft_name = t[0][3:]
 
-        elem = t[1].split('_')
+        if ft_name == 'movimientos':
+            ## manejo de que y su genero
+            que = t[1]
+            unidades = 'piezas'
+            if que == 'devolucion_salida2':
+                que = 'las devoluciones en garantia'
+                expresa = 'expresadas'
+            elif que == 'devolucion_salida1':
+                que = 'las devoluciones fuera de la garantia'
+                expresa = 'expresadas'
+            elif que == 'envios_a_rafaela':
+                que = 'los envios a Rafaela'
+                expresa = 'expresados'
+            elif que == 'envios_a_reconquista':
+                que = 'los envios a Reconquista'
+                expresa = 'expresados'
+            elif que == 'entradas_de_rafaela':
+                que = 'las entradas desde Rafaela'
+                expresa = 'expresadas'
+            elif que == 'entradas_de_reconquista':
+                que = 'las entradas desde Reconquista'
+                expresa = 'expresadas'
+            else:
+                que = "el %s" % que
+            ft=""
+        else:
+            elem = t[1].split('_')
 
-        if len(elem) == 1:
-            ## ejemplo: cantidad
-            que, unidades = elem[0], 'unidades'
-        elif len(elem) == 2:
-            ## ejemplo: margen_dolares
-            que, unidades = elem[0], elem[1]
-        elif len(elem) == 3:
-            ## ejemplo: precio_venta_dolares
-            que = '_'.join(elem[:-1])
-            unidades = elem[-1]
+            if len(elem) == 1:
+                ## ejemplo: cantidad
+                que, unidades = elem[0], 'unidades'
+            elif len(elem) == 2:
+                ## ejemplo: margen_dolares
+                que, unidades = elem[0], elem[1]
+            elif len(elem) == 3:
+                ## ejemplo: precio_venta_dolares
+                que = '_'.join(elem[:-1])
+                unidades = elem[-1]
 
-        if unidades == 'dolar':
-            unidades = 'dolares'
+            if unidades == 'dolar':
+                unidades = 'dolares'
+
+            ## manejo de que y su genero
+            if que == 'precio_venta':
+                que = 'el precio'
+            elif que == 'margen':
+                que = 'el margen'
+            elif que == 'costo':
+                que = 'el costo'
+            elif que == 'cantidad':
+                que = 'la cantidad'
+                expresa = 'expresada'
+
+            ft = "de %s " % ft_name
 
 
-        ## manejo de que y su genero
-        if que == 'precio_venta':
-            que = 'el precio'
-        elif que == 'margen':
-            que = 'el margen'
-        elif que == 'costo':
-            que = 'el costo'
-        elif que == 'cantidad':
-            que = 'la cantidad'
-            expresa = 'expresada'
-
-
-        rtn = '%s %sde %s %s en %s' % (que, promedio, ft_name, expresa, unidades)
+        rtn = '%s %s%s%s en %s' % (que, promedio, ft , expresa, unidades)
         
         return rtn
 
