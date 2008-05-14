@@ -157,6 +157,8 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
     categorias = models.Categoria.objects.all()
 
+    explanation = "este reporte tiene algunas restricciones y unos measures locos"
+
     return render_to_response('reportes2.html',locals())
 
 @login_required(redirect_field_name='/login/')
