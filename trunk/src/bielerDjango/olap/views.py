@@ -238,6 +238,10 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     tmp.extend(measures)
     tmp.extend(measures2)
     exp_t = [cubiculo.Meta.measure_as_string(x) for x in tmp]
+    ##FIXME: llevar esto al META para que no pase lo siguiente:
+    ## '''Ud. esta viendo el margen de ventas expresado
+    ## en pesos multiplicar el stock promedio expresado en piezas'''
+    
     join_exp_t = (" %s " % str(mf)).join(exp_t)
     
     explanation = "Ud. esta viendo " + join_exp_t
