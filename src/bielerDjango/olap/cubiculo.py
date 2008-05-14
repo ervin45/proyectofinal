@@ -91,16 +91,16 @@ class Meta:
                                              }
 
     @staticmethod
-    def measure_as_string(t):
+    def measure_as_string(lista):
         """
         >>> Meta.measure_as_string([['ft_compras', 'costo_dolar', 'sum']])
-        'el costo de compra expresado en dolares'
+        'el costo de compras expresado en dolares'
         >>> Meta.measure_as_string([['ft_compras', 'costo_dolar', 'avg']])
-        'el costo promedio de compra expresado en dolares'
+        'el costo promedio de compras expresado en dolares'
         >>> Meta.measure_as_string([['ft_compras', 'costo_pesos', 'sum']])
-        'el costo de compra expresado en pesos'
+        'el costo de compras expresado en pesos'
         >>> Meta.measure_as_string([['ft_compras', 'costo_pesos', 'avg']])
-        'el costo promedio de compra expresado en pesos'
+        'el costo promedio de compras expresado en pesos'
         >>> Meta.measure_as_string([['ft_compras', 'cantidad', 'sum']])
         'la cantidad de compras expresada en unidades'
         >>> Meta.measure_as_string([['ft_compras', 'cantidad', 'avg']])
@@ -125,8 +125,48 @@ class Meta:
         'el precio de ventas expresado en dolares'
         >>> Meta.measure_as_string([['ft_ventas', 'precio_venta_dolares', 'avg']])
         'el precio promedio de ventas expresado en dolares'
-        """        
-        rtn = ''
+        """
+
+        t = lista[0]
+
+        expresa = 'expresado'
+        if t[2] == 'avg':
+            promedio = 'promedio '
+        else:
+            promedio= ''
+
+        ft_name = t[0][3:]
+
+        elem = t[1].split('_')
+
+        if len(elem) == 1:
+            ## ejemplo: cantidad
+            que, unidades = elem[0], 'unidades'
+        elif len(elem) == 2:
+            ## ejemplo: margen_dolares
+            que, unidades = elem[0], elem[1]
+        elif len(elem) == 3:
+            ## ejemplo: precio_venta_dolares
+            que = '_'.join(elem[:-1])
+            unidades = elem[-1]
+
+        if unidades == 'dolar':
+            unidades = 'dolares'
+
+
+        ## manejo de que y su genero
+        if que == 'precio_venta':
+            que = 'el precio'
+        elif que == 'margen':
+            que = 'el margen'
+        elif que == 'costo':
+            que = 'el costo'
+        elif que == 'cantidad':
+            que = 'la cantidad'
+            expresa = 'expresada'
+
+
+        rtn = '%s %sde %s %s en %s' % (que, promedio, ft_name, expresa, unidades)
         
         return rtn
 
@@ -1048,5 +1088,4 @@ def _test():
     doctest.testmod()
 
 if __name__ == "__main__":
-    print "CUBICULO"
     _test()
