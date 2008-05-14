@@ -97,13 +97,8 @@
 
 
 <div class="outer-container">
-
 <a class="boton" id="save_expand">Guardar</a>&nbsp;<a class="boton" id="more_details_expand">M&aacute;s Detalles</a>
-
-<hr>
-
-
-<div id="save" style="display:none">
+<hr style="border:0; height: 1px;"><div id="save" style="display:none">
 	<table>
 		<tbody>
 		<tr>
@@ -230,18 +225,9 @@
     </tr>
   </tbody>
 </table>
-</div>
-<!-- FIN more_details -->
-
-<p style="font-size:1.8em; font-weight:bold">
-{{explanation}}
-</p>
-
-
+</div><!-- FIN more_details --><p style="font-size:1.4em; font-weight:bold">{{explanation}}</p>
 <script type="text/javascript" src="/media/js/swfobject.js"></script>
-<div id="flashcontent"></div>
-
-<script type="text/javascript">
+<div id="flashcontent"></div><script type="text/javascript">
 
 {% if mostrar_grafico %}
 var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "600", "300", "9", "#FFFFFF");
