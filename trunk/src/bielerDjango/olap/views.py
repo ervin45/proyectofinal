@@ -235,7 +235,7 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     categorias = models.Categoria.objects.all()
 
     exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures]
-    join_exp_t = srt(cf).join(exp_t)
+    join_exp_t = str(cf).join(exp_t)
     
     explanation = "Ud. esta viendo " + join_exp_t
 
