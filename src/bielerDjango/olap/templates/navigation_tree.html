@@ -45,9 +45,10 @@
 	
 	<div id="main">
 
+        <center><u><b>Reportes</b></u></center>
+
 	<ul id="browser" class="filetree">
-		<li><span class="folder">Reportes</span>
-			<ul>
+
 				{% for cat in categorias %}
 					<li><span class="folder">{{cat.nombre}}</span>
 						<ul>
@@ -62,19 +63,9 @@
 						</ul>
 					</li>
 				{% endfor %}
-			</ul>
-
-		</li>
-
-		
-		<li class="closed"><span class="folder">Indicador compra</span>
-			<ul>
-				<li><span class="file">ver</span></li>
-			</ul>
-		</li>
 	</ul>
 
-</div>
+        </div>
 <br>
 <center><u><b>Acciones</b></u></center>
 
