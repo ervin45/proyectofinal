@@ -125,6 +125,14 @@ class Meta:
         'el precio de ventas expresado en dolares'
         >>> Meta.measure_as_string([['ft_ventas', 'precio_venta_dolares', 'avg']])
         'el precio promedio de ventas expresado en dolares'
+        >>> Meta.measure_as_string([['ft_movimientos', 'devolucion_salida1', 'sum']])
+        'las devoluciones fuera de la garantia expresadas en piezas'
+        >>> Meta.measure_as_string([['ft_movimientos', 'devolucion_salida1', 'avg']])
+        'las devoluciones fuera de la garantia promedio expresadas en piezas'
+        >>> Meta.measure_as_string([['ft_movimientos', 'devolucion_salida2', 'sum']])
+        'las devoluciones en garantia expresadas en piezas'
+        >>> Meta.measure_as_string([['ft_movimientos', 'devolucion_salida2', 'avg']])
+        'las devoluciones en garantia promedio expresadas en piezas'
         """
 
         t = lista[0]
