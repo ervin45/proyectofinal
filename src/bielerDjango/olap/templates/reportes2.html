@@ -129,8 +129,8 @@
 	
 	<input type="button" value="Guardar" id="save_aceptar"/>
 </div>
-<div id="more_details" style="display:block">
-
+<div id="more_details" style="display:none">
+<span class="titulo_detalles">Detalles para la tabla de hechos: '{{ft}}'</span>
   <ul id="browser" class="filetree">
     <li><span class="folder">Ejes</span>
       <ul>
@@ -142,16 +142,6 @@
 	  </li>
 	  <li>
 	    Restricciones: <b>{{dimensions|hash:dim|hash:2|human_restriction|safe}}</b>
-	  </li>
-	</ul>
-      </li>
-      {% endfor %}
-
-      {% for dim in dimensions2 %}
-      <li><span class="folder">{{dim}}</span>
-	<ul>
-	  <li>
-	    Elem
 	  </li>
 	</ul>
       </li>
@@ -174,102 +164,41 @@
 </ul>
 </div>
 
+{% if ft2 %}
+<span class="titulo_detalles">Detalles para la tabla de hechos: '{{ft2}}'</span>
+  <ul id="browser" class="filetree">
+    <li><span class="folder">Ejes</span>
+      <ul>
+      {% for dim in dimensions2 %}
+      <li><span class="folder">{{dim}}</span>
+	<ul>
+	  <li>
+	    Nivel: <b>{{dimensions2|hash:dim|hash:1}}</b>
+	  </li>
+	  <li>
+	    Restricciones: <b>{{dimensions2|hash:dim|hash:2|human_restriction|safe}}</b>
+	  </li>
+	</ul>
+      </li>
+      {% endfor %}
+    </li>
+  </ul>
 
-<div id="more_details_old" style="display:block">
-<table class="info">
-  <tbody>
-    <tr>
-      <td colspan="2" style="text-align:center"><span class="titulo_detalles">Detalles para la tabla de hechos: '{{ft}}'</span></td>
-    </tr>
-{% for dim in dimensions %}
-    <tr>
-      <td valign="top" colspan="2">{{dim}}
-<table>
-  <tbody>
-    <tr>
-      <td valign="top">Nivel: </td>
-      <td>{{dimensions|hash:dim|hash:1}}</td>
-    </tr>
-    <tr>
-      <td valign="top">Restricciones: </td>
-      <td>{{dimensions|hash:dim|hash:2|human_restriction|safe}}</td>
-    </tr>
-  </tbody>
-</table>
-</td>
-    </tr>
-    <tr>
-{% endfor %}
-      <td>Dimensiones Ocultas</td>
-      <td>{{ore}}</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Medidas</td>
-      <td>{{measures}}</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
-
-<br>
-
-
-<table class="info">
-  <tbody>
-    <tr>
-      <td colspan="2" style="text-align:center"><span class="titulo_detalles">{{ft2}}</span></td>
-    </tr>
-    <tr>
-      <td>Dimensiones Principales</td>
-      <td>
-      </td>
-    </tr>
-{% for dim in dimensions2 %}
-    <tr>
-      <td valign="top">{{dim}}</td>
-      <td>
-
-<table>
-  <tbody>
-    <tr>
-      <td valign="top">Nivel: </td>
-      <td>{{dimensions2|hash:dim|hash:1}}</td>
-    </tr>
-    <h>
-      <td valign="top">Restricciones: </td>
-      <td>{{dimensions2|hash:dim|hash:2}}</td>
-    </tr|>
-  </tbody>
-</table>
-
-      </td>
-    </tr>
-    <tr>
-{% endfor %}
-      <td>Dimensiones Ocultas</td>
-      <td>{{ore2}}</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Medidas</td>
-      <td>{{measures2}}</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+  <li>
+    <span class="folder">Dimensiones Ocultas</span>
+    <ul>
+      {{ore2|human_ore|safe}}
+    </ul>
+  </li>
+  <li>
+    <span class="folder">Measures</span>
+    <ul>
+      {{measures2|human_measures|safe}}
+    </ul>
+  </li>
+</ul>
+</div>
+{% endif %}
 </div><!-- FIN more_details --><p style="font-size:1.4em; font-weight:bold">{{explanation}}</p>
 <script type="text/javascript" src="/media/js/swfobject.js"></script>
 <div id="flashcontent"></div><script type="text/javascript">
