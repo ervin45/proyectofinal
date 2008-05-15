@@ -28,8 +28,13 @@
 	padding: 3px 0pt 3px 16px;
 }
 
-#treecontrol { margin: 1em 0; display: none; }
+.treeview a.selected {
+	background-color: #eee;
 }
+
+#treecontrol { margin: 1em 0; display: none; }
+
+.treeview .hover { color: red; cursor: pointer; }
 
 .treeview li { background: url(/media/img/tree/treeview-default-line.gif) 0 0 no-repeat; }
 .treeview li.collapsable, .treeview li.expandable { background-position: 0 -176px; }

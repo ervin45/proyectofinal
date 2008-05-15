@@ -45,25 +45,25 @@
 	
 	<div id="main">
 
-        <center><u><b>Reportes</b></u></center>
-
-	<ul id="browser" class="filetree">
-
-				{% for cat in categorias %}
-					<li><span class="folder">{{cat.nombre}}</span>
-						<ul>
-							{% for reporte in cat.reporte_set.all %}
-                                                        {% ifequal reporte.user_id logged_user_id %}
-							<li>
-                                                                
-								<a target="detail" href="{{reporte.dwp}}" >{{reporte.nombre}}</a> <a class="delete" report_id="{{reporte.id}}"><img src="/media/img/del.png" width="13" /></a>
-							</li>
-                                                        {% endifequal %}
-							{% endfor %}
-						</ul>
-					</li>
-				{% endfor %}
-	</ul>
+            <center><u><b>Reportes</b></u></center>
+    
+            <ul id="browser" class="filetree">
+    
+                {% for cat in categorias %}
+                    <li><span class="folder">{{cat.nombre}}</span>
+                            <ul>
+                                {% for reporte in cat.reporte_set.all %}
+                                    {% ifequal reporte.user_id logged_user_id %}
+                                    <li>
+                                            
+                                            <a target="detail" href="{{reporte.dwp}}" >{{reporte.nombre}}</a> <a class="delete" report_id="{{reporte.id}}"><img src="/media/img/del.png" width="13" /></a>
+                                    </li>
+                                    {% endifequal %}
+                                {% endfor %}
+                            </ul>
+                    </li>
+                {% endfor %}
+            </ul>
 
         </div>
 <br>
