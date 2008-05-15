@@ -69,7 +69,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'bielerDjango.urls'
 
 TEMPLATE_DIRS = (
-    '/home/proyecto/proyectofinal/src/bielerDjango/olap/templates',
+    './olap/templates',
     '/home/proyecto/proyectofinal/src/bielerDjango/report_management/templates',
 )
 
