@@ -89,25 +89,25 @@ Problemática
 
 En el transcurso de los años en los que funciona la empresa, esta ha
 ido acumulando datos acerca de las operaciones que realiza para poder
-devenvolverse en su ambito de negocio. Todos estos datos tan sólo fueron
+desenvolverse en su ámbito de negocio. Todos estos datos tan sólo fueron
 acumulados en los sistemas internos que utiliza la empresa sin la
-posibilidad de realizar un analisis mas completo que permita la toma
-de decisiones en un nivel estrategico basado no solo en intuición del
-empresario sino tambien en datos cuantitativos y objetivos.
+posibilidad de realizar un análisis mas completo que permita la toma
+de decisiones en un nivel estratégico basado no sólo en intuición del
+empresario sino también en datos cuantitativos y objetivos.
 
-La empresa no tenia una manera sencilla y eficaz de analizar sus datos
-operacionales. No era posible realizar una comparacion de los datos en
+La empresa no tenía una manera sencilla y eficaz de analizar sus datos
+operacionales. No era posible realizar una comparación de los datos en
 diferentes variables en un tiempo razonable que permita la toma de
 decisiones. Esto era un problema a la hora de decidir el tipo de
 compras en materia de autos, camiones y repuestos para alcanzar
 objetivos como ser maximizar las ganancias.
 
 Ricardo C. Bieler S.A. consta de un casa central y dos sucursales en
-la provincia. Las decisiones solo eran posibles desde el punto central
-por ser el unico que tenia acceso a toda la información de la
+la provincia. Las decisiones sólo eran posibles desde el punto central
+por ser el único que tenía acceso a toda la información de la
 empresa. Esto provocaba que el proceso de toma de decisiones estuviera
 centralizado en muy pocas personas y los aportes de gerentes de las
-sucursales fueran minimos. Por esta causa se hacia muy necesario tener
+sucursales fueran mínimos. Por esta causa se hacia muy necesario tener
 la posibilidad de acceder a las funcionalidades del sistema desde
 cualquiera de estos puntos de decisión y asi agilizar los mecanismos
 decisionales.
