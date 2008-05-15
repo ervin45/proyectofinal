@@ -219,6 +219,7 @@ window.console && console.log("%s", current_value);
 function change_cf(){
 	var cf_name = jQuery('#cf option:selected').attr('id')
 	cf_params = jQuery('#params_' + cf_name).html()
+        jQuery('#cube_param_table_body').html('')
 	jQuery('#cube_param_table_body').html(cf_params)
 	
 }
@@ -253,21 +254,15 @@ function set_cf(){
 			jQuery('body').createAppend(
 				'table', {id: "params_" + k, style:'display:none'},''
 			)
+
 			jQuery.each(v['params'], function(i, param){
-				
-
-
-
 				jQuery("#params_" + k).createAppend(
 					'tr', {},[
 					'td', {}, ['label', {}, param['label']],
 					'td', {id: 'td_' + param['label']},''
 					]
 				)
-
-				
 				_add_param_type(param)
-
 			})
 		})
 	});
