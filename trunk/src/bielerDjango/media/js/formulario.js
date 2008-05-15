@@ -10,6 +10,23 @@ function agregar(){
 	_agregar('')
 }
 
+
+function ajax_or_cache(url, params){
+    url_id = url.split("/").join("")
+
+    if(!jQuery('#' + url_id).html()){
+        jQuery.get(url, params, function(data){
+                var div = "<div id='"+ url_id +"'>" + data + "</div>"
+                jQuery('body').append(div)
+        })
+    }
+
+    if(jQuery('#' + url_id).html()){
+        return jQuery('#' + url_id).html()
+    }else
+        return ""
+}
+
 /*
 Agrega una restriccion a un grupo de dependiendo del prefijo (vacio, "ft1_", "ft2")
 */
