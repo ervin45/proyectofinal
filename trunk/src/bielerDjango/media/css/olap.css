@@ -89,3 +89,9 @@ input[type="button"]{
     background-color: #D1D1D1;
     border: 1px solid #83AAD3;
 }
+
+.titulo_detalles {
+	font-weight: bold;
+	text-align: center;
+    	color: #161616;
+}
