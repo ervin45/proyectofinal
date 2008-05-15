@@ -132,7 +132,7 @@ brinde esta funcionalidad en tiempo real.
 
 Debido a las características particulares de la estructura de sistemas
 de información de la empresa, es necesario realizar adaptaciones a
-medida para la generación de informes personalizados que sean de facil
+medida para la generación de informes personalizados que sean de fácil
 generación y consulta. Las herramientas comerciales del mercado no
 ofrecen la flexibilidad suficiente para esta tarea.
 
