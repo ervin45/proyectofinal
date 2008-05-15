@@ -102,14 +102,12 @@
 
 		function change_ft(){
 			var ft1 = $('#ft1').val()
-			jQuery.get("/report/get_dimensions/" + ft1, {}, function(data){	
+			data = ajax_or_cache("/report/get_dimensions/" + ft1, {})	
 				dimensions1 = data.split("|")
-			})	
 
 			var ft2 = $('#ft2').val()
-			jQuery.get("/report/get_dimensions/" + ft2, {}, function(data){
+			data = ajax_or_cache("/report/get_dimensions/" + ft2, {})
 				dimensions2 = data.split("|")
-			})
 
 			var common = _common_dimensions(dimensions1, dimensions2)
 			var ft1_dimensions = _ft1_dimensions(dimensions1, dimensions2)
@@ -122,13 +120,11 @@
 			_add_options("ft1_dimension", ft1_dimensions.join("|"))
 			_add_options("ft2_dimension", ft2_dimensions.join("|"))
 
-			jQuery.get("/report/get_measures/" + ft1, {}, function(data){
+			data = ajax_or_cache("/report/get_measures/" + ft1, {})
 				_add_options_measures("ft1_measures", data)
-			})
 
-			jQuery.get("/report/get_measures/" + ft2, {}, function(data){
+			data = ajax_or_cache("/report/get_measures/" + ft2, {})
 				_add_options_measures("ft2_measures", data)
-			})
 
 			$('#ft1_rest_legend').html(ft1)
 			$('#ft2_rest_legend').html(ft2)
@@ -146,45 +142,40 @@
 
 		function change_x(){
 			var dimension = $('#x').val()
-			jQuery.get("/report/get_levels/" + dimension, {}, function(data){
+			data = ajax_or_cache("/report/get_levels/" + dimension, {})
 				_add_options("ft1_xl", data)
 				_add_options("ft2_xl", data)
-			})
                         labels_preview()
 		}
 
 		function change_y(){
 			var dimension = $('#y').val()
-			jQuery.get("/report/get_levels/" + dimension, {}, function(data){
+			data = ajax_or_cache("/report/get_levels/" + dimension, {})
 				_add_options("ft1_yl", data)
 				_add_options("ft2_yl", data)
-			})
                         labels_preview()
 		}
 		
 		function change_dimension(){
 			var dimension = $('#dimension').val()
-			jQuery.get("/report/get_levels_without_todo/" + dimension, {}, function(data){
+			data = ajax_or_cache("/report/get_levels_without_todo/" + dimension, {})
 				_add_options("level", data)
-			})
 
 			change_level()
 		}
 
 		function change_ft1_dimension(){
 			var dimension = $('#ft1_dimension').val()
-			jQuery.get("/report/get_levels_without_todo/" + dimension, {}, function(data){
+			data = ajax_or_cache("/report/get_levels_without_todo/" + dimension, {})
 				_add_options("ft1_level", data)
-			})
 
 			change_ft1_level()
 		}
 
 		function change_ft2_dimension(){
 			var dimension = $('#ft2_dimension').val()
-			jQuery.get("/report/get_levels_without_todo/" + dimension, {}, function(data){
+			data = ajax_or_cache("/report/get_levels_without_todo/" + dimension, {})
 				_add_options("ft2_level", data)
-			})
 
 			change_ft2_level()
 		}
@@ -192,26 +183,22 @@
 		function change_level(){
 			var dimension = $('#dimension').val()
 			var level = $('#level').val()
-			jQuery.get("/report/get_values/" + dimension + "/" + level, {}, function(data){
+			data = ajax_or_cache("/report/get_values/" + dimension + "/" + level, {})
 				_add_options("val", data)
-			})
-
 		}
 
 		function change_ft1_level(){
 			var dimension = $('#ft1_dimension').val()
 			var level = $('#ft1_level').val()
-			jQuery.get("/report/get_values/" + dimension + "/" + level, {}, function(data){
+			data = ajax_or_cache("/report/get_values/" + dimension + "/" + level, {})
 				_add_options("ft1_val", data)
-			})
 		}
 
 		function change_ft2_level(){
 			var dimension = $('#ft2_dimension').val()
 			var level = $('#ft2_level').val()
-			jQuery.get("/report/get_values/" + dimension + "/" + level, {}, function(data){
+			data = ajax_or_cache("/report/get_values/" + dimension + "/" + level, {})
 				_add_options("ft2_val", data)
-			})
 		}
 
 		function change_mf(){
@@ -224,10 +211,10 @@
                 
                         var old_values = new Array()
 			
-$('#param_table_body .measure').each(function(i, n){
-    old_values[i] = n.value
-    window.console && console.log("VALOR DEL SELECT VIEJO: %s", n.value);
-})
+                        $('#param_table_body .measure').each(function(i, n){
+                            old_values[i] = n.value
+                            window.console && console.log("VALOR DEL SELECT VIEJO: %s", n.value);
+                        })
 
 			$('#param_table_body').html('')
 			for(var i = 0; i < params_length; i++){

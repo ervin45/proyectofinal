@@ -53,14 +53,14 @@
 
 		function change_ft(){
 			var ft = $('#ft').val()
-			jQuery.get("/report/get_dimensions/" + ft, {}, function(data){
+			data = ajax_or_cache("/report/get_dimensions/" + ft, {})
 				_add_options("x", data)
 				_add_options("y", data)
 				_add_options("dimension", data)
-			})	
-			jQuery.get("/report/get_measures/" + ft, {}, function(data){
+
+			data = ajax_or_cache("/report/get_measures/" + ft, {})
 				_add_options_measures("measures", data)
-			})
+
 			change_x()
 			change_y()
 			change_dimension()
@@ -71,33 +71,29 @@
 
 		function change_x(){
 			var dimension = $('#x').val()
-			jQuery.get("/report/get_levels/" + dimension, {}, function(data){
+
+			data = ajax_or_cache("/report/get_levels/" + dimension, {})
 				_add_options("xl", data)
-			})
 		}
 
 		function change_y(){
 			var dimension = $('#y').val()
-			jQuery.get("/report/get_levels/" + dimension, {}, function(data){
+			data = ajax_or_cache("/report/get_levels/" + dimension, {})
 				_add_options("yl", data)
-			})
 		}
 		
 		function change_dimension(){
 			var dimension = $('#dimension').val()
-			jQuery.get("/report/get_levels_without_todo/" + dimension, {}, function(data){
+			data = ajax_or_cache("/report/get_levels_without_todo/" + dimension, {})
 				_add_options("level", data)
-			})
-
 			change_level()
 		}
 
 		function change_level(){
 			var dimension = $('#dimension').val()
 			var level = $('#level').val()
-			jQuery.get("/report/get_values/" + dimension + "/" + level, {}, function(data){
+			data = ajax_or_cache("/report/get_values/" + dimension + "/" + level, {})
 				_add_options("val", data)
-			})
 		}
 
 		function change_mf(){
