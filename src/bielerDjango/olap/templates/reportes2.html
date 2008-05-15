@@ -126,23 +126,16 @@
 <table class="info">
   <tbody>
     <tr>
-      <td colspan="2"><span class="titulo_detalles">{{ft}}</span></td>
-    </tr>
-    <tr>
-      <td>Dimensiones Principales</td>
-      <td>
-      </td>
+      <td colspan="2" style="text-align:center"><span class="titulo_detalles">Detalles para la tabla de hechos: '{{ft}}'</span></td>
     </tr>
 {% for dim in dimensions %}
     <tr>
-      <td valign="top">{{dim}}</td>
-      <td>
-
+      <td valign="top" colspan="2">{{dim}}</td>
 <table>
   <tbody>
     <tr>
       <td valign="top">Nivel: </td>
-      <td>{{dimensions|hash:dim|hash:1}}</td>
+      <td>{{d_1_human_redeable}}</td>
     </tr>
     <t>
       <td valign="top">Restricciones: </td>
@@ -150,8 +143,6 @@
     </tr|>
   </tbody>
 </table>
-
-      </td>
     </tr>
     <tr>
 {% endfor %}
@@ -179,8 +170,7 @@
 <table class="info">
   <tbody>
     <tr>
-      <td></td>
-      <td>{{ft2}}</td>
+      <td colspan="2" style="text-align:center"><span class="titulo_detalles">{{ft2}}</span></td>
     </tr>
     <tr>
       <td>Dimensiones Principales</td>
