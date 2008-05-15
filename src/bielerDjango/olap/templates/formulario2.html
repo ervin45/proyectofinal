@@ -27,7 +27,7 @@
 
 		$.ajaxSetup( {
 			type: "POST",
-			async: true
+			async: false
 		} );
 
 		/* EVENTOS*/
@@ -221,15 +221,24 @@
 			var ft2_measures = $('#ft2_measures').html()
 
 			var aggregations = $('#aggregations').html()		
+                
+                        var old_values = new Array()
 			
+$('#param_table_body .measure').each(function(i, n){
+    old_values[i] = n.value
+    window.console && console.log("VALOR DEL SELECT VIEJO: %s", n.value);
+})
+
 			$('#param_table_body').html('')
 			for(var i = 0; i < params_length; i++){
 				$('#param_table_body').createAppend(
 					'tr', {}, [
-					'td', { class: 'params', align: 'center', style: '' }, ['select', {}, ft1_measures + ft2_measures],
+					'td', { class: 'params', align: 'center', style: '' }, ['select', {id: 'ptbs' + i, class:'measure'}, ft1_measures + ft2_measures],
 					'td', {class: 'aggregations'}, ['select', {}, aggregations]
 					]
 				);
+                                //alert("jjjj" + $('ptbs' + i).val())
+                                $('#ptbs' + i).val(old_values[i])
 			}
 		}
 
