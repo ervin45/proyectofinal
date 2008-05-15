@@ -168,12 +168,16 @@ Apartir de una string con elementos separados por "|" agrega elementos OPTION a 
 */
 function _add_options(select, data){
 		var values = data.split("|");
+
+                current_value = jQuery('#' + select).val()
 		jQuery('#' + select).html('')
 		values.each(function(val){
 			jQuery('#' + select).createAppend(
 				'option', {value: val}, val
 			);
 		})
+                
+                jQuery('#' + select).val(current_value)
 }
 
 /*
@@ -181,15 +185,17 @@ Apartir de una string con elementos separados por "|" agrega elementos OPTION a 
 */
 function _add_options_measures(select, data){
 		var values = data.split("|");
+
+                current_value = jQuery('#' + select).val()
 		jQuery('#' + select).html('')
 		values.each(function(val){
                         var a = val.replace("ft_", "").replace(".", " -- ")
                         option = '<option value="' + val + '">' + a + '</option>'
                         jQuery('#' + select).append(option)
-// 			jQuery('#' + select).createAppend(
-// 				'option', {align: val}, val.replace("ft_", "").replace(".", " -- ")
-// 			);
 		})
+
+window.console && console.log("%s", current_value);
+                jQuery('#' + select).val(current_value)
 }
 
 
