@@ -3,6 +3,12 @@ from django.conf.urls.defaults import *
 import olap.views as olap
 import report_management.views as rm
 
+import os
+
+pwd = os.getcwd()
+media_dir = '%s/media' % pwd
+print 'media_dir', media_dir
+
 urlpatterns = patterns('',
     (r'^$', olap.index),
     (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
@@ -43,5 +49,5 @@ urlpatterns = patterns('',
 
     (r'^admin/', include('django.contrib.admin.urls')),
 
-    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/proyecto/proyectofinal/src/bielerDjango/media'}),
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': media_dir}),
 )
