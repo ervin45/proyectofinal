@@ -47,6 +47,27 @@ order_and_slice_the_cube2.meta = {
                                           ]
                                 } 
 
+def top10(cube,total_elements = 10,order = 'desc'):
+    eje = 0
+    sum_1 = {}
+    for k in cube.data.keys():
+        try:
+            sum_1[k[eje]] += cube.data[k]
+        except:
+            sum_1[k[eje]] = cube.data[k]
+
+    top = _top_ordered(sum_1,total_elements, order).keys()
+  
+    for i in cube.data.keys():
+        if i[eje] not in top:
+            del cube.data[i]
+
+    cube.clean()
+
+top10.meta = {
+    "label": "Top 10",
+    "params": []
+    }
 
 def same_cube(cube):
     pass
@@ -55,3 +76,27 @@ same_cube.meta = {
                                 "label": "Ninguno",
                                 "params": []
                                 }
+
+def no_zeros(cube):
+    eje = 0
+
+    sum_1 = {}
+    for k in cube.data.keys():
+        try:
+            sum_1[k[eje]] += cube.data[k]
+        except:
+            sum_1[k[eje]] = cube.data[k]
+
+    
+    los_zeros = [x[0] for x in tuple(sum_1.items()) if x[1] == 0]
+
+    for i in cube.data.keys():
+        if i[eje] in los_zeros:
+            del cube.data[i]
+
+    cube.clean()
+
+no_zeros.meta = {
+    "label": "Sin filas con todos ceros",
+    "params": []
+    }
