@@ -141,9 +141,9 @@ class Meta:
         'los envios a Rafaela expresados en piezas'
         >>> Meta.measure_as_string(['ft_movimientos', 'envios_a_rafaela', 'avg'])
         'los envios a Rafaela promedio expresados en piezas'
-        >>> Meta.measure_as_string(['ft_movimientos', 'entradas_de_rafaela', 'sum'])
+        >>> Meta.measure_as_string(['ft_movimientos', 'entrada_de_rafaela', 'sum'])
         'las entradas desde Rafaela expresadas en piezas'
-        >>> Meta.measure_as_string(['ft_movimientos', 'entradas_de_rafaela', 'avg'])
+        >>> Meta.measure_as_string(['ft_movimientos', 'entrada_de_rafaela', 'avg'])
         'las entradas desde Rafaela promedio expresadas en piezas'
         >>> Meta.measure_as_string(['ft_movimientos', 'envios_a_reconquista', 'sum'])
         'los envios a Reconquista expresados en piezas'
@@ -179,10 +179,10 @@ class Meta:
             elif que == 'envios_a_reconquista':
                 que = 'los envios a Reconquista'
                 expresa = 'expresados'
-            elif que == 'entradas_de_rafaela':
+            elif que == 'entrada_de_rafaela':
                 que = 'las entradas desde Rafaela'
                 expresa = 'expresadas'
-            elif que == 'entradas_de_reconquista':
+            elif que == 'entrada_de_reconquista':
                 que = 'las entradas desde Reconquista'
                 expresa = 'expresadas'
             else:
