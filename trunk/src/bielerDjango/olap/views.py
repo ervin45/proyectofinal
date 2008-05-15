@@ -161,7 +161,8 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
     categorias = models.Categoria.objects.all()
 
-    d_1_human_redeable = restriction_human_redeable(dimensions['dim'][1])
+    #d_1_human_redeable = restriction_human_redeable(dimensions['dim'][1])
+    d_1_human_redeable = str(dimensions)
 
     exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures]
     ##FIXME: " y " deberia ser reemplzado por la operacion entre measures
