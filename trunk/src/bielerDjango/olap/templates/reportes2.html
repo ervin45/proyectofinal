@@ -6,6 +6,13 @@
 <script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
 
 <link rel="stylesheet" type="text/css" href="/media/css/olap.css" media="screen" />
+<link rel="stylesheet" href="/media/css/jquery.treeview.css" />
+
+<script type="text/javascript" src="/media/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="/media/js/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="/media/js/jquery/jquery.treeview.js"></script>
+<script type="text/javascript" src="/media/js/jquery/demo.js"></script>
+
 <script type="text/javascript">
 	jQuery(document).ready(function($){
 
@@ -122,7 +129,53 @@
 	
 	<input type="button" value="Guardar" id="save_aceptar"/>
 </div>
-<div id="more_details" style="display:none">
+<div id="more_details" style="display:block">
+
+  <ul id="browser" class="filetree">
+    <li><span class="folder">Ejes</span>
+      <ul>
+      {% for dim in dimensions %}
+      <li><span class="folder">{{dim}}</span>
+	<ul>
+	  <li>
+	    Nivel: <b>{{dimensions|hash:dim|hash:1}}</b>
+	  </li>
+	  <li>
+	    Restricciones: <b>{{dimensions|hash:dim|hash:2|human_restriction|safe}}</b>
+	  </li>
+	</ul>
+      </li>
+      {% endfor %}
+
+      {% for dim in dimensions2 %}
+      <li><span class="folder">{{dim}}</span>
+	<ul>
+	  <li>
+	    Elem
+	  </li>
+	</ul>
+      </li>
+      {% endfor %}
+    </li>
+  </ul>
+
+  <li>
+    <span class="folder">Dimensiones Ocultas</span>
+    <ul>
+      {{ore|human_ore|safe}}
+    </ul>
+  </li>
+  <li>
+    <span class="folder">Measures</span>
+    <ul>
+      {{measures|human_measures|safe}}
+    </ul>
+  </li>
+</ul>
+</div>
+
+
+<div id="more_details_old" style="display:block">
 <table class="info">
   <tbody>
     <tr>
@@ -135,11 +188,11 @@
   <tbody>
     <tr>
       <td valign="top">Nivel: </td>
-      <td>{{d_1_human_redeable}}</td>
+      <td>{{dimensions|hash:dim|hash:1}}</td>
     </tr>
-    <t>
+    <tr>
       <td valign="top">Restricciones: </td>
-      <td>{{dimensions|hash:dim|hash:2}}</td>
+      <td>{{dimensions|hash:dim|hash:2|human_restriction|safe}}</td>
     </tr>
   </tbody>
 </table>
