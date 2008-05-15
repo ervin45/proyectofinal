@@ -102,6 +102,9 @@ def index(request):
 def initial(request):
     return render_to_response('initial.html',locals())
 
+def restriction_human_redeable(h):
+    return "test:" + str(h)
+
 @login_required(redirect_field_name='/login/')
 def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     report = reports.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
@@ -158,6 +161,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
     categorias = models.Categoria.objects.all()
 
+    d_1_human_redeable = restriction_human_redeable(dimensions[1]['dim'])
 
     exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures]
     ##FIXME: " y " deberia ser reemplzado por la operacion entre measures
