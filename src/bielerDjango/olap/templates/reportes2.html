@@ -86,12 +86,18 @@
                 $('#saving_label').show()
 
 		jQuery.post("/save_report/" , {dwp: dwp, nombre: nombre, categoria_id: categoria_id}, function(data){
-			parent.frames.browser.location.reload()
                         $('#saving_label').hide()
+                        if(data == "repeat_name"){
+                            var categoria_nombre = $('#categoria_id').text()
+                            alert("Ya existe el reporte '" + nombre + "' en la categoria")
+                            return
+                        }
+			parent.frames.browser.location.reload()
+
                         $('#nombre').val('')
                         $('#categoria_id').val('')
                         $('#save').slideUp();
-                        alert("El informe se guardo correctamente")
+                        alert("El reporte se guardo correctamente")
 		})
 
 		
