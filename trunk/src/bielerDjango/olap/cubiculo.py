@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#-*- coding: utf-8 -*-
 #############################################################################
 #
 #    Sistema de soporte de decisiones para Ricardo Bieler S.A.
@@ -18,7 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
-#-*- coding: utf-8 -*-
+
 
 from pprint import pprint
 
