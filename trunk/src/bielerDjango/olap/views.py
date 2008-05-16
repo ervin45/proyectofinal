@@ -489,9 +489,11 @@ def save_report(request):
 
     categoria = models.Categoria.objects.get(id=categoria_id)
 
+    if models.Reporte.objects.filter(nombre=nombre).extra(where=['categoria_id=%s' % categoria_id]):
+        return HttpResponse("repeat_name")
+    
     reporte  = models.Reporte(nombre=nombre, dwp=dwp, categoria=categoria, user_id=request.user.id)
     reporte.save()
-
     return HttpResponse("")
 
 @login_required(redirect_field_name='/login/')
