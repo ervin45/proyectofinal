@@ -88,6 +88,9 @@
 		jQuery.post("/save_report/" , {dwp: dwp, nombre: nombre, categoria_id: categoria_id}, function(data){
 			parent.frames.browser.location.reload()
                         $('#saving_label').hide()
+                        $('#nombre').val('')
+                        $('#categoria_id').val('')
+                        $('#save').slideUp();
                         alert("El informe se guardo correctamente")
 		})
 
