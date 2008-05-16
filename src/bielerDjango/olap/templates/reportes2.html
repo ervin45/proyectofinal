@@ -86,7 +86,7 @@
                         alert(msg)
                         return
                 }
-
+alert(nombre)
 		jQuery.post("/save_report/" , {dwp: dwp, nombre: nombre, categoria_id: categoria_id}, function(data){
 			parent.frames.browser.location.reload()
                         alert("El informe se guardo correctamente")
