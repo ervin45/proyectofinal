@@ -124,13 +124,19 @@ class graph:
         self.num_decimals = int( val )
 
     def set_is_fixed_num_decimals_forced( self, val ):
-        self.is_fixed_num_decimals_forced = "true" if (val) else "false"
+        self.is_fixed_num_decimals_forced = "true" 
+        if not val:
+            self.is_fixed_num_decimals_forced = "false" 
 
     def set_is_decimal_separator_comma( self, val ):
-        self.is_decimal_separator_comma = "true" if (val) else "false"
+        self.is_decimal_separator_comma = "true" 
+        if not val:
+            self.is_decimal_separator_comma = "false" 
 
     def set_is_thousand_separator_disabled( self, val ):
-        self.is_thousand_separator_disabled = "true" if (val) else "false"
+        self.is_thousand_separator_disabled = "true" 
+        if not val:
+            self.is_thousand_separator_disabled = "false"
 
 
 
