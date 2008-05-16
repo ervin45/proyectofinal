@@ -60,14 +60,10 @@
 
 
 	$('#save_aceptar').click(function(){
-                alert("guardar")
                 var error = false
                 var msg = ""
-		var href = window.location
-		var str = new String(href)
-		var str_arre = str.split("8000")
 
-		var dwp = str_arre[1]
+		var dwp = window.location.pathname
 		var nombre = $('#nombre').val()
 
 		if(nombre == ""){
@@ -86,7 +82,7 @@
                         alert(msg)
                         return
                 }
-alert(nombre)
+
 		jQuery.post("/save_report/" , {dwp: dwp, nombre: nombre, categoria_id: categoria_id}, function(data){
 			parent.frames.browser.location.reload()
                         alert("El informe se guardo correctamente")
