@@ -2,8 +2,12 @@ from django.db import models
 
 class Categoria(models.Model):
     nombre = models.CharField(maxlength=70)
+    user_id = models.IntegerField()
     class Meta:
         db_table = 'categorias'
+
+    class Admin:
+        pass
 
 class Reporte(models.Model):
     nombre = models.CharField(maxlength=60)
@@ -12,6 +16,9 @@ class Reporte(models.Model):
     categoria = models.ForeignKey(Categoria)
     class Meta:
         db_table = 'reportes'
+
+    class Admin:
+        pass
 
 def _test():
     import doctest

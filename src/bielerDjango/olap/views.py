@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
 
 import models
 import cubiculo
@@ -109,6 +110,8 @@ def restriction_human_redeable(h):
 def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     report = reports.Report1(ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params)
 
+    logged_user_name = User.objects.get(id=request.user.id).username
+
     try:
         cube = report.build_cube()
     except reports.CubeTooBig:
@@ -159,7 +162,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         ofc_params = graph_data(header, body, body_order, x, xl)
         mostrar_grafico = True
 
-    categorias = models.Categoria.objects.all()
+    categorias = models.Categoria.objects.filter(user_id=request.user.id)
 
     exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures]
     ##FIXME: " y " deberia ser reemplzado por la operacion entre measures
@@ -174,6 +177,8 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params):
     report2 = reports.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params)
+
+    logged_user_name = User.objects.get(id=request.user.id).username
 
     try:
         cube = report2.build_cube()
@@ -234,7 +239,7 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
         ofc_params = graph_data(header, body, body_order, x1, xl1)
         mostrar_grafico = True
 
-    categorias = models.Categoria.objects.all()
+    categorias = models.Categoria.objects.filter(user_id=request.user.id)
 
     tmp = []
     tmp.extend(measures)
@@ -414,24 +419,25 @@ def graph_data(header, body, body_order, x_label_dim, x_label_level):
 
     return graph.render_js()
 
-
-
-
 def formulario(request):
     return render_to_response('formulario.html',locals())
 
 def formulario2(request):
     return render_to_response('formulario2.html',locals())
 
-
-
 def navigation_tree(request):
-    categorias = models.Categoria.objects.all()
+    categorias_admin   = models.Categoria.objects.filter(user_id=1)
+
+    admin = True
+    if str(request.user.id) != "1":
+        admin = False
+        categorias_usuario = models.Categoria.objects.filter(user_id=request.user.id)
+
     logged_user_id = request.user.id
     return render_to_response('navigation_tree.html',locals())
 
 def adm_categoria(request):
-    categorias = models.Categoria.objects.all()
+    categorias = models.Categoria.objects.filter(user_id=request.user.id)
     return render_to_response('adm_categoria.html',locals())
 
 def create_report(request):
@@ -491,7 +497,7 @@ def save_report(request):
 
     if models.Reporte.objects.filter(nombre=nombre).extra(where=['categoria_id=%s' % categoria_id]):
         return HttpResponse("repeat_name")
-    
+
     reporte  = models.Reporte(nombre=nombre, dwp=dwp, categoria=categoria, user_id=request.user.id)
     reporte.save()
     return HttpResponse("")
@@ -505,10 +511,11 @@ def delete_report(request):
 
 @login_required(redirect_field_name='/login/')
 def save_categoria(request):
-
     nombre         = request.POST.get('nombre', False)
+    if models.Categoria.objects.filter(user_id=request.user.id).filter(nombre=nombre):
+        return HttpResponse("repeat_name")
 
-    categoria  = models.Categoria(nombre=nombre)
+    categoria  = models.Categoria(nombre=nombre, user_id=request.user.id)
     categoria.save()
 
     return HttpResponse('')

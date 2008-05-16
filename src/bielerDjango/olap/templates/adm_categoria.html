@@ -10,7 +10,7 @@
 	jQuery(document).ready(function($){
 
 		$('.categoria_delete').click(function(){
-			if (confirm("Esta seguro que desea borrar la categoria?")) { 
+			if (confirm("Esta seguro que desea borrar la categoria?\nTambién se borrarán los reportes asociados a ésta")) { 
 				var id = $(this).attr("categoria_id")
 				jQuery.post("/delete_categoria/" , {id: id}, function(data){
 					parent.frames.browser.location.reload()
@@ -20,11 +20,36 @@
 		})
 
 		$('#categoria_aceptar').click(function(){
+                        error = false
+                        msg = ""
+
 			var nombre = $('#categoria_nombre').val()
 	
+                        if(nombre == ""){
+                                msg += "Debe introducir un Nombre para guardar la Categoria\n"
+                                error = true
+                        }
+
+                        if(error == true){
+                                alert(msg)
+                                return
+                        }
+
+                        $('#saving_label').show()
+
 			jQuery.post("/save_categoria/" , {nombre: nombre}, function(data){
+                                $('#saving_label').hide()
+                                if(data == "repeat_name"){
+                                    var categoria_nombre = $('#categoria_id').text()
+                                    alert("Ya existe la categoria '" + nombre + "'")
+                                    return
+                                }
+
 				parent.frames.browser.location.reload()
 				window.location.reload()
+
+                                $('#categoria_nombre').val('')
+                                alert("La categoria se guardo correctamente")
 			})	
 		})
 	
@@ -70,6 +95,7 @@
 		</tbody>
 	</table>
 	<br>
+        <div id="saving_label" style="display:none;">Guardando...<img src="/media/img/lightbox-ico-loading.gif" width="20px" /></div>
 	<input type="button" value="Aceptar" id="categoria_aceptar"/>
 	</fieldset>
 </div>
