@@ -10,13 +10,17 @@ function agregar(){
 	_agregar('')
 }
 
+//Devuelve el string con parentesis
+function _p(a){
+    return "(" + a + ")";
+}
 
 function ajax_or_cache(url, params){
     url_id = url.split("/").join("")
 
     if(!jQuery('#' + url_id).html()){
         jQuery.get(url, params, function(data){
-                var div = "<div id='"+ url_id +"'>" + data + "</div>"
+                var div = '<div style="display:none" id="'+ url_id +'">' + data + "</div>"
                 jQuery('body').append(div)
         })
     }

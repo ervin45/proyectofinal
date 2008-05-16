@@ -20,14 +20,7 @@
 	$('.form_loader').click(function(e){
 		var href = $(this).attr('ref')
 
-		if($(this).val() == "1"){
-			var height = "8500";
-		}else{
-			var height = "1400";
-		}
-
 		$('#formulario_iframe').attr('src', href)
-		$('#formulario_iframe').attr('height', height)
 		$('#formulario_iframe').css('display', 'block')
 
 		$('#iframe_loading').show()
@@ -66,7 +59,7 @@
 
 	
 	<center><img id="iframe_loading" src="/media/img/loadingAnimation.gif" width="200" /></center>
-	<iframe style="margin: -7px" src="/report/formulario/" id="formulario_iframe" width=100% height=700 style="display:none"></iframe>
+	<iframe style="margin: -7px" src="/report/formulario/" id="formulario_iframe" width="100%" height="1550" style="display:none"></iframe>
 </div>
 
 
