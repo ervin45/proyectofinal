@@ -10,6 +10,7 @@ $(document).ready(function(){
 	// second example
 	$("#browser").treeview({
 		animated: "fast",
+                collapsed: true,
 		toggle: function() {
 			window.console && console.log("%o was toggled", this);
 		}

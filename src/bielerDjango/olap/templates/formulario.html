@@ -37,6 +37,9 @@
 
 		$('#y').change(change_y)
 
+                $('#xl').change(labels_preview)
+                $('#yl').change(labels_preview)
+
 		$('#dimension').change(change_dimension)
 
 		$('#level').change(change_level)
@@ -73,12 +76,16 @@
 
 			data = ajax_or_cache("/report/get_levels/" + dimension, {})
 				_add_options("xl", data)
+
+                        labels_preview()
 		}
 
 		function change_y(){
 			var dimension = $('#y').val()
 			data = ajax_or_cache("/report/get_levels/" + dimension, {})
 				_add_options("yl", data)
+
+                        labels_preview()
 		}
 		
 		function change_dimension(){
@@ -184,12 +191,107 @@
 			parent.location.href = url
 		}
 
+                function labels_preview(){
+                    $('#prev_x').html($('#x').val())
+                    $('#prev_y').html($('#y').val())
+
+                    $('#prev_xl').html(_p($('#xl').val()))
+                    $('#prev_yl').html(_p($('#yl').val()))
+                    $('#prev_ft1').html($('#ft').val())
+                }
+
 		change_ft()
                 set_cf()
+                labels_preview()
 
 	 });
 
     </script>
+
+
+<style>
+
+#prev_yl, #prev_yl2, #prev_ft1, #prev_y, #prev_ft2,  #prev_y2{
+    width: 120px;
+    text-align: right;
+}
+
+#prev_xl, #prev_x2, #prev_xl2,, #prev_x{
+    width: 120px;
+    text-align: left;
+}
+
+#prev_ft1, #prev_x, #prev_y, #prev_ft2, #prev_x2, #prev_y2{
+    font-weight:bold;
+    font-size: 14px;
+}
+
+#prev_xl, #prev_yl, #prev_xl2, #prev_yl2{
+    font-size: 10px;
+}
+
+#prev_ft1 {
+    position:absolute;
+    top:160px;
+    left:80px;
+}
+
+#prev_x {
+    position:absolute;
+    top:95px;
+    left:135px;
+}
+
+#prev_xl {
+    position:absolute;
+    top:110px;
+    left:135px;
+}
+
+#prev_y {
+    position:absolute;
+    top:95px;
+    left:-50px;
+    font-weight:bold;
+}
+
+#prev_yl {
+    position:absolute;
+    top:110px;
+    left:-50px;
+}
+
+#prev_ft2 {
+    position:absolute;
+    top:95px;
+    left:220px;
+}
+
+#prev_x2 {
+    position:absolute;
+    top:30px;
+    left:245px;
+}
+
+#prev_xl2 {
+    position:absolute;
+    top:45px;
+    left:245px;
+}
+
+#prev_y2 {
+    position:absolute;
+    top:35px;
+    left:80px;
+}
+
+#prev_yl2 {
+    position:absolute;
+    top:50px;
+    left:80px;
+}
+
+</style>
 
   </head>
   <body>
@@ -245,6 +347,16 @@
                         </tbody>
                         </table>
                 </fieldset>
+
+<div style="position: relative;">
+    <span id="prev_x"></span>
+    <span id="prev_y"></span>
+    <span id="prev_xl"></span>
+    <span id="prev_yl"></span>
+    <span id="prev_ft1"></span>
+
+    <img src="/media/img/previsualizacion.png"></img>
+</div>
 
 		<select id="measures" style="display:none"></select>
 		<select id="aggregations" style="display:none">
