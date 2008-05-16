@@ -83,8 +83,11 @@
                         return
                 }
 
+                $('#saving_label').show()
+
 		jQuery.post("/save_report/" , {dwp: dwp, nombre: nombre, categoria_id: categoria_id}, function(data){
 			parent.frames.browser.location.reload()
+                        $('#saving_label').hide()
                         alert("El informe se guardo correctamente")
 		})
 
@@ -122,7 +125,7 @@
 		</tr>
 		</tbody>
 	</table>
-	
+	<div id="saving_label" style="display:none;">Guardando...<img src="/media/img/lightbox-ico-loading.gif" width="20px" /></div>
 	<input type="button" value="Guardar" id="save_aceptar"/>
 </div>
 <div id="more_details" style="display:none">
