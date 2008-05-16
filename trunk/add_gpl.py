@@ -54,7 +54,7 @@ gpl = '''#######################################################################
 gpl = [x+"\n" for x in gpl.splitlines()]
 
 filename  = sys.argv[1]
-filename2 = filename+".bak"
+filename2 = filename
 
 input=file(filename,"r")
 
