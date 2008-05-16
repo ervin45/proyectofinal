@@ -44,20 +44,33 @@
 	
 	<div id="main">
 
-            <center><u><b>Reportes</b></u></center>
-    
+            <center><u><b>Reportes Globales</b></u></center>
+
             <ul id="browser" class="filetree">
-    
-                {% for cat in categorias %}
+                {% for cat in categorias_admin %}
                     <li><span class="folder">{{cat.nombre}}</span>
                             <ul>
                                 {% for reporte in cat.reporte_set.all %}
-                                    {% ifequal reporte.user_id logged_user_id %}
                                     <li>
-                                            
+                                        <a target="detail" href="{{reporte.dwp}}" >{{reporte.nombre}}</a> 
+                                        {% if admin %}
+                                            <a class="delete" report_id="{{reporte.id}}"><img src="/media/img/del.png" width="13" /></a>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                    </li>
+                {% endfor %}
+
+<center><u><b>Reportes de usuario</b></u></center>
+
+                {% for cat in categorias_usuario %}
+                    <li><span class="folder">{{cat.nombre}}</span>
+                            <ul>
+                                {% for reporte in cat.reporte_set.all %}
+                                    <li>
                                             <a target="detail" href="{{reporte.dwp}}" >{{reporte.nombre}}</a> <a class="delete" report_id="{{reporte.id}}"><img src="/media/img/del.png" width="13" /></a>
                                     </li>
-                                    {% endifequal %}
                                 {% endfor %}
                             </ul>
                     </li>
@@ -74,7 +87,7 @@
       <td><a target="detail" href="/create_report/"><img src="/media/img/nuevo-reporte.png" border="0"> Nuevo reporte</a></td>
     </tr>
     <tr>
-      <td><a target="detail" href="/adm_categoria/"><img src="/media/img/adm-categorias.png" border="0"> Administrar categorias</a></td>
+      <td><a target="detail" href="/adm_categoria/"><img src="/media/img/adm-categorias.png" border="0"> Categor&iacute;as</a></td>
     </tr>
     <tr>
       <td><a target="_parent" href="/logout/"><img src="/media/img/exit.png" border="0"> Salir</a></td>

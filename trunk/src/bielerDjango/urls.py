@@ -46,7 +46,6 @@ urlpatterns = patterns('',
     (r'^report/get_measures/(.*)/$',olap.get_measures),
     (r'^report/get_cf/$',olap.get_cf),
 
-
     (r'^admin/', include('django.contrib.admin.urls')),
 
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': media_dir}),
