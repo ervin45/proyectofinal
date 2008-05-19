@@ -708,8 +708,15 @@ class Report1:
         for row in incomplete_table:
             dict_row = dict(row)
             #cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row)
-            r = str(dict_row.pop('rows').encode('utf-8'))
-            c = str(dict_row.pop('columns').encode('utf-8'))
+            try:
+                r = str(dict_row.pop('rows').encode('utf-8'))
+            except:
+                r = str(dict_row.pop('rows'))
+
+            try:
+                c = str(dict_row.pop('columns').encode('utf-8'))
+            except:
+                c = str(dict_row.pop('columns'))
             cube.add(r,c,dict_row)
 
 
@@ -726,10 +733,16 @@ class Report1:
             raise CubeTooBig(cells, 0)
 
         for x in x_axis:
-            cube.add_x_value(str(x))
+            try:
+                cube.add_x_value(str(x.encode('utf-8')))
+            except:
+                cube.add_x_value(str(x))
 
         for y in y_axis:
-            cube.add_y_value(str(y))
+            try:
+                cube.add_y_value(str(y.encode('utf-8')))
+            except:
+                cube.add_y_value(str(y))
 
     def _member_function_params(self, x1, y1, cube):
         params = []
