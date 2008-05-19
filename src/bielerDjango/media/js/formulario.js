@@ -15,6 +15,7 @@ function _p(a){
     return "(" + a + ")";
 }
 
+//Obtiene la respuesta del cache o sino la solicita via ajax (dejando luego un cache)
 function ajax_or_cache(url, params){
     url_id = url.split("/").join("")
 
@@ -220,6 +221,7 @@ window.console && console.log("%s", current_value);
 }
 
 
+//Busca la informacion para crear los select box para cargar los parametros de la funcion de cubo
 function change_cf(){
 	var cf_name = jQuery('#cf option:selected').attr('id')
 	cf_params = jQuery('#params_' + cf_name).html()
@@ -228,6 +230,7 @@ function change_cf(){
 	
 }
 
+//crea un widget html segun el tipo de parametro que se indica en param
 function _add_param_type(param){
 	if(param['type'] == "text"){
 
@@ -247,6 +250,7 @@ function _add_param_type(param){
 	}	
 }
 
+//setea la informacion de las funciones de cubo y sus parametros para ser luego utilizadas
 function set_cf(){
 	jQuery.getJSON("/report/get_cf/", function(json){
 		jQuery.each(json, function(k, v){
@@ -323,11 +327,13 @@ function _get_cf_params(){
 	return temp	
 }
 
+//borra una restriccion de la lista
 function borrar(){
 	jQuery(this).parent().parent().remove()
 	alternate_colors()
 }
 
+//la tabla de restricciones posee 2 colores alternados
 function alternate_colors(ft_prefix){
 	jQuery('table.' + ft_prefix + 'restriction_table tr:even td').removeClass().addClass('even');
 	jQuery('table.' + ft_prefix + 'restriction_table tr:odd td').each(function(i){

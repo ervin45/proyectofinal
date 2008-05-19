@@ -35,7 +35,7 @@ def human_agg(valor):
         return ""
     if valor == 'avg':
         return " (promedio)"
-    
+
     return " " + valor
 
 @register.filter
@@ -55,8 +55,13 @@ def human_measures(l):
 @register.filter
 def human_ore(s):
     ''' input example : [['pieza', 'pieza', {'grupo_constructivo': ['92'], 'modelo': ['376'], 'modificacion': ['73']}]] '''
+    print "HUMAN_ORE", s
 
-    l = eval(s)
+    try:
+        l = eval(s)
+    except:
+        l = s
+
     rtn = []
     for restr in l:
         tabla = human_restriction(restr[2])
