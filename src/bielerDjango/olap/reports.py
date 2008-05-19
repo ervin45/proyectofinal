@@ -708,8 +708,8 @@ class Report1:
         for row in incomplete_table:
             dict_row = dict(row)
             #cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row)
-            r = str(dict_row.pop('rows'))
-            c = str(dict_row.pop('columns'))
+            r = str(dict_row.pop('rows').encode('utf-8'))
+            c = str(dict_row.pop('columns').encode('utf-8'))
             cube.add(r,c,dict_row)
 
 
