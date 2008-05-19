@@ -1112,6 +1112,30 @@ maximice la adaptabilidad del equipo de desarrollo.
 
 XP representó la mejor oferta dentro de las metodologías conocidas.
 
+
+-----------------------------------------------------------------------
+Testing como actitud de avance
+-----------------------------------------------------------------------
+
+Una de las mayores adaptaciones que experimentó el equipo de
+desarrollo durante el proyecto fue la incorporación de pruebas
+(testing) al desarrollo.
+
+Siguiendo la metodología, para cada funcionalidad a desarrollar es
+necesario comenzar con las pruebas (de unidad o funcionales) que
+determinarán el conjunto válido de entradas y salidas del sistema a
+implementar.
+
+En las primeras etapas del proyecto fue duro el proceso de adaptación,
+ya que el equipo debió forzarse a la creación paciente de cada una de
+las pruebas. Ni bien comenzaron las etapas posteriores a los primeros
+prototipos, los test de unidad eran parte de la rutina de
+implementación y se valoró el esfuerzo realizado. Muchos de los
+arreglos en el núcleo se realizaron la ver las pruebas de unidad
+fallar, sin tener que interacctuar con la aplicación web.
+
+El resultado final de esta actividad son 862 tests de unidad.
+
 -----------------------------------------------------------------------
 Integración con Subversion (SVN)
 -----------------------------------------------------------------------
@@ -1685,6 +1709,8 @@ Diagrama de clases
 ------------------------------------------------------------------------
 
 .. image:: diag_de_clases.eps
+
+.. image:: diag_de_clases_cubiculo.eps
 
 ------------------------------------------------------------------------
 Tests
