@@ -709,14 +709,16 @@ class Report1:
             dict_row = dict(row)
             #cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row)
             try:
-                r = str(dict_row.pop('rows').encode('utf-8'))
+                last_pop = dict_row.pop('rows')
+                r = str(last_pop.encode('utf-8'))
             except:
-                r = str(dict_row.pop('rows'))
+                r = str(last_pop)
 
             try:
-                c = str(dict_row.pop('columns').encode('utf-8'))
+                last_pop = dict_row.pop('columns')
+                c = str(last_pop.encode('utf-8'))
             except:
-                c = str(dict_row.pop('columns'))
+                c = str(last_pop)
             cube.add(r,c,dict_row)
 
 
