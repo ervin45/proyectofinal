@@ -127,8 +127,6 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     header     = cube.dim_y
     header_top, header_top_size = header_list_top(cube.dim_y)
 
-    #pprint(cube.dim_y)
-
     header_left, header_left_size = header_list_left(cube.dim_x)
 
     body       = get_body(cube)
@@ -147,8 +145,6 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
     dim_x = x
     dim_y = y
-
-    #pprint(body)
 
     main_axis = report.get_main_axis_list()
 

@@ -29,4 +29,4 @@ def sumar(a,b):
     if b == None:
         b = 0
 
-    return a + b 
+    return float(a) + float(b) 
