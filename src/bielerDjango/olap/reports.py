@@ -1002,10 +1002,16 @@ class Report2:
             raise CubeTooBig(cells, 0)
 
         for x in x_axis:
-            cube.add_x_value(str(x))
+            try:
+                cube.add_x_value(str(x.encode('utf-8')))
+            except:
+                cube.add_x_value(str(x))
 
         for y in y_axis:
-            cube.add_y_value(str(y))
+            try:
+                cube.add_y_value(str(y.encode('utf-8')))
+            except:
+                cube.add_y_value(str(y))
 
     def get_max_dimensions_cube_number(self, complete_cubes):
         '''
