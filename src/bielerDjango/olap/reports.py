@@ -793,6 +793,9 @@ class Report1:
         ft = self.cubiculo.ft
         dimensions = self.cubiculo.dimensions
         measures   = self.cubiculo.measures
+        from pprint import pprint
+        print "MEASURES"
+        pprint(measures)
         ore        = self.ore
         cube.add_info(ft=ft, dimensions=dimensions, measures=measures, ore=ore)
 
@@ -868,7 +871,7 @@ class Report2:
     def _split_measures(self, ft):
         '''
         Retorna las measures que pertenecen a un determinado fact table
-        
+
         >>> r = Report2("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "movimiento", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "sumar", '[["ft_movimientos", "stock", "avg"], ["ft_ventas", "cantidad", "sum"], ["ft_ventas", "margen_dolares", "sum"]]', 'order_and_slice_the_cube', '["3", "desc"]')
         >>> r._split_measures("movimientos")
         [['ft_movimientos', 'stock', 'avg']]
@@ -1096,11 +1099,9 @@ class Report2:
         for ft in self.fts:
             ft = self.cubiculos[ft].ft
             dimensions = self.cubiculos[ft].dimensions
-            measures   = self.cubiculos[ft].measures
+            measures   = self.measures
             ore        = self.cubiculos[ft].ore
             cube.add_info(ft=ft, dimensions=dimensions, measures=measures, ore=ore)
-
-
 
     def build_cube(self):
         '''

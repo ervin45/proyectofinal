@@ -48,6 +48,8 @@ class InvalidMeasure:
 
 
 class Meta:
+    hum_mf = {'dividir': ' dividido ', 'multiplicar': ' multiplicado ', 'sumar': ' sumado con ', 'restar': ' restado con ', 'mismo_valor': ' '}
+
     dimension_meta = {'pieza':[     'descripcion',
                                     'codigo',
                                     'pieza',
@@ -122,13 +124,13 @@ class Meta:
         >>> Meta.measure_as_string(['ft_compras', 'costo_pesos', 'avg'])
         'el costo promedio de compras expresado en pesos'
         >>> Meta.measure_as_string(['ft_compras', 'cantidad', 'sum'])
-        'la cantidad de compras expresada en unidades'
+        'la cantidad de compras expresada en piezas'
         >>> Meta.measure_as_string(['ft_compras', 'cantidad', 'avg'])
-        'la cantidad promedio de compras expresada en unidades'
+        'la cantidad promedio de compras expresada en piezas'
         >>> Meta.measure_as_string(['ft_ventas', 'cantidad', 'sum'])
-        'la cantidad de ventas expresada en unidades'
+        'la cantidad de ventas expresada en piezas'
         >>> Meta.measure_as_string(['ft_ventas', 'cantidad', 'avg'])
-        'la cantidad promedio de ventas expresada en unidades'
+        'la cantidad promedio de ventas expresada en piezas'
         >>> Meta.measure_as_string(['ft_ventas', 'margen_pesos', 'sum'])
         'el margen de ventas expresado en pesos'
         >>> Meta.measure_as_string(['ft_ventas', 'margen_pesos', 'avg'])
@@ -202,7 +204,7 @@ class Meta:
             elif que == 'entrada_de_rafaela':
                 que = 'las entradas desde Rafaela'
                 expresa = 'expresadas'
-            elif que == 'entrada_de_reconquista':
+            elif que == 'entradas_de_reconquista':
                 que = 'las entradas desde Reconquista'
                 expresa = 'expresadas'
             else:
@@ -213,7 +215,7 @@ class Meta:
 
             if len(elem) == 1:
                 ## ejemplo: cantidad
-                que, unidades = elem[0], 'unidades'
+                que, unidades = elem[0], 'piezas'
             elif len(elem) == 2:
                 ## ejemplo: margen_dolares
                 que, unidades = elem[0], elem[1]
