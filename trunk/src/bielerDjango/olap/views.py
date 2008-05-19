@@ -161,9 +161,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
     categorias = models.Categoria.objects.filter(user_id=request.user.id)
 
     exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures]
-    ##FIXME: " y " deberia ser reemplzado por la operacion entre measures
-    join_exp_t = " y ".join(exp_t)
-    
+    join_exp_t = cubiculo.Meta.hum_mf[mf].join(exp_t)
     explanation = "Ud. esta viendo " + join_exp_t
 
     return render_to_response('reportes2.html',locals())
@@ -241,13 +239,17 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     tmp = []
     tmp.extend(measures)
     tmp.extend(measures2)
-    exp_t = [cubiculo.Meta.measure_as_string(x) for x in tmp]
-    ##FIXME: llevar esto al META para que no pase lo siguiente:
-    ## '''Ud. esta viendo el margen de ventas expresado
-    ## en pesos multiplicar el stock promedio expresado en piezas'''
+    #exp_t = [cubiculo.Meta.measure_as_string(x) for x in tmp]
+    ###FIXME: llevar esto al META para que no pase lo siguiente:
+    ### '''Ud. esta viendo el margen de ventas expresado
+    ### en pesos multiplicar el stock promedio expresado en piezas'''
     
-    join_exp_t = (" %s " % str(mf)).join(exp_t)
+    #join_exp_t = (" %s " % str(mf)).join(exp_t)
     
+    #explanation = "Ud. esta viendo " + join_exp_t
+    
+    exp_t = [cubiculo.Meta.measure_as_string(x) for x in measures]
+    join_exp_t = cubiculo.Meta.hum_mf[mf].join(exp_t)
     explanation = "Ud. esta viendo " + join_exp_t
 
     two_cubes = True
