@@ -655,6 +655,8 @@ class graph:
             attr = self.sanitize(getattr(self, ov))
             if( attr != "" and attr != 0):
                 val, lis = l.split("=")
+                val = val.encode('utf-8')
+                lis = lis.encode('utf-8')
                 tmp += 'so.addVariable("%s", "%s");' % (val.replace("&", ""), lis.replace("&\r\n", ""))
                 tmp += "\n"
 
