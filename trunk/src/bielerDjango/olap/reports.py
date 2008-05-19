@@ -28,7 +28,7 @@ from pprint import pprint
 
 import cubiculo
 from odict import odict
-from utils import *
+import utils
 from member_functions import *
 from cube_functions import *
 
@@ -97,13 +97,13 @@ class Cube:
 
         """
         self.dim_x = list(set([i[0] for i in self.data.keys()]))
-        self.dim_x.sort(compare)
+        self.dim_x.sort(utils.compare)
 
         self.dim_y = list(set([i[1] for i in self.data.keys()]))
-        self.dim_y.sort(compare)
+        self.dim_y.sort(utils.compare)
 
         self.measures = list(set([i[2] for i in self.data.keys()]))
-        self.measures.sort(compare)
+        self.measures.sort(utils.compare)
 
     def set_default(self, value):
         '''
@@ -283,7 +283,7 @@ class Cube:
         '''
         if x not in self.dim_x:
             self.dim_x.append(x)
-            self.dim_x.sort(compare)
+            self.dim_x.sort(utils.compare)
 
     def add_y_value(self, y):
         '''
@@ -301,7 +301,7 @@ class Cube:
         '''
         if y not in self.dim_y:
             self.dim_y.append(y)
-            self.dim_y.sort(compare)
+            self.dim_y.sort(utils.compare)
 
     def add_measure_value(self, measure):
         '''
@@ -315,7 +315,7 @@ class Cube:
         '''
         if measure not in self.measures:
             self.measures.append(measure)
-            self.measures.sort(compare)
+            self.measures.sort(utils.compare)
 
     def dimensions(self):
         '''
@@ -435,7 +435,7 @@ class Cube:
         >>>
         """
 
-        return self.reduce_x(sumar, measure)
+        return self.reduce_x(utils.sumar, measure)
 
     def reduce_y(self, func, measure):
         """
@@ -467,7 +467,7 @@ class Cube:
         >>>
         """
 
-        return self.reduce_y(sumar, measure)
+        return self.reduce_y(utils.sumar, measure)
 
     def forecast_x_dummy(self,measure):
         """
@@ -533,7 +533,7 @@ class FakedRequest:
 class Report1:
     def __init__(self,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
         '''
-        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "same", "[]", "same_cube", "[]")
+        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "mismo_valor", "[]", "same_cube", "[]")
         >>> str(r.cubiculo.__class__).split('.')[-1]
         'Cubiculo'
         >>>
@@ -556,9 +556,9 @@ class Report1:
 
     def pivot(self, request):
         '''
-        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "mismo_valor", "[]", "same_cube", "[]")
         >>> r.pivot(FakedRequest())
-        '/report/ventas/pieza/tiempo/pieza/anio/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
+        '/report/ventas/pieza/tiempo/pieza/anio/xr={}/yr={}/ore=[]/mismo_valor/params=[]/same_cube/params=[]'
         >>>
         '''
         self.cubiculo.pivot()
@@ -568,9 +568,9 @@ class Report1:
 
     def drill(self,request, axis):
         '''
-        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "[]", "mismo_valor", "[]", "same_cube", "[]")
         >>> r.drill(FakedRequest(), 0)
-        '/report/ventas/tiempo/pieza/mes/pieza/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
+        '/report/ventas/tiempo/pieza/mes/pieza/xr={}/yr={}/ore=[]/mismo_valor/params=[]/same_cube/params=[]'
         >>>
         '''
         self.cubiculo.drill(axis)
@@ -580,9 +580,10 @@ class Report1:
 
     def roll(self, request, axis):
         '''
-        >>> r = Report1("ventas", "tiempo", "pieza", "mes", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
+        
+        >>> r = Report1("ventas", "tiempo", "pieza", "mes", "pieza", "{}", "{}", "[]", "mismo_valor", "[]", "same_cube", "[]")
         >>> r.roll(FakedRequest(), 0)
-        '/report/ventas/tiempo/pieza/anio/pieza/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
+        '/report/ventas/tiempo/pieza/anio/pieza/xr={}/yr={}/ore=[]/mismo_valor/params=[]/same_cube/params=[]'
         >>>
         '''
         self.cubiculo.roll(axis)
@@ -593,13 +594,13 @@ class Report1:
 
     def replace_to(self, request, axis, values):
         '''
-        >>> r = Report1("test", "tiempo", "pieza", "TODO", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r = Report1("test", "tiempo", "pieza", "TODO", "pieza", "{}", "{}", "[]", "mismo_valor", "[]", "same_cube", "[]")
         >>> r.replace_to(FakedRequest(), 0, 'TODO')
-        '/report/test/tiempo/pieza/anio/pieza/xr={}/yr={}/ore=[]/same/params=[]/same_cube/params=[]'
+        '/report/test/tiempo/pieza/anio/pieza/xr={}/yr={}/ore=[]/mismo_valor/params=[]/same_cube/params=[]'
         >>> r.replace_to(FakedRequest(), 0, '2006-12')
-        "/report/test/tiempo/pieza/mes/pieza/xr={'anio': ['2006'], 'mes': ['12']}/yr={}/ore=[]/same/params=[]/same_cube/params=[]"
+        "/report/test/tiempo/pieza/mes/pieza/xr={'anio': ['2006'], 'mes': ['12']}/yr={}/ore=[]/mismo_valor/params=[]/same_cube/params=[]"
         >>> r.replace_to(FakedRequest(), 0, '2006')
-        "/report/test/tiempo/pieza/mes/pieza/xr={'anio': ['2006']}/yr={}/ore=[]/same/params=[]/same_cube/params=[]"
+        "/report/test/tiempo/pieza/mes/pieza/xr={'anio': ['2006']}/yr={}/ore=[]/mismo_valor/params=[]/same_cube/params=[]"
         >>>
         '''
         self.cubiculo.replace_to(axis, values)
@@ -610,11 +611,11 @@ class Report1:
 
     def replace_to_both_axis(self, request, value0, value1):
         '''
-        >>> r = Report1("test", "tiempo", "pieza", "TODO", "pieza", "{}", "{}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r = Report1("test", "tiempo", "pieza", "TODO", "pieza", "{}", "{}", "[]", "mismo_valor", "[]", "same_cube", "[]")
         >>> r.replace_to_both_axis(FakedRequest(), 'TODO', '184')
-        "/report/test/tiempo/pieza/anio/modelo/xr={}/yr={'grupo_constructivo': ['184']}/ore=[]/same/params=[]/same_cube/params=[]"
+        "/report/test/tiempo/pieza/anio/modelo/xr={}/yr={'grupo_constructivo': ['184']}/ore=[]/mismo_valor/params=[]/same_cube/params=[]"
         >>> r.replace_to_both_axis(FakedRequest(), '2006', '184')
-        "/report/test/tiempo/pieza/mes/modelo/xr={'anio': ['2006']}/yr={'grupo_constructivo': ['184']}/ore=[]/same/params=[]/same_cube/params=[]"
+        "/report/test/tiempo/pieza/mes/modelo/xr={'anio': ['2006']}/yr={'grupo_constructivo': ['184']}/ore=[]/mismo_valor/params=[]/same_cube/params=[]"
         >>>
         '''
         self.cubiculo.replace_to_both_axis(value0, value1)
@@ -624,9 +625,9 @@ class Report1:
 
     def dice(self, request, main_axis, other_axis):
         '''
-        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r = Report1("ventas", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "mismo_valor", "[]", "same_cube", "[]")
         >>> r.dice(FakedRequest(), 'pieza', 'tipo_venta')
-        "/report/ventas/tiempo/tipo_venta/anio/TODO/xr={'anio': ['2006']}/yr={}/ore=[['pieza', 'pieza', {'grupo_constructivo': ['184']}]]/same/params=[]/same_cube/params=[]"
+        "/report/ventas/tiempo/tipo_venta/anio/TODO/xr={'anio': ['2006']}/yr={}/ore=[['pieza', 'pieza', {'grupo_constructivo': ['184']}]]/mismo_valor/params=[]/same_cube/params=[]"
         >>>
         '''
         self.cubiculo.dice(main_axis, other_axis)
@@ -637,9 +638,9 @@ class Report1:
     def dimension_values(self, axis):
         '''
         Devuelve los valores de un eje de un cubiculo
-        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "mismo_valor", "[]", "same_cube", "[]")
         >>> r.dimension_values(1)
-        ['184-0-14-71', ...,'184-616-16-80']
+        ['184-0-14-71', '184-0-63-80', '184-0-65-80', '184-0-67-25', '184-0-84-25', '184-0-93-80', '184-0-97-80', '184-1-35-25', '184-1-39-25', '184-1-58-25', '184-3-33-1', '184-102-1-1', '184-102-5-1', '184-112-0-61', '184-112-2-61', '184-112-2-80', '184-112-3-61', '184-166-2-80', '184-266-3-80', '184-312-10-79', '184-314-3-8', '184-314-3-79', '184-322-0-56', '184-327-2-80', '184-343-0-25', '184-343-72-25', '184-345-0-25', '184-352-1-71', '184-352-3-29', '184-352-9-8', '184-355-0-32', '184-355-4-80', '184-364-2-80', '184-364-3-80', '184-366-1-25', '184-366-2-25', '184-403-1-32', '184-457-0-8', '184-601-1-32', '184-601-5-80', '184-611-2-80', '184-616-12-80', '184-616-15-80', '184-616-16-80']
         >>> r.dimension_values(0)
         [2006]
         >>>
@@ -656,7 +657,7 @@ class Report1:
     def get_main_axis_list(self):
         '''
         Devuelve los ejes visibles
-        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "mismo_valor", "[]", "same_cube", "[]")
         >>> r.get_main_axis_list()
         ['tiempo', 'pieza']
         >>>
@@ -666,7 +667,7 @@ class Report1:
     def get_other_axis_list(self):
         '''
         Devuelve los ejes ocultos del primer cubiculo
-        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "mismo_valor", "[]", "same_cube", "[]")
         >>> r.get_other_axis_list()
         ['tipo_pieza']
         >>>
@@ -676,9 +677,9 @@ class Report1:
     def get_sql(self, ft):
         '''
         Retorna el sql que genera un cubiculo asociado a un fact table
-        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
+        >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "mismo_valor", "[]", "same_cube", "[]")
         >>> r.get_sql('test')
-        "SELECT td_tiempo.anio as columns,... td_pieza.pieza \\n"
+        "SELECT td_tiempo.anio as columns, td_pieza.grupo_constructivo|| '-' ||td_pieza.modelo|| '-' ||td_pieza.modificacion|| '-' ||td_pieza.pieza as rows, \\nFROM ft_test JOIN td_tiempo on (ft_test.fk_tiempo = td_tiempo.id) JOIN td_pieza on (ft_test.fk_pieza = td_pieza.id) \\nWHERE trim(td_tiempo.anio) in('2006') AND trim(td_pieza.grupo_constructivo) in('184') \\nGROUP BY td_tiempo.anio, td_pieza.grupo_constructivo, td_pieza.modelo, td_pieza.modificacion, td_pieza.pieza \\nORDER BY td_tiempo.anio, td_pieza.grupo_constructivo, td_pieza.modelo, td_pieza.modificacion, td_pieza.pieza \\n"
         >>>
         '''
         return self.cubiculo.sql()
