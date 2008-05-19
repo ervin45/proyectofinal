@@ -15,6 +15,15 @@ $(document).ready(function(){
 			window.console && console.log("%o was toggled", this);
 		}
 	});
+
+	$("#browser2").treeview({
+		animated: "fast",
+                collapsed: true,
+		toggle: function() {
+			window.console && console.log("%o was toggled", this);
+		}
+	});
+
 	$("#add").click(function() {
 		var branches = $("<li><span class='folder'>New Sublist</span><ul>" + 
 			"<li><span class='file'>Item1</span></li>" + 

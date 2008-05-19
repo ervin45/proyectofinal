@@ -13,7 +13,7 @@
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+##    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
@@ -921,10 +921,10 @@ class Cubiculo:
         ''
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._where()
-        "WHERE trim(td_tiempo.anio) in(trim('2005'), trim('1999')) "
+        "WHERE trim(td_tiempo.anio) in('2005', '1999') "
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[['proveedor', 'proveedor', {'proveedor': ['Mercedez Benz']}]])
         >>> c._where()
-        "WHERE trim(td_tiempo.anio) in(trim('2005'), trim('1999')) AND trim(td_proveedor.proveedor) in(trim('Mercedez Benz')) "
+        "WHERE trim(td_tiempo.anio) in('2005', '1999') AND trim(td_proveedor.proveedor) in('Mercedez Benz') "
         '''
 
         levels_with_parent = []
@@ -935,14 +935,14 @@ class Cubiculo:
             levels_with_parent.append(Meta.parent_list(name, level))
             if restriction:
                 for level, val in restriction.items():
-                    valores = ", ".join(["trim('%s')" % v for v in val])
+                    valores = ", ".join(["'%s'" % v.strip() for v in val])
                     where.append("trim(td_%s.%s) in(%s)" % ( name, level, valores))
 
         for other_dim in self.ore:
             (name, level, restriction) = other_dim
             if restriction:
                 for level, val in restriction.items():
-                    valores = ", ".join(["trim('%s')" % v for v in val])
+                    valores = ", ".join(["'%s'" % v.strip() for v in val])
                     where.append("trim(td_%s.%s) in(%s)" % ( name, level, valores))
 
         if where:

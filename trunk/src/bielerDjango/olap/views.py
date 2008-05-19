@@ -175,6 +175,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 @login_required(redirect_field_name='/login/')
 def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params):
+
     report2 = reports.Report2(ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     ,ft2, x2, y2, xl2, yl2, xr2, yr2, ore2, mf, params, cf, cf_params)
 
@@ -253,6 +254,7 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     
     explanation = "Ud. esta viendo " + join_exp_t
 
+    two_cubes = True
     return render_to_response('reportes2.html',locals())
 
 @login_required(redirect_field_name='/login/')

@@ -636,6 +636,7 @@ class Report1:
 
     def dimension_values(self, axis):
         '''
+        Devuelve los valores de un eje de un cubiculo
         >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.dimension_values(1)
         ['184-0-14-71', ...,'184-616-16-80']
@@ -654,6 +655,7 @@ class Report1:
 
     def get_main_axis_list(self):
         '''
+        Devuelve los ejes visibles
         >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.get_main_axis_list()
         ['tiempo', 'pieza']
@@ -663,6 +665,7 @@ class Report1:
 
     def get_other_axis_list(self):
         '''
+        Devuelve los ejes ocultos del primer cubiculo
         >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.get_other_axis_list()
         ['tipo_pieza']
@@ -672,6 +675,7 @@ class Report1:
 
     def get_sql(self, ft):
         '''
+        Retorna el sql que genera un cubiculo asociado a un fact table
         >>> r = Report1("test", "tiempo", "pieza", "anio", "pieza", "{'anio': ['2006']}", "{'grupo_constructivo': ['184']}", "[]", "same", "[]", "same_cube", "[]")
         >>> r.get_sql('test')
         "SELECT td_tiempo.anio as columns,... td_pieza.pieza \\n"
@@ -681,7 +685,7 @@ class Report1:
 
     def exec_sql(self, sql):
         '''
-        ---
+        Ejecuta el sql y devuelve el resultado
         '''
 
         cursor_dwh = dw_connect.cursor()
@@ -697,6 +701,9 @@ class Report1:
         return cursor_dwh.fetchall()
 
     def fill_cube(self, cube, incomplete_table):
+        '''
+        Inserta los datos de la tabla del sql a un objeto cube
+        '''
         for row in incomplete_table:
             dict_row = dict(row)
             #cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row)
@@ -706,6 +713,10 @@ class Report1:
 
 
     def complete_dimensions(self, cube, cubiculo):
+        '''
+        El objeto cube no tiene todos los valores de las 2 dimensiones (tiene blancos).
+        Esta metodo rellena esos valores
+        '''
         x_axis = self.dimension_values(1)
         y_axis = self.dimension_values(0)
 
@@ -751,12 +762,18 @@ class Report1:
         self.cube_function(*params)
 
     def set_can_flags(self, cube):
+        '''
+        Se agregan banderas que indican si es posible realizar drill down o roll up.
+        '''
         cube._can_roll_x = self.cubiculo.can_roll_x()
         cube._can_roll_y = self.cubiculo.can_roll_y()
         cube._can_drill_x = self.cubiculo.can_drill_x()
         cube._can_drill_y = self.cubiculo.can_drill_y()
 
     def set_meta_info(self, cube):
+        '''
+        Se agrega la informacion que describira al cubo
+        '''
         ft = self.cubiculo.ft
         dimensions = self.cubiculo.dimensions
         measures   = self.cubiculo.measures
@@ -764,6 +781,10 @@ class Report1:
         cube.add_info(ft=ft, dimensions=dimensions, measures=measures, ore=ore)
 
     def build_cube(self):
+        '''
+        A partir del cubiculo que almacena la instacia se crea un objeto cube para se visualizado en 
+        pantalla.
+        '''
         cube = Cube()
         cube.set_default(0)
 
@@ -784,6 +805,9 @@ class Report1:
         return final_cube
 
     def absolute_url(self, request, parcial_url):
+        '''
+        Retorna la url o dwp que representa al reporte
+        '''
         mf = self.member_function.__name__
         params = str(self.measures)
         cf = self.cube_function.__name__
@@ -801,6 +825,7 @@ class Report2:
         self.measures = eval(params)
         self.cube_function = globals()[cf]
         self.cube_function_params = eval(cf_params)
+
         exr1        = eval(xr1)
         d11         = [x1, xl1, exr1]
         eyr1        = eval(yr1)
@@ -816,6 +841,7 @@ class Report2:
         d22 = [y2, yl2, eyr2]
         dimensions2 = [d21, d22]
         eore2 = eval(ore2)
+
         cubiculo2   = cubiculo.Cubiculo(ft2, dimensions2, self._split_measures(ft2), eore2)
 
 
@@ -825,6 +851,8 @@ class Report2:
 
     def _split_measures(self, ft):
         '''
+        Retorna las measures que pertenecen a un determinado fact table
+        
         >>> r = Report2("ventas", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "movimiento", "tiempo", "pieza", "anio", "pieza", "{}", "{}", "{}", "sumar", '[["ft_movimientos", "stock", "avg"], ["ft_ventas", "cantidad", "sum"], ["ft_ventas", "margen_dolares", "sum"]]', 'order_and_slice_the_cube', '["3", "desc"]')
         >>> r._split_measures("movimientos")
         [['ft_movimientos', 'stock', 'avg']]
@@ -892,6 +920,9 @@ class Report2:
         return self.absolute_url(request, parcial_url)
 
     def dimension_values(self, axis, cubiculo):
+        '''
+        Devuelve los valores de un eje de un cubiculo
+        '''
         cursor_dwh = dw_connect.cursor()
 
         sql_dimension_values = cubiculo.dimension_values(int(axis))
@@ -902,18 +933,30 @@ class Report2:
         return axis_values
 
     def get_main_axis_list(self):
+        '''
+        Devuelve los ejes visibles del primer cubiculo (coinciden con los del segundo)
+        '''
         first_cubiculo = self.cubiculos[self.fts[0]]
         return first_cubiculo.get_main_axis_list()
 
     def get_other_axis_list(self):
+        '''
+        Devuelve los ejes ocultos del primer cubiculo
+        '''
         first_cubiculo = self.cubiculos[self.fts[0]]
         return first_cubiculo.get_other_axis_list()
 
     def get_sql(self, ft):
+        '''
+        Retorna el sql que genera un cubiculo asociado a un fact table
+        '''
         cubiculo = self.cubiculos[ft]
         return cubiculo.sql()
 
     def exec_sql(self, sql):
+        '''
+        Ejecuta el sql y devuelve el resultado
+        '''
         cursor_dwh = dw_connect.cursor()
         cursor_dwh.execute(sql)
 
@@ -924,12 +967,19 @@ class Report2:
         return cursor_dwh.fetchall()
 
     def fill_cube(self, cube, incomplete_table):
+        '''
+        Inserta los datos de la tabla del sql a un objeto cube
+        '''
         for row in incomplete_table:
             dict_row = dict(row)
             cube.add(str(dict_row.pop('rows')),str(dict_row.pop('columns')),dict_row)
 
 
     def complete_dimensions(self, cube, cubiculo):
+        '''
+        El objeto cube no tiene todos los valores de las 2 dimensiones (tiene blancos).
+        Esta metodo rellena esos valores
+        '''
         x_axis = self.dimension_values(1, cubiculo)
         y_axis = self.dimension_values(0, cubiculo)
 
@@ -943,11 +993,23 @@ class Report2:
         for y in y_axis:
             cube.add_y_value(str(y))
 
+    def get_max_dimensions_cube_number(self, complete_cubes):
+        '''
+        Resuelve cual de los dos cube tiene dimensiones mas grandes
+        '''
+        if complete_cubes[0].dimensions() > complete_cubes[1].dimensions():
+            return 0
+        return 1
+
     def fit(self, complete_cubes):
+        '''
+        Adapta el tamaño de los cube al maximos que haya entre los dos.
+        '''
         max_dimensions = (0, 0)
         for cube in complete_cubes:
             max_dimensions = max(max_dimensions, cube.dimensions())
 
+        print "max", max_dimensions 
         for cube in complete_cubes:
             cube.fit(max_dimensions[0], max_dimensions[1])
 
@@ -963,37 +1025,52 @@ class Report2:
 
         return params
 
-
     def merge(self, cubes):
+        '''
+        Fusiona los 2 cube aplicando la member_function. Devuelve un nuevo cube.
+        '''
         first  = cubes[0]
         second = cubes[1]
 
         temp_cube = Cube()
 
-        for x1, x2 in zip(first.dim_x, second.dim_x):
-            for y1, y2 in zip(first.dim_y, second.dim_y):
-
-                params = self._member_function_params(x1, y1, x2, y2, first, second)
-
-                temp = self.member_function(*params)
-
-                temp_cube.add(x1, y1, {'result': temp})
+        if self.get_max_dimensions_cube_number(cubes) == 0:
+            for x1, x2 in zip(first.dim_x, second.dim_x):
+                for y1, y2 in zip(first.dim_y, second.dim_y):
+                    params = self._member_function_params(x1, y1, x2, y2, first, second)
+                    temp = self.member_function(*params)
+                    temp_cube.add(x1, y1, {'result': temp})
+        else:
+            for x1, x2 in zip(first.dim_x, second.dim_x):
+                for y1, y2 in zip(first.dim_y, second.dim_y):
+                    params = self._member_function_params(x1, y1, x2, y2, first, second)
+                    temp = self.member_function(*params)
+                    temp_cube.add(x2, y2, {'result': temp})
 
         return temp_cube
 
     def apply_cube_function(self, cube):
+        '''
+        Se recibe el cubo fusionado y se le aplica la funcion de cubo
+        '''
         params = [cube]
         params.extend(self.cube_function_params)
 
         self.cube_function(*params)
 
     def set_can_flags(self, cube):
+        '''
+        Se agregan banderas que indican si es posible realizar drill down o roll up.
+        '''
         cube._can_roll_x  = any(x.can_roll_x()  for x in self.cubiculos.values())
         cube._can_roll_y  = any(x.can_roll_y()  for x in self.cubiculos.values())
         cube._can_drill_x = any(x.can_drill_x() for x in self.cubiculos.values())
         cube._can_drill_y = any(x.can_drill_y() for x in self.cubiculos.values())
 
     def set_meta_info(self, cube):
+        '''
+        Se agrega la informacion que describira al cubo
+        '''
         for ft in self.fts:
             ft = self.cubiculos[ft].ft
             dimensions = self.cubiculos[ft].dimensions
@@ -1004,6 +1081,10 @@ class Report2:
 
 
     def build_cube(self):
+        '''
+        A partir de los cubiculos que almacena la instacia se crea un objeto cube para se visualizado en 
+        pantalla.
+        '''
         complete_cubes = []
         for ft in self.fts:
             sql = self.get_sql(ft)
@@ -1024,6 +1105,9 @@ class Report2:
         return final_cube
 
     def absolute_url(self, request, parcial_url):
+        '''
+        Retorna la url o dwp que representa al reporte
+        '''
         mf = self.member_function.__name__
         params = str(self.measures)
         cf = self.cube_function.__name__

@@ -109,7 +109,7 @@ class graph:
         self.num_decimals = 0
         self.is_fixed_num_decimals_forced = ''
         self.is_decimal_separator_comma = ''
-        self.is_thousand_separator_disabled = ''
+        self.is_thousand_separator_disabled = 'true'
 
 
         # Tool tip:
@@ -624,8 +624,6 @@ class graph:
     def render_js(self):
         import inspect
 
-
-
         a = inspect.getmembers(self)
         output_variables = [x[0] for x in a if not inspect.ismethod(x[1])]
 
@@ -661,7 +659,3 @@ class graph:
                 tmp += "\n"
 
         return tmp
-
-
-
-
