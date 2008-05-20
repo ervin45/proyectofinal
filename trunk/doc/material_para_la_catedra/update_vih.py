@@ -23,7 +23,7 @@
 import MySQLdb
 
 # Create a connection object and create a cursor
-con = MySQLdb.Connect(host="192.168.61.102", port=3306, user="proyecto", passwd="123456", db="xpweb")
+con = MySQLdb.Connect(host="192.168.61.101", port=3306, user="proyecto", passwd="123456", db="xpweb")
 cursor = con.cursor()
 cursor2 = con.cursor()
 
