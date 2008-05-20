@@ -1,20 +1,17 @@
 
 a:hover {
-
-	color:#7CC5FF;
-
-	text-decoration:underline;
-
+	color:#FF0000;
+	text-decoration:none;
 }
 
 a {
-
+	color:#0000AA;
 	text-decoration:none;
 
 }
 
 a:visited {
-
+	color:#0000AA;
 	text-decoration:none;
 
 }
@@ -26,10 +23,9 @@ a:link {
 }
 
 a:active {
-
 	text-decoration:none;
-
 }
+
 
 table,tr,td,th{border-spacing:0;border:0px solid #d9d1cc;}
 
@@ -94,4 +90,9 @@ input[type="button"]{
 	font-weight: bold;
 	text-align: center;
     	color: #161616;
+}
+
+td a:hover,div a:hover {
+	color:#FF0000;
+	text-decoration:none;
 }

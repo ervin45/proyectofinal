@@ -148,7 +148,7 @@ def report(request,ft, x, y, xl, yl, xr, yr, ore, mf, params, cf, cf_params):
 
     main_axis = report.get_main_axis_list()
 
-    other_axis = ['Seleccionar..']
+    other_axis = ['seleccionar..']
     other_axis.extend(report.get_other_axis_list())
 
     if len(cube.dim_x) > 20 or len(cube.dim_y) > 20:
@@ -225,7 +225,9 @@ def report2(request,ft1, x1, y1, xl1, yl1, xr1, yr1, ore1
     dim_y = y1
 
     main_axis = report2.get_main_axis_list()
-    other_axis = report2.get_other_axis_list()
+
+    other_axis = ['seleccionar..']
+    other_axis.extend(report2.get_other_axis_list())
 
     if len(cube.dim_x) > 20 or len(cube.dim_y) > 20:
         ofc_params = ""
