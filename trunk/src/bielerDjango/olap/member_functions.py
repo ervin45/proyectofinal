@@ -8,7 +8,7 @@ def dividir(arg0, arg1):
     if not arg1:
         return 0
 
-    return arg0 / arg1
+    return float(arg0) / float(arg1)
 
 def multiplicar(arg0, arg1):
 
