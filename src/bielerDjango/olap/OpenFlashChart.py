@@ -641,13 +641,21 @@ class graph:
         for ov in output_variables:
             attr = self.sanitize(getattr(self, ov))
             if( attr != "" and attr != 0):
-                tmp += "so.addVariable('%s', '%s');" % (ov, self.sanitize(getattr(self, ov)))
+                ov.decode('utf-8')
+                nico1 = self.sanitize(getattr(self, ov))
+                try:
+                    nico1 = nico1.decode('utf-8')
+                except:
+                    pass
+                tmp += "so.addVariable('%s', '%s');" % (ov, nico1)
                 tmp += "\n"
 
         for d in data:
             attr = self.sanitize(getattr(self, ov))
             if( attr != "" and attr != 0):
                 val, lis = d.split("=")
+                val = val.decode('utf-8')
+                lis = lis.decode('utf-8')
                 tmp += 'so.addVariable("%s", "%s");' % (val.replace("&", ""), lis.replace("&\r\n", ""))
                 tmp += "\n"
 
