@@ -219,46 +219,37 @@ so.write("flashcontent");
 
  <!-- AGREGAR TITULOS DE ARRIBA -->
  {% for level in header_top%}
- <tr border="1">
+ <tr border="0">
   {% if forloop.first %}
    <th colspan="{{header_left_size}}" rowspan="{{header_top_size}}" width="100" >
-     <table id="axis_selection_table" cellpadding="0" cellspacing="0">
+     <table id="axis_selection_table" cellpadding="0" cellspacing="0" border="0">
       <tr>
       <td style="text-align:right;vertical-align:bottom;" colspan="2">
-       <img src="/media/img/1.gif">
+       <img border="0" src="/media/img/1.gif">
       </td>
-      <td style="vertical-align: top">
+      <td>
        <table class="roll_drill" width="50" border="0" cellpadding="0" cellspacing="0">
         <tr>
          <td>
           {% if can_roll_x %}
-          <a href="/roll/0/">
-           <img border="0" src="/media/img/roll_enabled.gif" />
-          </a>
+          <a href="/roll/0/" border="0"><img border="0" src="/media/img/roll_enabled.gif" /></a>
           {% else %}
-           <img src="/media/img/roll_disabled.gif" />
+           <img border="0" src="/media/img/roll_disabled.gif" />
           {% endif %}
          </td>
         </tr>
         <tr>
          <td>
           {% if can_drill_x %}
-          <a href="/drill/0/">
-           <img border="0" src="/media/img/drill_enabled.gif" />
-          </a>
+          <a href="/drill/0/" border="0"><img border="0" src="/media/img/drill_enabled.gif" /></a>
           {% else %}
-           <img src="/media/img/drill_disabled.gif" />
+           <img border="0" src="/media/img/drill_disabled.gif" />
           {% endif %}
-       
          </td>
         </tr>
-       </table>
-       &nbsp;
-       <span style="vertical-align: top; text-size:1.8em">{{dim_x}}</span>
-       &nbsp;
-       <input id="dicex_expand" src="/media/img/options.gif" type="image" />
-       <div id="expand_dim_x" style="display:none">
-       <select id="other_axis_x">
+       </table><span style="vertical-align:top;font-size:1.4em;font-variant: small-caps">&nbsp;{{dim_x}}&nbsp;</span><input border="0" id="dicex_expand" src="/media/img/options.gif" type="image" />
+       <div  border="0" id="expand_dim_x" style="display:none">
+       <select  style="font-size:1.3em;font-variant: small-caps" id="other_axis_x">
        {% for oa in other_axis %}
        <option>{{oa}}</option>
        {% endfor %}
@@ -269,42 +260,34 @@ so.write("flashcontent");
       </tr>
       <tr>
       <td>&nbsp;</td>
-      <td width="24"><img src="/media/img/2.gif"></td>
+      <td width="24"><img border="0" src="/media/img/2.gif"></td>
       <td>&nbsp;</td>
       </tr>
       <tr>
-      <td>
-
-       <table class="roll_drill">
+      <td border="0" cellspacing="0" style="padding:0px 0px 0px 10px">
+       <table border="0" cellspacing="0" cellpadding="0" class="roll_drill">
         <tr>
          <td>
           {% if can_roll_y %}
-          <a href="/roll/1/">
-           <img border="0" src="/media/img/roll_enabled.gif" />
-          </a>
+          <a href="/roll/1/" border="0"><img border="0" src="/media/img/roll_enabled.gif" /></a>
           {% else %}
-           <img src="/media/img/roll_disabled.gif" />
+           <img border="0" src="/media/img/roll_disabled.gif" />
           {% endif %}
          </td>
         </tr>
         <tr>
          <td>
-          {% if can_drill_y %}
-          <a href="/drill/1/">
-           <img border="0" src="/media/img/drill_enabled.gif" />
-          </a>
+           {% if can_drill_y %}
+          <a href="/drill/1/" border="0"><img border="0" src="/media/img/drill_enabled.gif" /></a>
           {% else %}
-           <img src="/media/img/drill_disabled.gif" />
+           <img border="0" src="/media/img/drill_disabled.gif" />
           {% endif %}
        
          </td>
         </tr>
-       </table>
-       &nbsp;
-       {{dim_y}}
-       <input id="dicey_expand" src="/media/img/options.gif" type="image" />
+       </table><span style="vertical-align:top;font-size:1.4em;font-variant: small-caps">&nbsp;{{dim_y}}&nbsp;</span><input id="dicey_expand" src="/media/img/options.gif" type="image" />
        <div id="expand_dim_y" style="display:none">
-       <select id="other_axis_y">
+       <select style="font-size:1.3em;font-variant: small-caps" id="other_axis_y">
        {% for oa in other_axis %}
        <option>{{oa}}</option>
        {% endfor %}
@@ -312,7 +295,7 @@ so.write("flashcontent");
        </div>
       
       </td>
-      <td valign="top" align="left" colspan="2"><img src="/media/img/3.gif"></td>
+      <td valign="top" align="left" colspan="2"><img  border="0" src="/media/img/3.gif"></td>
       </tr>
 
      </table>
