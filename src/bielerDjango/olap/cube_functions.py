@@ -77,21 +77,21 @@ same_cube.meta = {
                                 }
 
 def no_zeros(cube):
-    eje = 0
 
-    sum_1 = {}
-    for k in cube.data.keys():
-        try:
-            sum_1[k[eje]] += cube.data[k]
-        except:
-            sum_1[k[eje]] = cube.data[k]
+    for eje in [0, 1]:
+        sum_1 = {}
+        for k in cube.data.keys():
+            try:
+                sum_1[k[eje]] += cube.data[k]
+            except:
+                sum_1[k[eje]] = cube.data[k]
 
-    
-    los_zeros = [x[0] for x in tuple(sum_1.items()) if x[1] == 0]
 
-    for i in cube.data.keys():
-        if i[eje] in los_zeros:
-            del cube.data[i]
+        los_zeros = [x[0] for x in tuple(sum_1.items()) if x[1] == 0]
+
+        for i in cube.data.keys():
+            if i[eje] in los_zeros:
+                del cube.data[i]
 
     cube.clean()
 
