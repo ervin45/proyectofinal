@@ -47,8 +47,7 @@ order_and_slice_the_cube2.meta = {
                                           ]
                                 } 
 
-def top10(cube,total_elements = 10,order = 'desc'):
-    eje = 0
+def top10(cube,eje = 0,total_elements = 10,order = 'desc'):    
     sum_1 = {}
     for k in cube.data.keys():
         try:

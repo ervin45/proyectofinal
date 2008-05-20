@@ -839,6 +839,10 @@ class Cubiculo:
             where_aux = []
             for level, val in first_dimension[2].items():
                 valores = ", ".join([str(v) for v in val])
+                try:
+                    valores = valores.decode('utf-8')
+                except:
+                    pass
                 rest = "td_%s.%s in('%s')" % ( first_dimension[0], level, valores)
                 where_aux.append(rest)
             where = "%s" % " and ".join(where_aux)
@@ -941,6 +945,10 @@ class Cubiculo:
             if restriction:
                 for level, val in restriction.items():
                     valores = ", ".join(["'%s'" % v.strip() for v in val])
+                    try:
+                        valores = valores.decode('utf-8')
+                    except:
+                        pass
                     where.append("trim(td_%s.%s) in(%s)" % ( name, level, valores))
 
         for other_dim in self.ore:
@@ -948,6 +956,10 @@ class Cubiculo:
             if restriction:
                 for level, val in restriction.items():
                     valores = ", ".join(["'%s'" % v.strip() for v in val])
+                    try:
+                        valores = valores.decode('utf-8')
+                    except:
+                        pass
                     try:
                         valores = valores.decode('utf-8')
                     except:
@@ -1027,9 +1039,9 @@ class Cubiculo:
 
         sql = "%s\n" * 5 % (self._select(),self._from(), self._where(), self._group_by(), self._order_by() )
 
-        f = file("/tmp/cubiculo-debug","a")
-        f.write(sql+"\n")
-        f.close()
+        #f = file("/tmp/cubiculo-debug","a")
+        #f.write(sql+"\n")
+        #f.close()
         return sql
 
 
