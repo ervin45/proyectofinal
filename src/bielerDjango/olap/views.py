@@ -16,6 +16,7 @@ import math
 # patron espacios de mas \s{1,}$
 
 def header_list_top(header):
+    print "HEEEEEEADER", header
     if header == ['TODO']:
         return [[['TODO', 1,'TODO']]], 1
 
