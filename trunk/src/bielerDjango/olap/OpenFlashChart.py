@@ -654,8 +654,15 @@ class graph:
             attr = self.sanitize(getattr(self, ov))
             if( attr != "" and attr != 0):
                 val, lis = d.split("=")
-                val = val.decode('utf-8')
-                lis = lis.decode('utf-8')
+                try:
+                    val = val.decode('utf-8')
+                except:
+                    pass
+                try:
+                    lis = lis.decode('utf-8')
+                except:
+                    pass
+
                 tmp += 'so.addVariable("%s", "%s");' % (val.replace("&", ""), lis.replace("&\r\n", ""))
                 tmp += "\n"
 
@@ -663,8 +670,14 @@ class graph:
             attr = self.sanitize(getattr(self, ov))
             if( attr != "" and attr != 0):
                 val, lis = l.split("=")
-                val = val.decode('utf-8')
-                lis = lis.decode('utf-8')
+                try:
+                    val = val.decode('utf-8')
+                except:
+                    pass
+                try:
+                    lis = lis.decode('utf-8')
+                except:
+                    pass
                 tmp += 'so.addVariable("%s", "%s");' % (val.replace("&", ""), lis.replace("&\r\n", ""))
                 tmp += "\n"
 
