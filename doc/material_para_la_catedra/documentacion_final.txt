@@ -1147,9 +1147,9 @@ herramienta SVN.
 Ya sabemos que la metodología XP tiene como una de sus prácticas la
 integración del código fuente u otro tipo de archivos que sean
 modificados por uno o mas desarrolladores. Para este propósito se
-utilizó SVN[6].
+utilizó SVN[2].
 
-.. [6] No es exclusivo de XP sino que puede ser aprovechada por
+.. [2] No es exclusivo de XP sino que puede ser aprovechada por
        cualquier metodología, sea estándar o híbrida.
 
 SVN es un herramienta para el control de versiones de
@@ -1231,29 +1231,29 @@ que es interpretado o compilado a código nativo para su ejecución.
 
 Las aplicaciones libres existentes con funcionalidades de Data
 Warehouse, OLAP o similares, están en su mayoría implementadas en
-Java. La suite de herramientas Pentaho[1], posee varias herramientas
-para realizar ETL, Data Mining, etc. todas implementadas sobre Tomcat[2].
+Java. La suite de herramientas Pentaho[3], posee varias herramientas
+para realizar ETL, Data Mining, etc. todas implementadas sobre Tomcat[4].
 
-.. [1] http://www.pentaho.com
-.. [2] http://tomcat.apache.org
+.. [3] http://www.pentaho.com
+.. [4] http://tomcat.apache.org
 
 En el comienzo del proyecto, investigamos la suite Pentaho, en
-particular el producto Mondrian[3], y nos resultó muy complicada la
+particular el producto Mondrian[5], y nos resultó muy complicada la
 instalación y configuración.
 
 Una vez configurado, la performance de la aplicación Java era muy
 pobre. Entonces decidimos ver alternativas.
 
-.. [3] ver capítulo 3 para más detalles
+.. [5] ver capítulo 3 para más detalles
 
 ------------------------------------------------------------------------
 Python
 ------------------------------------------------------------------------
 
 Python es un lenguaje de programación creado por Guido van Rossum en
-el año 1990[4].
+el año 1990[6].
 
-.. [4] http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
+.. [6] http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
 
 Es comparado habitualmente con TCL, Perl, Scheme, Java y Ruby. En la6500
 actualidad Python se desarrolla como un proyecto de código abierto,
@@ -1776,11 +1776,11 @@ Herramientas: Wiki
 ------------------------------------------------------------------------
 
 Las anotaciones del proyecto las realizamos con una herramientas web
-de filosofía Wiki, provista por Google Code[5]. Esto nos permitió
+de filosofía Wiki, provista por Google Code[7]. Esto nos permitió
 realizar una base de conocimientos en hipertexto de manera sencilla y
 rápida.
 
-.. [5] http://code.google.com/p/proyectofinal
+.. [7] http://code.google.com/p/proyectofinal
 
 
 
