@@ -175,6 +175,14 @@ class Meta:
         'las entradas desde Reconquista expresadas en piezas'
         >>> Meta.measure_as_string(['ft_movimientos', 'entradas_de_reconquista', 'avg'])
         'las entradas desde Reconquista promedio expresadas en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'ajuste_negativo', 'sum'])
+        'los ajustes negativos expresados en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'ajuste_negativo', 'avg'])
+        'los ajustes negativos promedio expresados en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'ajuste_positivo', 'sum'])
+        'los ajustes positivos expresados en piezas'
+        >>> Meta.measure_as_string(['ft_movimientos', 'ajuste_positivo', 'avg'])
+        'los ajustes positivos promedio expresados en piezas'
         """
         expresa = 'expresado'
 
@@ -207,6 +215,12 @@ class Meta:
             elif que == 'entradas_de_reconquista':
                 que = 'las entradas desde Reconquista'
                 expresa = 'expresadas'
+            elif que == 'ajuste_negativo':
+                que = 'los ajustes negativos'
+                expresa = 'expresados'
+            elif que == 'ajuste_positivo':
+                que = 'los ajustes positivos'
+                expresa = 'expresados'
             else:
                 que = "el %s" % que
             ft=""
@@ -930,10 +944,10 @@ class Cubiculo:
         ''
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[])
         >>> c._where()
-        "WHERE trim(td_tiempo.anio) in('2005', '1999') "
+        u"WHERE trim(td_tiempo.anio) in('2005', '1999') "
         >>> c = Cubiculo(ft='ventas', dimensions=[['tiempo', 'mes', {'anio': ['2005', '1999']}], ['pieza', 'grupo_constructivo', {}]], measures=[['cantidad', 'sum']], ore=[['proveedor', 'proveedor', {'proveedor': ['Mercedez Benz']}]])
         >>> c._where()
-        "WHERE trim(td_tiempo.anio) in('2005', '1999') AND trim(td_proveedor.proveedor) in('Mercedez Benz') "
+        u"WHERE trim(td_tiempo.anio) in('2005', '1999') AND trim(td_proveedor.proveedor) in('Mercedez Benz') "
         '''
 
         levels_with_parent = []
