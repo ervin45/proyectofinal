@@ -711,7 +711,10 @@ class Cubiculo:
         dim = self.dimensions_order[int(axis)]
 
         self.dimensions[dim][2] = {}
-        rest_values = str(values).split("-")
+        try:
+            rest_values = str(values.encode('utf-8')).split("-")
+        except:
+            rest_values = str(values).split("-")
         values_size = len(rest_values)
 
         rest_levels = Meta.dimension_meta[dim][(values_size + 1) * -1: -1]
