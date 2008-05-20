@@ -14,7 +14,7 @@
 Organización del documento
 ------------------------------------------------------------------------
 
-El entendimiento del presente documento, el lector deberá estar
+Para el entendimiento del presente documento, el lector deberá estar
 familiarizado con alguna de las herramientas y tecnologías de bases de
 datos multidimensionales, conceptos de Data Warehouse como cubos OLAP,
 ETL y frameworks para el desarrollo web. El capítulo 1, Introducción,
@@ -23,7 +23,7 @@ intenta resumir y organizar estas tecnologías y conceptos.
 Para la realización de este proyecto se investigaron diversas
 tecnologías, algunas de ellas descartadas en las primeras instancias y
 otras forman parte del núcleo del sistema final. El capítulo 2,
-Tecnología Investigada, enumera y describe a las más importantes.
+Tecnología Investigada, enumera y describe las tecnologías más importantes.
 
 El capítulo 3 se centra en el desarrollo mismo del sistema, las partes
 claves que se necesitaron implementar para conseguir un sistema final
@@ -60,7 +60,7 @@ con 60 empleados en diversas áreas, desde el salón comercial hasta un
 importante taller. Posee dos sucursales, una en Reconquista y otra en
 Rafaela.
 
-La empresa Ricardo C. Bieler S.A. no posee, en la actualidad, un
+La empresa Ricardo C. Bieler S.A. no cuenta, en la actualidad, con un
 sistema de soporte de decisiones en lo que se refiere a la compra y
 venta de unidades (camiones, utilitarios y automóviles). En el caso de
 los repuestos, los movimientos de entrada y salida se basan en
@@ -255,7 +255,8 @@ software:
 :Libertad 1: La libertad de estudiar el funcionamiento del programa, y
 	  adaptarlo a las necesidades.
 
-:Libertad 2: La libertad de distribuir copias, con lo que puede ayudar a otros.
+:Libertad 2: La libertad de distribuir copias, con lo que se puede
+	  ayudar a otros.
 
 :Libertad 3: La libertad de mejorar el programa y hacer públicas las
 	  mejoras, de modo que toda la comunidad se beneficie (para la
@@ -270,7 +271,7 @@ Ventajas Genéricas
 El bajo o nulo coste de los productos libres permiten proporcionar a
 las PYMES servicios y ampliar sus infraestructuras sin que se vean
 mermados sus intentos de crecimiento por no poder hacer frente al pago
-de grandes cantidades en licencias.
+de grandes sumas en licencias.
 
 2. Libertad de uso y redistribución
 
@@ -417,7 +418,7 @@ utiliza. Se trata, sobre todo, de un expediente completo de una
 organización, más allá de la información transaccional y operacional.
 
 La definición no quedaría completa sin mencionar que la organización
-de los datos no es lo unico que implica un Data Warehouse. Ademas incluye
+de los datos no es lo unico que implica un Data Warehouse. Además incluye
 herramientas de análisis y consulta, y utilidades para la extracción,
 transformación y carga de datos de diversos orígenes de datos como
 pueden ser sistemas empresariales, webs o planillas de cálculo.
@@ -460,7 +461,7 @@ Beneficios
 Propiedades
 -----------------
 
-:Orientado a temas: Los datos en la base de datos estás organizados de
+:Orientado a temas: Los datos en la base de datos están organizados de
 	   manera que todos los elementos de datos relativos al mismo
 	   evento u objeto del mundo real están unidos entre sí.
 
@@ -499,7 +500,8 @@ decisiones a nivel departamental en lugar de hacerlo para toda la
 organización.
 
 La bibliografía posee dos corrientes respecto a este concepto. Los
-autores Bill Inmon y Raph Kimball poseen visiones considerablementes distintas sobre la relación entre Data Warehouse y un Data Mart. Para
+autores Bill Inmon y Raph Kimball poseen visiones considerablementes
+distintas sobre la relación entre Data Warehouse y un Data Mart. Para
 Inmon el Data Mart es cargado desde el Data Warehouse mediante
 programas de carga, visión TOP-DOWN. Para Kimball el Data Mart es una
 porción del Data Warehouse y es cargado directamente desde las bases
@@ -588,7 +590,7 @@ se analizan los datos se conocen como dimensiones. Para acceder a los
 datos sólo es necesario indexarlos a partir de los valores de las
 dimensiones o ejes.
 
-El almacenar físicamente los datos de esta forma tiene sus pros y sus
+Almacenar físicamente los datos de esta forma tiene sus pros y sus
 contras. Por ejemplo, en estas bases de datos las consultas de
 selección son muy rápidas (de hecho, casi en tiempo real). Pero uno de
 los problemas más grandes de esta forma de almacenamiento es que una
@@ -638,7 +640,7 @@ Los atributos X, Y, Z se corresponden con los ejes del cubo, mientras
 que el valor de W devuelto por cada tripleta (X, Y, Z) se corresponde
 con el dato o elemento que se rellena en cada celda del cubo.
 
-Debido a que los dispositivos de salida (monitores, impresoras, ...)
+Debido a que los dispositivos de salida (monitores, impresoras, etc)
 sólo cuentan con dos dimensiones, no pueden caracterizar fácilmente
 cuatro dimensiones, es más práctico proyectar "rebanadas" o secciones
 de los datos del cubo (se dice proyectar en el sentido clásico vector
@@ -717,7 +719,7 @@ Porque Python y no Java
 En el mercado de los lenguajes de programación Java se ha impuesto
 gracias al concepto de la máquina virtual multiplataforma, una
 plataforma que ofrece muchos servicios y a fuerza de marketing. Esto
-no quiere decir que Java deba se utilizado para cualquier desarrollo
+no quiere decir que Java deba ser utilizado para cualquier desarrollo
 como opción por defecto.
 
 En nuestro proyecto hemos elegido Python por ser un lenguaje que nos
@@ -729,18 +731,18 @@ desarrollador.
 
 Python presenta una serie de ventajas que lo hacen muy atractivo,
 tanto para su uso profesional como para el aprendizaje de la
-programación. Está en un proceso de continuo desarrollo por una gran
+programación. Está en un proceso de continuo desarrollo por una amplia
 comunidad de desarrolladores.
 
 Se puede destacar de Python:
 
-:Tiene una gran librería estándar: usada para una diversidad de
+:Tiene una librería estándar extensa: usada para una diversidad de
        tareas. Esto viene de la filosofía "baterías incluidas"
        ("batteries included") para módulos de Python.
 
 :Es un lenguaje muy expresivo: es decir, los programas Python son muy
     compactos: un programa Python suele ser bastante más corto que su
-    equivalente en lenguajes como Java. Python llega a ser considerado
+    equivalente en lenguajes como Java. Python es considerado
     por muchos un lenguaje de programación de muy alto nivel.
 
 :Es muy legible: la sintaxis de Python es muy elegante y permite la
@@ -768,8 +770,9 @@ un fracción de tiempo respecto a la mayoria de los lenguajes del
 mercado reduciendo considerablemente los costos de desarrollo y
 lenguajes como Java y C son mas apropiados cuando es muy alto el
 requerimiento de performance. En conclusión, pensamos que el tiempo de
-desarrollo es un requisito mucho mas crítico que la performance para
-nuestro proyecto, por lo tanto hemos elegido Python.
+desarrollo y la facilidad de mantenimiento es un requisito mucho mas
+crítico que la performance para nuestro proyecto, por lo tanto hemos
+elegido Python.
 
 -----------------------------------------------------------------------
 Framework Utilizado
@@ -795,7 +798,7 @@ refiere a la parte del sistema que selecciona qué mostrar y cómo
 mostrarlo, y el "Controlador" implica la parte del sistema que decide
 cual vista usar, dependiendo de la entrada del usuario, accediendo al
 modelo si es necesario.  Django sigue este patrón MVC lo
-suficientemente estrecho que puede ser llamado un framework MVC. Aquí
+suficiente como para ser llamado un framework MVC. Aquí
 se encuentra más o menos como la M, V y C se separan en Django:
 
 :M: la porción de acceso a la base de datos, es manejada por la capa
@@ -822,7 +825,7 @@ En el patrón de diseño MTV:
 :T: significa "Template", la capa de presentación. Esta capa contiene
     las decisiones relacionadas a la presentación: como algunas cosas
     son mostradas sobre una página web o otro tipo de
-    documento. Django Posee un sistema propio de templates esta
+    documento. Django Posee un sistema propio de templates que está
     formado por bloques y filtros que se encargan de visualizar
     adecuadamente objetos provenientes de las "View"
 
@@ -862,9 +865,9 @@ Mapeo de Vista/URL
 
 Una funcionalidad muy práctica de este framework es la flexibilidad
 con la que se puede relacionar una URL con una salida
-determinada. Para lograr esto, Django provee un archivo que dado un
-expresion regular de una URL relaciona esta con una función que sea
-capaz de devolver un objeto que represente una respuesta http.
+determinada. Para lograr esto, Django provee un archivo en el que dado una
+expresión regular de una URL relaciona esta con una función que sea
+capaz de devolver un objeto que represente una respuesta HTTP.
 
 ------------------------------------------------------------------------
 Metodología elegida
@@ -904,7 +907,7 @@ metodología. Estos valores son:
 
 :Comunicación: los desarrolladores necesitan intercambiar información
 	       e ideas sobre el proyecto, a los directivos, y a los
-	       clientes de forma honrada, confiable y fácil. La
+	       clientes de forma confiable y fácil. La
 	       información debe fluir de manera continua y rápida.
 
 :Sencillez: siempre que sea posible hay que elegir soluciones
@@ -1216,9 +1219,6 @@ de desarrollo:
                         Tecnología Investigada
 ========================================================================
 
-.. estructura gral un párrafo explica QUE ES, 2do parrafo Nuestra
-   experiencia. Tercer parrafo: veredicto.
-
 
 ------------------------------------------------------------------------
 Java y aplicaciones Tomcat
@@ -1255,7 +1255,7 @@ el año 1990[6].
 
 .. [6] http://svn.python.org/view/python/trunk/Misc/HISTORY?rev=51814&view=markup
 
-Es comparado habitualmente con TCL, Perl, Scheme, Java y Ruby. En la6500
+Es comparado habitualmente con TCL, Perl, Scheme, Java y Ruby. En la
 actualidad Python se desarrolla como un proyecto de código abierto,
 administrado por la Python Software Foundation. La última versión
 estable del lenguaje es actualmente la 2.5.1 (18 de abril de 2007)(Se
@@ -1287,7 +1287,7 @@ Turbo Gears
 ------------------------------------------------------------------------
 
 Es un framework de desarrollo web para Python. Subdivide el problema
-du una aplicación web en capas que interactuan entre si. La filosofía
+de una aplicación web en capas que interactuan entre si. La filosofía
 del proyecto es la reutilización de tecnologías existentes
 maduras. Las tecnologías utilizadas son:
 
@@ -1403,7 +1403,7 @@ navegadores web.
 
 Ajax no es una tecnología en sí mismo. En realidad, se trata de la
 unión de varias tecnologías que se desarrollan de forma autónoma y que
-se unen de formas nuevas y sorprendentes. Entre otras tecnologias que
+se unen de formas nuevas y sorprendentes. Entre otras tecnologías que
 integran AJAX se encuentran JavaScript, XML y CSS.
 
 En las aplicaciones web tradicionales, las acciones del usuario en la
@@ -1424,7 +1424,7 @@ PostgreSQL es un sistema de gestión de dases de datos
 objeto-relacionales (ORDBMS). En la actualidad es considerada la base
 de datos mas potente que tiene origen en el software
 libre. Desarrollado bajo licencia BSD (Berkeley Software Distribution)
-por una gran comunidad y empresas comerciales.
+por una amplia comunidad y empresas comerciales.
 
 Como los mas avanzandos motores de base de datos soporta concurrencia,
 transacionalidad, encriptación, clustering, triggers, procedimientos
@@ -1441,8 +1441,6 @@ la funcionalidad los Postgres para cumplir multiples objetivos.
                              Desarrollo
 ========================================================================
 
-.. En este capítulo explicamos las elecciones de diseño, el transcurso
-   de la implementacion etc. etc
 
 
 
@@ -1459,7 +1457,7 @@ elegida poseía a Mondrian como servidor de cubos. Desgraciadamente, en
 la implemenación de esta arquitectura tuvimos dificultades en la
 instalación, parametrización y utilización del mismo.
 
-A continuación una resumida lista de problemas encontrados:
+A continuación se presenta una lista resumida de problemas encontrados:
 
 * No teníamos experiencia en la administración del servidor de
   aplicaciones Tomcat.
@@ -1511,7 +1509,7 @@ informe a obtener. Los parámetros necesiarios son:
 
 
 Cubículo se basa en una base de datos relacional, en este proyecto
-la elección fue Postgre, y las tablas de hechos se caracterizan por
+la elección fue PostgreSQL, y las tablas de hechos se caracterizan por
 tener únicamente Claves Foráneas a las claves de las tablas
 dimensionales.
 
@@ -1628,10 +1626,10 @@ informes. Sobre estos informes se pueden realizar operaciones de:
 
 :drilldown: Es la operación para obtener mayor grado de detalle sobre
   una dimensión. Ejemplo pasar de año a mes o de rubro a subrubro en
-  un infrome.
+  un informe.
 
 :rollup: Es la operación contraria a drilldown, el usuario puede
-  obtener una visión parnorámica del informe. Ejemplo: el informe
+  obtener una visión panorámica del informe. Ejemplo: el informe
   visualiza las ventas separadas por vendedor y luego del rollup se
   obtine el informe separado por sucursal.
 
@@ -1679,7 +1677,7 @@ dividir el problema en funciones específicas:
   el informe presentado.
 
 :complete_dimension(): En las operaciones de cubos, siempre es
-  necesario tener ambos de las mismas dimensiones para operar. La
+  necesario tener en ambos cubos las mismas dimensiones para operar. La
   función complete_dimension() se encarga de homogeinizar las
   dimensiones de los cubos involucrados.
 
