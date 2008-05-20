@@ -948,6 +948,10 @@ class Cubiculo:
             if restriction:
                 for level, val in restriction.items():
                     valores = ", ".join(["'%s'" % v.strip() for v in val])
+                    try:
+                        valores = valores.encode('utf-8')
+                    except:
+                        pass
                     where.append("trim(td_%s.%s) in(%s)" % ( name, level, valores))
 
         if where:
