@@ -949,7 +949,7 @@ class Cubiculo:
                 for level, val in restriction.items():
                     valores = ", ".join(["'%s'" % v.strip() for v in val])
                     try:
-                        valores = valores.encode('utf-8')
+                        valores = valores.decode('utf-8')
                     except:
                         pass
                     where.append("trim(td_%s.%s) in(%s)" % ( name, level, valores))
