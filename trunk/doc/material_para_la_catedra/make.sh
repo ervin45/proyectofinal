@@ -3,6 +3,7 @@
 ## actualizacion de versiones-iteraciones... etc
 #./update.sh
 #./generate_doc_test.sh
+./cut_eps.sh
 
 rst2latex --language=es \
           --no-doc-title \
