@@ -109,7 +109,7 @@
 
 
 </head>
-<body>
+<body  style="background-image:url(/media/img/fondo_degrade.png); background-size:auto">
 
 
 <div class="outer-container">
@@ -196,9 +196,9 @@
 
 {% endif %}
 <span class="titulo_detalles">Funcion de cubo</span>: {{cf}}
-</div><!-- FIN more_details --><p style="font-size:1.4em; font-weight:bold">{{explanation}}</p>
+</div><!-- FIN more_details --><p style="font-size:1.4em; font-weight:bold;color:#555">{{explanation}}</p>
 <script type="text/javascript" src="/media/js/swfobject.js"></script>
-<div id="flashcontent"></div><script type="text/javascript">
+<center><div id="flashcontent"></div></center><script type="text/javascript">
 
 {% if mostrar_grafico %}
 var so = new SWFObject("/media/flash/open-flash-chart.swf", "chart", "600", "300", "9", "#FFFFFF");
@@ -214,6 +214,7 @@ so.write("flashcontent");
 <br /><br /><br />
 
 <a class="boton" href="/pivot/">Pivot</a> 
+<center>
 <table class="data_table">
 
  <!-- AGREGAR TITULOS DE ARRIBA -->
@@ -419,7 +420,7 @@ so.write("flashcontent");
  {% endfor %}
 
 </table>
-
+</center>
 
 
 
