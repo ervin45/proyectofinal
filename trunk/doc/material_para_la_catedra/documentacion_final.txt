@@ -1486,6 +1486,16 @@ datos relacional. Evaluamos el subconjunto de funcionalidades
 necesarias y posibles optimizaciones basadas en nuestra necesidad, y
 desarrollamos Cubículo.
 
+Arquitectura
+------------------------------------------------------------------------
+
+Debido a la elección de utilizar Django como framework de trabajo, era
+necesario ajustar el diseño del sistema al patrón MTV, explicado
+anteriormente. En la siguiente figura se puede apreciar la arquitectura
+de todo el sistema con la interacción entre los distintos componentes.
+
+.. image:: arquitectura.eps
+
 Cubículo
 ------------------------------------------------------------------------
 
@@ -1697,10 +1707,10 @@ Juego de la planificación
 ========================================================================
 
 ------------------------------------------------------------------------
-Diagrama de Entidad-Relacion
+Diagrama de entidad-relación
 ------------------------------------------------------------------------
 
-.. image :: DER.eps
+.. image:: DER.eps
 
 ------------------------------------------------------------------------
 Diagrama de clases
@@ -1715,6 +1725,29 @@ Tests
 ------------------------------------------------------------------------
 
 .. include:: doc_test.txt
+
+========================================================================
+                             Capturas de pantalla
+========================================================================
+
+.. image:: screenshot/login.eps
+
+.. image:: screenshot/initial.eps
+
+.. image:: screenshot/tabla_y_grafico.eps
+
+.. image:: screenshot/formulario1.eps
+
+.. image:: screenshot/snapshot1.eps
+
+.. image:: screenshot/borrar_reporte.eps
+
+.. image:: screenshot/adm_categorias.eps
+
+.. image:: screenshot/guardar_reporte.eps
+
+.. image:: screenshot/mas_detalles.eps
+
 
 ========================================================================
                              Conclusión
