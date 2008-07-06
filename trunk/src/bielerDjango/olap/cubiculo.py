@@ -778,6 +778,9 @@ class Cubiculo:
         OK
         >>>
         '''
+        
+        if main_axis.startswith(":"):
+            main_axis = main_axis[1:]
 
         if not main_axis in self.dimensions.keys():
             raise InvalidDimension(main_axis)
@@ -1056,6 +1059,7 @@ class Cubiculo:
         #f = file("/tmp/cubiculo-debug","a")
         #f.write(sql+"\n")
         #f.close()
+        print sql
         return sql
 
 
